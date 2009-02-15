@@ -6,9 +6,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="../../../bin/OpenGLKit_$(COMPILER)$(COMPILER_VER).dll" prefix_auto="0" extension_auto="0" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)/ReleaseDLL/" />
-				<Option external_deps="$(VCF_ROOT)/lib/libApplicationKit_mgcc.a;" />
+				<Option output="..\..\..\bin\OpenGLKit_$(COMPILER)$(COMPILER_VER).dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\ReleaseDLL\" />
+				<Option external_deps="$(VCF_ROOT)\lib\libApplicationKit_mgcc.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createStaticLib="1" />
@@ -33,7 +33,6 @@
 					<Add option="-D_WIN32" />
 					<Add option="-D_WINDOWS" />
 					<Add option="-D_USRDLL" />
-					<Add option="-DVCF_MINGW" />
 					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
 					<Add option="-DVCF_NO_ATL" />
 					<Add option="-DUSE_APPLICATIONKIT_DLL" />
@@ -79,9 +78,9 @@
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="../../../bin/OpenGLKit_$(COMPILER)$(COMPILER_VER)_d.dll" prefix_auto="0" extension_auto="0" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)/DebugDLL/" />
-				<Option external_deps="$(VCF_ROOT)/lib/libApplicationKit_mgcc_d.a;" />
+				<Option output="..\..\..\bin\OpenGLKit_$(COMPILER)$(COMPILER_VER)_d.dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\DebugDLL\" />
+				<Option external_deps="$(VCF_ROOT)\lib\libApplicationKit_mgcc_d.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createStaticLib="1" />
@@ -104,7 +103,6 @@
 					<Add option="-D_WIN32" />
 					<Add option="-D_WINDOWS" />
 					<Add option="-D_USRDLL" />
-					<Add option="-DVCF_MINGW" />
 					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
 					<Add option="-DVCF_NO_ATL" />
 					<Add option="-DUSE_APPLICATIONKIT_DLL" />
@@ -153,25 +151,27 @@
 			<Add alias="All" targets="mingw_Release;mingw_Debug;" />
 		</VirtualTargets>
 		<Compiler>
-			<Add directory='&quot;$(VCF_ROOT)/src&quot;' />
-			<Add directory='&quot;$(VCF_ROOT)/src/thirdparty/common/agg/include&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src\thirdparty\common\agg\include&quot;' />
 		</Compiler>
 		<Linker>
-			<Add directory='&quot;$(VCF_ROOT)/lib&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\lib&quot;' />
 		</Linker>
-		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLControl.cpp" />
-		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLControl.h" />
-		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLControlContext.cpp" />
-		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLControlContext.h" />
-		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLKit.h" />
-		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLPeer.h" />
-		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLToolkit.cpp" />
-		<Unit filename="../../../src/vcf/OpenGLKit/OpenGLToolkit.h" />
-		<Unit filename="../../../src/vcf/OpenGLKit/VCFOpenGL.h" />
-		<Unit filename="../../../src/vcf/OpenGLKit/Win32OpenGLPeer.cpp" />
-		<Unit filename="../../../src/vcf/OpenGLKit/Win32OpenGLPeer.h" />
+		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLContext.cpp" />
+		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLContext.h" />
+		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLControl.cpp" />
+		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLControl.h" />
+		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLKit.h" />
+		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLPeer.h" />
+		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp" />
+		<Unit filename="..\..\..\src\vcf\OpenGLKit\OpenGLToolkit.h" />
+		<Unit filename="..\..\..\src\vcf\OpenGLKit\VCFOpenGL.h" />
+		<Unit filename="..\..\..\src\vcf\OpenGLKit\Win32OpenGLPeer.cpp" />
+		<Unit filename="..\..\..\src\vcf\OpenGLKit\Win32OpenGLPeer.h" />
 		<Extensions>
 			<code_completion />
+			<envvars />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

@@ -6,9 +6,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="../../../bin/NetworkKit_$(COMPILER)$(COMPILER_VER).dll" prefix_auto="0" extension_auto="0" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)/Release/" />
-				<Option external_deps="$(VCF_ROOT)/lib/libFoundationKit_mgcc.a;" />
+				<Option output="..\..\..\bin\NetworkKit_$(COMPILER)$(COMPILER_VER).dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\Release\" />
+				<Option external_deps="$(VCF_ROOT)\lib\libFoundationKit_mgcc.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createStaticLib="1" />
@@ -31,7 +31,6 @@
 					<Add option="-D_WIN32" />
 					<Add option="-D_WINDOWS" />
 					<Add option="-D_USRDLL" />
-					<Add option="-DVCF_MINGW" />
 					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
 					<Add option="-DUSE_FOUNDATIONKIT_DLL" />
 					<Add option="-DNETKIT_DLL" />
@@ -66,14 +65,14 @@
 				</ExtraCommands>
 				<Environment>
 					<Variable name="COMPILER_VER" value="" />
-					<Variable name="FOUNDATIONKITDLL_GCH_DIR" value="../FoundationKit/$(COMPILER)$(COMPILER_VER)/ReleaseDLL/src" />
+					<Variable name="FOUNDATIONKITDLL_GCH_DIR" value="..\FoundationKit\$(COMPILER)$(COMPILER_VER)\ReleaseDLL\src" />
 					<Variable name="COMPILER" value="mgcc" />
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="../../../bin/NetworkKit_$(COMPILER)$(COMPILER_VER)_d.dll" prefix_auto="0" extension_auto="0" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)/DebugDLL/" />
-				<Option external_deps="$(VCF_ROOT)/lib/libFoundationKit_mgcc_d.a;" />
+				<Option output="..\..\..\bin\NetworkKit_$(COMPILER)$(COMPILER_VER)_d.dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\DebugDLL\" />
+				<Option external_deps="$(VCF_ROOT)\lib\libFoundationKit_mgcc_d.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createStaticLib="1" />
@@ -96,7 +95,6 @@
 					<Add option="-D_WIN32" />
 					<Add option="-D_WINDOWS" />
 					<Add option="-D_USRDLL" />
-					<Add option="-DVCF_MINGW" />
 					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
 					<Add option="-DUSE_FOUNDATIONKIT_DLL" />
 					<Add option="-DNETKIT_DLL" />
@@ -130,7 +128,7 @@
 				</ExtraCommands>
 				<Environment>
 					<Variable name="COMPILER_VER" value="" />
-					<Variable name="FOUNDATIONKITDLL_GCH_DIR" value="../FoundationKit/$(COMPILER)$(COMPILER_VER)/DebugDLL/src" />
+					<Variable name="FOUNDATIONKITDLL_GCH_DIR" value="..\FoundationKit\$(COMPILER)$(COMPILER_VER)\DebugDLL\src" />
 					<Variable name="COMPILER" value="mgcc" />
 				</Environment>
 			</Target>
@@ -139,36 +137,31 @@
 			<Add alias="All" targets="mingw_Release;mingw_Debug;" />
 		</VirtualTargets>
 		<Compiler>
-			<Add directory='&quot;$(VCF_ROOT)/src&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
 		</Compiler>
 		<Linker>
-			<Add directory='&quot;$(VCF_ROOT)/lib&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\lib&quot;' />
 		</Linker>
-		<Unit filename="../../../src/vcf/NetworkKit/DatagramSocket.cpp" />
-		<Unit filename="../../../src/vcf/NetworkKit/DatagramSocket.h" />
-		<Unit filename="../../../src/vcf/NetworkKit/NetToolkit.cpp" />
-		<Unit filename="../../../src/vcf/NetworkKit/NetToolkit.h" />
-		<Unit filename="../../../src/vcf/NetworkKit/NetworkKit.h" />
-		<Unit filename="../../../src/vcf/NetworkKit/NetworkKitSelectLib.h" />
-		<Unit filename="../../../src/vcf/NetworkKit/ServerSocketEvent.cpp" />
-		<Unit filename="../../../src/vcf/NetworkKit/ServerSocketEvent.h" />
-		<Unit filename="../../../src/vcf/NetworkKit/Socket.cpp" />
-		<Unit filename="../../../src/vcf/NetworkKit/Socket.h" />
-		<Unit filename="../../../src/vcf/NetworkKit/SocketEvent.cpp" />
-		<Unit filename="../../../src/vcf/NetworkKit/SocketEvent.h" />
-		<Unit filename="../../../src/vcf/NetworkKit/SocketException.h" />
-		<Unit filename="../../../src/vcf/NetworkKit/SocketListener.h" />
-		<Unit filename="../../../src/vcf/NetworkKit/SocketListeningLoop.cpp" />
-		<Unit filename="../../../src/vcf/NetworkKit/SocketListeningLoop.h" />
-		<Unit filename="../../../src/vcf/NetworkKit/SocketPeer.h" />
-		<Unit filename="../../../src/vcf/NetworkKit/URL.cpp" />
-		<Unit filename="../../../src/vcf/NetworkKit/URL.h" />
-		<Unit filename="../../../src/vcf/NetworkKit/Win32DatagramSocketPeer.cpp" />
-		<Unit filename="../../../src/vcf/NetworkKit/Win32DatagramSocketPeer.h" />
-		<Unit filename="../../../src/vcf/NetworkKit/Win32SocketPeer.cpp" />
-		<Unit filename="../../../src/vcf/NetworkKit/Win32SocketPeer.h" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\IPAddress.cpp" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\IPAddress.h" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\IPAddressPeer.h" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\NetworkExceptions.h" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\NetworkKit.cpp" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\NetworkKit.h" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\NetworkToolkit.cpp" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\NetworkToolkit.h" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\Socket.cpp" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\Socket.h" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\Win32IPAddressPeer.cpp" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\Win32IPAddressPeer.h" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\Win32NetworkToolkit.cpp" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\Win32NetworkToolkit.h" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\Win32SocketPeer.cpp" />
+		<Unit filename="..\..\..\src\vcf\NetworkKit\Win32SocketPeer.h" />
 		<Extensions>
 			<code_completion />
+			<envvars />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

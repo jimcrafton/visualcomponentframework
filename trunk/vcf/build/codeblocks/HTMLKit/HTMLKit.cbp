@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="3" />
+	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="HTMLKit" />
-		<Option default_target="-1" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="..\..\..\lib\libHTMLKit_mgcc_s.a" />
+				<Option output="..\..\..\lib\libHTMLKit_mgcc_s.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
 				<Option object_output="mgcc\ReleaseS\" />
-				<Option external_deps="$(VCF_ROOT)/lib\libApplicationKit_mgcc_s.a;" />
+				<Option external_deps="$(VCF_ROOT)\lib\libApplicationKit_mgcc_s.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
-				<Option includeInTargetAll="1" />
 				<Option createDefFile="1" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Option projectIncludeDirsRelation="2" />
@@ -34,10 +32,8 @@
 					<Add option="-D_WIN32" />
 					<Add option="-D_WINDOWS" />
 					<Add option="-D_LIB" />
-					<Add option="-DVCF_MINGW" />
 					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
 					<Add option="-DVCF_NO_ATL" />
-					<Add option="-DUSE_APPLICATIONKIT_LIB" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -48,13 +44,12 @@
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="..\..\..\lib\libHTMLKit_mgcc_sd.a" />
+				<Option output="..\..\..\lib\libHTMLKit_mgcc_sd.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
 				<Option object_output="mgcc\DebugS\" />
-				<Option external_deps="$(VCF_ROOT)/lib\libApplicationKit_mgcc_sd.a;" />
+				<Option external_deps="$(VCF_ROOT)\lib\libApplicationKit_mgcc_sd.a;" />
 				<Option type="2" />
 				<Option compiler="gcc" />
-				<Option includeInTargetAll="1" />
 				<Option createDefFile="1" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Option projectIncludeDirsRelation="2" />
@@ -74,10 +69,8 @@
 					<Add option="-D_WIN32" />
 					<Add option="-D_WINDOWS" />
 					<Add option="-D_LIB" />
-					<Add option="-DVCF_MINGW" />
 					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
 					<Add option="-DVCF_NO_ATL" />
-					<Add option="-DUSE_APPLICATIONKIT_LIB" />
 				</Compiler>
 				<Linker>
 					<Add library="ApplicationKit_$(COMPILER)$(COMPILER_VER)_sd" />
@@ -87,10 +80,13 @@
 				</Environment>
 			</Target>
 			<Environment>
-				<Variable name="COMPILER" value="mgcc" />
 				<Variable name="COMPILER_VER" value="" />
+				<Variable name="COMPILER" value="mgcc" />
 			</Environment>
 		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="mingw_Release;mingw_Debug;" />
+		</VirtualTargets>
 		<Compiler>
 			<Add directory="$(GCH_DIR)" />
 			<Add directory='&quot;$(VCF_INCLUDE)&quot;' />
@@ -102,107 +98,30 @@
 			<Add directory="..\..\resources\win32" />
 		</ResourceCompiler>
 		<Linker>
-			<Add directory='&quot;$(VCF_ROOT)/lib&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\lib&quot;' />
 		</Linker>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLBrowserControl.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLBrowserControl.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLBrowserPeer.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLDOMElements.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLKit.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLKit.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLToolkit.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLToolkit.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLBrowser.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLBrowser.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLBrowserSelectLib.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLDOMElements.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLDOMElements.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLToolkit.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLToolkit.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
-		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32WebBrowserHost.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="mingw_Release" />
-			<Option target="mingw_Debug" />
-		</Unit>
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLBrowserControl.cpp" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLBrowserControl.h" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLBrowserPeer.h" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLDOMElements.h" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLKit.cpp" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLKit.h" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLToolkit.cpp" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\HTMLToolkit.h" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLBrowser.cpp" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLBrowser.h" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLBrowserApplication.cpp" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLBrowserApplication.h" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLBrowserSelectLib.h" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLDOMElements.cpp" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLDOMElements.h" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLToolkit.cpp" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32HTMLToolkit.h" />
+		<Unit filename="..\..\..\src\vcf\HTMLKit\Win32WebBrowserHost.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
