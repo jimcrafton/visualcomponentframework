@@ -26,20 +26,20 @@ Win32ThreadManagerPeer::~Win32ThreadManagerPeer()
 
 }
 
-Waitable::WaitResult Win32ThreadManagerPeer::wait( std::vector<Waitable*>& waitObjects, 
+Waitable::WaitResult Win32ThreadManagerPeer::wait( std::vector<Waitable*>& waitObjects,
 													std::vector<Waitable*>& signaledObjects )
 {
 	Waitable::WaitResult result = Waitable::wrWaitFailed;
 
 	VCF_ASSERT( !waitObjects.empty() );
-	
+
 	signaledObjects.clear();
 
 	HANDLE* handles = new HANDLE[ waitObjects.size() ];
-	for ( int i=0;i<waitObjects.size();i++ ) {
+	for ( unsigned int i=0;i<waitObjects.size();i++ ) {
 		handles[i] = waitObjects[i]->getPeerHandleID();
 	}
-	
+
 	DWORD res = WaitForMultipleObjects( waitObjects.size(), handles, FALSE, INFINITE );
 
 	switch ( res ) {
@@ -59,27 +59,27 @@ Waitable::WaitResult Win32ThreadManagerPeer::wait( std::vector<Waitable*>& waitO
 			}
 		}
 		break;
-		
+
 	}
 	delete [] handles;
 	return result;
 }
 
-Waitable::WaitResult Win32ThreadManagerPeer::wait( std::vector<Waitable*>& waitObjects, 
-												  std::vector<Waitable*>& signaledObjects, 
+Waitable::WaitResult Win32ThreadManagerPeer::wait( std::vector<Waitable*>& waitObjects,
+												  std::vector<Waitable*>& signaledObjects,
 												  uint32 timeoutInMilliseconds )
 {
 	Waitable::WaitResult result = Waitable::wrWaitFailed;
 
 	VCF_ASSERT( !waitObjects.empty() );
-	
+
 	signaledObjects.clear();
 
 	HANDLE* handles = new HANDLE[ waitObjects.size() ];
-	for ( int i=0;i<waitObjects.size();i++ ) {
+	for ( unsigned int i=0;i<waitObjects.size();i++ ) {
 		handles[i] = waitObjects[i]->getPeerHandleID();
 	}
-	
+
 	DWORD res = WaitForMultipleObjects( waitObjects.size(), handles, FALSE, timeoutInMilliseconds );
 
 	switch ( res ) {
@@ -99,7 +99,7 @@ Waitable::WaitResult Win32ThreadManagerPeer::wait( std::vector<Waitable*>& waitO
 			}
 		}
 		break;
-		
+
 	}
 	delete [] handles;
 	return result;
