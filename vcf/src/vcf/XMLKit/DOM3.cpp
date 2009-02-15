@@ -1,7 +1,7 @@
-#include "XMLKit.h"
+#include "vcf/XMLKit/XMLKit.h"
 
 #ifdef XMLKIT_DOM
-#include "DOM3.h"
+#include "vcf/XMLKit/DOM3.h"
 
 
 
@@ -22,7 +22,7 @@ void parseFeatureString( const DOMString& s, std::vector<DOMFeature>& features )
 	const char* start = P;
 
 	features.clear();
-	
+
 	while ( (P-start) < tmp.length() ) {
 		if ( ' ' == *P ) {
 			DOMFeature f;
@@ -34,7 +34,7 @@ void parseFeatureString( const DOMString& s, std::vector<DOMFeature>& features )
 
 			if ( ::isdigit(*P) ) {
 				P2 = P;
-				
+
 				while ( (P-start) < tmp.length() && (*P != ' ') ) {
 					P++;
 				}
@@ -53,9 +53,9 @@ void parseFeatureString( const DOMString& s, std::vector<DOMFeature>& features )
 }
 
 
-bool TypeInfo::isDerivedFrom(const DOMString& typeNamespaceArg, 
-							const DOMString& typeNameArg, 
-							int derivationMethod ) const 
+bool TypeInfo::isDerivedFrom(const DOMString& typeNamespaceArg,
+							const DOMString& typeNameArg,
+							int derivationMethod ) const
 {
 	return false;
 }
@@ -109,15 +109,15 @@ bool DOMImplementation::hasFeature(const DOMString& feature, const DOMString& ve
 	return features_.find( key ) != features_.end();
 }
 
-DocumentType* DOMImplementation::createDocumentType(const DOMString& qualifiedName, 
-								 const DOMString& publicId, 
+DocumentType* DOMImplementation::createDocumentType(const DOMString& qualifiedName,
+								 const DOMString& publicId,
 								 const DOMString& systemId)
 {
 	return NULL;
 }
 
-Document* DOMImplementation::createDocument(const DOMString& namespaceURI, 
-						 const DOMString& qualifiedName, 
+Document* DOMImplementation::createDocument(const DOMString& namespaceURI,
+						 const DOMString& qualifiedName,
 						 const DocumentType& doctype)
 {
 	return NULL;
@@ -128,8 +128,8 @@ DOMObject* DOMImplementation::getFeature(const DOMString& feature, const DOMStri
 {
 	DOMString key = feature + "(" + version + ")";
 	std::map<DOMString,DOMObject*>::iterator found = features_.find( key );
-	if ( found != features_.end() ) {		
-		return found->second;		
+	if ( found != features_.end() ) {
+		return found->second;
 	}
 	return NULL;
 }

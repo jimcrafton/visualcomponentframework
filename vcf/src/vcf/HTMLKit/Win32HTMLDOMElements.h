@@ -9,7 +9,9 @@
 
 #include <exdisp.h>		// Defines of stuff like IWebBrowser2. This is an include file with Visual C 6 and above
 #include <mshtml.h>		// Defines of stuff like IHTMLDocument2. This is an include file with Visual C 6 and above
+#ifndef VCF_MINGW
 #include <mshtmhst.h>	// Defines of stuff like IDocHostUIHandler. This is an include file with Visual C 6 and above
+#endif
 
 #include "thirdparty/win32/comet/threading.h"
 #include "thirdparty/win32/comet/uuid.h"
@@ -46,15 +48,15 @@ COM_PTR(IWebBrowser2)
 using namespace comet;
 
 namespace VCF {
-	
+
 	class HTMLElementCollectionPeer : public IHTMLElementCollectionPtr {
 	public:
 		HTMLElementCollectionPeer():IHTMLElementCollectionPtr(){}
 
 		template<typename Itf>
-		HTMLElementCollectionPeer( const impl::com_cast_t<Itf>& x ) throw () : IHTMLElementCollectionPtr(x) {}	
+		HTMLElementCollectionPeer( const impl::com_cast_t<Itf>& x ) throw () : IHTMLElementCollectionPtr(x) {}
 	};
-	
+
 	class HTMLElementPeer : public IHTMLElementPtr {
 	public:
 		HTMLElementPeer():IHTMLElementPtr(){}
@@ -63,8 +65,8 @@ namespace VCF {
 		HTMLElementPeer( const impl::com_cast_t<Itf>& x ) throw () : IHTMLElementPtr(x) {}
 
 	};
-	
-	
+
+
 	class HTMLDocumentPeer : public IHTMLDocument2Ptr {
 	public:
 		HTMLDocumentPeer():IHTMLDocument2Ptr(){}
@@ -72,7 +74,7 @@ namespace VCF {
 		template<typename Itf>
 		HTMLDocumentPeer( const impl::com_cast_t<Itf>& x ) throw () : IHTMLDocument2Ptr(x) {}
 	};
-	
+
 
 	class HTMLInputElementPeer : public IHTMLInputElementPtr {
 	public:

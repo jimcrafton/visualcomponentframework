@@ -13,9 +13,9 @@ where you installed the VCF.
 
 
 
-#include "vcf/ApplicationKit/Win32HTMLBrowserApplication.h"
+#include "vcf/HTMLKit/Win32HTMLBrowserApplication.h"
 
-#include "vcf/ApplicationKit/Win32HTMLBrowser.h"
+#include "vcf/HTMLKit/Win32HTMLBrowser.h"
 
 
 CComModule _Module;

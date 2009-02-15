@@ -14,8 +14,8 @@ where you installed the VCF.
 #   pragma once
 #endif
 
-#include "IPAddress.h"
-#include "IPAddressPeer.h"
+#include "vcf/NetworkKit/IPAddress.h"
+#include "vcf/NetworkKit/IPAddressPeer.h"
 
 namespace VCF {
 
@@ -40,7 +40,7 @@ namespace VCF {
 	protected:
 		AnsiString ipAddress_;
 		AnsiString host_;
-		
+
 	};
 
 };
