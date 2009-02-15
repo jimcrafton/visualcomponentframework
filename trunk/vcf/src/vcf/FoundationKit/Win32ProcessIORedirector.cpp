@@ -17,8 +17,8 @@ using namespace VCF;
 
 Win32ProcessIORedirector::Win32ProcessIORedirector():
 	childProcess_(NULL),
-	processID_(0),
 	process_(NULL),
+	processID_(0),
 	processThreadID_(0),
 	readThreadID_(0),
 	readThread_(NULL),
@@ -28,8 +28,8 @@ Win32ProcessIORedirector::Win32ProcessIORedirector():
 	childStdoutWrHandle_(NULL),
 	savedStdinHandle_(NULL),
 	savedStdoutHandle_(NULL),
-	canContinueReading_(false),
-	startInfoPtr_(NULL)
+	startInfoPtr_(NULL),
+    canContinueReading_(false)
 {
 	memset( &processInfo_, 0, sizeof(processInfo_) );
 
@@ -58,7 +58,7 @@ Win32ProcessIORedirector::~Win32ProcessIORedirector()
 	readThread_ = NULL;
 
 
-	if (processID_ != DWORD(-1))	{
+	if ((DWORD)processID_ != DWORD(-1))	{
 		DWORD dwExitCode;
 		HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, processID_);
 
@@ -84,12 +84,12 @@ Win32ProcessIORedirector::~Win32ProcessIORedirector()
 
 bool Win32ProcessIORedirector::testProcess()
 {
-	if (processID_ != DWORD(-1))
+	if ((DWORD)processID_ != DWORD(-1))
 	{
 		HANDLE hProcess = this->childProcess_;//::OpenProcess(PROCESS_ALL_ACCESS, FALSE, processID_);
 		if (hProcess) {
 			DWORD exitCode;
-			BOOL bRet =  GetExitCodeProcess(hProcess, &exitCode);//WaitForSingleObject(hProcess,0);// 	// fails when the process is active
+			GetExitCodeProcess(hProcess, &exitCode);//WaitForSingleObject(hProcess,0);// 	// fails when the process is active
 			//if  (!CloseHandle(hProcess)) {
 			//	throw RuntimeException( MAKE_ERROR_MSG_2("CloseHandle(hProcess)"));
 		//	}
