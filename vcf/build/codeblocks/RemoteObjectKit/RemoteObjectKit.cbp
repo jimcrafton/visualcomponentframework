@@ -6,9 +6,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="mingw_Release">
-				<Option output="../../../bin/RemoteObjectKit_$(COMPILER)$(COMPILER_VER).dll" prefix_auto="0" extension_auto="0" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)/ReleaseDLL/" />
-				<Option external_deps="$(VCF_ROOT)/lib/libNetworkKit_mgcc.a;" />
+				<Option output="..\..\..\bin\RemoteObjectKit_$(COMPILER)$(COMPILER_VER).dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\ReleaseDLL\" />
+				<Option external_deps="$(VCF_ROOT)\lib\libNetworkKit_mgcc.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createStaticLib="1" />
@@ -33,7 +33,6 @@
 					<Add option="-D_WIN32" />
 					<Add option="-D_WINDOWS" />
 					<Add option="-D_USRDLL" />
-					<Add option="-DVCF_MINGW" />
 					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
 					<Add option="-DUSE_NETKIT_DLL" />
 					<Add option="-DREMOTEKIT_DLL" />
@@ -73,9 +72,9 @@
 				</Environment>
 			</Target>
 			<Target title="mingw_Debug">
-				<Option output="../../../bin/RemoteObjectKit_$(COMPILER)$(COMPILER_VER)_d.dll" prefix_auto="0" extension_auto="0" />
-				<Option object_output="$(COMPILER)$(COMPILER_VER)/DebugDLL/" />
-				<Option external_deps="$(VCF_ROOT)/lib/libNetworkKit_mgcc_d.a;" />
+				<Option output="..\..\..\bin\RemoteObjectKit_$(COMPILER)$(COMPILER_VER)_d.dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="$(COMPILER)$(COMPILER_VER)\DebugDLL\" />
+				<Option external_deps="$(VCF_ROOT)\lib\libNetworkKit_mgcc_d.a;" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createStaticLib="1" />
@@ -98,7 +97,6 @@
 					<Add option="-D_WIN32" />
 					<Add option="-D_WINDOWS" />
 					<Add option="-D_USRDLL" />
-					<Add option="-DVCF_MINGW" />
 					<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
 					<Add option="-DUSE_NETKIT_DLL" />
 					<Add option="-DREMOTEKIT_DLL" />
@@ -141,31 +139,33 @@
 			<Add alias="All" targets="mingw_Release;mingw_Debug;" />
 		</VirtualTargets>
 		<Compiler>
-			<Add directory='&quot;$(VCF_ROOT)/src&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\src&quot;' />
 		</Compiler>
 		<Linker>
-			<Add directory='&quot;$(VCF_ROOT)/lib&quot;' />
+			<Add directory='&quot;$(VCF_ROOT)\lib&quot;' />
 		</Linker>
-		<Unit filename="../../../src/vcf/RemoteObjectKit/AbstractDistributedApplication.cpp" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/AbstractDistributedApplication.h" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/ClassRegistryEntry.cpp" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/ClassRegistryEntry.h" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/ClassServerInstance.cpp" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/ClassServerInstance.h" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/DistributedClassRegistry.cpp" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/DistributedClassRegistry.h" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/DistributedException.cpp" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/DistributedException.h" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/InstanceID.cpp" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/InstanceID.h" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/Proxy.cpp" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/Proxy.h" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/RemoteCommon.h" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/RemoteConfig.h" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/RemoteObjectKit.cpp" />
-		<Unit filename="../../../src/vcf/RemoteObjectKit/RemoteObjectKit.h" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\AbstractDistributedApplication.cpp" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\AbstractDistributedApplication.h" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\ClassRegistryEntry.cpp" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\ClassRegistryEntry.h" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\ClassServerInstance.cpp" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\ClassServerInstance.h" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\DistributedClassRegistry.cpp" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\DistributedClassRegistry.h" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\DistributedException.cpp" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\DistributedException.h" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\InstanceID.cpp" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\InstanceID.h" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\Proxy.cpp" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\Proxy.h" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\RemoteCommon.h" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\RemoteConfig.h" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\RemoteObjectKit.cpp" />
+		<Unit filename="..\..\..\src\vcf\RemoteObjectKit\RemoteObjectKit.h" />
 		<Extensions>
 			<code_completion />
+			<envvars />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="JavaScriptKitDLL" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="mingw_Release">
+				<Option output="..\..\..\bin\JavaScriptKit_mgcc.dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="mgcc\ReleaseDLL\" />
+				<Option external_deps="$(VCF_ROOT)\lib\libApplicationKit_mgcc.a;" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createStaticLib="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Option projectLibDirsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-W" />
+					<Add option="-pipe" />
+					<Add option="-frtti" />
+					<Add option="-fexceptions" />
+					<Add option="-mthreads" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-Winvalid-pch" />
+					<Add option="-Wno-multichar" />
+					<Add option="-Wno-system-headers" />
+					<Add option="-Wno-extra" />
+					<Add option="-DNDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-Wl,--enable-auto-import" />
+					<Add option="-Wl,--enable-runtime-pseudo-reloc" />
+					<Add option="-Wl,--subsystem=windows" />
+					<Add option="-Wl,--check-sections" />
+					<Add library="ApplicationKit_$(COMPILER)$(COMPILER_VER)" />
+					<Add library="GraphicsKit_$(COMPILER)$(COMPILER_VER)" />
+					<Add library="FoundationKit_$(COMPILER)$(COMPILER_VER)" />
+					<Add library="rpcrt4" />
+					<Add library="odbc32" />
+					<Add library="odbccp32" />
+					<Add library="version" />
+					<Add library="kernel32" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+					<Add library="winspool" />
+					<Add library="comdlg32" />
+					<Add library="comctl32" />
+					<Add library="advapi32" />
+					<Add library="shell32" />
+					<Add library="ole32" />
+					<Add library="oleaut32" />
+					<Add library="uuid" />
+					<Add library="ws2_32" />
+					<Add library="opengl32" />
+					<Add library="glu32" />
+					<Add library="glaux" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cmd /c if NOT EXIST ..\..\..\lib MKDIR ..\..\..\lib" />
+					<Add after="cmd /c move ..\..\..\bin\libJavaScriptKit_mgcc.a ..\..\..\lib\libJavaScriptKit_mgcc.a" />
+				</ExtraCommands>
+				<Environment>
+					<Variable name="GCH_DIR" value="..\HTMLKit\$(COMPILER)$(COMPILER_VER)\ReleaseDLL\src" />
+				</Environment>
+			</Target>
+			<Target title="mingw_Debug">
+				<Option output="..\..\..\bin\JavaScriptKit_mgcc_d.dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="mgcc\DebugDLL\" />
+				<Option external_deps="$(VCF_ROOT)\lib\libApplicationKit_mgcc_d.a;" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createStaticLib="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Option projectLibDirsRelation="2" />
+				<Compiler>
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-pipe" />
+					<Add option="-frtti" />
+					<Add option="-fexceptions" />
+					<Add option="-mthreads" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-Winvalid-pch" />
+					<Add option="-Wno-multichar" />
+					<Add option="-D_DEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-Wl,--enable-auto-import" />
+					<Add option="-Wl,--enable-runtime-pseudo-reloc" />
+					<Add option="-Wl,--subsystem=windows" />
+					<Add option="-Wl,--check-sections" />
+					<Add library="ApplicationKit_$(COMPILER)$(COMPILER_VER)_d" />
+					<Add library="GraphicsKit_$(COMPILER)$(COMPILER_VER)_d" />
+					<Add library="FoundationKit_$(COMPILER)$(COMPILER_VER)_d" />
+					<Add library="rpcrt4" />
+					<Add library="odbc32" />
+					<Add library="odbccp32" />
+					<Add library="version" />
+					<Add library="kernel32" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+					<Add library="winspool" />
+					<Add library="comdlg32" />
+					<Add library="comctl32" />
+					<Add library="advapi32" />
+					<Add library="shell32" />
+					<Add library="ole32" />
+					<Add library="oleaut32" />
+					<Add library="uuid" />
+					<Add library="ws2_32" />
+					<Add library="opengl32" />
+					<Add library="glu32" />
+					<Add library="glaux" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cmd /c if NOT EXIST ..\..\..\lib MKDIR ..\..\..\lib" />
+					<Add after="cmd /c move ..\..\..\bin\libJavaScriptKit_mgcc_d.a ..\..\..\lib\libJavaScriptKit_mgcc_d.a" />
+				</ExtraCommands>
+				<Environment>
+					<Variable name="GCH_DIR" value="..\HTMLKit\$(COMPILER)$(COMPILER_VER)\DebugDLL\src" />
+				</Environment>
+			</Target>
+			<Environment>
+				<Variable name="COMPILER_VER" value="" />
+				<Variable name="COMPILER" value="mgcc" />
+			</Environment>
+		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="mingw_Release;mingw_Debug;" />
+		</VirtualTargets>
+		<Compiler>
+			<Add option="-DWIN32" />
+			<Add option="-D_WIN32" />
+			<Add option="-D_WINDOWS" />
+			<Add option="-D_USRDLL" />
+			<Add option="-DVCF_DISABLE_PRAGMA_LINKING" />
+			<Add option="-DVCF_NO_ATL" />
+			<Add option="-DUSE_FOUNDATIONKIT_DLL" />
+			<Add option="-DJAVASCRIPTKIT_DLL" />
+			<Add option="-DJAVASCRIPTKIT_EXPORTS" />
+			<Add option="-DEXPORT_JS_API" />
+			<Add option="-DXP_WIN" />
+			<Add directory="$(GCH_DIR)" />
+			<Add directory="$(VCF_ROOT)\src" />
+			<Add directory="$(VCF_ROOT)\src\vcf\JavaScriptKit\js-impl" />
+			<Add directory="$(VCF_ROOT)\src\vcf\JavaScriptKit\js-impl\fdlibm" />
+		</Compiler>
+		<ResourceCompiler>
+			<Add directory="..\..\resources\win32" />
+		</ResourceCompiler>
+		<Linker>
+			<Add directory='&quot;$(VCF_ROOT)\lib&quot;' />
+		</Linker>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\JavaScriptKit.cpp" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\JavaScriptKit.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_acos.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_acosh.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_asin.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_atan2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_atanh.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_cosh.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_exp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_fmod.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_gamma.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_gamma_r.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_hypot.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_j0.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_j1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_jn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_lgamma.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_lgamma_r.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_log.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_log10.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_pow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_rem_pio2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_remainder.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_scalb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_sinh.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\e_sqrt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\fdlibm.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\k_cos.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\k_rem_pio2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\k_sin.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\k_standard.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\k_tan.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_asinh.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_atan.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_cbrt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_ceil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_copysign.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_cos.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_erf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_expm1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_fabs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_finite.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_floor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_frexp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_ilogb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_isnan.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_ldexp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_lib_version.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_log1p.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_logb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_matherr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_modf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_nextafter.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_rint.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_scalbn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_signgam.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_significand.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_sin.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_tan.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\s_tanh.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_acos.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_acosh.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_asin.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_atan2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_atanh.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_cosh.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_exp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_fmod.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_gamma.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_gamma_r.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_hypot.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_j0.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_j1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_jn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_lgamma.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_lgamma_r.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_log.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_log10.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_pow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_remainder.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_scalb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_sinh.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\fdlibm\w_sqrt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\js.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsapi.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsarena.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsarena.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsarray.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsarray.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsatom.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsatom.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsautokw.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsbit.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsbool.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsbool.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsclist.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jscntxt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jscntxt.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jscompat.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsconfig.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jscpucfg.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsdate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsdate.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsdbgapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsdbgapi.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsdhash.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsdhash.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsdtoa.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsdtoa.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsemit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsemit.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsexn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsexn.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsfile.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsfile.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsfun.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsfun.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsgc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsgc.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jshash.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jshash.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsinterp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsinterp.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsiter.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsiter.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jslibmath.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jslock.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jslock.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jslog2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jslong.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jslong.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsmath.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsmath.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsnum.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsnum.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsobj.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsobj.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsopcode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsopcode.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsosdep.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsotypes.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsparse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsparse.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsprf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsprf.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsprvtd.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jspubtd.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsregexp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsregexp.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsscan.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsscan.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsscope.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsscope.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsscript.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsscript.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsstddef.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsstr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsstr.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jstypes.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsutil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsutil.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsxdrapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsxdrapi.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsxml.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\jsxml.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\prmjtime.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\prmjtime.h" />
+		<Unit filename="..\..\..\src\vcf\JavaScriptKit\js-impl\resource.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
