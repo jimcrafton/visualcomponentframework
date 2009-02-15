@@ -36,12 +36,12 @@ void Win32FilePeer::setFile( File* file )
 {
 	// close any open handles
 	close(); // %%%
-	
+
 	findData_ = NULL;
 	searchHandle_ = NULL;
-	
+
 	file_ = file;
-	
+
 	// will have a value when opening the file
 	fileHandle_ = NULL;
 }
@@ -50,7 +50,7 @@ void Win32FilePeer::create(  uint32 openFlags  )
 {
 	FilePath fp = getName();
 	String filename = fp.transformToOSSpecific();
-	
+
 	if ( false == filename.empty() ){
 		if ( NULL != fileHandle_ ){
 			::CloseHandle( fileHandle_ );
@@ -59,7 +59,7 @@ void Win32FilePeer::create(  uint32 openFlags  )
 			fileHandle_ = NULL;
 			std::vector<String> dirPaths;
 			String tmp = filename;
-			int pos = tmp.find( "\\" );
+			size_t pos = tmp.find( "\\" );
 			while ( pos != String::npos ) {
 				dirPaths.push_back( tmp.substr( 0, pos ) );
 				tmp.erase( 0, pos+1 );
@@ -105,7 +105,7 @@ void Win32FilePeer::create(  uint32 openFlags  )
 			//attach to the file
 			FilePath fp = filename;
 			String fileDir = fp.getPathName(true);
-			
+
 			#ifndef VCF_WIN32CE
 			if ( true == fileDir.empty() ){
 				TCHAR currentDir[MAX_PATH];
@@ -114,7 +114,7 @@ void Win32FilePeer::create(  uint32 openFlags  )
 				filename = "\\" + filename;
 				filename = currentDir +  filename;
 			}
-			#endif 
+			#endif
 
 			DWORD rwFlags = 0;
 			DWORD shFlags = 0;
@@ -181,13 +181,13 @@ uint64 Win32FilePeer::getSize()
 		}
 	}
 	else {
-		WIN32_FILE_ATTRIBUTE_DATA fileAttribData;	
-		
+		WIN32_FILE_ATTRIBUTE_DATA fileAttribData;
+
 		int res;
 		#ifndef VCF_WIN32CE
 		if ( System::isUnicodeEnabled() ) {
 			res = ::GetFileAttributesExW( getName().c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
-		} 
+		}
 		else {
 			res = ::GetFileAttributesExA( getName().ansi_c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
 		}
@@ -205,8 +205,8 @@ DateTime Win32FilePeer::getDateModified()
 {
 	DateTime result ;
 
-	WIN32_FILE_ATTRIBUTE_DATA fileAttribData;	
-	
+	WIN32_FILE_ATTRIBUTE_DATA fileAttribData;
+
 	String fileName = getName();
 	VCF_ASSERT( !fileName.empty() );
 
@@ -214,7 +214,7 @@ DateTime Win32FilePeer::getDateModified()
 	#ifndef VCF_WIN32CE
 	if ( System::isUnicodeEnabled() ) {
 		res = ::GetFileAttributesExW( fileName.c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
-	} 
+	}
 	else {
 		res = ::GetFileAttributesExA( fileName.ansi_c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
 	}
@@ -223,12 +223,12 @@ DateTime Win32FilePeer::getDateModified()
 #endif
 
 	if ( res ) {
-		result = Win32FilePeer::convertFileTimeToDateTime( fileAttribData.ftLastWriteTime );		
+		result = Win32FilePeer::convertFileTimeToDateTime( fileAttribData.ftLastWriteTime );
 	}
 	else {
 		throw BasicFileError( MAKE_ERROR_MSG_2("Unable to retreive file attributes for file " + fileName) );
 	}
-	
+
 	return result;
 }
 
@@ -236,8 +236,8 @@ DateTime Win32FilePeer::getDateCreated()
 {
 	DateTime result ;
 
-	WIN32_FILE_ATTRIBUTE_DATA fileAttribData;	
-	
+	WIN32_FILE_ATTRIBUTE_DATA fileAttribData;
+
 	String fileName = getName();
 	VCF_ASSERT( !fileName.empty() );
 
@@ -245,7 +245,7 @@ DateTime Win32FilePeer::getDateCreated()
 	#ifndef VCF_WIN32CE
 	if ( System::isUnicodeEnabled() ) {
 		res = ::GetFileAttributesExW( fileName.c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
-	} 
+	}
 	else {
 		res = ::GetFileAttributesExA( fileName.ansi_c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
 	}
@@ -254,12 +254,12 @@ DateTime Win32FilePeer::getDateCreated()
 #endif
 
 	if ( res ) {
-		result = Win32FilePeer::convertFileTimeToDateTime( fileAttribData.ftCreationTime );		
+		result = Win32FilePeer::convertFileTimeToDateTime( fileAttribData.ftCreationTime );
 	}
 	else {
 		throw BasicFileError( MAKE_ERROR_MSG_2("Unable to retreive file attributes for file " + fileName) );
 	}
-	
+
 	return result;
 }
 
@@ -267,8 +267,8 @@ DateTime Win32FilePeer::getDateAccessed()
 {
 	DateTime result ;
 
-	WIN32_FILE_ATTRIBUTE_DATA fileAttribData;	
-	
+	WIN32_FILE_ATTRIBUTE_DATA fileAttribData;
+
 	String fileName = getName();
 	VCF_ASSERT( !fileName.empty() );
 
@@ -276,7 +276,7 @@ DateTime Win32FilePeer::getDateAccessed()
 	#ifndef VCF_WIN32CE
 	if ( System::isUnicodeEnabled() ) {
 		res = ::GetFileAttributesExW( fileName.c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
-	} 
+	}
 	else {
 		res = ::GetFileAttributesExA( fileName.ansi_c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData );
 	}
@@ -285,12 +285,12 @@ DateTime Win32FilePeer::getDateAccessed()
 #endif
 
 	if ( res ) {
-		result = Win32FilePeer::convertFileTimeToDateTime( fileAttribData.ftLastAccessTime );		
+		result = Win32FilePeer::convertFileTimeToDateTime( fileAttribData.ftLastAccessTime );
 	}
 	else {
 		throw BasicFileError( MAKE_ERROR_MSG_2("Unable to retreive file attributes for file " + fileName) );
 	}
-	
+
 	return result;
 }
 
@@ -305,7 +305,7 @@ void Win32FilePeer::initDataSearch()
 			findData_ = new Win32FindDataA;
 		}
 		if ( NULL == findData_ ) {
-			throw NoFreeMemException(); 
+			throw NoFreeMemException();
 		}
 	}
 }
@@ -343,7 +343,7 @@ File* Win32FilePeer::findNextFileInSearch( Directory::Finder* finder )
 
 		// are we starting a new search ?
 		if ( NULL == searchHandle_ ) {
-			// Remarks: 1 - do not use searchPostfix_ != L"*", like: L"*.cpp", because there is 
+			// Remarks: 1 - do not use searchPostfix_ != L"*", like: L"*.cpp", because there is
 			//				      there is a bug that gives error when the directory is empty! :(
 			//				      Is this happening only with Unicode ? or with the searchPrefix_ ?
 			//
@@ -362,14 +362,14 @@ File* Win32FilePeer::findNextFileInSearch( Directory::Finder* finder )
 			#endif
 			ok = ( INVALID_HANDLE_VALUE != searchHandle_ );
 
-		} 
+		}
 		else {
 			#ifdef VCF_WIN32CE
 			ok = ( 0 != ::FindNextFileW( searchHandle_, &((Win32FindDataW*)findData_)->findData_ ) );
 			#else
 			if ( unicodeEnabled ) {
 				ok = ( 0 != ::FindNextFileW( searchHandle_, &((Win32FindDataW*)findData_)->findData_ ) );
-			} 
+			}
 			else {
 				ok = ( 0 != ::FindNextFileA( searchHandle_, &((Win32FindDataA*)findData_)->findData_ ) );
 			}
@@ -379,16 +379,16 @@ File* Win32FilePeer::findNextFileInSearch( Directory::Finder* finder )
 		if  ( ok ) {
 			if ( unicodeEnabled ) {
 				fAttribs = Win32FilePeer::convertAttributesFromSystemSpecific( ((Win32FindDataW*)findData_)->findData_.dwFileAttributes );
-			} 
+			}
 			else {
 				fAttribs = Win32FilePeer::convertAttributesFromSystemSpecific( ((Win32FindDataA*)findData_)->findData_.dwFileAttributes );
 			}
-			
+
 			// first filtering for attributes
 			isDir = ( 0 != ( fAttribs & File::faDirectory ) );
 			if ( ( isDir && finder->getCurrentDisplayOrder() == Directory::Finder::dmFiles ) ||
 			     ( !isDir && ( ( finder->getCurrentDisplayOrder() == Directory::Finder::dmDirs ) ||
-			                   ( ( File::faNone != finder->getMaskFilterFileAttribs() ) && 
+			                   ( ( File::faNone != finder->getMaskFilterFileAttribs() ) &&
 			                     ( 0 == ( fAttribs & finder->getMaskFilterFileAttribs() ) ) ) ) ) ) {
 				continue;
 			}
@@ -424,7 +424,7 @@ File* Win32FilePeer::findNextFileInSearch( Directory::Finder* finder )
 					if ( finder->getRecurse() ) {
 						if ( finder->canRecurseDown() )	{
 							this->goDirDown( finder, file );
-						} 
+						}
 						else {
 							// continue the search in the next subdirectory
 							continueSearch( finder, file );
@@ -437,10 +437,10 @@ File* Win32FilePeer::findNextFileInSearch( Directory::Finder* finder )
 					break;
 				}
 			}
-		} 
+		}
 		else {
 			DWORD searchErr = ::GetLastError();
-			
+
 			// end of search or error
 			if ( ERROR_NO_MORE_FILES == searchErr )  {
 				if ( INVALID_HANDLE_VALUE != searchHandle_ ) {
@@ -450,7 +450,7 @@ File* Win32FilePeer::findNextFileInSearch( Directory::Finder* finder )
 					continueSearch( finder, file );
 				}
 				break;
-			}			
+			}
 			else if ( (ERROR_ACCESS_DENIED == searchErr) && (INVALID_HANDLE_VALUE == searchHandle_) )  {
 				endFileSearch( finder );
 				continueSearch( finder, file );
@@ -489,7 +489,7 @@ void Win32FilePeer::continueSearch( Directory::Finder* finder, File* file )
 
 void Win32FilePeer::goDirDown( Directory::Finder* finder, File* file )
 {
-	
+
 	finder->goDownDir( file );
 }
 
@@ -503,10 +503,10 @@ void Win32FilePeer::goDirUp( Directory::Finder* finder, File* file )
 {
 	// throw if errors
 	file->internal_removeFromStatMask( statMask );
-	
+
 	if ( statMask & File::smAttributes ) {
 		file->internal_setFileAttributes( Win32FilePeer::convertAttributesFromSystemSpecific( fileAttribData.dwFileAttributes ) );
-	}	
+	}
 
 	// we are ok if here
 	file->internal_addToStatMask( statMask );
@@ -573,8 +573,8 @@ void Win32FilePeer::updateStat( File::StatMask statMask/*=File::smMaskAll*/ )
 
 	String fileName = getName();
 
-	//VCF_ASSERT( !FilePath::getPathName( fileName, true ).empty() );	
-	VCF_ASSERT( !fileName.empty() );	
+	//VCF_ASSERT( !FilePath::getPathName( fileName, true ).empty() );
+	VCF_ASSERT( !fileName.empty() );
 
 	WIN32_FILE_ATTRIBUTE_DATA fileAttribData;
 
@@ -586,7 +586,7 @@ void Win32FilePeer::updateStat( File::StatMask statMask/*=File::smMaskAll*/ )
 		if ( res = ::GetFileAttributesExW( getName().c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData ) ) {
 			copyFromAttributeData( file_, fileAttribData, statMask );
 		}
-	} 
+	}
 	else {
 		if ( res = ::GetFileAttributesExA( getName().ansi_c_str(), ::GetFileExInfoStandard, (void*)&fileAttribData ) ) {
 			copyFromAttributeData( file_, fileAttribData, statMask );
@@ -632,7 +632,7 @@ void Win32FilePeer::updateStat( File::StatMask statMask/*=File::smMaskAll*/ )
 		}
 #endif
 
-		
+
 	}
 	catch ( BasicException& /*be*/ ) {
 		throw; // re-throw
@@ -692,8 +692,8 @@ void Win32FilePeer::setDateModified( const DateTime& dateModified )
 				String error = VCFWin32::Win32Utils::getErrorString( GetLastError() );
 				throw BasicException( error );
 			}
-		} 
-		else {			
+		}
+		else {
 			hFile = ::CreateFileA( file_->getName().ansi_c_str(), GENERIC_READ|GENERIC_WRITE,
 				FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 			if (hFile == INVALID_HANDLE_VALUE) {
@@ -754,7 +754,7 @@ void Win32FilePeer::setDateModified( const DateTime& dateModified )
 	}
 #if (_MSC_VER >= 1300)
 	// vc7 and above
-	
+
 	#ifndef VCF_WIN32CE
 	if ( dwAttributes & FILE_ATTRIBUTE_DEVICE ) {
 		fileAttributes += File::faDevice;
@@ -794,7 +794,7 @@ void Win32FilePeer::setDateModified( const DateTime& dateModified )
 	if ( fileAttributes & File::faDevice ) {
 		dwAttributes += FILE_ATTRIBUTE_DEVICE;
 	}
-	#endif 
+	#endif
 #endif
 	if ( fileAttributes & File::faNormal ) {
 		dwAttributes += FILE_ATTRIBUTE_NORMAL;
@@ -827,7 +827,7 @@ void Win32FilePeer::open( const String& fileName, uint32 openFlags, File::ShareF
 		winFileName = currentDir +  winFileName;
 	}
 	#endif
-	
+
 	DWORD rwFlags = 0;
 	DWORD shFlags = 0;
 	DWORD createFlags = OPEN_EXISTING;
@@ -877,9 +877,9 @@ void Win32FilePeer::open( const String& fileName, uint32 openFlags, File::ShareF
 			NULL );
 	#endif
 
-	
-	
-	
+
+
+
 	if ( (NULL == fileHandle_) || (INVALID_HANDLE_VALUE == fileHandle_) ){
 		fileHandle_ = NULL;
 		//throw exception
@@ -974,7 +974,7 @@ void Win32FilePeer::copyTo( const String& copyFileName )
 	}
 #endif
 	if ( ! res ) {
-		
+
 		throw BasicFileError( MAKE_ERROR_MSG_2("Unable to copy \"" + src + "\" to \"" + copyFileName + "\".") );
 	}
 
@@ -991,7 +991,7 @@ DateTime Win32FilePeer::convertFileTimeToDateTime( const FILETIME& ft )
 	// ft --> st
 	if ( ::FileTimeToSystemTime( &ft, &st ) ) {
 		dt.set( st.wYear, st.wMonth, st.wDay,
-							st.wHour, st.wMinute, st.wSecond, 
+							st.wHour, st.wMinute, st.wSecond,
 							st.wMilliseconds );
 		ok = true;
 	}
@@ -1012,12 +1012,12 @@ DateTime Win32FilePeer::convertFileTimeToDateTime( const FILETIME& ft )
 	DateTime dt;
 
 	// ftUTC --> ftLocal
-	// see help of VisualStudio.net for "File Times", at the end, though 
+	// see help of VisualStudio.net for "File Times", at the end, though
 	if ( ::FileTimeToLocalFileTime( &ftUtc, &ftLoc ) ) {
 		// ftLocal --> stLocal
 		if ( ::FileTimeToSystemTime( &ftLoc, &stLoc ) ) {
 			dt.set( stLoc.wYear, stLoc.wMonth, stLoc.wDay,
-								stLoc.wHour, stLoc.wMinute, stLoc.wSecond, 
+								stLoc.wHour, stLoc.wMinute, stLoc.wSecond,
 								stLoc.wMilliseconds );
 			ok = true;
 		}
@@ -1064,7 +1064,7 @@ DateTime Win32FilePeer::convertFileTimeToDateTime( const FILETIME& ft )
 				throw BasicException( MAKE_ERROR_MSG_2(error) );
 			}
 		}
-#endif		
+#endif
 	}
 	catch( ... ) {
 		String error = VCFWin32::Win32Utils::getErrorString( GetLastError() );
