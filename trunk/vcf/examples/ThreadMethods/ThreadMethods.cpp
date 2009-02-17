@@ -191,6 +191,13 @@ public:
 };
 
 
+bool FuncWithLessArgs(const String& s)
+{
+	System::println( "FuncWithLessArgs: " + s );
+	return true;
+}
+
+
 int main( int argc, char** argv ){
 
 	FoundationKit::init( argc, argv );
@@ -314,6 +321,9 @@ int main( int argc, char** argv ){
 		Delegate2R<bool,const String&,double> d3;
 
 		d3 += duhDoIt;
+		d3 += new Function1<bool,const String&>(FuncWithLessArgs);
+		d3( "Fluffer!", 1.23 );
+
 
 
 		Blooper bl;

@@ -526,6 +526,15 @@ public:
 	DELEGATE(MouseDelegate,MouseLeave);
 
 	/**
+	@delegate BeginDragDrop fires an MouseEvent, with a type set to Control::MOUSE_MOVE.
+	Fired whenever the control decides it can begin a potential drag-drop operation.
+	@event MouseEvent
+	@eventtype Control::MOUSE_MOVE
+	*/
+	DELEGATE(MouseDelegate, BeginDragDrop);
+
+
+	/**
 	@delegate KeyPressed fires an KeyboardEvent, with a type set to Control::KEYBOARD_PRESSED.
 	Fired whenever the control receives a keypress. This is triggered by the
 	underlying windowing system.

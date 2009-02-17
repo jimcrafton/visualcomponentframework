@@ -59,7 +59,11 @@ void VFFParser::resetStream()
 	current_.tokenPtr = buffer_;
 	current_.sourceLine = 1;
 	current_.token = '\0';
-	nextToken();
+
+	VCFChar token = nextToken();
+	while ( TO_COMMENT == token ) {
+		token = nextToken();
+	}
 }
 
 void VFFParser::skipBlanks()

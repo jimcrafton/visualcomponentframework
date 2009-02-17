@@ -57,6 +57,16 @@ public:
 		return true;
 	}
 
+	//indicates whether the doc manager should create a default empty UI without a 
+	//document attached to it. This is normally false.
+	bool createDefaultUI() {
+		return false;
+	}
+
+	bool createInitialDocument() {
+		return true;
+	}
+
 	/**
 	*callback function managing the operation to be done after a new document
 	* has been created
@@ -230,18 +240,26 @@ public:
 	MDIPolicy(): /*currentDocument_(NULL),*/ documentCount_(0) {}
 
 	/**
-	* tells if we want the application to use the main applicaiton's window for a document
-	* this is false in a MDI application, as child windows are used instead.
+	tells if we want the application to use the main applicaiton's window for a document
+	this is false in a MDI application, as child windows are used instead.
 	*/
 	bool usesMainWindow() {
 		return false;
 	}
 
 	/**
-	* tells if we want the application to save the current document before activating a new document
+	tells if we want the application to save the current document before activating a new document
 	*/
 	bool saveBeforeNewDocument() {
 		return false;
+	}
+
+	bool createDefaultUI() {
+		return false;
+	}
+
+	bool createInitialDocument() {
+		return true;
 	}
 
 	/**

@@ -77,7 +77,6 @@ DocumentManager::DocumentManager():
 		currentDragDocument_(NULL)
 {
 	DocumentManager::docManagerInstance = this;
-	docInfoContainer_.initContainer( docInfo_ );		
 }
 
 
@@ -89,7 +88,7 @@ DocumentManager::~DocumentManager()
 
 Enumerator<DocumentInfo>* DocumentManager::getRegisteredDocumentInfo()
 {
-	return docInfoContainer_.getEnumerator();
+	return docInfo_.getEnumerator();
 }
 
 
@@ -196,7 +195,7 @@ void DocumentManager::init()
 			}
 
 
-			docInfo_[info.mimetype] = info;
+			docInfo_.push_back(info);
 		}
 
 		delete res;
@@ -389,7 +388,7 @@ DocumentInfo* DocumentManager::getDocumentInfo( Document* doc )
 
 	if ( NULL != docClass && NULL != modelClass ) {
 		while ( it != docInfo_.end() ) {
-			DocumentInfo& info = it->second;
+			DocumentInfo& info = *it;
 			if ( (info.docClass == docClass->getClassName() ||
 					info.docClass == docClass->getID()) || 
 					(info.modelClass == modelClass->getClassName() ||
@@ -398,7 +397,7 @@ DocumentInfo* DocumentManager::getDocumentInfo( Document* doc )
 				break;
 			}
 
-			it ++;
+			++it;
 		}
 	}
 
@@ -551,7 +550,7 @@ void DocumentManager::prepareOpenDialog( CommonFileOpenDialog* openDialog )
 
 	String fileTypes;
 	while ( it != docInfo_.end() ) {
-		DocumentInfo& info = it->second;
+		DocumentInfo& info = *it;
 
 		std::vector<FileTypeInfo> fileTypes = info.getFileTypes();
 		std::vector<FileTypeInfo>::iterator it2 = fileTypes.begin();
@@ -612,7 +611,7 @@ MIMEType DocumentManager::getDocTypeFromFileExtension( const String& fileName )
 	}
 
 	while ( it != docInfo_.end() ) {
-		DocumentInfo& info = it->second;
+		DocumentInfo& info = *it;
 
 		if ( String::npos != info.fileTypes.find( ext ) ) {
 
@@ -639,7 +638,7 @@ MIMEType DocumentManager::getFileTypeFromFileExtension( const String& fileName )
 
 	bool done = false;
 	while ( it != docInfo_.end() || !done ) {
-		DocumentInfo& info = it->second;
+		DocumentInfo& info = *it;
 
 		std::vector<FileTypeInfo> fileTypes = info.getFileTypes();
 		std::vector<FileTypeInfo>::iterator it2 = fileTypes.begin();
@@ -654,7 +653,7 @@ MIMEType DocumentManager::getFileTypeFromFileExtension( const String& fileName )
 			++it2;
 		}		
 
-		it ++;
+		++it;
 	}
 
 	return result;
@@ -665,17 +664,26 @@ DocumentInfo DocumentManager::getDocumentInfo( const MIMEType& mimeType )
 	DocumentInfo result;
 
 	if ( mimeType.isEmpty() ) {
-		result = docInfo_.begin()->second;
+		result = docInfo_.front();
 	}
 	else {
-		result = docInfo_[mimeType];
+
+		DocumentInfoMap::iterator it = docInfo_.begin();
+		while ( it != docInfo_.end() ) {
+			DocumentInfo& info = *it;
+			if ( info.mimetype == mimeType ) {
+				result = info;
+				break;
+			}
+			++it;
+		}
 	}
 	return result;
 }
 
 void DocumentManager::addDocumentInfo( const MIMEType& mimeType, const DocumentInfo& info )
 {
-	docInfo_[mimeType] = info;
+	docInfo_.push_back(info);
 }
 
 void DocumentManager::addDocument( Document* document )
@@ -991,19 +999,6 @@ void DocumentManager::cleanupDropTarget( Document* doc )
 	}
 }
 
-void DocumentManager::openFromCommandLine(const CommandLine& comdLine)
-{	
-	size_t argc = comdLine.getArgCount();
-	
-	if ( argc > 1 ) {
-		String docFileName = comdLine.getArgument(1);
-		
-		openFromFileName( docFileName );
-	}
-	else {
-		newDefaultDocument("", VCF::MIMEType() );
-	}
-}
 
 /**
 $Id$

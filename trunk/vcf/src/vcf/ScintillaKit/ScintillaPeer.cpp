@@ -1834,7 +1834,7 @@ void Win32ScintillaPeer::setIndent( const uint32& val )
 
 bool Win32ScintillaPeer::areIndentGuidesVisible()
 {
-	return sendScintillaMessage( SCI_GETINDENTATIONGUIDES, 0, 0 );
+	return sendScintillaMessage( SCI_GETINDENTATIONGUIDES, 0, 0 ) ? true : false;
 }
 
 void Win32ScintillaPeer::setIndentGuidesVisible( const bool& val )
@@ -1844,7 +1844,7 @@ void Win32ScintillaPeer::setIndentGuidesVisible( const bool& val )
 
 bool Win32ScintillaPeer::isWhiteSpaceVisible()
 {
-	return sendScintillaMessage( SCI_GETVIEWWS, 0, 0 );
+	return sendScintillaMessage( SCI_GETVIEWWS, 0, 0 ) ? true : false;
 }
 
 void Win32ScintillaPeer::setWhiteSpaceVisible( const bool& val )
@@ -1854,7 +1854,7 @@ void Win32ScintillaPeer::setWhiteSpaceVisible( const bool& val )
 
 bool Win32ScintillaPeer::isEOLVisible()
 {
-	return sendScintillaMessage( SCI_GETVIEWEOL, 0, 0 );
+	return sendScintillaMessage( SCI_GETVIEWEOL, 0, 0 ) ? true : false;
 }
 
 void Win32ScintillaPeer::setEOLVisible( const bool& val )
