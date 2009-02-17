@@ -472,6 +472,8 @@ void JPEGLoader::saveImageToFile( const String& fileName, Image* image )
 		break;
 	}
 
+	//int cs = RGB_PIXELSIZE;
+
 	jpeg_set_defaults(&cinfo);
 
 	// Set JFIF density parameters from the DIB data

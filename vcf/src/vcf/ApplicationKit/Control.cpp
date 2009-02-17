@@ -950,6 +950,7 @@ bool Control::getAutoStartDragDrop()
 
 bool Control::beginDragDrop( MouseEvent* event )
 {
+	BeginDragDrop( event );
 	return false;
 }
 

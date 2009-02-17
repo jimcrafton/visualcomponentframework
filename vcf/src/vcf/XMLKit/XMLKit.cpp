@@ -181,28 +181,28 @@ XMLSaxParser::XMLSaxParser(): parser_(NULL)
 {
 	memset(&saxHandler_,0,sizeof(saxHandler_));
 
-	saxHandler_.internalSubset = internalSubsetSAXFunc;
-	saxHandler_.entityDecl = entityDeclSAXFunc;
-	saxHandler_.notationDecl = notationDeclSAXFunc;
-	saxHandler_.attributeDecl = attributeDeclSAXFunc;
-	saxHandler_.elementDecl = elementDeclSAXFunc;
-	saxHandler_.unparsedEntityDecl = unparsedEntityDeclSAXFunc;
-	saxHandler_.startDocument = startDocumentSAXFunc;
-	saxHandler_.endDocument = endDocumentSAXFunc;
-	saxHandler_.startElement = startElementSAXFunc;
-	saxHandler_.endElement = endElementSAXFunc;
-	saxHandler_.reference = referenceSAXFunc;
-	saxHandler_.characters = charactersSAXFunc;
-	saxHandler_.ignorableWhitespace = ignorableWhitespaceSAXFunc;
-	saxHandler_.processingInstruction = processingInstructionSAXFunc;
-	saxHandler_.comment = commentSAXFunc;
-	saxHandler_.warning = warningSAXFunc;
+	saxHandler_.internalSubset = XMLSaxParser::internalSubsetSAXFunc;
+	saxHandler_.entityDecl = XMLSaxParser::entityDeclSAXFunc;
+	saxHandler_.notationDecl = XMLSaxParser::notationDeclSAXFunc;
+	saxHandler_.attributeDecl = XMLSaxParser::attributeDeclSAXFunc;
+	saxHandler_.elementDecl = XMLSaxParser::elementDeclSAXFunc;
+	saxHandler_.unparsedEntityDecl = XMLSaxParser::unparsedEntityDeclSAXFunc;
+	saxHandler_.startDocument = XMLSaxParser::startDocumentSAXFunc;
+	saxHandler_.endDocument = XMLSaxParser::endDocumentSAXFunc;
+	saxHandler_.startElement = XMLSaxParser::startElementSAXFunc;
+	saxHandler_.endElement = XMLSaxParser::endElementSAXFunc;
+	saxHandler_.reference = XMLSaxParser::referenceSAXFunc;
+	saxHandler_.characters = XMLSaxParser::charactersSAXFunc;
+	saxHandler_.ignorableWhitespace = XMLSaxParser::ignorableWhitespaceSAXFunc;
+	saxHandler_.processingInstruction = XMLSaxParser::processingInstructionSAXFunc;
+	saxHandler_.comment = XMLSaxParser::commentSAXFunc;
+	saxHandler_.warning = XMLSaxParser::warningSAXFunc;
 	saxHandler_.error = errorSAXFunc;
-	saxHandler_.fatalError = fatalErrorSAXFunc;
-	saxHandler_.cdataBlock = cdataBlockSAXFunc;
-	saxHandler_.externalSubset = externalSubsetSAXFunc;
-	saxHandler_.startElementNs = startElementNsSAX2Func;
-	saxHandler_.endElementNs = endElementNsSAX2Func;
+	saxHandler_.fatalError = XMLSaxParser::fatalErrorSAXFunc;
+	saxHandler_.cdataBlock = XMLSaxParser::cdataBlockSAXFunc;
+	saxHandler_.externalSubset = XMLSaxParser::externalSubsetSAXFunc;
+	saxHandler_.startElementNs = XMLSaxParser::startElementNsSAX2Func;
+	saxHandler_.endElementNs = XMLSaxParser::endElementNsSAX2Func;
 
 
 

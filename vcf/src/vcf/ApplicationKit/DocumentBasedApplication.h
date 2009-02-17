@@ -43,6 +43,8 @@ public:
 
 		DocMgrImpl::createMenus();
 
+		DocMgrImpl::createInitialUI();
+
 		return true;
 	}	
 

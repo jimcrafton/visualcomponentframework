@@ -542,6 +542,13 @@ void Component::initComponent( Component* instance, Class* clazz, Class* rootCla
 
 	resourceName = clazz->getClassName();
 
+	//strip out namespace
+	size_t pos = resourceName.find( "::" );
+	while ( pos != String::npos ) {
+		resourceName = resourceName.replace( pos, 2, "." );
+		pos = resourceName.find( "::" );
+	}
+
 	vffContents = bundle->getVFF(resourceName);
 		
 	if ( !vffContents.empty() ) {

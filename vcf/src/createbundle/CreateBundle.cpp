@@ -78,8 +78,9 @@ void copyFiles( const String& src, const String& dest )
 					srcName = FilePath::makeDirectoryName( srcName );
 					destName = FilePath::makeDirectoryName( destName );
 
-					//ignore nested CVS folders!
-					if ( String::npos == destName.getFileName().find( "CVS/" ) ) {
+					//ignore nested CVS/svn folders!
+					if ( (String::npos == destName.getFileName().find( "CVS/" )) &&
+							(String::npos == destName.getFileName().find( ".svn/" )) ) {
 						copyFiles( srcName, destName ); 
 					}
 				}

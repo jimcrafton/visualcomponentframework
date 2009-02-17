@@ -542,6 +542,9 @@ public:
 	
 	}
 
+
+	virtual void createInitialUI() {}
+
 	/**
 	* gets the action associated to an action tag, as specified by this document manager.
 	*@param ActionTag, the action's tag.
@@ -634,7 +637,7 @@ public:
 	/** called to remove a document from the document based application */
 	void removeDocument( Document* document );
 
-	void openFromCommandLine(const CommandLine& comdLine);
+	virtual void openFromCommandLine(const CommandLine& comdLine){};
 
 protected:
 
@@ -692,7 +695,7 @@ protected:
 	
 
 
-	typedef std::map<String,DocumentInfo> DocumentInfoMap;
+	typedef Array<DocumentInfo> DocumentInfoMap;
 	typedef std::map<Document*,UndoRedoStack*> DocumentUndoRedoMap;
 	typedef std::map< uint32, Action* > ActionMap;
 	typedef std::map<Document*,Model*> DocumentModelMap;
@@ -706,7 +709,6 @@ protected:
 	The map of all registered DocumentInfo(s) 
 	*/
 	DocumentInfoMap docInfo_;
-	EnumeratorMapContainer< DocumentInfoMap, DocumentInfo > docInfoContainer_;
 
 	/**
 	The list of all the opened document at this moment 
@@ -934,7 +936,9 @@ public:
 	*/
 	virtual void initializeWindowMenus( Window* window, Document* document, const DocumentInfo& info  );
 
+	virtual void createInitialUI();
 
+	virtual void openFromCommandLine(const CommandLine& comdLine);
 protected:
 	/**
 	* attaches a UI to the specified document
@@ -1623,7 +1627,7 @@ Window* DocumentManagerImpl<AppClass,DocInterfacePolicy>::getWindowForNewDocumen
 	else {
 		// in a MDI policy the new window for the document is a new window		
 		
-		if ( !info.windowClass.empty() ) {			
+		if ( !info.windowClass.empty() ) {
 			result = Frame::createWindow( ClassRegistry::getClass(info.windowClass) );
 			if ( NULL == result ) {			
 				//probably not a resource based window, try just creating the window class
@@ -1668,8 +1672,10 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUI( const DocumentI
 
 	initializeWindowMenus( window, document, info );
 
-	document->setWindow( window );
-	window->addComponent( document );
+	if ( NULL != document ) {
+		document->setWindow( window );
+		window->addComponent( document );
+	}	
 
 	DropTarget* dropTarget = new DropTarget(window);
 
@@ -1699,62 +1705,67 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUI( const DocumentI
 
 	addDropTarget( dropTarget );
 
-	if ( NULL == docEv ) {
 
-		docEv = new ClassProcedure1<ModelEvent*,AppClass >( app_,
-					&DocumentManagerImpl<AppClass,DocInterfacePolicy>::onDocModified,
-					"onDocModified" );
-	}
+	if ( NULL != document ) {
+		if ( NULL == docEv ) {
 
-	document->DocumentChanged += docEv;
+			docEv = new ClassProcedure1<ModelEvent*,AppClass >( app_,
+						&DocumentManagerImpl<AppClass,DocInterfacePolicy>::onDocModified,
+						"onDocModified" );
+		}
 
-	docEv = app_->getCallback("onDocModelModified");
-	if ( NULL == docEv ) {
+		document->DocumentChanged += docEv;
 
-		docEv = new ClassProcedure1<ModelEvent*,AppClass >( app_,
-					&DocumentManagerImpl<AppClass,DocInterfacePolicy>::onDocModelModified,
-					"onDocModelModified" );
-	}	
+		docEv = app_->getCallback("onDocModelModified");
+		if ( NULL == docEv ) {
 
-	document->getModel()->ModelChanged += docEv;
+			docEv = new ClassProcedure1<ModelEvent*,AppClass >( app_,
+						&DocumentManagerImpl<AppClass,DocInterfacePolicy>::onDocModelModified,
+						"onDocModelModified" );
+		}	
 
-	/**
-	create a view from the DocInfo if necessary
-	*/
-	View* view = NULL;
-	if ( !info.viewClass.empty() ) {
-		if ( info.windowClass != info.viewClass ) {
-			Object* viewObject = NULL;
-			viewObject = ClassRegistry::createNewInstance( info.viewClass );
+		document->getModel()->ModelChanged += docEv;
+	
 
-			view = dynamic_cast<View*>(viewObject);
+		/**
+		create a view from the DocInfo if necessary
+		*/
+		View* view = NULL;
+		if ( !info.viewClass.empty() ) {
+			if ( info.windowClass != info.viewClass ) {
+				Object* viewObject = NULL;
+				viewObject = ClassRegistry::createNewInstance( info.viewClass );
+
+				view = dynamic_cast<View*>(viewObject);
+			}
+			else {
+				view = window;
+			}
 		}
 		else {
 			view = window;
 		}
-	}
-	else {
-		view = window;
-	}
 
-	if ( NULL != view ) {
-		document->addView( view );
+		if ( NULL != view ) {
+			document->addView( view );
 
-		if ( view != window ) {
-			// sets a child view for the document inside the window
-			setNewView( info, view, window, document );
+			if ( view != window ) {
+				// sets a child view for the document inside the window
+				setNewView( info, view, window, document );
+			}
 		}
+
+		//need to provide a common place to
+		//init everything once all the "connections" are in place	
+
+		DocManagerEvent event( document, DocumentManager::dmDocumentInitialized );
+
+		DocumentInitialized( &event );
+
+		// let the policy to update its data to the new document
+		DocInterfacePolicy::afterNewDocument( document );
 	}
 
-	//need to provide a common place to
-	//init everything once all the "connections" are in place	
-
-	DocManagerEvent event( document, DocumentManager::dmDocumentInitialized );
-
-	DocumentInitialized( &event );
-
-	// let the policy to update its data to the new document
-	DocInterfacePolicy::afterNewDocument( document );
 
 	// makes sure the Frame has an handler to 
 	// to catch if the document's window is to be closing
@@ -1787,7 +1798,9 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUI( const DocumentI
 
 	window->ComponentCreated += newEv;
 
-	document->updateAllViews();
+	if ( NULL != document ) {
+		document->updateAllViews();
+	}
 }
 
 template < typename AppClass, typename DocInterfacePolicy >
@@ -1868,6 +1881,7 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 		}		
 	}
 
+
 	// just creates the object from its type using the VCF RTTI
 	Document* newDocument = createDocumentFromType( info );
 	Model* newModel = createModelFromType( info );
@@ -1901,7 +1915,7 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 		if ( DocumentManager::getShouldCreateUI() ) {
 			// creates or activates a window for it, and fires event for custom initializations.
 			attachUI( info, newDocument );
-		}
+		}	
 	}
 	else {
 		//throw exception !
@@ -1913,6 +1927,9 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 			throw RuntimeException( "Unable to create model of type: \"" + info.modelClass + "\". \nCheck the applications resource .xml file for a valid ModelClass entry with valid class name, \nand make sure that the class is registered with the VCF ClassRegistry." );
 		}
 	}
+	
+
+	
 
 	return newDocument;
 }
@@ -1970,6 +1987,14 @@ Model* DocumentManagerImpl<AppClass,DocInterfacePolicy>::createModelFromType( co
 	}
 
 	return result;
+}
+
+template < typename AppClass, typename DocInterfacePolicy >
+void DocumentManagerImpl<AppClass,DocInterfacePolicy>::createInitialUI()
+{
+	if ( DocInterfacePolicy::createDefaultUI() ) {
+		attachUI( getDocumentInfo( MIMEType("") ), NULL );
+	}
 }
 
 template < typename AppClass, typename DocInterfacePolicy >
@@ -2067,8 +2092,20 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::createMenus() {
 }
 
 
-
-
+template < typename AppClass, typename DocInterfacePolicy >
+void DocumentManagerImpl<AppClass,DocInterfacePolicy>::openFromCommandLine(const CommandLine& comdLine)
+{
+	size_t argc = comdLine.getArgCount();
+	
+	if ( argc > 1 ) {
+		String docFileName = comdLine.getArgument(1);
+		
+		openFromFileName( docFileName );
+	}
+	else if( DocInterfacePolicy::createInitialDocument() ){
+		newDefaultDocument("", VCF::MIMEType() );
+	}
+}
 
 };
 

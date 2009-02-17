@@ -37,12 +37,15 @@ public:
 		*/
 		MenuItem* fileMenu = new DefaultMenuItem( "File", menuBar->getRootMenuItem(), menuBar );
 		MenuItem* fileOpenImageMenu = new DefaultMenuItem( "Open Image...", fileMenu, menuBar );
+		MenuItem* fileSaveImageMenu = new DefaultMenuItem( "Save Image As...", fileMenu, menuBar );
 
 		//add our event handler to the menu item
 		fileOpenImageMenu->MenuItemClicked +=
 			new ClassProcedure1<MenuItemEvent*,ImageViewerWindow>( this,&ImageViewerWindow::openImage, "ImageViewerWindow::openImage" );
 
 
+		fileSaveImageMenu->MenuItemClicked +=
+			new ClassProcedure1<MenuItemEvent*,ImageViewerWindow>( this,&ImageViewerWindow::saveImage, "ImageViewerWindow::saveImage" );
 
 		//set the border of the window, this will give us a nice etched border
 		EtchedBorder* bdr = new EtchedBorder();
@@ -79,6 +82,35 @@ public:
 		}
 	}
 
+	void saveImage( MenuItemEvent* e ) {
+		CommonFileSaveDialog dlg( this );
+		std::vector< std::pair<String,String> > contentTypes;
+
+		/**
+		this will get a list of all current available types that
+		can currently be loaded by the VCF. The list is a series
+		of std::pair objects. the std::pair.first element is a string
+		that represents the file extension, and the std::pair.second
+		represents a string that is the mime type for the extension
+		*/
+		GraphicsToolkit::getAvailableImageTypes( contentTypes );
+		std::vector< std::pair<String,String> >::iterator it = contentTypes.begin();
+
+		/*
+		For each type, add a new filter to the dialog
+		*/
+		while ( it != contentTypes.end() ) {
+			std::pair<String,String>& type = *it;
+
+			dlg.addFilter( type.second + " (*." + type.first + " )", "*." + type.first );
+			it ++;
+		}
+
+		if ( dlg.execute() ) {
+			GraphicsToolkit::saveImage( dlg.getFileName(), currentImage_ );
+		}
+	}
+	
 	void openImage( MenuItemEvent* e ) {
 		CommonFileOpenDialog dlg( this );
 
