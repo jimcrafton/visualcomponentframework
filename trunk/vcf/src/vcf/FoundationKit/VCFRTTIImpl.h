@@ -3442,7 +3442,7 @@ void registerFieldType( const String& className, const String& fieldName, uint32
 }
 
 template <typename FieldType>
-void registerObjectFieldType( const String& className, const String& fieldName, uint32 fieldOffset )
+void registerObjectFieldType( const String& className, const String& fieldName, uint32 fieldOffset, FieldType dummyParam=FieldType() )
 {
 	Class* clazz = ClassRegistry::getClass( className );
 	if ( NULL != clazz ){

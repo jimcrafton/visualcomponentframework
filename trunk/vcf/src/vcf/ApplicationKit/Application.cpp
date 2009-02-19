@@ -141,7 +141,13 @@ void Application::internal_main()
 
 			Application* runningInstance = Application::getRunningInstance();
 			if ( runningInstance->getName().empty() ) {
-				runningInstance->setName( runningInstance->getClassName() );
+				String className = runningInstance->getClassName();
+				size_t pos = className.find( "::" );
+				while ( pos != String::npos ) {
+					className = className.replace( pos, 2, "." );
+					pos = className.find( "::" );
+				}
+				runningInstance->setName( className );
 			}
 
 			//init the running instance

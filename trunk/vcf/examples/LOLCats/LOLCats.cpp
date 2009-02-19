@@ -10,8 +10,9 @@
 #include <shellapi.h>
 
 #include "vcf/HTMLKit/HTMLKit.h"
+
 #if !defined(VCF_DISABLE_PRAGMA_LINKING)
-#   define USE_INTERNETKIT_LIB
+#   define USE_INTERNETKIT_DLL
 #endif
 
 #include "vcf/InternetKit/InternetKit.h"
