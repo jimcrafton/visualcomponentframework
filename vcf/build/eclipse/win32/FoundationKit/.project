@@ -75,7 +75,7 @@
 		<link>
 			<name>FoundationKit</name>
 			<type>2</type>
-			<location>VCF_ROOT/src/vcf/FoundationKit</location>
+			<locationURI>VCF_ROOT/src/vcf/FoundationKit</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
