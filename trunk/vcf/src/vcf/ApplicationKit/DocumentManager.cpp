@@ -91,118 +91,177 @@ Enumerator<DocumentInfo>* DocumentManager::getRegisteredDocumentInfo()
 	return docInfo_.getEnumerator();
 }
 
-
-void DocumentManager::init()
+bool DocumentManager::initFromApp( AbstractApplication* application )
 {
-	Application* app = Application::getRunningInstance();
+
+	AbstractApplication* app = application;
+
+
+
+	if ( NULL == application ) {
+		app = Application::getRunningInstance();
+	}
+
+	if ( initFromPath( app ) ) {
+		return false;
+	}
+	else {
+		return initFromResourceBundle( app->getName() + ".xml", app );
+	}
+
+	return true;
+}
+
+bool DocumentManager::initFromPath( AbstractApplication* application )
+{
+	String infoFilename = System::getInfoFileFromFileName( application->getFileName() );
+
+	if ( !File::exists( infoFilename ) ) {
+		return false;
+	}
+
 	
-	
-	Resource* res = app->getResourceBundle()->getResource( app->getName() + ".xml" );
-	if ( NULL != res ) {
 
-		PropertyListing properties;
-		BasicInputStream bis( (const uchar*)res->getData(), res->getDataSize() );
+	bool result = false;
 
-		bis >> &properties;
+	try {
+		FileInputStream fs(infoFilename);
+		result = initFromStream( &fs, application );
+	}
+	catch ( BasicException& ) {
+		result = false;
+	}
+
+	return result;
+}
+
+bool DocumentManager::initFromStream( InputStream* stream, AbstractApplication* application )
+{
+	PropertyListing properties;
+	(*stream) >> &properties;
 
 
-		const VariantArray& docTypes = properties.getArray( "DocumentTypes" );
-		for (size_t i=0;i<docTypes.data.size();i++ ) {
-			const PropertyListing& dict =  (const PropertyListing&)(Object&) docTypes.data[i];
+	const VariantArray& docTypes = properties.getArray( "DocumentTypes" );
+	for (size_t i=0;i<docTypes.data.size();i++ ) {
+		const PropertyListing& dict =  (const PropertyListing&)(Object&) docTypes.data[i];
+		
+		if ( !dict.keyExists("TypeExtensions") ) {
+			throw RuntimeException( "Invalid Document Info file - missing 'TypeExtensions' key" );
+		}
+
+		if ( !dict.keyExists("TypeContent") ) {
+			throw RuntimeException( "Invalid Document Info file - missing 'TypeContent' key" );
+		}
+
+		const VariantArray& extensions = dict.getArray( "TypeExtensions" );
+		const VariantArray& typeContents = dict.getArray( "TypeContent" );
+
+		VCF_ASSERT( extensions.data.size() == typeContents.data.size() );
+
+		if ( extensions.data.size() != typeContents.data.size() ) {
+			throw RuntimeException( "Invalid Document Info file - 'TypeContent' and 'TypeExtensions' array sizes don't match" );
+		}
+
+
+		if ( !dict.keyExists("ClipboardTypeContent") ) {
+			throw RuntimeException( "Invalid Document Info file - missing 'ClipboardTypeContent' key" );
+		}
+		const VariantArray& clipboardTypes = dict.getArray( "ClipboardTypeContent" );
+
+		String icoFile = dict["TypeIcon"];
+
+		size_t pos = icoFile.find("@");
+		if ( pos != String::npos ) {
+			icoFile.erase( 0, pos+1);
+
+			icoFile = application->getFileName() + "," + icoFile;
+		}
+		else {
+			icoFile = System::findResourceDirectory() + icoFile;
+		}
+		
+		DocumentInfo info;
+		info.mimetype = (String)dict["DocTypeContent"];
+		info.description = (String)dict["TypeDescription"];
+		info.windowClass = (String)dict["DocumentWindow"];
+		info.viewClass = (String)dict["DocumentView"];
+		info.docClass = (String)dict["DocumentClass"];
+		info.modelClass = (String)dict["ModelClass"];
+		
+		
+
+		for (size_t k=0;k<clipboardTypes.data.size();k++ ) {
+			String type = clipboardTypes.data[k];
+
+			if ( k > 0 ) {
+				info.clipboardTypes += ";";
+			}
+			info.clipboardTypes += type;				
+		}
+
+		//register type(s)
+		UIShell* shell = UIShell::getUIShell();
+		for (size_t j=0;j<extensions.data.size();j++ ) {
+			String ext = extensions.data[j];
+			String mime = typeContents.data[j];
 			
-			if ( !dict.keyExists("TypeExtensions") ) {
-				throw RuntimeException( "Invalid Document Info file - missing 'TypeExtensions' key" );
-			}
 
-			if ( !dict.keyExists("TypeContent") ) {
-				throw RuntimeException( "Invalid Document Info file - missing 'TypeContent' key" );
-			}
-
-			const VariantArray& extensions = dict.getArray( "TypeExtensions" );
-			const VariantArray& typeContents = dict.getArray( "TypeContent" );
-
-			VCF_ASSERT( extensions.data.size() == typeContents.data.size() );
-
-			if ( extensions.data.size() != typeContents.data.size() ) {
-				throw RuntimeException( "Invalid Document Info file - 'TypeContent' and 'TypeExtensions' array sizes don't match" );
-			}
-
-
-			if ( !dict.keyExists("ClipboardTypeContent") ) {
-				throw RuntimeException( "Invalid Document Info file - missing 'ClipboardTypeContent' key" );
-			}
-			const VariantArray& clipboardTypes = dict.getArray( "ClipboardTypeContent" );
-
-			String icoFile = dict["TypeIcon"];
-
-			size_t pos = icoFile.find("@");
-			if ( pos != String::npos ) {
-				icoFile.erase( 0, pos+1);
-
-				icoFile = app->getFileName() + "," + icoFile;
+			FileAssociationInfo fa;
+			fa.extension = ext;
+			fa.mimeType = mime;
+			fa.documentClass = application->getName() + ".";
+			if ( !info.docClass.empty() ) {
+				fa.documentClass += info.docClass;
 			}
 			else {
-				icoFile = System::findResourceDirectory() + icoFile;
+				fa.documentClass += info.modelClass;
 			}
-			
-			DocumentInfo info;
-			info.mimetype = (String)dict["DocTypeContent"];
-			info.description = (String)dict["TypeDescription"];
-			info.windowClass = (String)dict["DocumentWindow"];
-			info.viewClass = (String)dict["DocumentView"];
-			info.docClass = (String)dict["DocumentClass"];
-			info.modelClass = (String)dict["ModelClass"];
-			
-			
+			fa.documentDescription = info.description;
+			fa.documentIconPath = icoFile;
+			fa.launchingProgram = application->getFileName();
 
-			for (size_t k=0;k<clipboardTypes.data.size();k++ ) {
-				String type = clipboardTypes.data[k];
+			shell->createFileAssociation( fa, false );				
 
-				if ( k > 0 ) {
-					info.clipboardTypes += ";";
-				}
-				info.clipboardTypes += type;				
+			if ( j > 0 ) {
+				info.fileTypes += ";";
 			}
-
-			//register type(s)
-			UIShell* shell = UIShell::getUIShell();
-			for (size_t j=0;j<extensions.data.size();j++ ) {
-				String ext = extensions.data[j];
-				String mime = typeContents.data[j];
-				
-
-				FileAssociationInfo fa;
-				fa.extension = ext;
-				fa.mimeType = mime;
-				fa.documentClass = app->getName() + ".";
-				if ( !info.docClass.empty() ) {
-					fa.documentClass += info.docClass;
-				}
-				else {
-					fa.documentClass += info.modelClass;
-				}
-				fa.documentDescription = info.description;
-				fa.documentIconPath = icoFile;
-				fa.launchingProgram = app->getFileName();
-
-				shell->createFileAssociation( fa, false );				
-
-				if ( j > 0 ) {
-					info.fileTypes += ";";
-				}
-				info.fileTypes += ext;
-				info.fileTypes += ";" + mime;
-			}
-
-
-			docInfo_.push_back(info);
+			info.fileTypes += ext;
+			info.fileTypes += ";" + mime;
 		}
+
+
+		docInfo_.push_back(info);
+	}
+
+	return true;
+}
+
+bool DocumentManager::initFromResourceBundle( const String& resName, AbstractApplication* application )
+{
+	bool result = false;
+
+	Resource* res = application->getResourceBundle()->getResource( resName );
+
+	if ( NULL != res ) {
+		
+		BasicInputStream bis( (const uchar*)res->getData(), res->getDataSize() );
+
+		result = initFromStream( &bis, application );
 
 		delete res;
 	}
 	else {
-		throw RuntimeException( "You need to have a resource file named \"" + app->getName() + ".xml\" with the correct data in it."  );
+		throw RuntimeException( "You need to have a resource file named \"" + resName + "\" with the correct data in it."  );
 	}
+
+	return result;
+}
+
+void DocumentManager::init()
+{
+	Application* app = Application::getRunningInstance();	
+	
+	initFromApp( app );	
 }
 
 void DocumentManager::terminate() {	

@@ -1284,7 +1284,8 @@ void GraphicsContext::setClippingRect( Rect* rect )
 
 	if ( NULL != clipPath ) { //take ownership of the underlying object instance
 		Object* pathObj = dynamic_cast<Object*>( clipPath );
-		pathObj->addRef();
+		//commented this out to accomdate the change in initial refcount for an Object instance JEC
+		//pathObj->addRef(); 		
 	}
 
 	currentGraphicsState_->clippingPath_ = clipPath;

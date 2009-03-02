@@ -1429,7 +1429,7 @@ void UIToolkit::internal_removeAccelerator( const VirtualKeyCode& keyCode, const
 			(accel->getAssociatedMenuItem() == src) ||
 			(accel->getAssociatedObject() == src) ) {
 			if ( accel->getOwner() == NULL ) {
-				accel->release();
+				accel->free();
 			}
 
 			removeAccels.push_back( it );
