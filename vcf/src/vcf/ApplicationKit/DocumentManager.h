@@ -262,6 +262,13 @@ public:
 	*/
 	virtual void init();
 
+	bool initFromApp( AbstractApplication* application );
+
+	bool initFromPath( AbstractApplication* application );
+
+	bool initFromResourceBundle( const String& resName, AbstractApplication* application );
+
+	bool initFromStream( InputStream* stream, AbstractApplication* application );
 	/**
 	* termination function for document based applications.
 	* This is called just before Application::terminateRunningApplication().

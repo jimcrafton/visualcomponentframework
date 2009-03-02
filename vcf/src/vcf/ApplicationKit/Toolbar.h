@@ -35,7 +35,7 @@ class APPLICATIONKIT_API ToolbarItem : public Item, public Button {
 public:
 
 	ToolbarItem();
-
+	virtual ~ToolbarItem();
 
 	enum {
 		tbCaptionChanged = 200431,

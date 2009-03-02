@@ -506,6 +506,8 @@ public:
 	static String getExecutableNameFromBundlePath( const String& fileName );
 
 
+	static String getInfoFileFromFileName( const String& fileName );
+
 	static void internal_replaceResourceBundleInstance( ResourceBundle* newInstance );
 protected:
 	System();
@@ -523,7 +525,7 @@ protected:
 
 	ResourceBundle* resBundle_;
 
-	static String getInfoFileFromFileName( const String& fileName );
+	
 
 	static System* getInstance();
 };

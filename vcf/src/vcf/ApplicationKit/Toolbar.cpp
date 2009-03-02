@@ -29,6 +29,11 @@ ToolbarItem::ToolbarItem():
 	displayState_ = tisEnabled;
 }
 
+ToolbarItem::~ToolbarItem()
+{
+
+}
+
 void ToolbarItem::click()
 {
 	ButtonEvent event( this, ToolbarItem::tbItemClicked );
@@ -362,19 +367,17 @@ ToolbarModel::ToolbarModel()
 
 ToolbarModel::~ToolbarModel()
 {
-	std::vector<ToolbarItem*>::iterator it = toolbarItems_.begin();
-	while ( it != toolbarItems_.end() ) {
-		ToolbarItem* item = *it;
-		item->release();
-		it ++;
-	}
-
 	toolbarItems_.clear();
 }
 
 void ToolbarModel::addItem( ToolbarItem* item )
 {
 	toolbarItems_.push_back( item );
+
+	if ( NULL == item->getOwner() ) {
+		addComponent( item );
+	}
+
 	item->setModel( this );
 	itemChanged( ToolbarItem::tbAdded, item );
 }

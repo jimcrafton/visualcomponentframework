@@ -2242,6 +2242,14 @@ void Win32Listview::onCtrlModelChanged( Event* e )
 			getCallback( "Win32Listview::onColumnModelRemoved" );
 
 
+		HWND header = ListView_GetHeader(hwnd_);
+		int cc = Header_GetItemCount(header);
+		for (int i=0;i<cc;i++ ) {
+			Header_DeleteItem(header,i);
+		}
+
+
+
 		//build up colums
 		if ( !cm->isEmpty() ) {
 			uint32 count = cm->getCount();
