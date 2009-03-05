@@ -12,6 +12,8 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/GraphicsKit/GraphicsResourceBundle.h"
 #include "vcf/ApplicationKit/ApplicationResourceBundle.h"
+#include "vcf/ApplicationKit/DocumentManager.h"
+
 
 using namespace VCF;
 
@@ -79,6 +81,11 @@ Enumerator<VCF::LibraryApplication*>* LibraryApplication::getRegisteredLibraries
 void LibraryApplication::registerLibrary( VCF::LibraryApplication* libraryApp )
 {
 	(*LibraryApplication::namedLibraryAppMap)[ libraryApp->getName() ] = libraryApp;
+
+	DocumentManager* mgr = DocumentManager::getDocumentManager();
+	if ( NULL != mgr ) {
+		mgr->initFromApp( libraryApp );
+	}
 }
 
 

@@ -9,6 +9,11 @@ where you installed the VCF.
 
 
 #include "vcf/FoundationKit/FoundationKit.h"
+#include "vcf/FoundationKit/StringTokenizer.h"
+#include "vcf/FoundationKit/Base64Codec.h"
+#include "vcf/FoundationKit/PropertyListing.h"
+
+
 
 using namespace VCF;
 
@@ -88,203 +93,73 @@ int main( int argc, char** argv ){
 	String infoFileName = outDir + "Info.plist";
 	String infoXML;
 
+	PropertyListing plist;
+	bool modified = false;
+
 	//does the file already exist???
 	if ( !outDir.empty() && File::exists( infoFileName ) ) {
-		
-		XMLParser xmlParser;
-		FileInputStream fs(infoFileName);
-		xmlParser.parse( &fs );				
-		fs.close();
+		try {
+			FileInputStream fs(infoFileName);
+			XMLDictInputStream xis(&fs);
+			xis >> &plist;
 
-		XMLNode* topNode = NULL;
-		XMLNode* dictNode = NULL;
-		Enumerator<XMLNode*>* nodes = xmlParser.getParsedNodes();
-		while ( nodes->hasMoreElements() ) {
-			XMLNode* node = nodes->nextElement();
-			if ( NULL == topNode ) {
-				topNode = node; //store off the first node
+
+			VariantData v = plist.getByPath( "ProgramVersion" );
+
+			if ( !plist.keyExists( "ProgramVersion" ) || ((v.isNull() || (v.isString() && v.toString().empty())) && !exeName.empty()) ) {
+				plist["ProgramVersion"] = version;
+				modified = true;
 			}
-			if ( node->getName() == L"plist" ) {
-				dictNode = node->getNodeByName( L"dict" );
-				break;
+
+			v = plist.getByPath( "Executable" );
+			if ( !plist.keyExists( "Executable" ) || ((v.isNull() || (v.isString() && v.toString().empty())) && !exeName.empty()) ) {
+				plist["Executable"] = exeName;
+				modified = true;
+			}
+
+			v = plist.getByPath( "FileVersion" );
+			if ( !plist.keyExists( "FileVersion" ) || ((v.isNull() || (v.isString() && v.toString().empty())) && !exeName.empty()) ) {
+				plist["FileVersion"] = version;
+				modified = true;
+			}
+
+			v = plist.getByPath( "ProductName" );
+			if ( !plist.keyExists( "ProductName" ) || ((v.isNull() || (v.isString() && v.toString().empty())) && !exeName.empty()) ) {
+				plist["ProductName"] = bundleName;
+				modified = true;
+			}
+
+			v = plist.getByPath( "Copyright" );
+			if ( !plist.keyExists( "Copyright" ) || ((v.isNull() || (v.isString() && v.toString().empty())) && !exeName.empty()) ) {
+				plist["Copyright"] = copyright;
+				modified = true;
+			}
+
+			v = plist.getByPath( "Author" );
+			if ( !plist.keyExists( "Author" ) || ((v.isNull() || (v.isString() && v.toString().empty())) && !exeName.empty()) ) {
+				plist["Author"] = author;
+				modified = true;
 			}
 		}
-
-		if ( NULL != dictNode ) {
-			nodes = dictNode->getChildNodes();
-			bool needsProgramVersion = true;
-			bool needsExecutable = true;
-			bool needsFileVersion = true;
-			bool needsProductName = true;
-			bool needsCopyright = true;
-			bool needsAuthor = true;
-
-			while ( nodes->hasMoreElements() ) {
-				XMLNode* key = nodes->nextElement();
-				XMLNode* val = NULL;
-				
-				if ( nodes->hasMoreElements() ) {
-					val = nodes->nextElement();
-				}
-				
-				if ( (NULL != val) && (key->getName() == "key") ) {
-					String cdata = key->getCDATA();
-					StringUtils::trimWhiteSpaces( cdata );
-					key->setCDATA( cdata );
-
-					if ( cdata == "ProgramVersion" ) {
-						val->setCDATA( version );
-						needsProgramVersion = false;
-					}
-					else if ( cdata == "Executable" ) {
-						val->setCDATA( exeName );
-						needsExecutable = false;
-					}
-					else if ( cdata == "FileVersion" ) {
-						val->setCDATA( version );
-						needsFileVersion = false;
-					}
-					else if ( cdata == "ProductName" ) {
-						val->setCDATA( bundleName );
-						needsProductName = false;
-					}
-					else if ( cdata == "Copyright" ) {
-						val->setCDATA( copyright );
-						needsCopyright = false;
-					}
-					else if ( cdata == "Author" ) {
-						val->setCDATA( author );
-						needsAuthor = false;
-					}
-					else { //strip out trailing white space
-						cdata = val->getCDATA();
-						StringUtils::trimWhiteSpaces( cdata );
-						val->setCDATA( cdata );
-					}
-				}
-			}
-			
-			XMLNode* key = NULL;
-			XMLNode* value = NULL;
-			if ( needsProgramVersion ) {
-				key = dictNode->addChildNode( "key" );
-				key->setCDATA( "ProgramVersion" );
-
-				value = dictNode->addChildNode( "string" );
-				value->setCDATA( version );
-			}
-
-			if ( needsExecutable ) {
-				key = dictNode->addChildNode( "key" );
-				key->setCDATA( "Executable" );
-
-				value = dictNode->addChildNode( "string" );
-				value->setCDATA( exeName );
-			}
-
-			if ( needsFileVersion ) {
-				key = dictNode->addChildNode( "key" );
-				key->setCDATA( "FileVersion" );
-
-				value = dictNode->addChildNode( "string" );
-				value->setCDATA( version );
-			}
-
-			if ( needsProductName ) {
-				key = dictNode->addChildNode( "key" );
-				key->setCDATA( "ProductName" );
-
-				value = dictNode->addChildNode( "string" );
-				value->setCDATA( bundleName );
-			}
-
-			if ( needsCopyright ) {
-				key = dictNode->addChildNode( "key" );
-				key->setCDATA( "Copyright" );
-
-				value = dictNode->addChildNode( "string" );
-				value->setCDATA( copyright );
-			}
-
-			if ( needsAuthor ) {
-				key = dictNode->addChildNode( "key" );
-				key->setCDATA( "Author" );
-
-				value = dictNode->addChildNode( "string" );
-				value->setCDATA( author );
-			}
-
-			String createinfoComments = "Info.xml file updated by createinfo on " + StringUtils::format( date, "%a %B %d, %Y %H:%M:%S" );
-		
-			String xmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-			
-			infoXML = xmlHeader + crlf + "<!--" + createinfoComments + "-->" + crlf;
-		
-
-			infoXML += topNode->toString();
+		catch (BasicException& e) {
+			System::println( "Invalid Info.xml file!\n Exception: " + e.getMessage() );
 		}
-		else {
+		catch (...) {
 			System::println( "Invalid Info.xml file!" );
 			return 1;
-		}		
+		}
 	}	
 	else {
-		
-		String createinfoComments = "Info.xml file created by createinfo on " + StringUtils::format( date, "%a %B %d, %Y %H:%M:%S" );
-		
-		String xmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";		
-		
-		infoXML += xmlHeader + crlf + "<!--" + createinfoComments + "-->" + crlf;
-		
-		
-		XMLNode plist;
-		plist.setName( "plist" );
-		
-		XMLNode* dict = plist.addChildNode( "dict" );
-		XMLNode* key = dict->addChildNode( "key" );
-		key->setCDATA( "ProgramVersion" );
-		
-		XMLNode* value = dict->addChildNode( "string" );
-		value->setCDATA( version );
-		
-		key = dict->addChildNode( "key" );
-		key->setCDATA( "Executable" );
-		
-		value = dict->addChildNode( "string" );
-		value->setCDATA( exeName );
+		modified = true;
 
 
-		key = dict->addChildNode( "key" );
-		key->setCDATA( "FileVersion" );
-		
-		value = dict->addChildNode( "string" );
-		value->setCDATA( version );
-		
-		key = dict->addChildNode( "key" );
-		key->setCDATA( "ProductName" );
-		
-		value = dict->addChildNode( "string" );
-		value->setCDATA( bundleName );
-		
-		key = dict->addChildNode( "key" );
-		key->setCDATA( "Copyright" );
-		
-		value = dict->addChildNode( "string" );
-		value->setCDATA( copyright );
-		
-		key = dict->addChildNode( "key" );
-		key->setCDATA( "Author" );
-		
-		value = dict->addChildNode( "string" );
-		value->setCDATA( author );
-		
-		key = dict->addChildNode( "key" );
-		key->setCDATA( "Company" );
-		
-		value = dict->addChildNode( "string" );
-		value->setCDATA( "Your company" );
-		
-		infoXML += plist.toString();
+		plist["ProgramVersion"] = version;
+		plist["Executable"] = exeName;
+		plist["FileVersion"] = version;
+		plist["ProductName"] = bundleName;
+		plist["Copyright"] = copyright;
+		plist["Author"] = author;
+		plist["Company"] = "Your company";
 		
 	}
 
@@ -295,17 +170,32 @@ int main( int argc, char** argv ){
 		if ( !File::exists( outDir ) ) {
 			//yep, go ahead and create it!
 
-			Directory infoDir;
-			infoDir.create( outDir, File::ofRead | File::ofWrite );
+			try {
+				Directory infoDir;
+				infoDir.create( outDir, File::ofRead | File::ofWrite );
+			}
+			catch ( BasicException& e ) {
+				System::println( "Error creating directory. Exception: " + e.getMessage() );
+				return 1;
+			}
 		}
 
-		FileOutputStream fs( infoFileName );
-		TextOutputStream ts(&fs);
 
-		ts << infoXML;
+		
+		if ( modified ) {
+			try {
+				FileOutputStream fs(infoFileName);
+				XMLDictOutputStream xos(&fs);
+				xos << &plist;
+			}
+			catch ( BasicException& e ) {
+				System::println( "Error writing info dictionary. Exception: " + e.getMessage() );
+				return 1;
+			}
+		}
 	}
 	else {
-		System::println( infoXML );
+		System::println( plist.toString() );
 	}	
 
 	FoundationKit::terminate();

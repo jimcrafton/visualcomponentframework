@@ -1115,18 +1115,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKit
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name HTMLKit
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name InternetKit
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name XMLKitLib
-    End Project Dependency
 }}}
 
 ###############################################################################

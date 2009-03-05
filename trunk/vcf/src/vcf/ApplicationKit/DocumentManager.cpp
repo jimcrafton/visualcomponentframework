@@ -102,10 +102,7 @@ bool DocumentManager::initFromApp( AbstractApplication* application )
 		app = Application::getRunningInstance();
 	}
 
-	if ( initFromPath( app ) ) {
-		return false;
-	}
-	else {
+	if ( !initFromPath( app ) ) {
 		return initFromResourceBundle( app->getName() + ".xml", app );
 	}
 
@@ -128,7 +125,8 @@ bool DocumentManager::initFromPath( AbstractApplication* application )
 		FileInputStream fs(infoFilename);
 		result = initFromStream( &fs, application );
 	}
-	catch ( BasicException& ) {
+	catch ( BasicException& e ) {
+		StringUtils::trace( "Error initializing doc manager from stream with file " + infoFilename + "\nException: " + e.getMessage() + "\n" );
 		result = false;
 	}
 
@@ -218,7 +216,13 @@ bool DocumentManager::initFromStream( InputStream* stream, AbstractApplication* 
 			}
 			fa.documentDescription = info.description;
 			fa.documentIconPath = icoFile;
-			fa.launchingProgram = application->getFileName();
+
+			if ( application != Application::getRunningInstance() ) {
+				fa.launchingProgram = Application::getRunningInstance()->getFileName();
+			}
+			else {
+				fa.launchingProgram = application->getFileName();
+			}
 
 			shell->createFileAssociation( fa, false );				
 
@@ -758,6 +762,19 @@ void DocumentManager::removeDocument( Document* document )
 		openDocuments_.erase( found );
 		//document->release();
 	}
+}
+
+void DocumentManager::setNewView( const DocumentInfo& info, View* view, Window* window, Document* newDocument ) 
+{
+	view->setViewControl( window );
+	window->setView( view );
+	newDocument->addView( window );
+}
+
+void DocumentManager::currentDocumentChanged() 
+{
+	DocManagerEvent event( getCurrentDocument()->getModel(), DocumentManager::dmCurrentDocumentChanged );
+	CurrentDocumentChanged( &event );
 }
 
 
