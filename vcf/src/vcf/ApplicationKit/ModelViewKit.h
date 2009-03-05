@@ -33,6 +33,11 @@ where you installed the VCF.
 #	include "vcf/ApplicationKit/DocumentManager.h"
 #endif // _VCF_DOCUMENTMANAGER_H__
 
+#ifndef _VCF_DOCUMENTMANAGERIMPL_H__
+#	include "vcf/ApplicationKit/DocumentManagerImpl.h"
+#endif // _VCF_DOCUMENTMANAGERIMPL_H__
+
+
 #ifndef _VCF_DOCMANAGERPOLICY_H__
 #	include "vcf/ApplicationKit/DocManagerPolicy.h"
 #endif // _VCF_DOCMANAGERPOLICY_H__
