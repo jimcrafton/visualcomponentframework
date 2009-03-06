@@ -47,7 +47,12 @@ void Library::init()
 	}
 
 	if ( !currentLibName_.empty() ){
-		load( currentLibName_ );
+		try {
+			load( currentLibName_ );
+		}
+		catch (...) {
+			unload();
+		}
 	}
 }
 

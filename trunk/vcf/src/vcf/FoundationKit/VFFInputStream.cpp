@@ -24,6 +24,7 @@ static Dictionary componentConstants;
 class FuncPtrHolder : public Object {
 public:
 	FuncPtrHolder(VFFInputStream::ComponentConstantFunc fp): funcPtr(fp){}
+	virtual ~FuncPtrHolder(){}
 
 	VFFInputStream::ComponentConstantFunc funcPtr;
 };

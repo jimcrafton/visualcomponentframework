@@ -14,6 +14,12 @@ where you installed the VCF.
 #endif
 
 
+
+
+
+
+
+
 namespace VCF  {
 
 /**
@@ -67,8 +73,7 @@ public:
 protected:
 	
 	GraphicsResourceBundle* resourceBundle_;
-	static std::map<String,LibraryApplication*>* namedLibraryAppMap;
-	static EnumeratorMapContainer<std::map<String,LibraryApplication*>, LibraryApplication*>* namedLibAppContainer;
+	static Map<String,LibraryApplication*> namedLibraryAppMap;
 };
 
 

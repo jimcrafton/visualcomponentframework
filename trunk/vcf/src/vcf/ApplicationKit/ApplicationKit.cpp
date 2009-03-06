@@ -39,9 +39,7 @@ static int ApplicationKitRefCount = 0;
 
 PropertyEditorManager* PropertyEditorManager::propertyEditorMgr = NULL;
 
-std::map<String,VCF::LibraryApplication*>* VCF::LibraryApplication::namedLibraryAppMap = NULL;
-
-EnumeratorMapContainer<std::map<String,VCF::LibraryApplication*>, VCF::LibraryApplication*>* LibraryApplication::namedLibAppContainer = NULL;
+//std::map<String,VCF::LibraryApplication*>* VCF::LibraryApplication::namedLibraryAppMap = NULL;
 
 CursorManager* CursorManager::cursorMgrInstance = NULL;
 
@@ -265,6 +263,7 @@ void ApplicationKit::terminate()
 		UIToolkit::closeToolkit();
 
 		GraphicsKit::terminate();
+		ApplicationKitRefCount = 0;
 	}
 }
 

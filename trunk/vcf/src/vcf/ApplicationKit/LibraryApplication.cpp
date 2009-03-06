@@ -14,8 +14,12 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/ApplicationResourceBundle.h"
 #include "vcf/ApplicationKit/DocumentManager.h"
 
+VCF::Map<VCF::String,VCF::LibraryApplication*> VCF::LibraryApplication::namedLibraryAppMap;
+
 
 using namespace VCF;
+
+
 
 LibraryApplication::LibraryApplication():
 	resourceBundle_(NULL)
@@ -57,9 +61,9 @@ void LibraryApplication::setName( const String& name )
 {
 	Component::setName( name );
 
-	std::map<String,LibraryApplication*>::iterator found = 	LibraryApplication::namedLibraryAppMap->find( getName() );
-	if ( found != LibraryApplication::namedLibraryAppMap->end() ) {
-		(*LibraryApplication::namedLibraryAppMap)[ getName() ] = this;
+	std::map<String,LibraryApplication*>::iterator found = 	LibraryApplication::namedLibraryAppMap.find( getName() );
+	if ( found != LibraryApplication::namedLibraryAppMap.end() ) {
+		LibraryApplication::namedLibraryAppMap[ getName() ] = this;
 	}
 }
 
@@ -75,12 +79,12 @@ GraphicsResourceBundle* LibraryApplication::getResourceBundle()
 
 Enumerator<VCF::LibraryApplication*>* LibraryApplication::getRegisteredLibraries()
 {
-	return LibraryApplication::namedLibAppContainer->getEnumerator();
+	return LibraryApplication::namedLibraryAppMap.getEnumerator();
 }
 
 void LibraryApplication::registerLibrary( VCF::LibraryApplication* libraryApp )
 {
-	(*LibraryApplication::namedLibraryAppMap)[ libraryApp->getName() ] = libraryApp;
+	LibraryApplication::namedLibraryAppMap[ libraryApp->getName() ] = libraryApp;
 
 	DocumentManager* mgr = DocumentManager::getDocumentManager();
 	if ( NULL != mgr ) {
@@ -91,9 +95,9 @@ void LibraryApplication::registerLibrary( VCF::LibraryApplication* libraryApp )
 
 void LibraryApplication::unRegisterLibrary( VCF::LibraryApplication* libraryApp )
 {
-	std::map<String,LibraryApplication*>::iterator found = 	LibraryApplication::namedLibraryAppMap->find( libraryApp->getName() );
-	if ( found != LibraryApplication::namedLibraryAppMap->end() ) {
-		LibraryApplication::namedLibraryAppMap->erase( found );
+	std::map<String,LibraryApplication*>::iterator found = 	LibraryApplication::namedLibraryAppMap.find( libraryApp->getName() );
+	if ( found != LibraryApplication::namedLibraryAppMap.end() ) {
+		LibraryApplication::namedLibraryAppMap.erase( found );
 	}
 }
 
@@ -101,8 +105,8 @@ VCF::LibraryApplication* LibraryApplication::getRegisteredLibraryApplication( co
 {
 	VCF::LibraryApplication* result = NULL;
 
-	std::map<String,LibraryApplication*>::iterator found = 	LibraryApplication::namedLibraryAppMap->find( libName );
-	if ( found != LibraryApplication::namedLibraryAppMap->end() ) {
+	std::map<String,LibraryApplication*>::iterator found = 	LibraryApplication::namedLibraryAppMap.find( libName );
+	if ( found != LibraryApplication::namedLibraryAppMap.end() ) {
 		result = found->second;
 	}
 
@@ -121,19 +125,12 @@ void LibraryApplication::unload( VCF::LibraryApplication* libraryApp )
 
 void LibraryApplication::initLibraryRegistrar()
 {
-	LibraryApplication::namedLibraryAppMap = new std::map<String,LibraryApplication*>();
-	LibraryApplication::namedLibAppContainer = new EnumeratorMapContainer<std::map<String,LibraryApplication*>, LibraryApplication*>();
-
-	LibraryApplication::namedLibAppContainer->initContainer( *LibraryApplication::namedLibraryAppMap );
+	
 }
 
 void LibraryApplication::clearLibraryRegistrar()
 {
-	delete LibraryApplication::namedLibraryAppMap;
-	LibraryApplication::namedLibraryAppMap = NULL;
-
-	delete LibraryApplication::namedLibAppContainer;
-	LibraryApplication::namedLibAppContainer = NULL;
+	LibraryApplication::namedLibraryAppMap.clear();
 }
 
 

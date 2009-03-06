@@ -255,7 +255,10 @@ bool DocumentManager::initFromResourceBundle( const String& resName, AbstractApp
 		delete res;
 	}
 	else {
-		throw RuntimeException( "You need to have a resource file named \"" + resName + "\" with the correct data in it."  );
+
+		if ( application == Application::getRunningInstance() ) {
+			throw RuntimeException( "You need to have a resource file named \"" + resName + "\" with the correct data in it."  );
+		}		
 	}
 
 	return result;
