@@ -422,6 +422,7 @@
 		<Unit filename="..\..\..\src\vcf\FoundationKit\NoSuchElementException.h" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\NoToolKitFoundException.h" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\NotImplementedException.h" />
+		<Unit filename="..\..\..\src\vcf\FoundationKit\Nullable.h" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\OSHandlePeer.h" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\Object.cpp" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\Object.h" />
@@ -430,13 +431,25 @@
 		<Unit filename="..\..\..\src\vcf\FoundationKit\PackageInfo.cpp" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\PackageInfo.h" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\Persistable.h" />
-		<Unit filename="..\..\..\src\vcf\FoundationKit\PosixCondition.cpp" />
+		<Unit filename="..\..\..\src\vcf\FoundationKit\PosixCondition.cpp">
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
+		</Unit>
 		<Unit filename="..\..\..\src\vcf\FoundationKit\PosixCondition.h" />
-		<Unit filename="..\..\..\src\vcf\FoundationKit\PosixMutex.cpp" />
+		<Unit filename="..\..\..\src\vcf\FoundationKit\PosixMutex.cpp">
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
+		</Unit>
 		<Unit filename="..\..\..\src\vcf\FoundationKit\PosixMutex.h" />
-		<Unit filename="..\..\..\src\vcf\FoundationKit\PosixThread.cpp" />
+		<Unit filename="..\..\..\src\vcf\FoundationKit\PosixThread.cpp">
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
+		</Unit>
 		<Unit filename="..\..\..\src\vcf\FoundationKit\PosixThread.h" />
-		<Unit filename="..\..\..\src\vcf\FoundationKit\PosixThreadManagerPeer.cpp" />
+		<Unit filename="..\..\..\src\vcf\FoundationKit\PosixThreadManagerPeer.cpp">
+			<Option target="linux_Debug" />
+			<Option target="linux_Release" />
+		</Unit>
 		<Unit filename="..\..\..\src\vcf\FoundationKit\PosixThreadManagerPeer.h" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\ProcessException.h" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\ProcessIORedirectionPeer.h" />
