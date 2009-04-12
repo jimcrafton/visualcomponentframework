@@ -353,6 +353,7 @@ namespace VCF{
 
 #include "vcf/FoundationKit/Enum.h"
 #include "vcf/FoundationKit/VariantData.h"
+#include "vcf/FoundationKit/Nullable.h"
 #include "vcf/FoundationKit/Class.h"
 #include "vcf/FoundationKit/InterfaceClass.h"
 
