@@ -220,8 +220,8 @@ public:
 
 protected:
 
-	//don't allow copy constructorys
-	StringTokenizer( const StringTokenizer& ) {};
+	//don't allow copy constructors
+	StringTokenizer( const StringTokenizer& source) : Object(source) {};
 
 	StringTokenizer& operator=( const StringTokenizer& rhs ) {
 		return *this;
