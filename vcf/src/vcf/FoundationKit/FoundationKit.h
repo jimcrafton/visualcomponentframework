@@ -400,7 +400,7 @@ namespace VCF{
 #include "vcf/FoundationKit/ProcessPeer.h"
 #include "vcf/FoundationKit/XMLParser.h"
 #include "vcf/FoundationKit/VariantDataStream.h"
-
+#include "vcf/FoundationKit/Base64Codec.h"
 
 
 
