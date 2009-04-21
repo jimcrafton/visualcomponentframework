@@ -33,72 +33,7 @@
 
 
 
-typedef unsigned int uint32;
-typedef unsigned char uchar;
-typedef unsigned short ushort;
-typedef wchar_t U16Char; //16 bit unicode character codepoint
-
-typedef std::basic_string<U16Char> String;
-
-
-
-
-
-class HiResClock {
-public:
-
-	HiResClock(){
-		QueryPerformanceFrequency( (LARGE_INTEGER*)&frequency_ );
-		memset( &performanceCounter1_, 0, sizeof(performanceCounter1_) );
-		memset( &performanceCounter2_, 0, sizeof(performanceCounter2_) );
-	}
-
-
-
-	void start() {		
-		QueryPerformanceCounter( (LARGE_INTEGER*)&performanceCounter1_ );
-	}
-
-	void stop() {
-		QueryPerformanceCounter( (LARGE_INTEGER*)&performanceCounter2_ );
-	}
-
-	void clear() {
-		//QueryPerformanceFrequency( &frequency_ );
-		memset( &performanceCounter1_, 0, sizeof(performanceCounter1_) );
-		memset( &performanceCounter2_, 0, sizeof(performanceCounter2_) );
-	}
-
-	operator double() const {
-		return duration();
-	}
-
-	double duration() const {
-		return ((double)(performanceCounter2_ - performanceCounter1_))/((double)frequency_);
-	}
-protected:
-	__int64 frequency_;
-	__int64 performanceCounter1_;
-	__int64 performanceCounter2_;
-private:
-	HiResClock( const HiResClock& rhs );
-
-
-	HiResClock& operator=( const HiResClock& rhs );
-};
-
-
-
-inline size_t RoundUp(size_t cb, size_t units)
-{
-    return ((cb + units - 1) / units) * units;
-}
-
-//#define HAVE_MMX
-
-/**
-	Code page values for the locale:
-	*/
+//Code page values for the locale:
 enum LanguageEncoding { 
 	leUnknown = -1,
 	leDefault = 0,
@@ -256,24 +191,105 @@ enum LanguageEncoding {
 };
 
 
+
+
+
+
+typedef unsigned int uint32;
+typedef unsigned char uchar;
+typedef unsigned short ushort;
+typedef wchar_t U16Char; //16 bit unicode character codepoint
+
+typedef std::basic_string<U16Char> String;
+
+
+
+
+
+class HiResClock {
+public:
+
+	HiResClock(){
+		QueryPerformanceFrequency( (LARGE_INTEGER*)&frequency_ );
+		memset( &performanceCounter1_, 0, sizeof(performanceCounter1_) );
+		memset( &performanceCounter2_, 0, sizeof(performanceCounter2_) );
+	}
+
+
+
+	void start() {		
+		QueryPerformanceCounter( (LARGE_INTEGER*)&performanceCounter1_ );
+	}
+
+	void stop() {
+		QueryPerformanceCounter( (LARGE_INTEGER*)&performanceCounter2_ );
+	}
+
+	void clear() {
+		//QueryPerformanceFrequency( &frequency_ );
+		memset( &performanceCounter1_, 0, sizeof(performanceCounter1_) );
+		memset( &performanceCounter2_, 0, sizeof(performanceCounter2_) );
+	}
+
+	operator double() const {
+		return duration();
+	}
+
+	double duration() const {
+		return ((double)(performanceCounter2_ - performanceCounter1_))/((double)frequency_);
+	}
+protected:
+	__int64 frequency_;
+	__int64 performanceCounter1_;
+	__int64 performanceCounter2_;
+private:
+	HiResClock( const HiResClock& rhs );
+
+
+	HiResClock& operator=( const HiResClock& rhs );
+};
+
+
+
+inline size_t RoundUp(size_t cb, size_t units)
+{
+    return ((cb + units - 1) / units) * units;
+}
+
+//#define HAVE_MMX
+
+
 class StringPool;
 class FastString;
 
 
 union MemHeader {
 	struct {
-		MemHeader* prev;			
+		//MemHeader* prev;			
 		size_t  size;
 		unsigned char* next;
 		unsigned char* limit;
 		size_t refcount;
 	};
-	U16Char alignment;
+	U16Char alignment; //here to align the struct
 };
 
 
 class StringData {
 private:
+
+	StringData(): strPtr(NULL), 
+					length(0), 
+					refcount(0),
+					memHdr(NULL),
+					pool(NULL),
+					hashID(0),
+					ansiStrPtr(NULL){}
+
+
+
+
+
 	friend class StringPool;
 	friend class FastString;
 
@@ -295,6 +311,8 @@ public:
 		NoEntry = (uint32)-1,
 	};
 
+	size_t totalMemHdrsAllocated;
+	size_t totMemHdrsFreed;
 
 	StringPool();
 	~StringPool();	
@@ -406,6 +424,8 @@ public:
 
 	StringData* find( const U16Char* str, size_t length );
 
+	void debug();
+
 	static StringData* addString( const U16Char* str, size_t length );
 	static StringData* addString( const char* str, size_t length, LanguageEncoding encoding );
 
@@ -474,6 +494,13 @@ private:
 
 	unsigned char*  next_;   // first available byte
 	unsigned char*  limit_;  // one past last available byte
+
+
+	std::vector<MemHeader*> allocatedHdrs_;
+
+	MemHeader* nextHdr( MemHeader* current );
+	MemHeader* prevHdr( MemHeader* current );
+
 	MemHeader* currentHdr_;   // current block
 	size_t   granularity_;
 	std::vector<size_t> freeEntries_;	
@@ -482,6 +509,7 @@ private:
 	bool compactMemory_;
 
 
+	bool freeStringData( StringData* handle );
 	
 	typedef std::multimap<uint32,StringData*> StringMapT;
 
@@ -529,6 +557,47 @@ DWORD StringPool::threadPoolTLSIndex = 0;
 StringPool::StringPoolTLSGuard StringPool::poolTLSGuard;
 std::deque<StringPool*> StringPool::stringPoolStack;
 
+
+void StringPool::debug()
+{
+	printf( ">>>>>>>>>StringPool::debug()<<<<<<<<<<<\n" );
+	printf( "allocatedHdrs length: %u\n", allocatedHdrs_.size() );
+
+	std::vector<MemHeader*>::iterator it =  allocatedHdrs_.begin();
+	while ( it != allocatedHdrs_.end() ) {
+		MemHeader* m = *it;
+		
+		printf( "MemHeader %p, refc: %u, size: %u\n", m, m->refcount, m->size );
+		++it;
+	}
+
+
+	StringMapIter it2 = this->stringMap_.begin();
+	size_t prevHash = 0;
+
+	printf( "strings in map: %u\n", stringMap_.size() );
+	while( it2 != stringMap_.end() ) {
+		size_t h = it2->first;
+		StringData* s = it2->second;
+
+		if ( prevHash != h ) {
+			printf( "Hash key: %u\n", h );
+		}
+
+		printf( "\tStr %p[%u, refc: %u, hdr: %p] : %.*S%s\n", 
+				s, 
+				s->length, 
+				s->refcount, 
+				s->memHdr, 
+				(s->length > 20) ? 20 : s->length, 
+				s->strPtr,
+				(s->length > 20) ? "..." : "" );
+
+		prevHash = h;
+
+		++it2;
+	}	
+}
 
 
 StringPool* StringPool::getUsablePool()
@@ -742,8 +811,11 @@ StringPool::StringPool():
 	granularity_(0),
 	totalBytesAllocated_(0),
 	threadID_(0),
-	compactMemory_(false)
+	compactMemory_(false),
+	totalMemHdrsAllocated(0),
+	totMemHdrsFreed(0)
 {
+	
 	SYSTEM_INFO si;
 	GetSystemInfo(&si);
 	granularity_ = RoundUp(sizeof(MemHeader) + MIN_CBCHUNK,
@@ -755,12 +827,72 @@ StringPool::StringPool():
 
 StringPool::~StringPool()
 {
+	/*
 	MemHeader* hdrPtr = currentHdr_;
 	while (hdrPtr) {
-		MemHeader hdr = *hdrPtr;
-		VirtualFree(hdr.prev, hdr.size, MEM_RELEASE);
-		hdrPtr = hdr.prev;
+		MemHeader* tmpPtr = hdrPtr;
+		hdrPtr = tmpPtr->prev;
+		VirtualFree(tmpPtr, tmpPtr->size, MEM_RELEASE);
+
+		totMemHdrsFreed ++;
 	}
+	*/
+
+
+	std::vector<MemHeader*>::iterator it = allocatedHdrs_.begin();
+	while ( it != allocatedHdrs_.end() ) {
+		MemHeader* hdr = *it;
+
+		size_t sz = hdr->size;
+		if ( VirtualFree(hdr, hdr->size, MEM_RELEASE) ) {
+			totalBytesAllocated_ -= sz;
+		}
+		totMemHdrsFreed ++;
+
+		++it;
+	}
+
+	allocatedHdrs_.clear();
+
+	printf( "StringPool::~StringPool() totalBytesAllocated_: %u\n", totalBytesAllocated_ );
+}
+
+
+
+MemHeader* StringPool::nextHdr( MemHeader* current ) 
+{
+	MemHeader* result = NULL;
+
+	if ( allocatedHdrs_.empty() ) {
+		return NULL;
+	}
+
+	std::vector<MemHeader*>::iterator found = std::find( allocatedHdrs_.begin(), allocatedHdrs_.end(), current );
+	if ( found != allocatedHdrs_.end() ) {
+		++found;
+		if ( found != allocatedHdrs_.end() ) {
+			result = *found;
+		}
+	}
+
+	return result;
+}
+
+MemHeader* StringPool::prevHdr( MemHeader* current )
+{
+	MemHeader* result = NULL;
+
+	if ( allocatedHdrs_.empty() ) {
+		return NULL;
+	}
+
+	std::vector<MemHeader*>::iterator found = std::find( allocatedHdrs_.begin(), allocatedHdrs_.end(), current );
+	if ( found != allocatedHdrs_.end() && found != allocatedHdrs_.begin() ) {
+		--found;		
+		result = *found;
+	}
+
+	return result;
 }
 
 StringData* StringPool::allocate( size_t length )
@@ -779,7 +911,6 @@ StringData* StringPool::allocate( size_t length )
 		next_ += bytesLength;
 		currentHdr_->next = next_;
 		currentHdr_->refcount ++;
-
 		return data;
 	}
 	
@@ -802,7 +933,7 @@ StringData* StringPool::allocate( size_t length )
 	
 	limit_ = reinterpret_cast<unsigned char*>(nextBytes + allocSize);
 	MemHeader* currentHdr = reinterpret_cast<MemHeader*>(nextBytes);
-	currentHdr->prev = currentHdr_;
+//	currentHdr->prev = currentHdr_;
 	currentHdr->size = allocSize;
 	currentHdr->refcount = 0;
 	
@@ -811,6 +942,10 @@ StringData* StringPool::allocate( size_t length )
 	next_ = reinterpret_cast<unsigned char*>(currentHdr + sizeof(U16Char));
 	currentHdr_->next = next_;
 	currentHdr_->limit = limit_;
+	
+	allocatedHdrs_.push_back( currentHdr_ );
+
+	totalMemHdrsAllocated ++;
 	
 	return allocate(length);
 }
@@ -855,7 +990,7 @@ StringData* StringPool::allocate(const U16Char* begin, const U16Char* end)
 	
 	limit_ = reinterpret_cast<unsigned char*>(nextBytes + allocSize);
 	MemHeader* currentHdr = reinterpret_cast<MemHeader*>(nextBytes);
-	currentHdr->prev = currentHdr_;
+//	currentHdr->prev = currentHdr_;
 	currentHdr->size = allocSize;
 	currentHdr->refcount = 0;
 	
@@ -864,6 +999,9 @@ StringData* StringPool::allocate(const U16Char* begin, const U16Char* end)
 	next_ = reinterpret_cast<unsigned char*>(currentHdr + sizeof(U16Char));
 	currentHdr_->next = next_;
 	currentHdr_->limit = limit_;
+	allocatedHdrs_.push_back( currentHdr_ );
+
+	totalMemHdrsAllocated ++;
 
 
 	return allocate(begin, end);
@@ -893,7 +1031,6 @@ StringData* StringPool::find( const U16Char* str, size_t length )
 		if ( data->length == length ) {
 			result = data;
 		}
-		
 	}
 	else {
 		while ( current != found.second ) {
@@ -939,29 +1076,13 @@ StringData* StringPool::transformAnsiToUnicode( const char* str, size_t length, 
 	else {
 		size_t bytesLength = sizeof(StringData) + (newStr->length * sizeof(U16Char)) + sizeof(U16Char);
 
+		printf( "reclaim the memory found an existing for transformAnsiToUnicode()\n" );
 		//reclaim the memory, we don't need it after all, since we found an existing
 		//match
 		next_ -= bytesLength;
 		totalBytesAllocated_ -= bytesLength;
 
-
-	//	currentHdr_ = currentHdr;
-	//next_ = reinterpret_cast<unsigned char*>(currentHdr + sizeof(U16Char));
-
-
-		if ( next_ == reinterpret_cast<unsigned char*>(currentHdr_ + sizeof(U16Char)) ) {
-			//at begining , maybe we take out the whole thing
-			if ( NULL != currentHdr_->prev ) {
-				if ( currentHdr_->prev->next < currentHdr_->prev->limit ) {
-					MemHeader* tmp = currentHdr_;
-					currentHdr_ = currentHdr_->prev;
-					next_ = currentHdr_->next;
-					limit_ = currentHdr_->limit;
-
-					VirtualFree(tmp, 0, MEM_RELEASE);
-				}
-			}
-		}
+		freeStringData( newStr );
 	}
 
 	return result;
@@ -1068,6 +1189,118 @@ uint32 StringPool::incStringRefcount( StringData* data )
 	return 0;
 }
 
+
+
+bool StringPool::freeStringData( StringData* data )
+{
+	bool result = true;
+
+	if ( data->memHdr->refcount > 0 ) {
+		data->memHdr->refcount --;
+	}
+	else {
+		if ( compactsMemory() ) {
+			//printf( "Memhdr refcount is already at 0!!!\n" );
+		}
+	}
+	if ( 0 == data->memHdr->refcount ) {
+		if ( compactsMemory() ) {
+			bool deleteMemHdr = true;
+
+			if ( data->memHdr == currentHdr_ ) {
+				if ( next_ == reinterpret_cast<unsigned char*>(currentHdr_ + sizeof(U16Char)) ) {
+					//at begining , maybe we take out the whole thing
+
+					MemHeader* prev = this->prevHdr( currentHdr_ );
+
+					if ( NULL != prev ) {
+						if ( prev->next < prev->limit ) {							
+							currentHdr_ = prev;
+							next_ = currentHdr_->next;
+							limit_ = currentHdr_->limit;
+							deleteMemHdr = true;
+						}
+					}
+				}
+				else {
+					deleteMemHdr = false;
+				}
+			}				
+
+			StringPool::StringMapIter it = stringMap_.begin();
+			size_t count = 0;
+			std::vector<StringPool::StringMapIter> removeEntries(stringMap_.size());
+			while ( it != stringMap_.end() ) {
+				StringData* strData = it->second;
+				if ( strData->memHdr == data->memHdr ) {
+
+					if ( strData->refcount > 0 ) {
+						printf( "String data %p[%u characters] {%.*S%s} still has ref count(%u) > 0\n", 
+							strData, 
+							strData->length, 
+							(strData->length > 20) ? 20 : strData->length, 
+							strData->strPtr,  
+							(strData->length > 20) ? "..." : "",
+							strData->refcount );
+
+
+						result = false;
+						deleteMemHdr = false;
+
+						//break;
+						//return result;
+					}
+					else {
+						removeEntries[count] = it;
+						count++;
+					}
+
+					++it;						
+				}
+				else {
+					++it;
+				}
+			}
+
+			for (size_t ri=0;ri<count;ri++) {
+				stringMap_.erase(removeEntries[ri]);
+			}
+			
+
+			if ( deleteMemHdr ) {
+				//printf( "yanked %u strings\n", count );
+				size_t bytesFreed = data->memHdr->size;
+				void* ptr = data->memHdr;
+
+				std::vector<MemHeader*>::iterator found = 
+					std::find( allocatedHdrs_.begin(), 
+								allocatedHdrs_.end(), data->memHdr );
+				if ( found != allocatedHdrs_.end() ) {
+					allocatedHdrs_.erase( found );
+				}
+
+				if ( VirtualFree(data->memHdr, 0, MEM_RELEASE) ) {
+					totalBytesAllocated_ -= bytesFreed;
+					//printf( "Freed %u bytes of data %p\n", bytesFreed, ptr );
+
+					totMemHdrsFreed ++;
+				}
+				else {
+					printf( "VirtualFree failed. GetLastError(): %d\n", GetLastError() );
+					result = false;					
+				}
+			}
+			else if ( !deleteMemHdr && result ) {	
+				//reset it back to the beginning
+				next_ = reinterpret_cast<unsigned char*>(currentHdr_ + sizeof(U16Char));
+				currentHdr_->next = next_;
+				limit_ = currentHdr_->limit;
+			}
+		}
+	}
+	return result;
+}
+
 uint32 StringPool::decStringRefcount( StringData* data )
 {
 	if ( NULL != data ) {
@@ -1075,63 +1308,17 @@ uint32 StringPool::decStringRefcount( StringData* data )
 		if ( pool->getThreadID() == ::GetCurrentThreadId() ) {
 			if ( data->refcount > 0 ) {
 				data->refcount--;
-
-				if ( 0 == data->refcount ) {
-					if ( data->memHdr->refcount > 0 ) {
-						data->memHdr->refcount --;
-					}
-					else {
-						if ( pool->compactsMemory() ) {
-							printf( "Memhdr refcount is already at 0!!!\n" );
-						}
-					}
-					if ( 0 == data->memHdr->refcount ) {
-						if ( pool->compactsMemory() ) {
-							if ( data->memHdr != pool->currentHdr_ ) {
-								//MemHeader* tmp = data->memHdr;
-								//currentHdr_ = currentHdr_->prev;
-								//next_ = currentHdr_->next;
-								//limit_ = currentHdr_->limit;
-
-								StringPool::StringMapIter it = pool->stringMap_.begin();
-								size_t count = 0;
-								while ( it != pool->stringMap_.end() ) {
-									if ( it->second->memHdr == data->memHdr ) {
-
-										if ( it->second->refcount != 0 ) {
-											printf( "String data %p {%ls} still has ref count(%u) > 0\n", it->second, it->second->strPtr,  it->second->refcount );
-											return 0;
-										}
-
-										StringPool::StringMapIter tmp = it;
-										++it;
-										pool->stringMap_.erase(tmp);
-										count++;
-									}
-									else {
-										++it;
-									}
-								}
-								printf( "yanked %u strings\n", count );
-								size_t bytesFreed = data->memHdr->size;
-								void* ptr = data->memHdr;
-								if ( VirtualFree(data->memHdr, 0, MEM_RELEASE) ) {
-									pool->totalBytesAllocated_ -= bytesFreed;
-									printf( "Freed %u bytes of data %p\n", bytesFreed, ptr );
-								}
-								else {
-									printf( "VirtualFree failed. GetLastError(): %d\n", GetLastError() );
-								}
-
-								return 0;
-
-							}
-						}
-					}
-
-					return 0;
-				}
 			}
+			else {
+				//printf( "String already at 0 refcount!\n" );
+			}
+
+			if ( 0 == data->refcount ) {				
+				if ( !pool->freeStringData( data ) ) {
+					printf( "pool->freeStringData() failed!\n" );
+				}
+				return 0;
+			}			
 		}
 		else {
 			//we need to lock it?
@@ -1502,10 +1689,8 @@ public:
 		return FastString::npos;
 	}
 
-
-
-
 	//os specific string type conversion
+#ifdef WIN32	
 	//win32
 
 #ifdef _MSC_VER 
@@ -1566,6 +1751,7 @@ public:
 		}
 		return *this;
 	}
+#endif
 
 	//stl conversion support
 	operator std::wstring() const {
@@ -1790,7 +1976,7 @@ ChDictionary::ChDictionary()
 		i++;
 	}*/
 
-	/*
+	
 	std::locale old = std::locale::global(std::locale(".950"));
 
 	std::wifstream src;
@@ -1800,7 +1986,7 @@ ChDictionary::ChDictionary()
 	size_t sz = src.tellg();
 	src.seekg( 0, std::ios_base::beg );
 	
-	unsigned short* data = new unsigned short[ sz ];
+	wchar_t * data = new wchar_t [ sz ];
 
 	src.read( data, sz );
 
@@ -1809,9 +1995,9 @@ ChDictionary::ChDictionary()
 	delete [] data;
 
 
-	const unsigned short* P = chStr.c_str();
-	const unsigned short* start = P;
-	const unsigned short* line = start;
+	const wchar_t* P = chStr.c_str();
+	const wchar_t* start = P;
+	const wchar_t* line = start;
 	wstring s;
 	while ( P-start < sz ) {
 		if ( *P == L'\r' || *P == L'\n' ) {
@@ -1834,7 +2020,7 @@ ChDictionary::ChDictionary()
 		}
 		P++;
 	}
-*/
+
 
 /*
 	//StringTokenizer tok(chStr,"\r\n");
@@ -2093,7 +2279,7 @@ void part2()
 		ChDictionary2 dict2;
 		clock.stop();
 
-		std::cout << dict2.Length() << std::endl;		
+		std::cout << dict2.Length() << std::endl;
 		printf( "FastString (ChDictionary2) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
 	}
 
@@ -2101,6 +2287,8 @@ void part2()
 
 
 	{
+		printf( "num entries in string pool before ChDictionary3() : %u\n", StringPool::getUsablePool()->uniqueEntries() );
+
 		ChDictionary3 dict3;
 		clock.start();
 		dict3.doit();
@@ -2108,10 +2296,15 @@ void part2()
 
 		std::cout << dict3.Length() << std::endl;		
 		printf( "FastString (ChDictionary3) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
-		printf( "num entries in string pool: %u\n", StringPool::getUsablePool()->uniqueEntries() );
+		printf( "num entries in string pool after ChDictionary3::doit() : %u\n", StringPool::getUsablePool()->uniqueEntries() );
 	}
+	printf( "num entries in string pool after ChDictionary3::~ChDictionary3() : %u\n", StringPool::getUsablePool()->uniqueEntries() );
+
+	StringPool::getUsablePool()->debug();
 
 	{
+		printf( "num entries in string pool before ChDictionary3() : %u\n", StringPool::getUsablePool()->uniqueEntries() );
+
 		ChDictionary3 dict3;
 		clock.start();
 		dict3.doit();
@@ -2119,10 +2312,16 @@ void part2()
 
 		std::cout << dict3.Length() << std::endl;		
 		printf( "FastString (ChDictionary3) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
-		printf( "num entries in string pool: %u\n", StringPool::getUsablePool()->uniqueEntries() );
+	
+		printf( "num entries in string pool after ChDictionary3::doit() : %u\n", StringPool::getUsablePool()->uniqueEntries() );
 	}
+	printf( "num entries in string pool after ChDictionary3::~ChDictionary3() : %u\n", StringPool::getUsablePool()->uniqueEntries() );
+
+	
 
 	{
+		printf( "num entries in string pool before ChDictionary3() : %u\n", StringPool::getUsablePool()->uniqueEntries() );
+
 		ChDictionary3 dict3;
 		clock.start();
 		dict3.doit();
@@ -2131,16 +2330,27 @@ void part2()
 		std::cout << dict3.Length() << std::endl;		
 		printf( "FastString (ChDictionary3) impl took %0.8f seconds or %0.4f milliseconds\n", clock.duration() , (clock.duration()*1000.0) );
 
-		printf( "num entries in string pool: %u\n", StringPool::getUsablePool()->uniqueEntries() );
+		printf( "num entries in string pool after ChDictionary3::doit() : %u\n", StringPool::getUsablePool()->uniqueEntries() );
+
 		printf( "total bytes in string pool: %u\n", StringPool::getUsablePool()->totalBytesAllocated() );
+		printf( "totalMemHdrsAllocated in string pool: %u\n",StringPool::getUsablePool()->totalMemHdrsAllocated );
+		printf( "totMemHdrsFreed in string pool: %u\n",StringPool::getUsablePool()->totMemHdrsFreed );
 
+		
 		int idx = 22;
 		printf( "item[%d].english: %ls\n", idx, dict3.Item(idx).english.c_str() );
 		printf( "item[%d].pinyin: %ls\n", idx, dict3.Item(idx).pinyin.c_str() );
 		printf( "item[%d].trad: %ls\n", idx, dict3.Item(idx).trad.c_str() );
 	}
-
+	printf( "num entries in string pool after ChDictionary3::~ChDictionary3() : %u\n", StringPool::getUsablePool()->uniqueEntries() );
 	
+
+	printf( "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n");
+	printf( "num entries in string pool: %u\n", StringPool::getUsablePool()->uniqueEntries() );
+	printf( "total bytes in string pool: %u\n", StringPool::getUsablePool()->totalBytesAllocated() );
+	printf( "totalMemHdrsAllocated in string pool: %u\n",StringPool::getUsablePool()->totalMemHdrsAllocated );
+	printf( "totMemHdrsFreed in string pool: %u\n",StringPool::getUsablePool()->totMemHdrsFreed );
+
 }
 
 
@@ -2169,7 +2379,7 @@ int main( int argc, char** argv )
 
 //	FoundationKit::init( argc, argv );
 
-	
+	{
 	StringPool stringPool;
 	stringPool.makeCurrentPool();
 	stringPool.setCompactsMemory(true);
@@ -2259,6 +2469,18 @@ int main( int argc, char** argv )
 	clock.stop();
 
 	printf( "fs Length %u, (f2 = f) took %0.8f seconds\n",f2.length(),clock.duration() );
+
+
+	clock.start();
+	wcslen( BIGSTR2 );
+	clock.stop();
+	printf( "wcslen( BIGSTR2 ) took %0.8f seconds\n",clock.duration() );
+
+	clock.start();
+	f.length();
+	clock.stop();
+	printf( "f.length() took %0.8f seconds\n",clock.duration() );
+
 
 	printf( "===============================================================================\n" );
 	printf( "===============================================================================\n" );
@@ -2374,7 +2596,18 @@ int main( int argc, char** argv )
 	printf( "num entries in string pool: %u\n", StringPool::getUsablePool()->uniqueEntries() );
 	printf( "total bytes in string pool: %u\n", StringPool::getUsablePool()->totalBytesAllocated() );
 
-	Sleep(10000000);
+	printf( "totalMemHdrsAllocated in string pool: %u\n", StringPool::getUsablePool()->totalMemHdrsAllocated );
+	printf( "totMemHdrsFreed in string pool: %u\n", StringPool::getUsablePool()->totMemHdrsFreed );
+
+	}
+
+	printf( "num entries in string pool: %u\n", StringPool::getUsablePool()->uniqueEntries() );
+	printf( "total bytes in string pool: %u\n", StringPool::getUsablePool()->totalBytesAllocated() );
+
+	printf( "totalMemHdrsAllocated in string pool: %u\n",StringPool::getUsablePool()->totalMemHdrsAllocated );
+	printf( "totMemHdrsFreed in string pool: %u\n",StringPool::getUsablePool()->totMemHdrsFreed );
+
+//	Sleep(10000000);
 
 //	FoundationKit::terminate();
 
