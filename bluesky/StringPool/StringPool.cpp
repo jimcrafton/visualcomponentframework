@@ -25,6 +25,10 @@
 
 
 
+
+
+
+
 #include <fstream>
 #include <iostream> // for cin/cout
 
@@ -251,6 +255,47 @@ private:
 
 
 
+class ProfileIt {
+	HiResClock clock;
+	int line;
+public:
+	ProfileIt():line(-1){
+		clock.start();
+	}
+
+	ProfileIt(int l):line(l){
+		clock.start();
+	}
+
+	ProfileIt(const char* s, int l):line(l){
+		OutputDebugString(s);
+		clock.start();
+	}
+
+	~ProfileIt() {
+		clock.stop();
+		char tmp[256];
+
+		sprintf( tmp, "line[%u] took %0.8f s\n", line, clock.duration() );
+		OutputDebugString(tmp);
+	}
+};
+
+
+//	#define _PROFILE_ME_	ProfileIt p(__LINE__); \
+//		\
+//
+
+//	#define _PROFILE_ME_S_(s)	ProfileIt p(s,__LINE__); \
+//		\
+//
+
+#define _PROFILE_ME_	
+#define _PROFILE_ME_S_(s)	
+
+
+
+
 inline size_t RoundUp(size_t cb, size_t units)
 {
     return ((cb + units - 1) / units) * units;
@@ -275,19 +320,31 @@ union MemHeader {
 };
 
 
+class StringData;
+
+
+class StringExtraData {
+public:
+	StringExtraData():encoding(leDefault),
+						subStrStart(StringExtraData::SubStrNPos),
+						subStrEnd(StringExtraData::SubStrNPos),
+						substrParent(NULL),
+						nextSubstr(NULL) {}
+	enum {
+		SubStrNPos = (size_t)-1,
+	};
+
+	LanguageEncoding encoding;
+	size_t subStrStart; 
+	size_t subStrEnd;
+	StringData* substrParent;
+	StringData* nextSubstr;
+};
+
 class StringData {
 private:
 
-	StringData(): strPtr(NULL), 
-					length(0), 
-					refcount(0),
-					memHdr(NULL),
-					pool(NULL),
-					hashID(0),
-					ansiStrPtr(NULL){}
-
-
-
+	StringData(){}
 
 
 	friend class StringPool;
@@ -300,7 +357,17 @@ private:
 	StringPool* pool;	
 	uint32 hashID;
 	char* ansiStrPtr;
+	StringExtraData* extra;
 };	
+
+
+
+
+
+
+
+
+
 
 
 class StringPool {
@@ -311,8 +378,6 @@ public:
 		NoEntry = (uint32)-1,
 	};
 
-	size_t totalMemHdrsAllocated;
-	size_t totMemHdrsFreed;
 
 	StringPool();
 	~StringPool();	
@@ -393,9 +458,10 @@ public:
 	static uint32 hash( const U16Char* str, size_t length )
     {
         uint32 result = 0;
+		size_t len = length < 256 ? length : 256;
 #if 1
 		result = 0;
-		for (size_t i=0;i<length;i+=1 ) {        
+		for (size_t i=0;i<len;i+=1 ) {        
             result = str[i] + (result << 6) + (result << 16) - result;			
 		}
 #else
@@ -422,9 +488,11 @@ public:
     }
 
 
-	StringData* find( const U16Char* str, size_t length );
+	StringData* find( const U16Char* str, size_t length, const uint32& hash = 0 );
 
 	void debug();
+
+	static bool isSubString( StringData* handle );
 
 	static StringData* addString( const U16Char* str, size_t length );
 	static StringData* addString( const char* str, size_t length, LanguageEncoding encoding );
@@ -434,6 +502,12 @@ public:
 	static bool equals( StringData* lhs, StringData* rhs );
 	static int compare( StringData* lhs, StringData* rhs );
 	
+	static StringData* insert( StringData* src, StringData* dest, size_t insertPos );
+	static StringData* insert( const U16Char* src, size_t srcLength, StringData* dest, size_t insertPos );
+	static StringData* insert( U16Char ch, StringData* dest, size_t insertPos, size_t repeatCount );
+	static StringData* erase( StringData* src, size_t startPos, size_t length );
+	static StringData* subStr( StringData* src, size_t startPos, size_t length );
+
 	static char* transformToAnsi( StringData* handle, LanguageEncoding encoding );	
 	
 	size_t uniqueEntries() const {
@@ -503,15 +577,19 @@ private:
 
 	MemHeader* currentHdr_;   // current block
 	size_t   granularity_;
-	std::vector<size_t> freeEntries_;	
+	
 	size_t totalBytesAllocated_;
 	uint32 threadID_;
 	bool compactMemory_;
 
+	void initStringData( StringData* data, const U16Char* strPtr, size_t length );
+						
 
-	bool freeStringData( StringData* handle );
+	void freeStringData( StringData* handle );
+	void freeMemHeader( MemHeader* memHdr );
 	
 	typedef std::multimap<uint32,StringData*> StringMapT;
+	//typedef std::map<uint32,StringData*> StringMapT;
 
 	typedef StringMapT::iterator StringMapIter;
 	typedef StringMapT::const_iterator StringMapConstIter;
@@ -811,9 +889,7 @@ StringPool::StringPool():
 	granularity_(0),
 	totalBytesAllocated_(0),
 	threadID_(0),
-	compactMemory_(false),
-	totalMemHdrsAllocated(0),
-	totMemHdrsFreed(0)
+	compactMemory_(false)
 {
 	
 	SYSTEM_INFO si;
@@ -847,7 +923,7 @@ StringPool::~StringPool()
 		if ( VirtualFree(hdr, hdr->size, MEM_RELEASE) ) {
 			totalBytesAllocated_ -= sz;
 		}
-		totMemHdrsFreed ++;
+
 
 		++it;
 	}
@@ -900,13 +976,8 @@ StringData* StringPool::allocate( size_t length )
 	size_t bytesLength = sizeof(StringData) + (length * sizeof(U16Char)) + sizeof(U16Char);
 	if ((next_ + bytesLength) <= limit_) {
 		StringData* data = (StringData*)next_;
-		data->length = length;
-		data->memHdr = currentHdr_;
-		data->pool = this;
-		data->refcount = 0;
-		data->strPtr = (U16Char*) (next_ + sizeof(StringData));
-		data->hashID = 0;
-		data->ansiStrPtr = 0;
+
+		initStringData( data, NULL, length );
 
 		next_ += bytesLength;
 		currentHdr_->next = next_;
@@ -944,10 +1015,25 @@ StringData* StringPool::allocate( size_t length )
 	currentHdr_->limit = limit_;
 	
 	allocatedHdrs_.push_back( currentHdr_ );
-
-	totalMemHdrsAllocated ++;
 	
 	return allocate(length);
+}
+
+void StringPool::initStringData( StringData* data, const U16Char* strPtr, size_t length )
+{
+	data->length = length;
+	data->memHdr = currentHdr_;
+	data->pool = this;
+	data->refcount = 0;
+	data->strPtr = (U16Char*) (next_ + sizeof(StringData));
+	data->hashID = 0;
+	data->ansiStrPtr = 0;
+	data->extra = NULL;
+
+	if ( NULL != strPtr ) {
+		StringPool::wmemcpy( data->strPtr, strPtr, data->length );
+		data->hashID = StringPool::hash(data->strPtr, data->length);
+	}
 }
 
 StringData* StringPool::allocate(const U16Char* begin, const U16Char* end)
@@ -955,19 +1041,12 @@ StringData* StringPool::allocate(const U16Char* begin, const U16Char* end)
 	size_t length = sizeof(StringData) + ((end - begin) * sizeof(U16Char)) + sizeof(U16Char);
 	if ((next_ + length) <= limit_) {
 		StringData* data = (StringData*)next_;
-		data->length = (end - begin);
-		data->memHdr = currentHdr_;
-		data->pool = this;
-		data->refcount = 0;
-		data->strPtr = (U16Char*) (next_ + sizeof(StringData));
-		data->hashID = 0;
-		data->ansiStrPtr = 0;
+		
+		initStringData( data, begin, (end - begin) );
 
 		next_ += length;
 		currentHdr_->next = next_;
 		currentHdr_->refcount ++;
-
-		StringPool::wmemcpy( data->strPtr, begin, data->length );
 		return data;
 	}
 	
@@ -1001,22 +1080,18 @@ StringData* StringPool::allocate(const U16Char* begin, const U16Char* end)
 	currentHdr_->limit = limit_;
 	allocatedHdrs_.push_back( currentHdr_ );
 
-	totalMemHdrsAllocated ++;
-
-
 	return allocate(begin, end);
 }
 
 
-StringData* StringPool::find( const U16Char* str, size_t length )
+StringData* StringPool::find( const U16Char* str, size_t length, const uint32& hashID )
 {
-	StringData* result = NULL;//NoEntry;
+	StringData* result = NULL;
 
-	uint32 hashID = hash(str,length);
+	uint32 realHashID = (0 == hashID) ? StringPool::hash(str,length) : hashID;
 
-	StringMapRangeT found = stringMap_.equal_range( hashID );
+	StringMapRangeT found = stringMap_.equal_range( realHashID );
 	StringMapIter current = found.first;
-
 	
 	size_t rangeCount = 0;
 	while ( current != found.second ) {
@@ -1045,9 +1120,10 @@ StringData* StringPool::find( const U16Char* str, size_t length )
 			++current ;
 		}
 	}
-	
+
 	return result;
 }
+
 
 StringData* StringPool::transformAnsiToUnicode( const char* str, size_t length, LanguageEncoding encoding )
 {
@@ -1069,8 +1145,14 @@ StringData* StringPool::transformAnsiToUnicode( const char* str, size_t length, 
 	result = find( newStr->strPtr, newStr->length );
 
 	if ( NULL == result ) {
-		newStr->hashID = hash(newStr->strPtr, newStr->length);
-		stringMap_.insert(StringMapPairT(newStr->hashID,newStr));
+		newStr->hashID = hash(newStr->strPtr, newStr->length);		
+
+		stringMap_.insert(StringMapPairT(newStr->hashID,newStr));		
+
+		newStr->extra = new StringExtraData();
+		newStr->extra->encoding = encoding;
+
+
 		result = newStr;
 	}
 	else {
@@ -1114,9 +1196,6 @@ StringData* StringPool::addString( const U16Char* str, size_t length )
 
 	if ( result == NULL ) {
 		StringData* newStr = pool->allocate( str, str+length );
-
-		newStr->hashID = hash(newStr->strPtr, newStr->length);
-
 		result = newStr;
 
 		//////////////////////////////////////////////////////
@@ -1190,10 +1269,56 @@ uint32 StringPool::incStringRefcount( StringData* data )
 }
 
 
-
-bool StringPool::freeStringData( StringData* data )
+void StringPool::freeMemHeader( MemHeader* memHdr )
 {
-	bool result = true;
+	
+
+	std::vector<MemHeader*>::iterator found = 
+		std::find( allocatedHdrs_.begin(), 
+					allocatedHdrs_.end(), memHdr );
+	if ( found != allocatedHdrs_.end() ) {
+		allocatedHdrs_.erase( found );
+	}
+
+	size_t bytesFreed = memHdr->size;
+	if ( VirtualFree(memHdr, 0, MEM_RELEASE) ) {
+		totalBytesAllocated_ -= bytesFreed;
+	}
+	else {
+		printf( "VirtualFree failed. GetLastError(): %d\n", GetLastError() );
+	}
+}
+
+void StringPool::freeStringData( StringData* data )
+{
+	if ( NULL != data->extra ) {
+
+		//adjust child substring nodes
+		if ( NULL != data->extra->nextSubstr ) {
+			StringData* next = data->extra->nextSubstr;
+			while ( next != NULL ) {
+				if ( NULL != next->extra ) {
+					next->extra->substrParent = NULL;
+
+					//re-hash the string data here to make it "independent"
+
+					//if the string already exists, then just 
+
+
+					next = next->extra->nextSubstr;
+
+					next->extra->nextSubstr = NULL;
+				}
+				else {
+					next = NULL;
+				}
+			}
+		}	
+
+		delete data->extra;
+		data->extra = NULL;
+	}
+	
 
 	if ( data->memHdr->refcount > 0 ) {
 		data->memHdr->refcount --;
@@ -1203,8 +1328,11 @@ bool StringPool::freeStringData( StringData* data )
 			//printf( "Memhdr refcount is already at 0!!!\n" );
 		}
 	}
+
+
 	if ( 0 == data->memHdr->refcount ) {
 		if ( compactsMemory() ) {
+			bool outstandingStrHandles = false;
 			bool deleteMemHdr = true;
 
 			if ( data->memHdr == currentHdr_ ) {
@@ -1235,16 +1363,16 @@ bool StringPool::freeStringData( StringData* data )
 				if ( strData->memHdr == data->memHdr ) {
 
 					if ( strData->refcount > 0 ) {
-						printf( "String data %p[%u characters] {%.*S%s} still has ref count(%u) > 0\n", 
-							strData, 
-							strData->length, 
-							(strData->length > 20) ? 20 : strData->length, 
-							strData->strPtr,  
-							(strData->length > 20) ? "..." : "",
-							strData->refcount );
+						//printf( "String data %p[%u characters] {%.*S%s} still has ref count(%u) > 0\n", 
+						//	strData, 
+						//	strData->length, 
+						//	(strData->length > 20) ? 20 : strData->length, 
+						//	strData->strPtr,  
+						//	(strData->length > 20) ? "..." : "",
+						//	strData->refcount );
 
 
-						result = false;
+						outstandingStrHandles = true;
 						deleteMemHdr = false;
 
 						//break;
@@ -1268,29 +1396,9 @@ bool StringPool::freeStringData( StringData* data )
 			
 
 			if ( deleteMemHdr ) {
-				//printf( "yanked %u strings\n", count );
-				size_t bytesFreed = data->memHdr->size;
-				void* ptr = data->memHdr;
-
-				std::vector<MemHeader*>::iterator found = 
-					std::find( allocatedHdrs_.begin(), 
-								allocatedHdrs_.end(), data->memHdr );
-				if ( found != allocatedHdrs_.end() ) {
-					allocatedHdrs_.erase( found );
-				}
-
-				if ( VirtualFree(data->memHdr, 0, MEM_RELEASE) ) {
-					totalBytesAllocated_ -= bytesFreed;
-					//printf( "Freed %u bytes of data %p\n", bytesFreed, ptr );
-
-					totMemHdrsFreed ++;
-				}
-				else {
-					printf( "VirtualFree failed. GetLastError(): %d\n", GetLastError() );
-					result = false;					
-				}
+				freeMemHeader( data->memHdr );
 			}
-			else if ( !deleteMemHdr && result ) {	
+			else if ( !deleteMemHdr && !outstandingStrHandles ) {	
 				//reset it back to the beginning
 				next_ = reinterpret_cast<unsigned char*>(currentHdr_ + sizeof(U16Char));
 				currentHdr_->next = next_;
@@ -1298,7 +1406,6 @@ bool StringPool::freeStringData( StringData* data )
 			}
 		}
 	}
-	return result;
 }
 
 uint32 StringPool::decStringRefcount( StringData* data )
@@ -1314,9 +1421,7 @@ uint32 StringPool::decStringRefcount( StringData* data )
 			}
 
 			if ( 0 == data->refcount ) {				
-				if ( !pool->freeStringData( data ) ) {
-					printf( "pool->freeStringData() failed!\n" );
-				}
+				pool->freeStringData( data );
 				return 0;
 			}			
 		}
@@ -1351,6 +1456,23 @@ bool StringPool::equals( StringData* lhs, StringData* rhs )
 	return false;
 }
 
+bool StringPool::isSubString( StringData* handle )
+{
+	if ( NULL == handle ) {
+		return false;
+	}
+
+	if ( NULL == handle->extra ) {
+		return false;
+	}
+
+	if ( NULL != handle->extra ) {
+		return (NULL != handle->extra->substrParent);
+	}
+
+	return false;
+}
+
 int StringPool::compare( StringData* lhs, StringData* rhs )
 {
 	if ( lhs == rhs ) {
@@ -1367,6 +1489,327 @@ int StringPool::compare( StringData* lhs, StringData* rhs )
 
 	return 0;
 }
+
+StringData* StringPool::insert( const U16Char* src, size_t srcLength, StringData* dest, size_t insertPos )
+{
+	if ( insertPos > dest->length ) {
+		return NULL;
+	}
+
+
+	StringData* result = NULL;
+
+	StringPool* pool = dest->pool;
+
+	size_t size = dest->length + srcLength;
+	
+	StringData* newStr = pool->allocate( size );
+
+	if ( 0 == insertPos ) {
+		StringPool::wmemcpy( newStr->strPtr, src, srcLength );
+		StringPool::wmemcpy( &newStr->strPtr[srcLength], dest->strPtr, dest->length );		
+	}
+	else if ( dest->length -1 == insertPos ) {
+		StringPool::wmemcpy( newStr->strPtr, dest->strPtr, dest->length );
+		StringPool::wmemcpy( &newStr->strPtr[dest->length], src, srcLength );
+	}
+	else {		
+		StringPool::wmemcpy( newStr->strPtr, dest->strPtr, insertPos );
+		StringPool::wmemcpy( &newStr->strPtr[insertPos], src, srcLength );	
+		StringPool::wmemcpy( &newStr->strPtr[insertPos+srcLength], &dest->strPtr[insertPos], dest->length - insertPos );	
+	}
+
+	result = pool->find( newStr->strPtr, newStr->length );
+
+	if ( NULL == result ) {
+		newStr->hashID = StringPool::hash(newStr->strPtr, newStr->length);
+
+		pool->stringMap_.insert(StringMapPairT(newStr->hashID,newStr));		
+
+		result = newStr;
+	}
+	else {
+		size_t bytesLength = sizeof(StringData) + (newStr->length * sizeof(U16Char)) + sizeof(U16Char);
+
+		//reclaim the memory, we don't need it after all, since we found an existing
+		//match
+		pool->next_ -= bytesLength;
+		pool->totalBytesAllocated_ -= bytesLength;
+
+		pool->freeStringData( newStr );
+	}
+	
+
+	return result;
+}	
+
+StringData* StringPool::insert( StringData* src, StringData* dest, size_t insertPos )
+{	
+	if ( insertPos > dest->length ) {
+		return NULL;
+	}
+
+
+	StringData* result = NULL;
+
+	StringPool* pool = NULL;
+
+	if ( (src->pool == dest->pool) || (src->pool->getThreadID() == dest->pool->getThreadID()) ) {
+		pool = dest->pool;
+	}
+	else {
+		pool = StringPool::getUsablePool();
+	}
+
+	size_t size = dest->length + src->length;
+	
+	StringData* newStr = pool->allocate( size );
+
+	if ( 0 == insertPos ) {
+		StringPool::wmemcpy( newStr->strPtr, src->strPtr, src->length );
+		StringPool::wmemcpy( &newStr->strPtr[src->length], dest->strPtr, dest->length );		
+	}
+	else if ( dest->length -1 == insertPos ) {
+		StringPool::wmemcpy( newStr->strPtr, dest->strPtr, dest->length );
+		StringPool::wmemcpy( &newStr->strPtr[dest->length], src->strPtr, src->length );
+	}
+	else {		
+		StringPool::wmemcpy( newStr->strPtr, dest->strPtr, insertPos );
+		StringPool::wmemcpy( &newStr->strPtr[insertPos], src->strPtr, src->length );	
+		StringPool::wmemcpy( &newStr->strPtr[insertPos+src->length], &dest->strPtr[insertPos], dest->length - insertPos );	
+	}
+
+	result = pool->find( newStr->strPtr, newStr->length );
+
+	if ( NULL == result ) {
+		newStr->hashID = StringPool::hash(newStr->strPtr, newStr->length);
+
+		pool->stringMap_.insert(StringMapPairT(newStr->hashID,newStr));		
+
+		result = newStr;
+	}
+	else {
+		size_t bytesLength = sizeof(StringData) + (newStr->length * sizeof(U16Char)) + sizeof(U16Char);
+
+		//reclaim the memory, we don't need it after all, since we found an existing
+		//match
+		pool->next_ -= bytesLength;
+		pool->totalBytesAllocated_ -= bytesLength;
+
+		pool->freeStringData( newStr );
+	}
+	
+
+	return result;
+}
+
+StringData* StringPool::insert( U16Char ch, StringData* dest, size_t insertPos, size_t repeatCount )
+{
+	if ( insertPos > dest->length ) {
+		return NULL;
+	}
+
+
+	if ( 0 == repeatCount ) {
+		return NULL;
+	}
+
+	StringData* result = NULL;
+
+	StringPool* pool = dest->pool;	
+
+	size_t size = dest->length + repeatCount;
+	
+	StringData* newStr = pool->allocate( size );
+
+	if ( 0 == insertPos ) {
+		for (size_t i=0;i<repeatCount;i++ ) {
+			newStr->strPtr[i] = ch;
+		}
+		StringPool::wmemcpy( &newStr->strPtr[repeatCount], dest->strPtr, dest->length );		
+	}
+	else if ( dest->length -1 == insertPos ) {
+		StringPool::wmemcpy( newStr->strPtr, dest->strPtr, dest->length );		
+		for (size_t i=0;i<repeatCount;i++ ) {
+			newStr->strPtr[dest->length + i] = ch;
+		}
+	}
+	else {		
+		StringPool::wmemcpy( newStr->strPtr, dest->strPtr, insertPos );
+		for (size_t i=0;i<repeatCount;i++ ) {
+			newStr->strPtr[insertPos + i] = ch;
+		}		
+		StringPool::wmemcpy( &newStr->strPtr[insertPos+repeatCount], &dest->strPtr[insertPos], dest->length - insertPos );	
+	}
+
+	result = pool->find( newStr->strPtr, newStr->length );
+
+	if ( NULL == result ) {
+		newStr->hashID = StringPool::hash(newStr->strPtr, newStr->length);
+
+		pool->stringMap_.insert(StringMapPairT(newStr->hashID,newStr));		
+
+		result = newStr;
+	}
+	else {
+		size_t bytesLength = sizeof(StringData) + (newStr->length * sizeof(U16Char)) + sizeof(U16Char);
+
+		//reclaim the memory, we don't need it after all, since we found an existing
+		//match
+		pool->next_ -= bytesLength;
+		pool->totalBytesAllocated_ -= bytesLength;
+
+		pool->freeStringData( newStr );
+	}
+	
+
+	return result;
+}
+
+StringData* StringPool::erase( StringData* src, size_t startPos, size_t length )
+{
+	StringData* result = NULL;
+
+	if ( startPos > src->length ) {
+		return NULL;
+	}
+
+	if ( (startPos+length) > src->length ) {
+		return NULL;
+	}
+
+	if ( 0 == startPos && length >= src->length ) {
+		StringPool::decStringRefcount(src);
+		return NULL;
+	}
+
+	StringPool* pool = src->pool;	
+
+	size_t size = length > src->length ? (src->length - startPos) : src->length - length;
+	
+	StringData* newStr = pool->allocate( size );
+	
+	if ( 0 == startPos ) {
+		StringPool::wmemcpy( newStr->strPtr, &src->strPtr[length], newStr->length );		
+	}
+	else {		
+		StringPool::wmemcpy( newStr->strPtr, src->strPtr, startPos );
+		StringPool::wmemcpy( &newStr->strPtr[startPos], &src->strPtr[startPos + length], src->length - (startPos + length) );	
+	}
+
+	result = pool->find( newStr->strPtr, newStr->length );
+
+	if ( NULL == result ) {
+		newStr->hashID = StringPool::hash(newStr->strPtr, newStr->length);
+
+		pool->stringMap_.insert(StringMapPairT(newStr->hashID,newStr));		
+
+		result = newStr;
+	}
+	else {
+		size_t bytesLength = sizeof(StringData) + (newStr->length * sizeof(U16Char)) + sizeof(U16Char);
+
+		//reclaim the memory, we don't need it after all, since we found an existing
+		//match
+		pool->next_ -= bytesLength;
+		pool->totalBytesAllocated_ -= bytesLength;
+
+		pool->freeStringData( newStr );
+	}
+
+	return result;
+}
+
+StringData* StringPool::subStr( StringData* src, size_t startPos, size_t length )
+{
+	StringData* result = NULL;
+	StringPool* pool = src->pool;
+
+	if ( startPos > src->length || (startPos + length) > src->length ) {
+		return NULL;
+	}
+
+
+	if ( NULL != src->extra ) {
+		if ( NULL != src->extra->nextSubstr ) {
+			StringData* next = src->extra->nextSubstr;
+			while ( next != NULL ) {
+
+				if ( next->length == length && next->extra->subStrStart == startPos ) {
+					return next;
+				}
+
+				if ( NULL != next->extra ) {
+					next = next->extra->nextSubstr;
+				}
+				else {
+					next = NULL;
+				}
+			}
+		}
+	}
+
+	size_t bytesLength = sizeof(StringData) + (length * sizeof(U16Char)) + sizeof(U16Char);
+	if ((pool->next_ + bytesLength) <= pool->limit_) {
+		StringData* data = (StringData*)pool->next_;
+
+		pool->initStringData( data, NULL , length );
+
+		data->strPtr = src->strPtr + startPos;
+
+		data->extra = new StringExtraData();
+		data->extra->subStrStart = startPos;
+		data->extra->subStrEnd = startPos+length;
+		data->extra->substrParent = src;
+
+		src->extra = new StringExtraData();
+		src->extra->nextSubstr = data;
+
+
+		//data->extra
+
+		pool->next_ += bytesLength;
+		pool->currentHdr_->next = pool->next_;
+		pool->currentHdr_->refcount ++;
+		return data;
+	}
+
+
+
+	unsigned char* nextBytes = NULL;
+	size_t allocSize = 0;
+
+	if (bytesLength <= MAX_CHARALLOC) {	
+		allocSize = RoundUp(bytesLength + sizeof(MemHeader), pool->granularity_);
+
+		nextBytes = reinterpret_cast<unsigned char*>(
+				VirtualAlloc(NULL, allocSize, MEM_COMMIT, PAGE_READWRITE) );
+	}
+
+	if (!nextBytes) {
+		static std::bad_alloc outOfMemException;
+		throw(outOfMemException);
+	}
+
+	pool->totalBytesAllocated_ += allocSize;
+	
+	pool->limit_ = reinterpret_cast<unsigned char*>(nextBytes + allocSize);
+	MemHeader* currentHdr = reinterpret_cast<MemHeader*>(nextBytes);
+//	currentHdr->prev = currentHdr_;
+	currentHdr->size = allocSize;
+	currentHdr->refcount = 0;
+	
+
+	pool->currentHdr_ = currentHdr;
+	pool->next_ = reinterpret_cast<unsigned char*>(currentHdr + sizeof(U16Char));
+	pool->currentHdr_->next = pool->next_;
+	pool->currentHdr_->limit = pool->limit_;
+	
+	pool->allocatedHdrs_.push_back( pool->currentHdr_ );
+
+	return subStr( src, startPos, length );
+}
+
 
 class StringLiteral {
 public:
@@ -1400,7 +1843,9 @@ protected:
 
 std::vector<U16Char> StringLiteral::storage(StringLiteral::InitialStorageSize);
 
-
+/**
+our immutable string class
+*/
 class FastString {
 public:
 
@@ -1415,25 +1860,24 @@ public:
 		UTF32BigEndianBOM = 0x0000FEFF
 	};
 
-	typedef U16Char* iterator;
+	//Note that this is const only for iterator
+	//access
     typedef const U16Char* const_iterator;
 	typedef size_t size_type;
 	typedef ptrdiff_t difference_type;
-	typedef U16Char value_type;	
-    typedef U16Char *pointer;
+	typedef U16Char value_type;
     typedef const U16Char *const_pointer;
-	typedef U16Char& reference;
     typedef const U16Char& const_reference;
 
 	#if (_MSC_VER <= 1200) && !defined(__GNUC__)
-		typedef std::reverse_iterator<iterator, value_type,
-					reference, pointer, difference_type> reverse_iterator;
+	//	typedef std::reverse_iterator<iterator, value_type,
+	//				reference, pointer, difference_type> reverse_iterator;
 
 		typedef std::reverse_iterator<const_iterator, value_type,
 					const_reference, const_pointer, difference_type>
 					const_reverse_iterator;
 	#else
-		typedef std::reverse_iterator<iterator> reverse_iterator;
+//		typedef std::reverse_iterator<iterator> reverse_iterator;
 		typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 	#endif
 		
@@ -1545,6 +1989,18 @@ public:
 		return data_->length;
 	}
 
+	LanguageEncoding encoding() const {
+		if ( NULL == data_ ) {
+			return leUnknown;
+		}
+
+		if ( NULL != data_->extra ) {
+			return data_->extra->encoding;
+		}
+		return leDefault;
+	}	
+
+
 
 	bool operator == ( const FastString& rhs ) const {
 		return StringPool::equals(data_, rhs.data_ );
@@ -1570,12 +2026,17 @@ public:
 		return data_->refcount > 0;
 	}
 
+	bool isSubstr() const {
+		return StringPool::isSubString(data_);
+	}
+
 	int compare( const FastString& rhs ) const {
 		return StringPool::compare( data_, rhs.data_ );
 	}
 
 	FastString substr( size_type pos, size_type length ) const {
-		return FastString( data_->strPtr + pos, length );
+		return FastString( StringPool::subStr( data_, pos, length ) );
+		//return FastString( data_->strPtr + pos, length );
 	}
 	
     const_iterator begin() const {
@@ -1725,16 +2186,6 @@ public:
 		return *this;
 	}
 
-/*
-	operator BSTR() const {
-		return SysAllocString(c_str());
-	}
-
-	FastString& operator=( const BSTR& rhs ) {
-		assign( (const U16Char*)rhs, SysStringLen(rhs) );
-		return *this;
-	}
-*/
 
 	operator VARIANT() const {
 		VARIANT result;
@@ -1764,12 +2215,99 @@ public:
 	}
 
 
+	//stl conversion support
+	operator std::string() const {
+		return std::string(ansi_c_str());
+	}
+
+	FastString& operator=( const std::string& rhs ) {
+		assign( rhs.c_str(), rhs.length() );
+		return *this;
+	}
+
+
+	
 
 	//utility
+	FastString insert( size_type pos, const FastString& str ) const {
+		return FastString( StringPool::insert(  str.data_, data_, pos ) );
+	}
 
+	FastString insert( size_type pos, const value_type* str ) const {
+		return FastString( StringPool::insert(  str, wcslen((const wchar_t*)str), data_, pos ) );
+	}
+
+	FastString insert( size_type pos, size_type count,  value_type ch ) const {
+		return FastString( StringPool::insert(  ch, data_, pos, count ) );
+	}
+
+	FastString insert( size_type pos, value_type ch ) const {
+		return FastString( StringPool::insert(  ch, data_, pos, 1 ) );
+	}
+
+	FastString append( const FastString& str ) const {
+		return insert( length(), str );
+	}
+
+	FastString prepend( const FastString& str ) const {
+		return insert( 0, str );
+	}
+
+
+	FastString erase( size_type pos = 0, size_type count = npos ) const {
+		return FastString( StringPool::erase( data_, pos, count ) );
+	}
+
+	FastString erase( const_iterator first, const_iterator last ) const {
+		return FastString( StringPool::erase( data_, first - begin(), last - first ) );
+	}
+
+	FastString erase( const_iterator it ) const {
+		return FastString( StringPool::erase( data_, it - begin(), 1 ) );
+	}
+
+	size_type copy( value_type* strPtr,  size_type length, size_type offset = 0 ) const {		
+		StringPool::wmemcpy( strPtr, c_str() + offset, length );
+	}
+
+	friend
+	FastString operator+ (const FastString& lhs, const FastString& rhs );
+
+	FastString& operator+= ( const FastString& rhs ) {
+		*this = insert( length(), rhs );
+		return *this;
+	}
 protected:
+
+	FastString( StringData* data ):data_(NULL) {
+		assign(data);
+	}
+
+	void assign( StringData* data ) {
+		StringPool::decStringRefcount(data_);
+
+		data_ = data;
+		
+		StringPool::incStringRefcount(data_);
+	}
+
+
+	FastString& operator=( StringData* data ) {
+		assign( data );
+		return *this;
+	}
+
 	StringData* data_;
 };
+
+
+
+FastString operator+ (const FastString& lhs, const FastString& rhs )
+{		
+	return lhs.insert( lhs.length(), rhs );
+}
+
+
 
 
 #define BIGSTR	L"sf;lkasjd f;klasjdf; kalsjdf; akljdsf; kaljsdf;k ajd;sfkl ja;sdfklja;weroitupqeriogn.fvkxcpbv78xc9v8b"
@@ -1916,6 +2454,9 @@ using std::string;
 using std::wstring;
 using std::vector;
 
+
+#define DICT_FILE_NAME		"C:\\code\\vcfdev\\dev\\bluesky\\StringPool\\cedict.b5"
+
 struct ChDictionaryEntry
 {
 	bool Parse(const wstring& line);
@@ -1962,7 +2503,7 @@ ChDictionary::ChDictionary()
 
 	std::wifstream src;
 	src.imbue(std::locale(".950"));
-	src.open("cedict.b5");
+	src.open(DICT_FILE_NAME);
 	wstring s;
 	int i = 0;
 	while (std::getline(src, s)) {
@@ -1976,14 +2517,14 @@ ChDictionary::ChDictionary()
 		i++;
 	}*/
 
-	
 	std::locale old = std::locale::global(std::locale(".950"));
 
 	std::wifstream src;
 	src.imbue(std::locale(".950"));
-	src.open("cedict.b5");
+	src.open(DICT_FILE_NAME);
 	src.seekg( 0, std::ios_base::end );
 	size_t sz = src.tellg();
+	
 	src.seekg( 0, std::ios_base::beg );
 	
 	wchar_t * data = new wchar_t [ sz ];
@@ -2088,7 +2629,7 @@ private:
 ChDictionary2::ChDictionary2()
 {
 	/*
-	FileInputStream fs("cedict.b5");
+	FileInputStream fs(DICT_FILE_NAME);
 	
 	unsigned char* data = new unsigned char[ fs.getSize() ];
 
@@ -2172,7 +2713,7 @@ ChDictionary3::ChDictionary3()
 
 void ChDictionary3::doit()
 {
-	FILE* f = fopen("cedict.b5","rb");
+	FILE* f = fopen(DICT_FILE_NAME,"rb");
 	fseek(f,0,SEEK_END);
 	size_t sz = ftell(f);
 	fseek(f,0,SEEK_SET);
@@ -2333,8 +2874,6 @@ void part2()
 		printf( "num entries in string pool after ChDictionary3::doit() : %u\n", StringPool::getUsablePool()->uniqueEntries() );
 
 		printf( "total bytes in string pool: %u\n", StringPool::getUsablePool()->totalBytesAllocated() );
-		printf( "totalMemHdrsAllocated in string pool: %u\n",StringPool::getUsablePool()->totalMemHdrsAllocated );
-		printf( "totMemHdrsFreed in string pool: %u\n",StringPool::getUsablePool()->totMemHdrsFreed );
 
 		
 		int idx = 22;
@@ -2348,9 +2887,6 @@ void part2()
 	printf( "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n");
 	printf( "num entries in string pool: %u\n", StringPool::getUsablePool()->uniqueEntries() );
 	printf( "total bytes in string pool: %u\n", StringPool::getUsablePool()->totalBytesAllocated() );
-	printf( "totalMemHdrsAllocated in string pool: %u\n",StringPool::getUsablePool()->totalMemHdrsAllocated );
-	printf( "totMemHdrsFreed in string pool: %u\n",StringPool::getUsablePool()->totMemHdrsFreed );
-
 }
 
 
@@ -2371,6 +2907,118 @@ void part3()
 	VARIANT v2 = fs;
 
 	printf( "====End of part3()=============================================================\n" );
+}
+
+
+
+void test_insert()
+{
+	double fs1, fsMulti, bs1, bsMulti;
+
+	HiResClock clock;
+
+	FastString fs;
+
+	
+	fs = BIGSTR;
+	
+
+	clock.start();
+	fs.insert( 45, L"JKLLKDJLKDJLDKJSLDKJL" );
+	clock.stop();
+	fs1 = clock.duration();
+
+	clock.start();
+	for (int i=0;i<100;i++) {
+		FastString f;
+		f = BIGSTR;
+		f.insert( i % (fs.length()-10), L"JKLLKDJLKDJLDKJSLDKJL" );
+	}
+	clock.stop();
+	fsMulti = clock.duration();
+
+
+
+
+	String bs;	
+	bs = BIGSTR;
+	
+
+	clock.start();
+	bs.insert( 45, L"JKLLKDJLKDJLDKJSLDKJL" );
+	clock.stop();
+	bs1 = clock.duration();
+
+	clock.start();
+	for (int i=0;i<100;i++) {
+		String b;
+		b = BIGSTR;
+		b.insert( i % (bs.length()-10), L"JKLLKDJLKDJLDKJSLDKJL" );
+	}
+	clock.stop();
+	bsMulti = clock.duration();
+
+
+	printf( "test_insert()\n" );
+	printf( "Once		Multi\n" );
+	printf( "FS %0.8f\t%0.8f\n", fs1, fsMulti );
+	printf( "BS %0.8f\t%0.8f\n", bs1, bsMulti );
+}
+
+
+
+void test_substr()
+{
+	double fs1, fsMulti, bs1, bsMulti;
+
+	HiResClock clock;
+
+	FastString fs;
+
+	
+	fs = BIGSTR;
+	
+
+	clock.start();
+	FastString fss = fs.substr( 10, fs.length()-15 );
+	clock.stop();
+	fs1 = clock.duration();
+
+	clock.start();
+	for (int i=0;i<100;i++) {
+		FastString f;
+		f = BIGSTR;
+		f.substr( 10, f.length()-15 );
+	}
+	clock.stop();
+	fsMulti = clock.duration();
+
+
+
+
+	String bs;	
+	bs = BIGSTR;
+	
+
+	clock.start();
+	bs.substr( 10, bs.length()-15 );
+	clock.stop();
+	bs1 = clock.duration();
+
+	clock.start();
+	for (int i=0;i<100;i++) {
+		String b;
+		b = BIGSTR;
+		b.substr( 10, b.length()-15 );
+	}
+	clock.stop();
+	bsMulti = clock.duration();
+
+
+	printf( "test_substr()\n" );
+	printf( "Once		Multi\n" );
+	printf( "FS %0.8f\t%0.8f\n", fs1, fsMulti );
+	printf( "BS %0.8f\t%0.8f\n", bs1, bsMulti );
 }
 
 
@@ -2471,6 +3119,28 @@ int main( int argc, char** argv )
 	printf( "fs Length %u, (f2 = f) took %0.8f seconds\n",f2.length(),clock.duration() );
 
 
+
+	FastString ss1;
+	ss1 = BIGSTR2;
+	clock.start();
+	FastString ss2 = ss1.substr(10, 256);
+	clock.stop();
+	printf( "ss2 Length %u, (ss1.substr(10, 256)) took %0.8f seconds\n",ss2.length(),clock.duration() );
+
+
+	clock.start();
+	ss2 = ss1.substr(10, 256);
+	clock.stop();
+	printf( "ss2 Length %u, (ss1.substr(10, 256)) took %0.8f seconds\n",ss2.length(),clock.duration() );
+
+
+	clock.start();
+	ss2 = ss1.substr(10, 1256);
+	clock.stop();
+	printf( "ss2 Length %u, (ss1.substr(10, 1256)) took %0.8f seconds\n",ss2.length(),clock.duration() );
+
+
+
 	clock.start();
 	wcslen( BIGSTR2 );
 	clock.stop();
@@ -2529,6 +3199,26 @@ int main( int argc, char** argv )
 	printf( "basic_string<>  s2 Length %u, (s2 = s) took %0.8f seconds\n",s2.length(),clock.duration() );
 
 
+	String ss1a;
+	ss1a = BIGSTR2;
+	clock.start();
+	String ss2a = ss1a.substr(10, 256);
+	clock.stop();
+	printf( "ss2a Length %u, (ss1a.substr(10, 256)) took %0.8f seconds\n",ss2a.length(),clock.duration() );
+
+
+	clock.start();
+	ss2a = ss1a.substr(10, 256);
+	clock.stop();
+	printf( "ss2a Length %u, (ss1a.substr(10, 256)) took %0.8f seconds\n",ss2a.length(),clock.duration() );
+
+
+	clock.start();
+	ss2a = ss1a.substr(10, 1256);
+	clock.stop();
+	printf( "ss2a Length %u, (ss1a.substr(10, 1256)) took %0.8f seconds\n",ss2a.length(),clock.duration() );
+
+
 
 	s2.find(L"hello");
 	
@@ -2578,16 +3268,64 @@ int main( int argc, char** argv )
 	clock2.stop();
 	f6 = sl;
 
-	f6 = f6.substr( 5, 5 );
+	FastString f6a = f6.substr( 5, 5 );
 
-	clock.stop();
+	FastString f6b = f6.substr( 5, 5 );
+
+
+	//clock.stop();
 
 	printf( "f6 from ansi Length %u, StringLiteral took %0.8f seconds, total took %0.8f seconds\n",f5.length(),clock2.duration(), clock.duration() );
 
 
 
 
+	FastString ff1;
+	ff1 = L"Hello";
+	FastString ff2;
+	ff2 = L" World";
+	
 
+	FastString ff3 = ff1 + ff2;
+	printf( "ff3 = %.*S\n", ff3.length(), ff3.c_str() );
+
+	ff3.clear();
+	ff3 = ff1;
+	ff3 += ff2;
+	printf( "ff3 = %.*S\n", ff3.length(), ff3.c_str() );
+
+
+	ff2 = L"ABCD";
+
+	FastString ins1;
+	ins1 = L"Hello World";
+	FastString ins2 = ins1.insert( 5, ff2 );
+	printf( "ins2 = %.*S\n", ins2.length(), ins2.c_str() );
+
+	ins2 = ins1.insert( 0, ff2 );
+	printf( "ins2 = %.*S\n", ins2.length(), ins2.c_str() );
+
+	ins2 = ins1.insert( ins1.length(), ff2 );
+	printf( "ins2 = %.*S\n", ins2.length(), ins2.c_str() );
+
+
+	FastString::const_iterator it = ins2.begin();
+	while ( it != ins2.end() ) {
+		printf( "%c\n", *it );
+		++it;
+	}
+
+
+
+
+	test_insert();
+
+	test_substr();
+
+
+
+
+	/*
 	part2();
 
 
@@ -2595,17 +3333,12 @@ int main( int argc, char** argv )
 
 	printf( "num entries in string pool: %u\n", StringPool::getUsablePool()->uniqueEntries() );
 	printf( "total bytes in string pool: %u\n", StringPool::getUsablePool()->totalBytesAllocated() );
-
-	printf( "totalMemHdrsAllocated in string pool: %u\n", StringPool::getUsablePool()->totalMemHdrsAllocated );
-	printf( "totMemHdrsFreed in string pool: %u\n", StringPool::getUsablePool()->totMemHdrsFreed );
-
+*/
 	}
 
-	printf( "num entries in string pool: %u\n", StringPool::getUsablePool()->uniqueEntries() );
-	printf( "total bytes in string pool: %u\n", StringPool::getUsablePool()->totalBytesAllocated() );
+	//printf( "num entries in string pool: %u\n", StringPool::getUsablePool()->uniqueEntries() );
+	//printf( "total bytes in string pool: %u\n", StringPool::getUsablePool()->totalBytesAllocated() );
 
-	printf( "totalMemHdrsAllocated in string pool: %u\n",StringPool::getUsablePool()->totalMemHdrsAllocated );
-	printf( "totMemHdrsFreed in string pool: %u\n",StringPool::getUsablePool()->totMemHdrsFreed );
 
 //	Sleep(10000000);
 
