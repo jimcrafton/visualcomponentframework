@@ -46,6 +46,8 @@ protected:
 private:
 	String outputFileName_;
 	OutputStream* errStream_;
+    boost::scoped_ptr<FileOutputStream> fs;
+	boost::scoped_ptr<TextOutputStream> tos;
 };
 
 

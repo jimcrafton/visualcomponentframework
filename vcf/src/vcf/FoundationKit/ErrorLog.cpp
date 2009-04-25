@@ -21,6 +21,14 @@ ErrorLog::ErrorLog( const String& ouputFilename ):
 	}
 
 	System::setErrorLog( this );
+
+    try {
+        fs.reset(new FileOutputStream( outputFileName_ ));
+        tos.reset(new TextOutputStream(fs.get()));
+    }
+	catch (...) {
+		throw FileIOError( MAKE_ERROR_MSG_2("Unknown Exception accessing the log file: \"" + outputFileName_ + "\"") );
+	}
 }
 
 ErrorLog::~ErrorLog()
@@ -31,19 +39,12 @@ ErrorLog::~ErrorLog()
 void ErrorLog::toLog( const String& text )
 {
 	try {
-		FileOutputStream fs( outputFileName_ );
-
-		TextOutputStream tos( &fs );
-
-		tos.write( text );
-
+		tos->write( text );
 	}
 	catch ( BasicException& e ) {
-
 		throw e;
 	}
 	catch (...) {
-
 		throw FileIOError( MAKE_ERROR_MSG_2("Unknown Exception accessing the log file: \"" + outputFileName_ + "\"") );
 	}
 
