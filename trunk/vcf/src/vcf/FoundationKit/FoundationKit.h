@@ -182,7 +182,7 @@ where you installed the VCF.
 
 
 #include "vcf/FoundationKit/VCFTime.h"
-
+#include "vcf/FoundationKit/Hash.h"
 
 
 namespace VCF{
