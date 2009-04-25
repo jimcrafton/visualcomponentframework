@@ -263,6 +263,7 @@
 		<Unit filename="..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\FoundationKitSelectLib.h" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\FrameworkConfig.h" />
+		<Unit filename="..\..\..\src\vcf\FoundationKit\Hash.h" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\IniFini.cpp" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\IniFini.h" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\Interface.h" />
