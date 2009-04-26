@@ -57,7 +57,8 @@
 				</Linker>
 				<ExtraCommands>
 					<Add after="cmd /c if NOT EXIST ..\..\..\lib MKDIR ..\..\..\lib" />
-					<Add after="cmd /c move ..\..\..\bin\libFoundationKit_$(COMPILER)$(COMPILER_VER).a ..\..\..\lib\libFoundationKit_$(COMPILER)$(COMPILER_VER).a" />
+					<Add after="cmd /c if EXIST ..\..\..\bin\libFoundationKit_$(COMPILER)$(COMPILER_VER).a move ..\..\..\bin\libFoundationKit_$(COMPILER)$(COMPILER_VER).a ..\..\..\lib\libFoundationKit_$(COMPILER)$(COMPILER_VER).a" />
+					<Add after="cmd /c if EXIST ..\..\..\bin\libFoundationKit_$(COMPILER)$(COMPILER_VER).dll.a move ..\..\..\bin\libFoundationKit_$(COMPILER)$(COMPILER_VER).dll.a ..\..\..\lib\libFoundationKit_$(COMPILER)$(COMPILER_VER).dll.a" />
 				</ExtraCommands>
 				<Environment>
 					<Variable name="COMPILER_VER" value="" />
@@ -76,8 +77,8 @@
 				<Option projectResourceIncludeDirsRelation="2" />
 				<Option projectLibDirsRelation="2" />
 				<Compiler>
-					<Add option="-W" />
 					<Add option="-g" />
+					<Add option="-W" />
 					<Add option="-pipe" />
 					<Add option="-frtti" />
 					<Add option="-fexceptions" />
@@ -114,7 +115,8 @@
 				</Linker>
 				<ExtraCommands>
 					<Add after="cmd /c if NOT EXIST ..\..\..\lib MKDIR ..\..\..\lib" />
-					<Add after="cmd /c move ..\..\..\bin\libFoundationKit_$(COMPILER)$(COMPILER_VER)_d.a ..\..\..\lib\libFoundationKit_$(COMPILER)$(COMPILER_VER)_d.a" />
+					<Add after="cmd /c if EXIST ..\..\..\bin\libFoundationKit_$(COMPILER)$(COMPILER_VER)_d.a move ..\..\..\bin\libFoundationKit_$(COMPILER)$(COMPILER_VER)_d.a ..\..\..\lib\libFoundationKit_$(COMPILER)$(COMPILER_VER)_d.a" />
+					<Add after="cmd /c if EXIST ..\..\..\bin\libFoundationKit_$(COMPILER)$(COMPILER_VER)_d.dll.a move ..\..\..\bin\libFoundationKit_$(COMPILER)$(COMPILER_VER)_d.dll.a ..\..\..\lib\libFoundationKit_$(COMPILER)$(COMPILER_VER)_d.dll.a" />
 				</ExtraCommands>
 				<Environment>
 					<Variable name="COMPILER_VER" value="" />
@@ -260,7 +262,10 @@
 			<Option weight="0" />
 		</Unit>
 		<Unit filename="..\..\..\src\vcf\FoundationKit\FoundationKitPrivate.h" />
-		<Unit filename="..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl" />
+		<Unit filename="..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="..\..\..\src\vcf\FoundationKit\FoundationKitSelectLib.h" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\FrameworkConfig.h" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\Hash.h" />
