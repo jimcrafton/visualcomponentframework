@@ -387,6 +387,23 @@ public:
 
 	StringData* transformAnsiToUnicode( const char* str, size_t length, LanguageEncoding encoding );
 
+	static bool virtualFree( void* ptr, size_t ptrMemBytesToFree ) {
+		#ifdef WIN32
+			return ::VirtualFree( ptr, ptrMemBytesToFree, MEM_RELEASE ) ? true : false;
+		#endif
+	}
+
+	static void* virtualAlloc( size_t sizeBytesToAllocate ) {
+		void* result = NULL;
+		#ifdef WIN32
+			result = ::VirtualAlloc(NULL, sizeBytesToAllocate, MEM_COMMIT, PAGE_READWRITE);
+		#endif
+
+		return result;
+
+	}
+
+
 	static size_t wstrlen( const U16Char *s1 ) {
 		return ::wcslen( (const wchar_t*)s1 );
 	}
@@ -892,12 +909,15 @@ StringPool::StringPool():
 	compactMemory_(false)
 {
 	
+#ifdef WIN32
+
 	SYSTEM_INFO si;
 	GetSystemInfo(&si);
 	granularity_ = RoundUp(sizeof(MemHeader) + MIN_CBCHUNK,
 								si.dwAllocationGranularity);
 
 	threadID_ = ::GetCurrentThreadId();
+#endif
 
 }
 
@@ -914,13 +934,24 @@ StringPool::~StringPool()
 	}
 	*/
 
+	StringMapIter it2 = this->stringMap_.begin();
+	
+	while( it2 != stringMap_.end() ) {		
+		StringData* s = it2->second;		
+
+		s->pool = NULL;
+
+		++it2;
+	}	
+
+
 
 	std::vector<MemHeader*>::iterator it = allocatedHdrs_.begin();
 	while ( it != allocatedHdrs_.end() ) {
 		MemHeader* hdr = *it;
 
 		size_t sz = hdr->size;
-		if ( VirtualFree(hdr, hdr->size, MEM_RELEASE) ) {
+		if ( StringPool::virtualFree(hdr, hdr->size) ) {
 			totalBytesAllocated_ -= sz;
 		}
 
@@ -991,8 +1022,7 @@ StringData* StringPool::allocate( size_t length )
 	if (bytesLength <= MAX_CHARALLOC) {	
 		allocSize = RoundUp(bytesLength + sizeof(MemHeader), granularity_);
 
-		nextBytes = reinterpret_cast<unsigned char*>(
-				VirtualAlloc(NULL, allocSize, MEM_COMMIT, PAGE_READWRITE) );
+		nextBytes = reinterpret_cast<unsigned char*>( StringPool::virtualAlloc(allocSize) );
 	}
 
 	if (!nextBytes) {
@@ -1281,7 +1311,7 @@ void StringPool::freeMemHeader( MemHeader* memHdr )
 	}
 
 	size_t bytesFreed = memHdr->size;
-	if ( VirtualFree(memHdr, 0, MEM_RELEASE) ) {
+	if ( StringPool::virtualFree(memHdr, 0 ) ) {
 		totalBytesAllocated_ -= bytesFreed;
 	}
 	else {
@@ -1307,7 +1337,9 @@ void StringPool::freeStringData( StringData* data )
 
 					next = next->extra->nextSubstr;
 
-					next->extra->nextSubstr = NULL;
+					if ( NULL != next ) {
+						next->extra->nextSubstr = NULL;
+					}
 				}
 				else {
 					next = NULL;
@@ -1412,15 +1444,22 @@ uint32 StringPool::decStringRefcount( StringData* data )
 {
 	if ( NULL != data ) {
 		StringPool* pool = data->pool;
-		if ( pool->getThreadID() == ::GetCurrentThreadId() ) {
+
+		if ( NULL == pool ) {
 			if ( data->refcount > 0 ) {
 				data->refcount--;
 			}
-			else {
-				//printf( "String already at 0 refcount!\n" );
+			if ( 0 == data->refcount ) {
+				printf( "Orphaned StringData %p!\n", data );
 			}
 
-			if ( 0 == data->refcount ) {				
+		}
+		else if ( pool->getThreadID() == ::GetCurrentThreadId() ) {
+			if ( data->refcount > 0 ) {
+				data->refcount--;
+			}
+
+			if ( 0 == data->refcount ) {
 				pool->freeStringData( data );
 				return 0;
 			}			
@@ -1735,11 +1774,11 @@ StringData* StringPool::subStr( StringData* src, size_t startPos, size_t length 
 			StringData* next = src->extra->nextSubstr;
 			while ( next != NULL ) {
 
-				if ( next->length == length && next->extra->subStrStart == startPos ) {
-					return next;
-				}
-
 				if ( NULL != next->extra ) {
+					if ( next->length == length && next->extra->subStrStart == startPos ) {
+						return next;
+					}
+
 					next = next->extra->nextSubstr;
 				}
 				else {
@@ -2910,60 +2949,91 @@ void part3()
 }
 
 
-
-void test_insert()
+template <typename TestOp>
+void test( const TestOp& op, const std::string& name )
 {
 	double fs1, fsMulti, bs1, bsMulti;
 
 	HiResClock clock;
 
-	FastString fs;
-
-	
-	fs = BIGSTR;
-	
 
 	clock.start();
-	fs.insert( 45, L"JKLLKDJLKDJLDKJSLDKJL" );
+	op(true);
 	clock.stop();
 	fs1 = clock.duration();
 
-	clock.start();
-	for (int i=0;i<100;i++) {
-		FastString f;
-		f = BIGSTR;
-		f.insert( i % (fs.length()-10), L"JKLLKDJLKDJLDKJSLDKJL" );
+	{
+		clock.start();
+		for (int i=0;i<100;i++) {
+
+			op(true);
+		}
+		clock.stop();
 	}
-	clock.stop();
 	fsMulti = clock.duration();
 
 
 
 
-	String bs;	
-	bs = BIGSTR;
-	
 
 	clock.start();
-	bs.insert( 45, L"JKLLKDJLKDJLDKJSLDKJL" );
+	op( false );
 	clock.stop();
 	bs1 = clock.duration();
 
-	clock.start();
-	for (int i=0;i<100;i++) {
-		String b;
-		b = BIGSTR;
-		b.insert( i % (bs.length()-10), L"JKLLKDJLKDJLDKJSLDKJL" );
+	{
+		clock.start();
+		for (int i=0;i<100;i++) {
+			op( false );
+		}
+		clock.stop();
 	}
-	clock.stop();
 	bsMulti = clock.duration();
 
 
-	printf( "test_insert()\n" );
+	printf( "test %s\n", name.c_str() );
 	printf( "Once		Multi\n" );
 	printf( "FS %0.8f\t%0.8f\n", fs1, fsMulti );
 	printf( "BS %0.8f\t%0.8f\n", bs1, bsMulti );
 }
+
+
+
+struct TestInsert {
+
+	void operator() ( bool x ) const {
+		if ( x ) {
+			FastString fs;	
+			fs = BIGSTR;
+
+			fs.insert( 45, L"JKLLKDJLKDJLDKJSLDKJL" );
+		}
+		else {
+			String bs;	
+			bs = BIGSTR;
+			bs.insert( 45, L"JKLLKDJLKDJLDKJSLDKJL" );
+		}
+	}
+};
+
+
+
+struct TestSubstr {
+
+	mutable FastString f2;
+	void operator() ( bool x ) const {
+		if ( x ) {
+			static FastString f;
+			f = BIGSTR;
+			f.substr( 10, f.length()-15 );
+		}
+		else {
+			String bs;	
+			bs = BIGSTR;
+			bs.substr( 10, bs.length()-15 );
+		}
+	}
+};
 
 
 
@@ -2980,17 +3050,20 @@ void test_substr()
 	
 
 	clock.start();
-	FastString fss = fs.substr( 10, fs.length()-15 );
+	FastString fss = 
+		fs.substr( 10, fs.length()-15 );
 	clock.stop();
 	fs1 = clock.duration();
 
-	clock.start();
-	for (int i=0;i<100;i++) {
-		FastString f;
-		f = BIGSTR;
-		f.substr( 10, f.length()-15 );
+	{
+		clock.start();
+		for (int i=0;i<100;i++) {
+			FastString f;
+			f = BIGSTR;
+			f.substr( 10, f.length()-15 );
+		}
+		clock.stop();
 	}
-	clock.stop();
 	fsMulti = clock.duration();
 
 
@@ -3005,13 +3078,15 @@ void test_substr()
 	clock.stop();
 	bs1 = clock.duration();
 
-	clock.start();
-	for (int i=0;i<100;i++) {
-		String b;
-		b = BIGSTR;
-		b.substr( 10, b.length()-15 );
+	{
+		clock.start();
+		for (int i=0;i<100;i++) {
+			String b;
+			b = BIGSTR;
+			b.substr( 10, b.length()-15 );
+		}
+		clock.stop();
 	}
-	clock.stop();
 	bsMulti = clock.duration();
 
 
@@ -3318,11 +3393,20 @@ int main( int argc, char** argv )
 
 
 
-	test_insert();
+	test( TestInsert(), "insertion" );
+
+
+	test( TestSubstr(), "substr" );
+
+	test( TestSubstr(), "substr" );
+
+	test( TestSubstr(), "substr" );
 
 	test_substr();
 
 
+
+	
 
 
 	/*
