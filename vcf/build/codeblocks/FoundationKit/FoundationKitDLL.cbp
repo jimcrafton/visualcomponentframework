@@ -38,6 +38,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-shared-libgcc" />
 					<Add option="-Wl,--enable-runtime-pseudo-reloc" />
 					<Add library="rpcrt4" />
 					<Add library="uuid" />
@@ -96,6 +97,7 @@
 					<Add option="-DFOUNDATIONKIT_EXPORTS" />
 				</Compiler>
 				<Linker>
+					<Add option="-shared-libgcc" />
 					<Add option="-Wl,--enable-runtime-pseudo-reloc" />
 					<Add library="rpcrt4" />
 					<Add library="uuid" />
