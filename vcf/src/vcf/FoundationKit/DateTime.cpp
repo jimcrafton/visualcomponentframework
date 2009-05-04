@@ -960,7 +960,7 @@ void ByYear::incr( DateTime& dt, uint32 offset )
 	uint32 m = dt.getMonth();
 	uint32 d = dt.getDay();
 
-	int origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+	uint32 origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
 
 	y += offset;
 
