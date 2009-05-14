@@ -69,6 +69,7 @@
         vcf/FoundationKit/NoSuchElementException.h
         vcf/FoundationKit/NotImplementedException.h
         vcf/FoundationKit/NoToolKitFoundException.h
+        vcf/FoundationKit/Nullable.h
         vcf/FoundationKit/Object.h
         vcf/FoundationKit/OSHandlePeer.h
         vcf/FoundationKit/OutOfBoundsException.h

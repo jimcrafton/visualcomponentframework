@@ -1185,6 +1185,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DocumentManager.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\DocumentManagerImpl.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\DragDropPeer.h
 # End Source File
 # Begin Source File

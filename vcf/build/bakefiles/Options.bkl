@@ -8,12 +8,14 @@
         <if cond="FORMAT=='msvc6prj'">,_vc6</if>
         <if cond="FORMAT=='msvs2003prj'">,_vc70,_vc71</if>
         <if cond="FORMAT=='msvs2005prj'">,_vc80,_vc90</if>
+        <if cond="FORMAT=='msvs2008prj'">,_vc90</if>
     </set>
     <set var="OPTION_SELECTLIB_DESC"/>
     <set var="OPTION_SELECTLIB_DESC">
         <if cond="FORMAT=='msvc6prj'">,vc6</if>
         <if cond="FORMAT=='msvs2003prj'">,vc70,vc71</if>
         <if cond="FORMAT=='msvs2005prj'">,vc80,vc90</if>
+        <if cond="FORMAT=='msvs2008prj'">,vc90</if>
     </set>
     <option name="OPTION_SELECTLIB">
         <values>$(OPTION_SELECTLIB_DEFAULT)</values>

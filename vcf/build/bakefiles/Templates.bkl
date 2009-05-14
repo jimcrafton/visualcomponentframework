@@ -71,7 +71,7 @@
                 <sys-lib>imm32</sys-lib>
             </if>
 
-            <if cond="FORMAT in ['msvc','msvc6prj','msvs2005prj','borland']">
+            <if cond="FORMAT in ['msvc','msvc6prj','msvs2003prj','msvs2005prj','msvs2008prj','borland']">
                 <sys-lib>oleacc</sys-lib>
                 <sys-lib>urlmon</sys-lib>
             </if>
@@ -202,7 +202,7 @@
 
     <template id="vcf_exe_gui" template="vcf_exe">
         <app-type>gui</app-type>
-        <if cond="FORMAT in ['msvc','msvc6prj','msvs2005prj']">
+        <if cond="FORMAT in ['msvc','msvc6prj','msvs2003prj','msvs2005prj','msvs2008prj']">
             <ldflags>/ENTRY:"mainCRTStartup"</ldflags>
         </if>
         <if cond="FORMAT=='borland'">
