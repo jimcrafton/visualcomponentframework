@@ -86,6 +86,7 @@
         vcf/ApplicationKit/Document.h
         vcf/ApplicationKit/DocumentBasedApplication.h
         vcf/ApplicationKit/DocumentManager.h
+        vcf/ApplicationKit/DocumentManagerImpl.h
         vcf/ApplicationKit/DragDropPeer.h
         vcf/ApplicationKit/DragScrollEvent.h
         vcf/ApplicationKit/DragSource.h

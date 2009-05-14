@@ -16,7 +16,7 @@
         <set var="OPTION_HTMLKIT">1</set>
         <set var="OPTION_OPENGLKIT">1</set>
         <set var="OPTION_NETWORKKIT">1</set>
-        <set var="OPTION_REMOTEOBJECTKIT">1</set>
+        <set var="OPTION_REMOTEOBJECTKIT">0</set>
         <set var="OPTION_INTERNETKIT">1</set>
         <set var="OPTION_REGEXKIT">1</set>
         <set var="OPTION_XMLKIT">1</set>
@@ -101,7 +101,7 @@
     precompiled header file.
     -->
     <set var="PRECOMPILED">0</set>
-    <if cond="FORMAT in ['msvc','msvc6prj','msvs2005prj']">
+    <if cond="FORMAT in ['msvc','msvc6prj','msvs2003prj','msvs2005prj','msvs2008prj']">
         <set var="PRECOMPILED">1</set>
     </if>
 

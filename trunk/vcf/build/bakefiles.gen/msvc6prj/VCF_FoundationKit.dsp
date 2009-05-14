@@ -814,6 +814,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\NotImplementedException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\Nullable.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\OSHandlePeer.h
 # End Source File
 # Begin Source File
