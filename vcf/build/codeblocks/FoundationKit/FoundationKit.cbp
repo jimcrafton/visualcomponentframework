@@ -201,7 +201,10 @@
 			<Option weight="0" />
 		</Unit>
 		<Unit filename="..\..\..\src\vcf\FoundationKit\FoundationKitPrivate.h" />
-		<Unit filename="..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl" />
+		<Unit filename="..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="..\..\..\src\vcf\FoundationKit\FoundationKitSelectLib.h" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\FrameworkConfig.h" />
 		<Unit filename="..\..\..\src\vcf\FoundationKit\IniFini.cpp" />
