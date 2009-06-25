@@ -53,17 +53,17 @@ long Object::release(Object* owner)
 	return refCount_;
 }
 
-Class* Object::getClass() const 
+VCF::Class* Object::getClass() const
 {
 
-	Class* result = ClassRegistry::getClass( this );
+	VCF::Class* result = ClassRegistry::getClass( this );
 	if ( NULL != result ){
 		result->setSource( this );
 	}
 	return result;
 }
 
-String Object::getClassName() const 
+String Object::getClassName() const
 {
 	String result = "";
 	Class* clazz = ClassRegistry::getClass( this );
@@ -84,9 +84,9 @@ String Object::toString() const
 	String result;
 	/*
 	JC : I commented this out - I think there was some confusion about how this was supposed
-	to work. By using %ls we can pass in a WideChar*. If you use an ansi char* I am not sure 
+	to work. By using %ls we can pass in a WideChar*. If you use an ansi char* I am not sure
 	what will happen.
-	The simpler solution is to just use the StringUtils::format() function, which 
+	The simpler solution is to just use the StringUtils::format() function, which
 	uses less ansi to wide char transformation.
 	I would like to thank Aroman for catching this though!
 	char info[256];
@@ -94,10 +94,10 @@ String Object::toString() const
 		     this->getClassName().ansi_c_str(), this, (int)refCount_ );
 	result += info;
 	*/
-	//Note: %ls means we can pass in a WideChar* - if we wanted to 
+	//Note: %ls means we can pass in a WideChar* - if we wanted to
 	//pass in a char* we would need to use the %s formatter
 	result = Format("%ls @ %p, refcount: %d") % getClassName().c_str() % this % (int)refCount_;
-	
+
 	return result;
 }
 
