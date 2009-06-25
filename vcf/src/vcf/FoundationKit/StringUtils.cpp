@@ -1170,6 +1170,10 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting,
 	uint32 m = date.getMonth();
 	uint32 d = date.getDay();
 
+#ifdef VCF_OSX
+    int tmpLen = 256;
+#endif
+
 	VCFChar tmp[256];
 	memset( tmp, 0, sizeof(tmp) );
 
@@ -1255,7 +1259,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting,
 					//result += L"{insert Locale date/time here}";
 
 					if ( NULL != locale ) {
-						result += locale->toStringFromDate( date ) + " " + locale->toStringFromTime( date );  
+						result += locale->toStringFromDate( date ) + " " + locale->toStringFromTime( date );
 					}
 
 					current = p + 1;
@@ -1709,7 +1713,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting,
 					result.append( current, (p-current) -formatArgCount );
 
 					if ( NULL != locale ) {
-						result += locale->toStringFromDate( date );  
+						result += locale->toStringFromDate( date );
 					}
 
 					//result += L"{Locale's Date}";
@@ -1725,7 +1729,7 @@ VCF::String StringUtils::format( const DateTime& date, const String& formatting,
 					result.append( current, (p-current) -formatArgCount );
 
 					if ( NULL != locale ) {
-						result += locale->toStringFromTime( date );  
+						result += locale->toStringFromTime( date );
 					}
 
 					current = p + 1;

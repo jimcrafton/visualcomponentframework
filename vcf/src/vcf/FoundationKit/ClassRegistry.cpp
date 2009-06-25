@@ -10,8 +10,8 @@ where you installed the VCF.
 #include "vcf/FoundationKit/FoundationKit.h"
 #include "vcf/FoundationKit/VCFRTTIImpl.h"
 
-using namespace VCF;
-
+namespace VCF
+{
 
 ClassRegistry* ClassRegistry::create()
 {
@@ -75,18 +75,18 @@ void ClassRegistry::removeClass( const String& className )
 	#endif
 
 	if ( !className.empty() ) {
-		String id ;
+		String classId;
 
 		Map<String,Class*>::iterator found =
 			registryInstance_->classMap_.find( className );
 
 		if ( found != registryInstance_->classMap_.end() ){
-			Class* clazz = found->second;
-			id = clazz->getID();
+			VCF::Class* clazz = found->second;
+			classId = clazz->getID();
 			delete clazz;
 			registryInstance_->classMap_.erase( found );
 
-			found = registryInstance_->classIDMap_.find( id );
+			found = registryInstance_->classIDMap_.find( classId );
 			if ( found != registryInstance_->classIDMap_.end() ) {
 				registryInstance_->classIDMap_.erase( found );
 			}
@@ -128,24 +128,24 @@ void ClassRegistry::removeInterface( const String& interfaceName )
 	#endif
 
 	if ( !interfaceName.empty() ) {
-		String id ;
+		String classId;
 
 		Map<String,InterfaceClass*>::iterator found =
 			registryInstance_->interfaceMap_.find( interfaceName );
 
 		if ( found != registryInstance_->interfaceMap_.end() ){
 			InterfaceClass* clazz = found->second;
-			id = clazz->getID();
+			classId = clazz->getID();
 			delete clazz;
 			registryInstance_->interfaceMap_.erase( found );
 
-			found = registryInstance_->interfaceIDMap_.find( id );
+			found = registryInstance_->interfaceIDMap_.find( classId );
 			if ( found != registryInstance_->interfaceIDMap_.end() ) {
 				registryInstance_->interfaceIDMap_.erase( found );
 			}
 
 			Map<String,ImplementedInterfaceClass*>::iterator found2 =
-				registryInstance_->implementedInterfacesIDMap_.find( id );
+				registryInstance_->implementedInterfacesIDMap_.find( classId );
 
 			if ( found2 != registryInstance_->implementedInterfacesIDMap_.end() ) {
 				registryInstance_->implementedInterfacesIDMap_.erase( found2 );
@@ -211,7 +211,7 @@ Class* ClassRegistry::getClass( const Object* object )
 	return ClassRegistry::getClassRegistry()->internal_getClass( object );
 }
 
-Class* ClassRegistry::getClass( Object* object ) 
+Class* ClassRegistry::getClass( Object* object )
 {
 #ifndef VCF_RTTI
 	return NULL;
@@ -388,7 +388,7 @@ Class* ClassRegistry::internal_getClassFromClassID( const String& classID )
 }
 
 
-Class* ClassRegistry::internal_getClass( const Object* object ) 
+Class* ClassRegistry::internal_getClass( const Object* object )
 {
 	Class* result = NULL;
 	std::map<String,Class*>::iterator found =
@@ -429,11 +429,11 @@ Class* ClassRegistry::internal_getClass( Object* object )
 Object* ClassRegistry::internal_createNewInstance( const String& className )
 {
 	Object* result = NULL;
-	if ( !className.empty() ) {		
+	if ( !className.empty() ) {
 		Class* clazz = NULL;
 		std::map<String,Class*>::iterator found =
 			classMap_.find( className );
-		
+
 		if ( found != classMap_.end() ){
 			clazz = found->second;
 			result = clazz->createInstance();
@@ -492,7 +492,7 @@ void ClassRegistry::internal_addClass( const String& className, Class* classToRe
 		}
 
 		Class* superClass = classToRegister->getSuperClass();
-		Class* tmp = NULL;		
+		Class* tmp = NULL;
 
 		while ( NULL != superClass ){
 			//copy over properties
@@ -895,7 +895,7 @@ std::vector<VariantData> ClassRegistry::getAttrValuesByClass( const String& clas
 		Class* clazz = it->second;
 		if ( clazz->hasAttribute(attr) ) {
 			classes.push_back( clazz );
-		}		
+		}
 
 		++it;
 	}
@@ -917,7 +917,7 @@ std::vector<VariantData> ClassRegistry::getAttrValuesByClass( const String& clas
 		++it2;
 	}
 
-	
+
 
 #endif
 	return result;
@@ -929,7 +929,7 @@ Class* ClassRegistry::getClassWithAttrValue( const String& attr, const VariantDa
 	Class* result = NULL;
 #ifdef VCF_RTTI
 	ClassRegistry* reg = ClassRegistry::getClassRegistry();
-	
+
 	std::map<String,Class*>::iterator it = reg->classMap_.begin();
 	while ( it != reg->classMap_.end() ) {
 		Class* clazz = it->second;
@@ -938,7 +938,7 @@ Class* ClassRegistry::getClassWithAttrValue( const String& attr, const VariantDa
 				result = clazz;
 				break;
 			}
-		}		
+		}
 
 		++it;
 	}
@@ -952,7 +952,7 @@ Class* ClassRegistry::getClassWithAttrValue( const String& className, const Stri
 	Class* result = NULL;
 #ifdef VCF_RTTI
 	ClassRegistry* reg = ClassRegistry::getClassRegistry();
-	
+
 	std::map<String,Class*>::iterator it = reg->classMap_.begin();
 	while ( it != reg->classMap_.end() ) {
 		Class* clazz = it->second;
@@ -972,6 +972,7 @@ Class* ClassRegistry::getClassWithAttrValue( const String& className, const Stri
 	return result;
 }
 
+} // namespace VCF
 /**
 $Id$
 */

@@ -8,9 +8,9 @@ where you installed the VCF.
 
 
 #include "vcf/FoundationKit/FoundationKit.h"
-using namespace VCF;
 
-
+namespace VCF
+{
 
 Class::Class( const String& className, const String& classID, const String& superClass )
 {
@@ -69,12 +69,12 @@ Class::~Class()
 	interfaces_.clear();
 }
 
-String Class::getClassName() const 
+String Class::getClassName() const
 {
 	return className_;
 }
 
-bool Class::hasProperty( const String& propertyName ) const 
+bool Class::hasProperty( const String& propertyName ) const
 {
 	bool result = false;
     std::map<String,Property*>::const_iterator found = properties_.find( propertyName );
@@ -102,7 +102,7 @@ void Class::addDelegate( DelegateProperty* event )
 	}
 }
 
-DelegateProperty* Class::getDelegate( const String& delegateName ) const 
+DelegateProperty* Class::getDelegate( const String& delegateName ) const
 {
 	DelegateProperty* result = NULL;
 	std::map<String,DelegateProperty*>::const_iterator found = delegates_.find( delegateName );
@@ -112,7 +112,7 @@ DelegateProperty* Class::getDelegate( const String& delegateName ) const
 	return result;
 }
 
-bool Class::hasDelegate( const String& delegateName ) const 
+bool Class::hasDelegate( const String& delegateName ) const
 {
 	bool result = false;
 	std::map<String,DelegateProperty*>::const_iterator found = delegates_.find( delegateName );
@@ -140,7 +140,7 @@ void Class::addMethod( Method* method )
 	}
 }
 
-bool Class::hasMethod( const String& methodName ) const 
+bool Class::hasMethod( const String& methodName ) const
 {
 	bool result = false;
     std::map<String,Method*>::const_iterator found = methods_.find( methodName );
@@ -148,12 +148,12 @@ bool Class::hasMethod( const String& methodName ) const
 	return result;
 }
 
-uint32 Class::getMethodCount() const 
+uint32 Class::getMethodCount() const
 {
 	return methods_.size();
 }
 
-Method* Class::getMethod( const String& methodName ) const 
+Method* Class::getMethod( const String& methodName ) const
 {
 	Method* result = NULL;
 
@@ -176,7 +176,7 @@ void Class::addField( Field* field )
 	}
 }
 
-bool Class::hasField( const String& fieldName ) const 
+bool Class::hasField( const String& fieldName ) const
 {
 	bool result = false;
     std::map<String,Field*>::const_iterator found = fields_.find( fieldName );
@@ -184,12 +184,12 @@ bool Class::hasField( const String& fieldName ) const
 	return result;
 }
 
-uint32 Class::getFieldCount() const 
+uint32 Class::getFieldCount() const
 {
 	return fields_.size();
 }
 
-Field* Class::getField( const String& fieldName ) const 
+Field* Class::getField( const String& fieldName ) const
 {
 	Field* result = NULL;
 
@@ -267,17 +267,17 @@ void Class::setSource( Object* source )
 	}
 }
 
-uint32 Class::getPropertyCount() const 
+uint32 Class::getPropertyCount() const
 {
 	return properties_.size();
 }
 
-String Class::getID() const 
+String Class::getID() const
 {
 	return classID_;
 }
 
-Class* Class::getSuperClass() const 
+Class* Class::getSuperClass() const
 {
 	if ( NULL == superClass_ ){
 
@@ -287,7 +287,7 @@ Class* Class::getSuperClass() const
 	return superClass_;
 }
 
-String Class::getClassNameForProperty( Property* property ) 
+String Class::getClassNameForProperty( Property* property )
 {
 	String result = "";
 
@@ -381,12 +381,12 @@ String Class::getClassNameForProperty( Property* property )
 	return result;
 }
 
-uint32 Class::getInterfaceCount() const 
+uint32 Class::getInterfaceCount() const
 {
 	return interfaces_.size();
 }
 
-bool Class::hasInterface( const String& interfaceName ) const 
+bool Class::hasInterface( const String& interfaceName ) const
 {
 	bool result = false;
 	std::map<String, InterfaceClass*>::const_iterator it = interfaces_.begin();
@@ -401,13 +401,13 @@ bool Class::hasInterface( const String& interfaceName ) const
 	return result;
 }
 
-bool Class::hasInterfaceID( const String& interfaceID ) const 
+bool Class::hasInterfaceID( const String& interfaceID ) const
 {
 	std::map<String, InterfaceClass*>::const_iterator found = interfaces_.find( interfaceID );
 	return found != interfaces_.end();
 }
 
-InterfaceClass* Class::getInterfaceByName( const String& interfaceName ) const 
+InterfaceClass* Class::getInterfaceByName( const String& interfaceName ) const
 {
 	InterfaceClass* result = NULL;
 
@@ -423,7 +423,7 @@ InterfaceClass* Class::getInterfaceByName( const String& interfaceName ) const
 	return result;
 }
 
-InterfaceClass* Class::getInterfaceByID( const String& interfaceID ) const 
+InterfaceClass* Class::getInterfaceByID( const String& interfaceID ) const
 {
 	InterfaceClass* result = NULL;
 
@@ -463,7 +463,7 @@ uint32 Class::sizeOf() const
 	result += className_.sizeOf();
 	result += classID_.sizeOf();
 	result += superClassName_.sizeOf();
-	
+
 	Map<String,Property*>::const_iterator it = properties_.begin();
 	while ( it != properties_.end() ) {
 		result += it->second->sizeOf();
@@ -476,7 +476,7 @@ uint32 Class::sizeOf() const
 		++it2;
 	}
 
-	
+
 	Map<String, DelegateProperty*>::const_iterator it3 = delegates_.begin();
 	while ( it3 != delegates_.end() ) {
 		result += it3->second->sizeOf();
@@ -502,7 +502,7 @@ VariantData Class::getAttribute( const String& attrName ) const
 	return VariantData::null();
 }
 
-void Class::addAttribute( const String& attrName, const VariantData& attrVal ) 
+void Class::addAttribute( const String& attrName, const VariantData& attrVal )
 {
 	attributes_[attrName] = attrVal;
 }
@@ -525,7 +525,7 @@ bool Class::derivesFrom( const String& className ) const
 	return false;
 }
 
-bool Class::relatedTo( const String& className ) const 
+bool Class::relatedTo( const String& className ) const
 {
 	if ( className == className_ ) {
 		return true;
@@ -542,6 +542,8 @@ bool Class::relatedTo( const String& className ) const
 
 	return false;
 }
+
+} // namespace VCF
 /**
 $Id$
 */

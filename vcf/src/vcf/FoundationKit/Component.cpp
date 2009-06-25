@@ -13,7 +13,8 @@ where you installed the VCF.
 
 static int ComponentTagID = 0;
 
-using namespace VCF;
+namespace VCF
+{
 
 Component::Component():
 	owner_(NULL),
@@ -92,7 +93,7 @@ void Component::free()
 void Component::destroy()
 {
 	if ( !(Component::csDestroying & componentState_) ) {
-		VCF::ComponentEvent e( this, Component::COMPONENT_DESTROYED );	
+		VCF::ComponentEvent e( this, Component::COMPONENT_DESTROYED );
 
 		handleEvent( &e );
 	}
@@ -107,7 +108,7 @@ void Component::destroy()
 	components_.clear();
 }
 
-String Component::getName() const 
+String Component::getName() const
 {
 	return name_;
 }
@@ -135,7 +136,7 @@ void Component::handleEvent( Event* event )
 			break;
 
 			case Component::COMPONENT_DESTROYED:{
-				ComponentEvent* componentEvent = (ComponentEvent*)event;				
+				ComponentEvent* componentEvent = (ComponentEvent*)event;
 
 				//notify all the child component of the component destroy
 				std::vector<Component*>::iterator it = components_.begin();
@@ -149,7 +150,7 @@ void Component::handleEvent( Event* event )
 				beforeDestroy( componentEvent );
 				ComponentDestroyed( componentEvent );
 			}
-			break;			
+			break;
 
 			case Component::COMPONENT_LOADED : {
 				ComponentEvent* componentEvent = (ComponentEvent*)event;
@@ -172,19 +173,19 @@ void Component::beforeDestroy( ComponentEvent* event )
 }
 
 
-uint32 Component::getComponentState() const 
+uint32 Component::getComponentState() const
 {
 	return componentState_;
 }
 
 void Component::setComponentState( const uint32& componentState )
 {
-	//check for design mode here since we have async creation handling 
+	//check for design mode here since we have async creation handling
 	//at the moment
 	bool designing = isDesigning();
 
 	componentState_ = componentState;
-	
+
 	if ( !(componentState & Component::csDesigning) ) {
 		if ( designing ) {
 			componentState_ |= Component::csDesigning;
@@ -247,7 +248,7 @@ void Component::removeFromOwner( const bool& freeInstance )
 		if ( freeInstance ) {
 			free();
 		}
-	}	
+	}
 }
 
 Enumerator<Component*>* Component::getComponents()
@@ -255,7 +256,7 @@ Enumerator<Component*>* Component::getComponents()
 	return componentContainer_.getEnumerator();
 }
 
-uint32 Component::getComponentCount() const 
+uint32 Component::getComponentCount() const
 {
 	return components_.size();
 }
@@ -268,7 +269,7 @@ Component* Component::findComponent( const String& componentName, const bool& re
 		result = this;
 	}
 	else {
-		
+
 		//this is very slow !! for the moment !
 		std::vector<Component*>::iterator it = components_.begin();
 		while ( it != components_.end() ){
@@ -329,7 +330,7 @@ bool Component::bindVariable( Component** variablePtr, const String& variableNam
 			if ( true == result ) {
 				break;
 			}
-		}		
+		}
 	}
 	return result;
 }
@@ -430,7 +431,7 @@ void Component::loaded()
 		componentState_ &= ~Component::csLoading;
 		ComponentEvent e( this, Component::COMPONENT_LOADED );
 
-		handleEvent( &e );		
+		handleEvent( &e );
 	}
 }
 
@@ -490,7 +491,7 @@ void Component::setDestroying()
 
 void Component::setDesigning( const bool& designing )
 {
-	if ( designing != isDesigning() ) {		
+	if ( designing != isDesigning() ) {
 		if ( designing ) {
 			setComponentState( componentState_ | Component::csDesigning );
 		}
@@ -501,7 +502,7 @@ void Component::setDesigning( const bool& designing )
 }
 
 
-bool Component::getUseLocaleStrings() const 
+bool Component::getUseLocaleStrings() const
 {
 	return (Component::csUsesLocaleStrings & componentState_) ? true : false;
 }
@@ -524,7 +525,7 @@ void Component::setUseLocaleStrings( const bool& val )
 }
 
 
-void Component::initComponent( Component* instance, Class* clazz, Class* rootClazz, ResourceBundle* resBundle ) 
+void Component::initComponent( Component* instance, Class* clazz, Class* rootClazz, ResourceBundle* resBundle )
 {
 	if ( (clazz->getID() == COMPONENT_CLASSID) || (clazz == rootClazz) ) {
 		return;
@@ -550,7 +551,7 @@ void Component::initComponent( Component* instance, Class* clazz, Class* rootCla
 	}
 
 	vffContents = bundle->getVFF(resourceName);
-		
+
 	if ( !vffContents.empty() ) {
 		BasicInputStream bis( vffContents );
 		VFFInputStream vis( &bis );
@@ -562,7 +563,7 @@ void Component::initComponent( Component* instance, Class* clazz, Class* rootCla
 Component* Component::createComponentFromResources( Class* clazz, Class* rootClazz, ResourceBundle* resBundle )
 {
 	Component* result = NULL;
-	
+
 	VCF_ASSERT( clazz != NULL );
 
 	try {
@@ -572,7 +573,7 @@ Component* Component::createComponentFromResources( Class* clazz, Class* rootCla
 
 		if ( NULL != result ) {
 			Component::initComponent( result, clazz, rootClazz, resBundle );
-			
+
 			result->loaded();
 		}
 		else {
@@ -586,7 +587,7 @@ Component* Component::createComponentFromResources( Class* clazz, Class* rootCla
 	return result;
 }
 
-Dictionary* Component::getSettings() const 
+Dictionary* Component::getSettings() const
 {
 	return settings_;
 }
@@ -607,7 +608,7 @@ uint32 Component::getSettingNames( std::vector<String>& names )
 	return names.size();
 }
 
-ComponentSetting* Component::getSetting( const String& name ) const 
+ComponentSetting* Component::getSetting( const String& name ) const
 {
 	ComponentSetting* result = NULL;
 
@@ -634,8 +635,8 @@ ComponentSetting* Component::getSetting( const String& name ) const
 				result = dynamic_cast<ComponentSetting*>(object);
 			}
 		}
-		
-	}	
+
+	}
 
 	return result;
 }
@@ -694,7 +695,7 @@ ComponentSetting* Component::assignSetting( const String& settingName, const Str
 
 	VariantData* propVal = property->get();
 	if ( propVal != NULL ) {
-		result->value = *propVal; 
+		result->value = *propVal;
 	}
 
 	setSetting( settingName, result );
@@ -716,34 +717,34 @@ void Component::setSetting( const String& settingName, ComponentSetting* setting
 void Component::getAppNameAndKey( String& appName, String& key )
 {
 	const CommandLine& cmdLine = FoundationKit::getCommandLine();
-	
+
 	FilePath programName = cmdLine.getArgument(0);
-	
+
 	appName = programName.getBaseName();
-	
-	key = "Software\\";	
-	
+
+	key = "Software\\";
+
 	ResourceBundle* bundle = System::getResourceBundle();
 	if ( NULL != bundle ) {
-		ProgramInfo* info = bundle->getProgramInfo(); 
+		ProgramInfo* info = bundle->getProgramInfo();
 		if ( NULL != info ) {
 			String s = info->getProgramName();
 			if ( !s.empty() ) {
 				appName = s;
 			}
-			
+
 			s = info->getCompany();
 			if ( !s.empty() ) {
 				key += s + "\\";
 			}
-			
+
 			delete info;
 		}
 	}
-	
-	
-	//need a way to generate platform 
-	//neutral reg keys!!!!! 
+
+
+	//need a way to generate platform
+	//neutral reg keys!!!!!
 	//These are window specific for now!
 	key += appName + "\\";
 }
@@ -801,12 +802,12 @@ void Component::initializeSettings( const bool& recursive )
 								}
 
 								switch ( setting->value.type ) {
-									case pdString : {										
+									case pdString : {
 										setting->value = reg.getStringValue(name);
 									}
-									break;								
+									break;
 
-									case pdULong : case pdLong : case pdUInt : case pdInt : {										
+									case pdULong : case pdLong : case pdUInt : case pdInt : {
 										setting->value = reg.getIntValue(name);
 									}
 									break;
@@ -853,9 +854,9 @@ void Component::initializeSettings( const bool& recursive )
 		std::vector<Component*>::iterator it = components_.begin();
 		while ( it != components_.end() ){
 			Component* child = *it;
-			
+
 			child->initializeSettings( recursive );
-			
+
 			++ it;
 		}
 	}
@@ -905,7 +906,7 @@ void Component::storeSettings( const bool& recursive )
 
 						if ( reg.openKey( key + setting->section, true ) ) {
 							Property* property = clazz->getProperty( setting->name );
-							
+
 							if ( NULL != property ) {
 								VariantData* propVal = property->get();
 								if ( propVal ) {
@@ -915,11 +916,11 @@ void Component::storeSettings( const bool& recursive )
 
 							try {
 								switch ( setting->value.type ) {
-									case pdString : {	
+									case pdString : {
 										String val = setting->value;
 										reg.setValue( val, name);
 									}
-									break;								
+									break;
 
 									case pdULong : case pdLong : case pdUInt : case pdInt : {
 										uint32 val = setting->value;
@@ -967,9 +968,9 @@ void Component::storeSettings( const bool& recursive )
 		std::vector<Component*>::iterator it = components_.begin();
 		while ( it != components_.end() ){
 			Component* child = *it;
-			
+
 			child->storeSettings( recursive );
-			
+
 			++ it;
 		}
 	}
@@ -979,6 +980,8 @@ bool Component::generatePropertyValue( const String& fullPropertyName, Property*
 {
 	return false;
 }
+
+} // namespace VCF
 
 /**
 $Id$

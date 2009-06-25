@@ -221,7 +221,7 @@ public:
 protected:
 
 	//don't allow copy constructors
-	StringTokenizer( const StringTokenizer& source) : Object(source) {};
+	StringTokenizer( const StringTokenizer& source) : Object(source), Enumerator<String>(source) {};
 
 	StringTokenizer& operator=( const StringTokenizer& rhs ) {
 		return *this;

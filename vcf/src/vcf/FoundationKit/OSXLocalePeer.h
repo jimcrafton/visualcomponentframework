@@ -49,6 +49,7 @@ public:
 	virtual float toFloat( const UnicodeString& str );
 	virtual double toDoubleAsCurrency( const UnicodeString& str );
     virtual DateTime toDateTime( const UnicodeString& str );
+    virtual DateTime toDateTime( const UnicodeString& str, const String& format );
 	virtual UnicodeString toLowerCase( const UnicodeString& s );
 	virtual UnicodeString toUpperCase( const UnicodeString& s );
 
@@ -61,6 +62,8 @@ public:
 	virtual int getCurrencyFractionalDigits();
 	virtual UnicodeString getCurrencyPositiveSign();
 	virtual UnicodeString getCurrencyNegativeSign();
+	virtual UnicodeString getAMSymbol();
+	virtual UnicodeString getPMSymbol();
 
 	virtual bool isCharA( const int32& charTypeMask, const VCFChar& c );
 
@@ -69,18 +72,18 @@ public:
 	virtual OSHandleID getHandleID() {
 		return (OSHandleID)localeRef_;
 	}
-	
+
 	virtual void setToCurrentThread();
 protected:
 
     static std::map<String,AppleLocalePair> localeMaping;
-	CFLocaleRef localeRef_;	
+	CFLocaleRef localeRef_;
 	LocaleRef collateLocaleRef_;
 	CFNumberFormatterRef integerNumFormatterRef_;
 	CFNumberFormatterRef realNumFormatterRef_;
 	CFNumberFormatterRef currencyNumFormatterRef_;
 	UnicodeString crtLocaleStr_;
-	
+
 
 };
 
