@@ -432,31 +432,15 @@ public:
 	converts the VariantData to an Object pointer
 	*/
 	operator Object* () const {
-		VCF_ASSERT(type != pdConstObject);
 		return ObjVal;
 	};
-
-	/**
-	converts the VariantData to a pointer to a const Object
-	*/
-	operator const Object* () const {
-		return ConstObjVal;
-	}
 
 	/**
 	converts the VariantData to an Object reference
 	*/
 	operator Object& () const {
-		VCF_ASSERT(type != pdConstObject);
 		return *ObjVal;
 	};
-
-	/**
-	converts the VariantData to a const Object reference
-	*/
-	operator const Object& () const {
-		return *ConstObjVal;
-	}
 
 	/**
 	converts the VariantData to an String
