@@ -24,7 +24,7 @@ class GraphicsContext;
 /**
 \class BasicStroke BasicStroke.h "vcf/GraphicsKit/BasicStroke.h"
 */
-class GRAPHICSKIT_API BasicStroke : public VCF::Object, public VCF::Stroke {
+class GRAPHICSKIT_API BasicStroke : public VCF::HeapObject, public VCF::Stroke {
 public:
 	BasicStroke();
 

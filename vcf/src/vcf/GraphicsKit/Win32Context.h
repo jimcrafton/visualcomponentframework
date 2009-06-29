@@ -26,7 +26,7 @@ namespace VCF
 
 class GRAPHICSKIT_API Win32Image;
 
-class GRAPHICSKIT_API Win32Context  : public Object, public ContextPeer {
+class GRAPHICSKIT_API Win32Context  : public HeapObject, public ContextPeer {
 public:
 	Win32Context();
 

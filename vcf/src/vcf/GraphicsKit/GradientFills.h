@@ -50,7 +50,7 @@ need to be unique per color and the list of colors is sorted
 by it's location. Each mid point has a value ranging 0.0 to 1.0.
 Mid point values do \em not need to be unique.
 */
-class GradientFill : public Object, public Fill {
+class GradientFill : public HeapObject, public Fill {
 public:
 
 

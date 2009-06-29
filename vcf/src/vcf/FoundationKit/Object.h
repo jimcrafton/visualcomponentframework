@@ -28,35 +28,8 @@ Base class for the entire Visual Component Framework.
 */
 class FOUNDATIONKIT_API Object {
 public:
-	Object();
-    Object(const Object &obj);
 
 	virtual ~Object();	
-
-	
-
-	/**
-	*increments the reference count of the object
-	@param Object* the optional owner of the new referenced object
-	for use in future, more sophisticated refcounting schemes
-	@return long the current reference count of the object
-	*/
-    virtual long addRef(Object* owner=NULL);
-
-	/**
-	decrements the reference count of the object
-	@param Object* the optional owner of the new referenced object
-	for use in future, more sophisticated refcounting schemes
-	when the refCount_ drops to 0 the object is destroyed
-	*/
-    virtual long release(Object* owner=NULL);
-
-	/**
-	returns the number of outstanding references for this object
-	*/
-    long getRefCount() const{
-		return refCount_;
-	}
 
     /**
     returns a string representation of the object
@@ -216,13 +189,50 @@ public:
 
 protected:
 	
-
-	AtomicCount refCount_;
 private:
 
 };
 
+/**
+\class HeapObject Object.h "vcf/FoundationKit/Object.h"
+Object with refcounting methods that originally belonged to Object class.  This enables
+the Object class to live peacefully on the stack.  HeapObject should always be created
+on the heap!
+*/
+class FOUNDATIONKIT_API HeapObject: public Object {
+public:
+	HeapObject();
+    HeapObject(const HeapObject &obj);
+
+	/**
+	*increments the reference count of the object
+	@return long the current reference count of the object
+	*/
+    virtual long addRef();
+
+	/**
+	decrements the reference count of the object
+	*/
+    virtual long release();
+
+	/**
+	returns the number of outstanding references for this object
+	*/
+    long getRefCount() const{
+		return refCount_;
+	}
+
+	/**
+    returns a string representation of the object
+     */
+	virtual String toString() const;
+
+protected:
+
+	AtomicCount refCount_;
 };
+
+}
 
 
 #endif // _VCF_OBJECT_H__

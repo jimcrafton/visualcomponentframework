@@ -27,7 +27,7 @@ where you installed the VCF.
 
 namespace VCF{
 
-class GRAPHICSKIT_API Ellipse : public VCF::Object, public VCF::Path {
+class GRAPHICSKIT_API Ellipse : public VCF::HeapObject, public VCF::Path {
 public:
 	Ellipse(){}
 

@@ -26,7 +26,7 @@ buffer for the GraphicsContext is available. Alpha support is only used if
 the rendering is performed by AGG, otherwise it is ignored.
 @see Fill
 */
-class GRAPHICSKIT_API BasicFill : public Object, public Fill {
+class GRAPHICSKIT_API BasicFill : public HeapObject, public Fill {
 public:
 	BasicFill();
 

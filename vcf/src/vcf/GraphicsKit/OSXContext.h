@@ -35,7 +35,7 @@ public:
 };
 
 
-class OSXContext  : public ContextPeer, public Object {
+class OSXContext  : public ContextPeer, public HeapObject {
 public:
 
 	

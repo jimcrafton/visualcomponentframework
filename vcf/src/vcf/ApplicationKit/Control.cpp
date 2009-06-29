@@ -127,7 +127,7 @@ void Control::destroy()
 	}
 
 	if ( NULL != view_ ) {
-		Object* obj = dynamic_cast<Object*>( view_ );
+		HeapObject* obj = dynamic_cast<HeapObject*>( view_ );
 		if ( NULL != obj ) {
 			obj->release();
 		}
@@ -1376,7 +1376,7 @@ View* Control::getView()
 void Control::setView( View* view )
 {
 	if ( NULL != view_ ) {
-		Object* obj = dynamic_cast<Object*>( view_ );
+		HeapObject* obj = dynamic_cast<HeapObject*>( view_ );
 		if ( NULL != obj ) {
 			obj->release();
 		}
@@ -1386,7 +1386,7 @@ void Control::setView( View* view )
 
 	if ( NULL != view_ ) {
 		view_->setViewControl( this );
-		Object* obj = dynamic_cast<Object*>( view_ );
+		HeapObject* obj = dynamic_cast<HeapObject*>( view_ );
 		if ( NULL != obj ) {
 			obj->addRef();
 		}

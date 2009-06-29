@@ -158,7 +158,7 @@ GraphicsState::~GraphicsState()
 {
 
 	if ( NULL != clippingPath_ ) {
-		Object* obj = dynamic_cast<Object*>( clippingPath_ );
+		HeapObject* obj = dynamic_cast<HeapObject*>( clippingPath_ );
 		obj->release();
 	}
 	clippingPath_ = NULL;
@@ -173,14 +173,14 @@ GraphicsState& GraphicsState::operator=( const GraphicsState& rhs )
 	compositeMode_ = rhs.compositeMode_;
 
 	if ( NULL != clippingPath_ ) { //release the underlying object instance
-		Object* pathObj = dynamic_cast<Object*>( clippingPath_ );
+		HeapObject* pathObj = dynamic_cast<HeapObject*>( clippingPath_ );
 		pathObj->release();
 	}
 
 	clippingPath_ = rhs.clippingPath_;
 
 	if ( NULL != clippingPath_ ) { //take ownership of the underlying object instance
-		Object* pathObj = dynamic_cast<Object*>( clippingPath_ );
+		HeapObject* pathObj = dynamic_cast<HeapObject*>( clippingPath_ );
 		pathObj->addRef();
 	}
 
@@ -1276,7 +1276,7 @@ void GraphicsContext::setClippingRect( Rect* rect )
 	Path* clipPath = currentGraphicsState_->clippingPath_;
 
 	if ( NULL != clipPath ) { //release the underlying object instance
-		Object* pathObj = dynamic_cast<Object*>( clipPath );
+		HeapObject* pathObj = dynamic_cast<HeapObject*>( clipPath );
 		pathObj->release();
 	}
 
@@ -1298,14 +1298,14 @@ void GraphicsContext::setClippingPath( Path* clippingPath )
 	Path* clipPath = currentGraphicsState_->clippingPath_;
 
 	if ( NULL != clipPath ) { //release the underlying object instance
-		Object* pathObj = dynamic_cast<Object*>( clipPath );
+		HeapObject* pathObj = dynamic_cast<HeapObject*>( clipPath );
 		pathObj->release();
 	}
 
 	clipPath = clippingPath;
 
 	if ( NULL != clipPath ) { //take ownership of the underlying object instance
-		Object* pathObj = dynamic_cast<Object*>( clipPath );
+		HeapObject* pathObj = dynamic_cast<HeapObject*>( clipPath );
 		pathObj->addRef();
 	}
 
