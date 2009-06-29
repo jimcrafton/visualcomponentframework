@@ -19,7 +19,7 @@ where you installed the VCF.
 
 namespace VCF{
 
-class GRAPHICSKIT_API BasicRectangle : public VCF::Object, public VCF::Polygon{
+class GRAPHICSKIT_API BasicRectangle : public VCF::HeapObject, public VCF::Polygon{
 };
 
 };

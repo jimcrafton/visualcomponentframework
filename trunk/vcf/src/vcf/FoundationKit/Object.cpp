@@ -15,7 +15,7 @@ using namespace VCF;
 std::list<void*> Object::allocatedObjects;
 #endif
 
-Object::Object()
+HeapObject::HeapObject()
     : refCount_( 1 )
 	//initialized to one
 	//so a release after creating this object
@@ -23,7 +23,7 @@ Object::Object()
 {
 }
 
-Object::Object(const Object &obj)
+HeapObject::HeapObject(const HeapObject &obj)
     : refCount_(1)
 {
 }
@@ -33,12 +33,12 @@ Object::~Object()
 
 }
 
-long Object::addRef(Object* owner)
+long HeapObject::addRef()
 {
 	return ++refCount_;
 }
 
-long Object::release(Object* owner)
+long HeapObject::release()
 {
 	if ( 0 == --refCount_ )  {
 		Component* c = dynamic_cast<Component*>(this);
@@ -96,6 +96,15 @@ String Object::toString() const
 	*/
 	//Note: %ls means we can pass in a WideChar* - if we wanted to
 	//pass in a char* we would need to use the %s formatter
+	result = Format("%ls @ %p") % getClassName().c_str() % this;
+	
+	return result;
+}
+
+String HeapObject::toString() const
+{
+	String result;
+	
 	result = Format("%ls @ %p, refcount: %d") % getClassName().c_str() % this % (int)refCount_;
 
 	return result;

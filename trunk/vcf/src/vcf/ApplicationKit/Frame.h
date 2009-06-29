@@ -120,7 +120,7 @@ which is also part of the frame.
 class APPLICATIONKIT_API Frame : public VCF::Control, public DelegatedContainer<Frame>  {
 public:
 
-	class State : public Object, public Persistable{
+	class State : public HeapObject, public Persistable{
 	public:
 		State();
 

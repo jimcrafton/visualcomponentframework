@@ -21,7 +21,7 @@ The BezierCurve is a basic implementation of the Path interface and provides
 methods to create lines, rectangles, polylines, and curves.
 @see Path
 */
-class GRAPHICSKIT_API BezierCurve : public VCF::Object, public VCF::Path {
+class GRAPHICSKIT_API BezierCurve : public VCF::HeapObject, public VCF::Path {
 public:
 	BezierCurve();
 

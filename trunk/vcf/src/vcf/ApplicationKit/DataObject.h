@@ -78,7 +78,7 @@ protected:
 *A DataObject represents a data object in the clipboard.
 *Can be streamed out to a stream
 */
-class APPLICATIONKIT_API DataObject : public Object {
+class APPLICATIONKIT_API DataObject : public HeapObject {
 
 public:
 	//DataObject( const char* dataToInitWith, const uint32& dataSize, const String& dataType );

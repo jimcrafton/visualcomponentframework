@@ -22,7 +22,7 @@ class CursorPeer;
 \class Cursor Cursor.h "vcf/ApplicationKit/Cursor.h"
 Class Cursor documentation
 */
-class APPLICATIONKIT_API Cursor : public Object {
+class APPLICATIONKIT_API Cursor : public HeapObject {
 public:
 	enum SystemCursorType{
 		SCT_DEFAULT=0,

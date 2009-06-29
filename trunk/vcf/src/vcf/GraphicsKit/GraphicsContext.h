@@ -114,7 +114,7 @@ have been  called. For example:
 @author Jim Crafton
 
 */
-class GRAPHICSKIT_API GraphicsContext : public Object {
+class GRAPHICSKIT_API GraphicsContext : public HeapObject {
 public:
 	/**
 	Creates a new blank graphics context of the specified width and height
