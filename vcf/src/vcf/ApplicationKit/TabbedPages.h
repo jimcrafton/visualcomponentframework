@@ -105,6 +105,8 @@ public:
 	Enumerator<TabPage*>* getPages();
 
 	virtual void handleEvent( Event* e );
+
+	TabPage* tabPageHitTest( const Point& point );
 protected:
 	class ScrollButton : public PushButton {
 	public:
