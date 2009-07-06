@@ -638,7 +638,39 @@ TabPage* TabbedPages::getTabPage( const uint32& index )
 void TabbedPages::setTabPage( const uint32& index, TabPage* page )
 {
 	if ( index < tabPages_.size() ) {
-		tabPages_[index]->free();
+
+		TabPage* oldPage = tabPages_[index];
+
+		TabSheet* sheet = oldPage->getTabSheet();
+
+		removeComponent( oldPage );
+		oldPage->free();
+		
+
+		if ( NULL == page->getOwner() ) {
+			addComponent( page );
+		}
+
+		page->setControl( this );
+		page->setModel( getViewModel() );
+		page->setIndex( index );
+
+		if ( NULL == page->getTabSheet() ) {
+			sheet->setPage( page );
+			page->setTabSheet( sheet );
+		}
+		else {
+			remove( sheet );
+			removeComponent( sheet );
+			sheet->free();
+
+			sheet = page->getTabSheet();
+
+			insertAtIndex( sheet, AlignClient, index );
+		}	
+				
+		tabHeight_ = maxVal<double>( tabHeight_, page->getPreferredHeight() );
+
 		tabPages_[index] = page;
 		repaint();
 	}
