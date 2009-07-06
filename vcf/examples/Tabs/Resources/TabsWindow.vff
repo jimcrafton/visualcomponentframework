@@ -6,6 +6,10 @@ object TabsWindow  : VCF::Window
 	caption = 'Tabs example'
 
 	object tabs :  VCF::TabbedPages 
+		delegates 
+			MouseClicked = [TabsApplication@TabsApplication::tabPageClicked]
+		end
+
 		alignment = AlignClient
 
 		object tab1 : VCF::TabSheet 
@@ -30,6 +34,10 @@ object TabsWindow  : VCF::Window
 				tabModel.items[1] = 'pg2'
 				tabModel.items[2] = 'pg3'
 			end
+		end
+
+		object tab5 : VCF::TabSheet 
+			title = 'Custom Tab'
 		end
 
 		selectedSheet = @tab3
