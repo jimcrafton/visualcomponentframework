@@ -510,27 +510,45 @@ void TabbedPages::resizeChildren()
 }
 */
 
-void TabbedPages::mouseDown( MouseEvent* event )
+TabPage* TabbedPages::tabPageHitTest( const Point& point )
 {
-	CustomControl::mouseDown( event );
+	TabPage* result = NULL;
+
+	Point tmp = point;
+
 	Rect tabPagesBounds;
 	tabPagesBounds.setRect( 0, borderWidth_, getWidth(), borderWidth_ + tabHeight_ );
-	if ( true == tabPagesBounds.containsPt( event->getPoint() ) ){
+	if ( true == tabPagesBounds.containsPt( &tmp ) ){
 		//find tab		
 		Array<TabPage*>::iterator it = tabPages_.begin();	
 		
 		while ( it != tabPages_.end() ){			
 			TabPage* page = *it;
 			
-			if ( page->containsPoint( event->getPoint() ) ){
-				setSelectedPage( page );
-				resizeChildren(NULL);
+			if ( page->containsPoint( &tmp ) ){
+				result = page;
 				break;
 			}			
 			
 			++it;
 		}
 	}
+
+	return result;
+}
+
+void TabbedPages::mouseDown( MouseEvent* event )
+{
+	CustomControl::mouseDown( event );
+
+	TabPage* tabPage = tabPageHitTest( *event->getPoint() );
+
+	if ( NULL != tabPage ) {
+		setSelectedPage( tabPage );
+		resizeChildren(NULL);
+	}
+
+	
 }
 
 void TabbedPages::mouseMove( MouseEvent* event )
