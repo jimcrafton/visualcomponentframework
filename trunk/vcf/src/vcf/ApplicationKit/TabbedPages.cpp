@@ -647,7 +647,7 @@ TabPage* TabbedPages::getTabPage( const uint32& index )
 {
 	TabPage* result = NULL;
 	if ( index < tabPages_.size() ) {
-		tabPages_[index];
+		result = tabPages_[index];
 	}
 
 	return result;
@@ -657,6 +657,9 @@ void TabbedPages::setTabPage( const uint32& index, TabPage* page )
 {
 	if ( index < tabPages_.size() ) {
 
+		TabModel* tm = getTabModel();
+		tm->setSelectedPage( TabModel::NoPageSelected );
+
 		TabPage* oldPage = tabPages_[index];
 
 		TabSheet* sheet = oldPage->getTabSheet();
@@ -664,6 +667,8 @@ void TabbedPages::setTabPage( const uint32& index, TabPage* page )
 		removeComponent( oldPage );
 		oldPage->free();
 		
+		
+
 
 		if ( NULL == page->getOwner() ) {
 			addComponent( page );
@@ -690,6 +695,7 @@ void TabbedPages::setTabPage( const uint32& index, TabPage* page )
 		tabHeight_ = maxVal<double>( tabHeight_, page->getPreferredHeight() );
 
 		tabPages_[index] = page;
+		tm->setSelectedPage( index );
 		repaint();
 	}
 }
@@ -741,8 +747,10 @@ TabPage* TabbedPages::getSelectedPage()
 
 void TabbedPages::setSelectedPage( TabPage* page )
 {	
+	selectedPage_ = NULL;
+
 	TabModel* tm = getTabModel();
-	if ( NULL != page ) {		
+	if ( NULL != page ) {
 		tm->setSelectedPage( page->getIndex() );
 	}
 	else {		
