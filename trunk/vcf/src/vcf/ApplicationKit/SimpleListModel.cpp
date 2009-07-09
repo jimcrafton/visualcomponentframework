@@ -70,6 +70,10 @@ bool SimpleListModel::doInsert( const uint32 & index, const VariantData& item )
 
 bool SimpleListModel::doRemove( const uint32 & index )
 {
+	if ( IndexNotFound == index ) {
+		return false;
+	}
+
 	Array<VariantData>::iterator found = data_.begin() + index;		
 	if ( found != data_.end() ) {
 		VariantData v = *found;

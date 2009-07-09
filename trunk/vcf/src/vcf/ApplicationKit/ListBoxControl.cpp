@@ -223,6 +223,29 @@ void ListBoxControl::onItemDeleted( ListModelEvent* event )
 		++it2;
 	}
 
+	if ( items_.size() > event->index ) {
+		ListItem* item = items_[event->index];
+		
+		if ( NULL != item ) {
+			currentMaxHeight_ -= item->getBounds().getHeight();
+			//need to recalc currentMaxWidth_ here also if item removed was the widest item. DT
+			
+			Scrollable* scrollable = getScrollable();
+			
+			if ( NULL != scrollable ) {
+				if ( (getHeight() > currentMaxHeight_) && (scrollable->getVerticalPosition() > 0.0) ) {
+					scrollable->setVerticalPosition( 0.0 );
+				}
+				
+				if ( (getWidth() > currentMaxWidth_) && (scrollable->getHorizontalPosition() > 0.0) ) {
+					scrollable->setHorizontalPosition( 0.0 );
+				}		
+				
+				scrollable->setVirtualViewSize( currentMaxWidth_, currentMaxHeight_ );	
+			}
+		}
+	}
+
 	ListControl::onItemDeleted(event);
 }
 
@@ -506,6 +529,8 @@ void ListBoxControl::paint( GraphicsContext* ctx )
 		while ( it != items_.end() ) {
 			ListItem* item = *it;
 			itemRect.setRect( offsetx, currentTop, offsetx + (width-scrollW), currentTop + defaultItemHeight_ );
+
+			item->setBounds( itemRect );
 
 			if ( ((itemRect.top_ <= viewBounds.bottom_ ) && (itemRect.bottom_ >= viewBounds.top_ )) ||
 					(itemRect.containsPt( &viewBounds.getTopLeft()) || (itemRect.containsPt( &viewBounds.getBottomRight() )) ) ) {
