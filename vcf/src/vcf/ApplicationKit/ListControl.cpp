@@ -203,6 +203,29 @@ void ListControl::handleEvent( Event* event )
 			ItemSelectionChanged( (ItemEvent*)event );
 		}
 		break;
+
+		case lmeContentsDeleted: {
+			Array<ListItem*>::iterator it = items_.begin();
+			while ( it != items_.end() ) {
+				ListItem* item = *it;
+				removeComponent( item );
+				item->free();
+				++it;
+			}
+
+			items_.clear();
+
+			Scrollable* scrollable = getScrollable();
+			
+			if ( NULL != scrollable ) {				
+				scrollable->setVerticalPosition( 0.0 );
+				scrollable->setHorizontalPosition( 0.0 );
+				scrollable->setVirtualViewSize( 0.0, 0.0 );	
+			}
+
+			repaint();
+		}
+		break;
 	}
 }
 
