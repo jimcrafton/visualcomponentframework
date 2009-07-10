@@ -100,6 +100,8 @@ void ListBoxControl::handleEvent( Event* event )
 	switch ( event->getType() ) {
 		case lmeContentsDeleted: {
 			selectedItems_.clear();
+			
+			
 			repaint();
 		}
 		break;
