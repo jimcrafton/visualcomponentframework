@@ -747,14 +747,16 @@ TabPage* TabbedPages::getSelectedPage()
 
 void TabbedPages::setSelectedPage( TabPage* page )
 {	
-	selectedPage_ = NULL;
-
-	TabModel* tm = getTabModel();
-	if ( NULL != page ) {
-		tm->setSelectedPage( page->getIndex() );
-	}
-	else {		
-		tm->setSelectedPage( TabModel::NoPageSelected );
+	if ( page != selectedPage_ ) {
+		selectedPage_ = page;
+		
+		TabModel* tm = getTabModel();
+		if ( NULL != page ) {
+			tm->setSelectedPage( page->getIndex() );
+		}
+		else {
+			tm->setSelectedPage( TabModel::NoPageSelected );
+		}
 	}
 }
 
