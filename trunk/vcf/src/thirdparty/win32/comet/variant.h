@@ -269,8 +269,10 @@ namespace comet {
 			 return VarCyCmp(V_CY(&lv), V_CY(&rv));
 		 case VT_DECIMAL:
 			 return VarDecCmp(&V_DECIMAL(&lv), &V_DECIMAL(&rv));
+#ifndef _WIN32_WCE
 		 case VT_I8:
 			 return _VARCMP(V_I8(&lv), V_I8(&rv));
+#endif
 		 case VT_R4:
 			 return _VARCMP(V_R4(&lv), V_R4(&rv));
 		 case VT_R8:
