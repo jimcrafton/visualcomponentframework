@@ -104,7 +104,7 @@ Setup VCF_ operating system
 	#endif
 
 	#if defined _WIN32_WCE
-		#define VCF_WIN32CE
+		#define VCF_WIN32CE _WIN32_WCE // need to know ce version
 	#endif
 #endif
 
@@ -124,10 +124,11 @@ Setup VCF_ operating system
 	#define VCF_WIN
 #endif
 
-
 #ifdef VCF_WIN32CE
+#if VCF_WIN32CE < 0x501
 #define MulDiv(a, b, c) ((a*b)/c) 
-#endif
+#endif //VCF_WIN32CE < 0x501
+#endif //VCF_WIN32CE
 
 #ifdef __CYGWIN__
 	#define VCF_CYGWIN
@@ -557,7 +558,6 @@ namespace VCF {
 };
 
 
-
 #define KEEP_NAMESPACE_IN_CLASSNAME
 
 #ifdef VCF_WIN
@@ -633,6 +633,13 @@ this define is to fix:
 
 #endif //VCF_WIN
 
+#ifdef VCF_WIN
+	#ifndef GetProcAddressA
+		#ifndef VCF_WIN32CE
+			#define GetProcAddressA GetProcAddress	
+		#endif
+	#endif //!GetProcAddressA
+#endif //VCF_WIN
 
 
 /**

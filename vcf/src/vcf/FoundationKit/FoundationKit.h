@@ -60,6 +60,16 @@ where you installed the VCF.
 
 
 	#ifdef VCF_WIN32CE
+		#if VCF_WIN32CE < 0x501
+		#pragma message("!!! PPC2003 is not really supported - too many missing functions !!!")
+		#endif
+
+		// We define _TIME_T_DEFINED here because we override time_t to use
+        // 64 bit values like on win32
+		// Need to be done before including standard headers stdlib, stdio, ...
+		#define _TIME_T_DEFINED
+		typedef __int64 time_t;      /* time value */		
+
 		#pragma comment(linker, "/nodefaultlib:libc.lib")
 		#pragma comment(linker, "/nodefaultlib:libcd.lib")
 		#define WINVER _WIN32_WCE
@@ -164,7 +174,7 @@ where you installed the VCF.
 #include <exception>
 #include <list>
 
-
+#include "vcf/OSCompatKit/OSCompatKit.h"
 #include "vcf/FoundationKit/FoundationKitSelectLib.h"
 
 #include "vcf/FoundationKit/AtomicCount.h"
