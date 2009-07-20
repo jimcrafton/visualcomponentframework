@@ -131,6 +131,8 @@
 #     error unknown CE compiler
 #   elif _MSC_VER == 1400
 #     define BOOST_COMPILER_VERSION 8.0
+#   elif _MSC_VER == 1500
+#     define BOOST_COMPILER_VERSION 9.0
 #   else
 #     error unknown CE compiler
 #   endif
