@@ -23,7 +23,9 @@
 #include <comet/uuid_fwd.h>
 #include <comet/bstr.h>
 
+#ifndef _WIN32_WCE
 #pragma comment( lib, "rpcrt4.lib" )
+#endif
 
 namespace comet {
 
