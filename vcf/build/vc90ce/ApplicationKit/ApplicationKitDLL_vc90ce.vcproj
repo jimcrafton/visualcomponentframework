@@ -879,6 +879,38 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TransparentWindow.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\TransparentWindow.h"
@@ -1839,6 +1871,38 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32CursorPeer.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32CursorPeer.h"
@@ -1855,6 +1919,38 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DragDropPeer.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DragDropPeer.h"
@@ -1863,10 +1959,74 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DropDownPeer.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.h"
@@ -1915,6 +2075,38 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32FileOpenDialog.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32FileOpenDialog.h"
@@ -1923,6 +2115,38 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32FileSaveDialog.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32FileSaveDialog.h"
@@ -2063,6 +2287,38 @@
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PopupWindowPeer.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Pocket PC 2003 (ARMV4)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32PopupWindowPeer.h"
