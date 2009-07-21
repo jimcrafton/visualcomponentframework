@@ -502,5 +502,22 @@ GetCalendarInfoW(
     __in int      cchData,
     __out_opt LPDWORD  lpValue);
 
+//////////////////////////////////////////////////////
+// POSIX FUNCTIONS
+//////////////////////////////////////////////////////
+#if defined(__cplusplus)
+#define __BEGIN_C_DECLS extern "C" {
+#define __END_C_DECLS }
+#else
+#define __BEGIN_C_DECLS
+#define __END_C_DECLS
+#endif
+
+__BEGIN_C_DECLS
+
+void 	__cdecl abort (void);
+
+__END_C_DECLS
+
 #endif //_WIN32_WCE
 #endif //_VCF_OSCOMPATKIT_H__

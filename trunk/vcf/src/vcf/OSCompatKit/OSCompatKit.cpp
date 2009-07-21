@@ -14,3 +14,18 @@ GetCalendarInfoW(
 
 	return 0;
 }
+
+BOOL
+WINAPI
+DestroyCursor(
+    __in HCURSOR hCursor)
+{
+	// Doesn't exist on wince
+	return TRUE;
+}
+
+void abort(void)
+{
+	/* No return */
+    TerminateProcess(GetCurrentProcess(), 0);
+}
