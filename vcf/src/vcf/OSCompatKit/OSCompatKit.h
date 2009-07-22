@@ -373,6 +373,12 @@ DestroyCursor(
     __in HCURSOR hCursor);
 
 WINUSERAPI
+UINT
+WINAPI
+RegisterWindowMessageA(
+    LPCSTR lpString);
+
+WINUSERAPI
 HANDLE
 WINAPI
 CopyImage(
