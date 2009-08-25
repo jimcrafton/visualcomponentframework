@@ -747,8 +747,6 @@ public:
 
 	inline Array( const Array& rhs ):
 		OrderedEnumerator< ItemType, std::vector<ItemType> >(rhs) {}
-
-	
 };
 
 
