@@ -19,6 +19,11 @@ where you installed the VCF.
 #endif  //_VCF_DICTIONARY_H__
 
 
+#ifndef _VCF_STRINGTOKENIZER_H__
+	#include "vcf/FoundationKit/StringTokenizer.h"
+#endif  //_VCF_STRINGTOKENIZER_H__
+
+
 
 #ifndef _VCF_COLUMNMODEL_H__
 #	include "vcf/ApplicationKit/ColumnModel.h"
@@ -187,13 +192,15 @@ protected:
 template <typename Type>
 class  ArrayModel : public ListModel {
 public:
+	typedef Type DataType;
+
 	ArrayModel(): enumData_(NULL){}
 
-	ArrayModel(const std::vector<Type>& rhs): enumData_(NULL){
-		data_ = rhs;
+	ArrayModel( const std::vector<DataType>& rhs): enumData_(NULL){
+		//data_ = rhs;
 	}
 
-	ArrayModel( Type* arrayPtr, const uint32& arrayLength ): enumData_(NULL){
+	ArrayModel( DataType* arrayPtr, const uint32& arrayLength ): enumData_(NULL){
 		data_.resize(arrayLength);
 		for ( uint32 i=0;i<arrayLength;i++ ) {
 			data_[i] = arrayPtr[i];
@@ -223,7 +230,7 @@ public:
 		uint32 result = IndexNotFound;
 
 		Type val = item;
-		_typename_ Array<Type>::iterator found = std::find( data_.begin(), data_.end(), val );
+		_typename_ Array<DataType>::iterator found = std::find( data_.begin(), data_.end(), val );
 		if ( found != data_.end() ) {
 			result = found - data_.begin();
 		}
@@ -233,7 +240,7 @@ public:
 	virtual bool getItems( std::vector<VariantData>& items ) {
 		items.resize( data_.size() );
 		
-		_typename_ Array<Type>::iterator it1 = data_.begin();
+		_typename_ Array<DataType>::iterator it1 = data_.begin();
 		std::vector<VariantData>::iterator it2 = items.begin();
 		while ( it1 != data_.end() ) {
 			*it2 = *it1;
@@ -254,7 +261,7 @@ public:
 			enumData_->resize( data_.size() );
 		}
 		
-		_typename_ Array<Type>::iterator it1 = data_.begin();
+		_typename_ Array<DataType>::iterator it1 = data_.begin();
 		Array<VariantData>::iterator it2 = enumData_->begin();
 		while ( it1 != data_.end() ) {
 			*it2 = *it1;
@@ -276,31 +283,33 @@ public:
 		return data_.size();
 	}
 
-	ArrayModel& operator=( const Array<Type>& rhs ) {
+	ArrayModel& operator=( const Array<DataType>& rhs ) {
 		data_ = rhs;
 		ModelEvent e(this,MODEL_CHANGED);
 		changed(&e);
 		return *this;
 	}
 
-	ArrayModel& operator=( const std::vector<Type>& rhs ) {
-		data_ = rhs;
+	ArrayModel& operator=(  const std::vector<DataType>& rhs ) {
+		
+		data_.assign( rhs.begin(), rhs.end() );
+
 		ModelEvent e(this,MODEL_CHANGED);
 		changed(&e);
 		return *this;
 	}
 
-	operator const std::vector<Type>& () const {
+	operator const std::vector<DataType>& () const {
 		return data_;
 	}
 
 
-	Type operator[] (const uint32& index ) const {
+	DataType operator[] (const uint32& index ) const {
 		return data_[index];
 	}
 
 protected:
-	Array<Type> data_;
+	Array<DataType> data_;
 	Array<VariantData>* enumData_;
 
 	virtual bool doInsert( const uint32 & index, const VariantData& item ) {
@@ -309,7 +318,7 @@ protected:
 	}
 
 	virtual bool doRemove( const uint32 & index ) {
-		_typename_ Array<Type>::iterator found = data_.begin() + index;		
+		_typename_ Array<DataType>::iterator found = data_.begin() + index;		
 		if ( found != data_.end() ) {
 			VariantData v = *found;
 			data_.erase( found );	
@@ -340,7 +349,7 @@ protected:
 			data_.resize( missing + data_.size() );
 		}	
 		
-		data_[index] = (Type)item;
+		data_[index] = (DataType)item;
 		
 		if ( missing > 0 ) {
 			VariantData v;
@@ -422,8 +431,26 @@ public:
 		return !items.empty();
 	}
 
+	String getIgnorePropertyNames() {
+		String result;
+
+		for (size_t i=0;i<ignorePropNames_.size();i++ ) {
+			if ( i > 0 ) {
+				result += L";";
+			}
+			result += ignorePropNames_[i];
+		}
+		return result;
+	}
+
+	void setIgnorePropertyNames( const String& val ) {
+		StringTokenizer tok(val,";");
+		ignorePropNames_.clear();
+		tok.getElements( ignorePropNames_ );
+	}
 protected:
 	std::map<uint32,Property*> properties_;
+	std::vector<String> ignorePropNames_;
 
 	bool initProperties(Object* o) {
 		if ( NULL != o ) {
@@ -435,8 +462,11 @@ protected:
 					while ( props->hasMoreElements() ) {
 						Property* prop = props->nextElement();
 						if ( !prop->isCollection() ) {
-							properties_[index] = prop;						
-							index ++;
+							
+							if (  ignorePropNames_.end() == std::find( ignorePropNames_.begin(), ignorePropNames_.end(), prop->getName() ) ){
+								properties_[index] = prop;						
+								index ++;
+							}
 						}
 					}
 				}				
@@ -686,7 +716,11 @@ public:
 				while ( props->hasMoreElements() ) {
 					Property* prop = props->nextElement();
 					if ( !prop->isCollection() ) {
-						add( prop->getDisplayName() );
+						if (  ignorePropNames_.end() == std::find( ignorePropNames_.begin(), ignorePropNames_.end(), prop->getName() ) ){
+							add( prop->getDisplayName() );
+						}
+
+						
 					}
 				}
 			}
@@ -717,9 +751,28 @@ public:
 			}
 		}
 	}
+
+	String getIgnorePropertyNames() {
+		String result;
+
+		for (size_t i=0;i<ignorePropNames_.size();i++ ) {
+			if ( i > 0 ) {
+				result += L";";
+			}
+			result += ignorePropNames_[i];
+		}
+		return result;
+	}
+
+	void setIgnorePropertyNames( const String& val ) {
+		StringTokenizer tok(val, L";");
+		ignorePropNames_.clear();
+		tok.getElements( ignorePropNames_ );
+	}
 protected:
 	Class* source_;
 	ListModel* listModel_;
+	std::vector<String> ignorePropNames_;
 
 	void onListModelChanged( Event* e ) {		
 		if ( !listModel_->isEmpty() ) {
@@ -847,6 +900,17 @@ public:
 	}
 };
 
+
+class APPLICATIONKIT_API StringListModel : public ArrayModel<String> {
+public:
+	StringListModel(){}
+	virtual ~StringListModel(){}
+
+	StringListModel& operator=( const std::vector<String>& rhs ) {		
+		ArrayModel<String>::operator =(rhs);
+		return *this;
+	}
+};
 
 	
 };

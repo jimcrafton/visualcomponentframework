@@ -86,7 +86,8 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL(Document);
 
 		REGISTER_CLASSINFO_EXTERNAL( ListModel );
-		REGISTER_CLASSINFO_EXTERNAL( SimpleListModel );
+		REGISTER_CLASSINFO_EXTERNAL( SimpleListModel );		
+
 		REGISTER_CLASSINFO_EXTERNAL( MenuItem );
 		REGISTER_CLASSINFO_EXTERNAL(TabModel);
 		REGISTER_CLASSINFO_EXTERNAL(TabPage);
@@ -191,6 +192,7 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL(IntModel);
 		REGISTER_CLASSINFO_EXTERNAL(DoubleModel);
 		REGISTER_CLASSINFO_EXTERNAL(StringModel);
+		REGISTER_CLASSINFO_EXTERNAL( StringListModel );
 
 
 

@@ -1169,6 +1169,7 @@ _class_rtti_(ObjectModel, "VCF::Model", "ObjectModel")
 _class_rtti_end_
 
 _class_rtti_(ObjectListModel, "VCF::SimpleListModel", "ObjectListModel")	
+	_property_( String, "ignorePropertyNames", getIgnorePropertyNames, setIgnorePropertyNames, "" );
 _class_rtti_end_
 
 
@@ -1182,6 +1183,7 @@ _class_rtti_end_
 
 _class_rtti_(ObjectColumnModel, "VCF::ColumnModel", "ObjectColumnModel")	
 	_property_object_( ListModel, "listModel", getListModel, setListModel, "" )
+	_property_( String, "ignorePropertyNames", getIgnorePropertyNames, setIgnorePropertyNames, "" );
 _class_rtti_end_
 
 
@@ -1200,6 +1202,9 @@ _class_rtti_(DoubleModel, "VCF::Model", "DoubleModel")	 //skipping the TypeModel
 _class_rtti_end_
 
 _class_rtti_(StringModel, "VCF::Model", "StringModel")	 //skipping the TypeModel base class - something to note here...
+_class_rtti_end_
+
+_class_rtti_(StringListModel, "VCF::ListModel", "StringListModel")	 //skipping the TypeModel base class - something to note here...
 _class_rtti_end_
 
 
