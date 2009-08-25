@@ -381,6 +381,7 @@ void Win32Listview::postPaintItem( NMLVCUSTOMDRAW* drawItem )
 	RECT tmp = {0,0,0,0};
 	ListView_GetItemRect( hwnd_, drawItem->nmcd.dwItemSpec, &tmp, LVIR_BOUNDS );
 	Rect itemRect( tmp.left, tmp.top, tmp.right, tmp.bottom );
+	
 
 	if ( NULL != item ) {
 
@@ -909,6 +910,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 		case LVN_GETDISPINFOW:{
 
 			NMLVDISPINFOW* displayInfo = (NMLVDISPINFOW*)lParam;
+			
 			if ( displayInfo->hdr.hwndFrom == hwnd_ ) {
 
 				ListModel* lm = (ListModel*) this->peerControl_->getViewModel();				
@@ -941,6 +943,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 						else{
 							caption = lm->getAsString( displayInfo->item.iItem );
 						}
+						
 						// changed to unsigned ints after discussion with Jim,
 						// but he seemed uncertain so it'd be worth checking - ACH
 						unsigned int size = VCF::minVal<unsigned int>( caption.size(), displayInfo->item.cchTextMax );
@@ -1084,8 +1087,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 			NMLVCUSTOMDRAW* listViewCustomDraw = (NMLVCUSTOMDRAW*)lParam;
 			ListModel* model = listviewControl_->getListModel();
 			wndProcResult = CDRF_DODEFAULT;
-			result = true;
-
+			result = true;			
 
 			if ( NULL != model ) {
 				/**
@@ -1096,11 +1098,14 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 				switch ( listViewCustomDraw->nmcd.dwDrawStage ) {
 					case CDDS_PREPAINT : {
 						// Request prepaint notifications for each item.
-						wndProcResult = CDRF_NOTIFYITEMDRAW;						
+						wndProcResult = CDRF_NOTIFYITEMDRAW;
+						
+
 					}
 					break;
 
-					case CDDS_ITEMPREPAINT : {
+					case CDDS_ITEMPREPAINT : {					
+
 						// Request prepaint notifications for each item.
 						ListItem* item = listviewControl_->getItem( listViewCustomDraw->nmcd.dwItemSpec );
 						if ( NULL != item ) {
@@ -2228,6 +2233,7 @@ void Win32Listview::onCtrlModelChanged( Event* e )
 
 		ListModel* lm = (ListModel*)model;		
 		ListView_SetItemCountEx( hwnd_, lm->getCount(), LVSICF_NOINVALIDATEALL );				
+		StringUtils::trace( Format("Win32Listview::onCtrlModelChanged(): Added %d items to hwnd: %p\n") % lm->getCount() % hwnd_ );
 		InvalidateRect( hwnd_, NULL, TRUE );
 
 
@@ -2243,11 +2249,17 @@ void Win32Listview::onCtrlModelChanged( Event* e )
 
 
 		HWND header = ListView_GetHeader(hwnd_);
-		int cc = Header_GetItemCount(header);
+		int cc = Header_GetItemCount(header);		
+
 		for (int i=0;i<cc;i++ ) {
-			Header_DeleteItem(header,i);
+			SendMessage( hwnd_, LVM_DELETECOLUMN, i, 0 );
+			//Weird - don't use the code below! It causes 
+			//the items in the column to have 0 width! Despite 
+			//being assigned a width value when the column is assigned.
+			//Header_DeleteItem(header,i);
 		}
 
+		cc = Header_GetItemCount(header);
 
 
 		//build up colums
@@ -2288,8 +2300,8 @@ void Win32Listview::onColumnModelAdded( Event* e )
 		column.mask = LVCF_FMT | LVCF_WIDTH;
 		column.cx = (int32)width;
 		column.fmt = LVCFMT_LEFT;
-		
-		if ( SendMessage( hwnd_, LVM_INSERTCOLUMNW, (WPARAM)lme->index, (LPARAM)&column ) >= 0 ) {
+		int res = SendMessage( hwnd_, LVM_INSERTCOLUMNW, (WPARAM)lme->index, (LPARAM)&column );
+		if ( res >= 0 ) {
 			HWND header = ListView_GetHeader( hwnd_ );
 			
 			registerHeaderWndProc();
