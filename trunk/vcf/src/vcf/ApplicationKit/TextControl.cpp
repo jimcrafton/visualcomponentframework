@@ -1099,6 +1099,20 @@ void TextControl::setInputValidator( InputValidator* val )
 		}
 	}
 }
+
+
+void TextControl::updateView( Model* updatedModel )
+{
+	Control::updateView(updatedModel);
+	
+	if ( NULL != updatedModel && !getModelKey().isNull() ) {
+		String s = updatedModel->getValueAsString( this->getModelKey() );
+		if ( s != peer_->getText() ) {
+			this->peer_->setText( s );
+		}
+	}
+}
+
 /**
 $Id$
 */

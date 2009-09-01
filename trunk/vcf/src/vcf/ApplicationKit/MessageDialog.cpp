@@ -130,10 +130,10 @@ MessageDialog::~MessageDialog()
 
 }
 
-UIToolkit::ModalReturnType MessageDialog::showModal()
+UIToolkit::ModalReturnType MessageDialog::showModal(bool autoDestroy)
 {
 	verifyUIState();
-	return Dialog::showModal();
+	return Dialog::showModal(autoDestroy);
 }
 
 void MessageDialog::show()

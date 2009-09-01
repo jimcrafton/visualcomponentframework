@@ -202,7 +202,7 @@ void Dialog::showSheetModal()
 	owner_->setEnabled( false );	
 }	
 
-UIToolkit::ModalReturnType Dialog::showModal()
+UIToolkit::ModalReturnType Dialog::showModal(bool autoDestroy)
 {
 	UIToolkit::ModalReturnType result = UIToolkit::mrNone;
 
@@ -230,7 +230,9 @@ UIToolkit::ModalReturnType Dialog::showModal()
 	}
 
 	//kill off the internal contained compoennts and controls
-	destroy();
+	if ( autoDestroy ) {
+		destroy();
+	}
 
 	previousFocusedControl_ = prevFocusedControl;
 

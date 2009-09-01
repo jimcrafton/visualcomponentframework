@@ -200,6 +200,12 @@ void ListControl::handleEvent( Event* event )
 		break;
 
 		case ItemEvent::Selected : {
+			ItemEvent* ie = (ItemEvent*)event;
+			ListModel* lm = getListModel();
+			if ( NULL != lm ) {
+				lm->setCurrentIndex( ie->index );
+				lm->updateAllViews();
+			}
 			ItemSelectionChanged( (ItemEvent*)event );
 		}
 		break;

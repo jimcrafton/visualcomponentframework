@@ -184,7 +184,7 @@ public:
 	modal event loop. The same can be achieved programmatically
 	by calling the dialog's close() method.
 	*/
-	virtual UIToolkit::ModalReturnType showModal();
+	virtual UIToolkit::ModalReturnType showModal( bool autoDestroy=true );
 
 	/**
 	This function returns once the dialog is displayed, but is considered

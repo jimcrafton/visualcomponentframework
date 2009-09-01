@@ -571,6 +571,7 @@ _class_rtti_end_
 _class_abstract_rtti_(ListModel, "VCF::Model", LISTMODEL_CLASSID)
 	_delegate_(ListModelDelegate, ItemAdded )
 	_delegate_(ListModelDelegate, ItemRemoved )
+	_property_( uint32, "currentIndex", getCurrentIndex, setCurrentIndex, "" )	
 	_property_array_( String, "items", getAsString,setAsString,insert,remove,getCount, "" )
 	_property_array_( VariantData, "objects", get,set,insert,remove,getCount, "" )
 	_property_collection2_( VariantData, String, "subItems", getSubItemAtKey,setSubItemAtKey,insertSubItemAtKey,removeSubItemAtKey,getSubItemsCountAtKey, "" )

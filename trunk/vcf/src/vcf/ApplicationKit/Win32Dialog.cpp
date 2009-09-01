@@ -232,9 +232,19 @@ bool Win32Dialog::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 					else {
 						//thorw exception????
 					}
-				}
 
-				result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+					AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+
+					//hide window
+					::ShowWindow( hwnd_, SW_HIDE );
+					PostQuitMessage(0);
+
+					wndProcResult = 1;
+					result = true;
+				}
+				else {
+					result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+				}
 			}
 			else {
 				//result = true, don't handle further
@@ -250,9 +260,9 @@ bool Win32Dialog::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 			Win32Window::handleEventMessages( message, wParam, lParam, wndProcResult );
 			Dialog* dlg = (Dialog*)peerControl_;
 			if ( NULL != dlg ) {
-				if ( true == dlg->isModal() ) {
-					PostQuitMessage(0);
-				}
+				//if ( true == dlg->isModal() ) {
+					//PostQuitMessage(0);
+				//}
 			}
 		}
 		break;

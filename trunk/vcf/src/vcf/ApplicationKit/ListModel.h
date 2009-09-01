@@ -116,7 +116,7 @@ public:
 	};
 
 
-	ListModel(){
+	ListModel():currentIndex_(InvalidIndex){
 
 	};
 
@@ -311,6 +311,14 @@ public:
 		return getSubItemsCount( StringUtils::fromStringAsUInt(key) );	
 	}
 
+	uint32 getCurrentIndex() {
+		return currentIndex_;
+	}
+
+	void setCurrentIndex( const uint32& val ) {
+		currentIndex_ = val;
+	}
+
 protected:
 	virtual bool doInsert( const uint32 & index, const VariantData& item ){
 		return false;
@@ -369,6 +377,9 @@ protected:
 		itemEvent.index = index;
 		changed( &itemEvent );
 	}
+
+	uint32 currentIndex_;
+
 };
 
 
@@ -390,6 +401,13 @@ inline VariantData ListModel::getValue( const VariantData& key )
 	if ( key.isInteger() ) {
 		return get( key );
 	}
+	else if ( key.isString() ) {
+		String s = key;
+		uint32 idx = getCurrentIndex();		
+		if ( s == L"currentIndex" && idx != ListModel::InvalidIndex ) {
+			return get( idx );
+		}
+	}
 
 	return VariantData::null();
 }
@@ -398,6 +416,13 @@ inline String ListModel::getValueAsString( const VariantData& key )
 {
 	if ( key.isInteger() ) {
 		return getAsString( key );
+	}
+	else if ( key.isString() ) {
+		String s = key;
+		uint32 idx = getCurrentIndex();		
+		if ( s == L"currentIndex" && idx != ListModel::InvalidIndex ) {
+			return getAsString( idx );
+		}
 	}
 
 	return String();
@@ -408,12 +433,26 @@ inline void ListModel::setValue( const VariantData& value, const VariantData& ke
 	if ( key.isInteger() ) {
 		set( key, value );
 	}
+	else if ( key.isString() ) {
+		String s = key;
+		uint32 idx = getCurrentIndex();		
+		if ( s == L"currentIndex" && idx != ListModel::InvalidIndex ) {
+			set( idx, value );
+		}
+	}
 }
 
 inline void ListModel::setValueAsString( const String& value, const VariantData& key )
 {
 	if ( key.isInteger() ) {
 		setAsString( key, value );
+	}
+	else if ( key.isString() ) {
+		String s = key;
+		uint32 idx = getCurrentIndex();		
+		if ( s == L"currentIndex" && idx != ListModel::InvalidIndex ) {
+			setAsString( idx, value );
+		}
 	}
 }
 
