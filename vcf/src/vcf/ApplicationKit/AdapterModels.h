@@ -214,12 +214,26 @@ public:
 	}
 
 	virtual void empty() {
-		data_.clear();
 
+		ListModelEvent itemEvent( this, lmeItemRemoved );
+
+		std::vector<DataType>::iterator it = data_.begin();
+		
+		while ( it != data_.end() ) {
+			itemEvent.item = NULL;
+			itemEvent.index = it - data_.begin();
+			ItemRemoved( &itemEvent );
+			++it;
+		}
+		data_.clear();
 		if ( NULL != enumData_ ) {
 			delete enumData_;
 			enumData_ = NULL;
 		}
+
+
+		ListModelEvent event( this, lmeContentsDeleted );
+		ModelChanged( &event );
 	}
 
 	virtual VariantData get( const uint32& index ) {
