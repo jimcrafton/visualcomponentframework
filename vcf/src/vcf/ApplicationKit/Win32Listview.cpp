@@ -1052,7 +1052,8 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 							event.index = lvNotificationHdr->iItem;
 							event.itemSelected = true;
 
-							listviewControl_->ItemSelectionChanged( &event );
+							listviewControl_->handleEvent( &event );
+								//ItemSelectionChanged( &event );
 						}
 						else {
 							item->setSelected( false );

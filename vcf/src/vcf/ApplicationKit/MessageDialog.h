@@ -64,7 +64,7 @@ public:
 	The standard dimensions of the icon are windowing system dependent, but in general on Win32 systems
 	the size is 32 X 32, and on MacOSX it would be 64 X 64 pixels.
 	*/
-	virtual UIToolkit::ModalReturnType showModal();
+	virtual UIToolkit::ModalReturnType showModal(bool autoDestroy=true);
 
 	/**
 	Like the showModal() method, this is overridden to verify the same conditions as showModal().

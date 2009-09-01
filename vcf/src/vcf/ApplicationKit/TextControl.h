@@ -73,6 +73,9 @@ public:
 
 	void init();
 
+	virtual void updateView( Model* updatedModel );
+
+
 	virtual void paint( GraphicsContext * context );
 
 	void setTextModel( TextModel * model );
