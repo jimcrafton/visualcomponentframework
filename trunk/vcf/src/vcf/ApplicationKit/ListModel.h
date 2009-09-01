@@ -315,6 +315,10 @@ public:
 		return currentIndex_;
 	}
 
+	bool isCurrentIndexValid() {
+		return (currentIndex_ != InvalidIndex) && currentIndex_ < getCount();
+	}
+
 	void setCurrentIndex( const uint32& val ) {
 		currentIndex_ = val;
 	}
@@ -404,7 +408,7 @@ inline VariantData ListModel::getValue( const VariantData& key )
 	else if ( key.isString() ) {
 		String s = key;
 		uint32 idx = getCurrentIndex();		
-		if ( s == L"currentIndex" && idx != ListModel::InvalidIndex ) {
+		if ( s == L"currentIndex" && isCurrentIndexValid() ) {
 			return get( idx );
 		}
 	}
@@ -420,7 +424,7 @@ inline String ListModel::getValueAsString( const VariantData& key )
 	else if ( key.isString() ) {
 		String s = key;
 		uint32 idx = getCurrentIndex();		
-		if ( s == L"currentIndex" && idx != ListModel::InvalidIndex ) {
+		if ( s == L"currentIndex" && isCurrentIndexValid() ) {
 			return getAsString( idx );
 		}
 	}
@@ -436,7 +440,7 @@ inline void ListModel::setValue( const VariantData& value, const VariantData& ke
 	else if ( key.isString() ) {
 		String s = key;
 		uint32 idx = getCurrentIndex();		
-		if ( s == L"currentIndex" && idx != ListModel::InvalidIndex ) {
+		if ( s == L"currentIndex" && isCurrentIndexValid() ) {
 			set( idx, value );
 		}
 	}
@@ -450,7 +454,7 @@ inline void ListModel::setValueAsString( const String& value, const VariantData&
 	else if ( key.isString() ) {
 		String s = key;
 		uint32 idx = getCurrentIndex();		
-		if ( s == L"currentIndex" && idx != ListModel::InvalidIndex ) {
+		if ( s == L"currentIndex" && isCurrentIndexValid() ) {
 			setAsString( idx, value );
 		}
 	}
