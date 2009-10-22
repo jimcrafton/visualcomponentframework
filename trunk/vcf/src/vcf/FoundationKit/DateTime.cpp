@@ -29,7 +29,7 @@ using namespace VCF;
 
 DateTime::DateTime( time_t newTime ):
 	time_(0)
-{
+{	
 	tm gm = *vcflocaltime( &newTime );
 
 	set( gm.tm_year + 1900, gm.tm_mon+1, gm.tm_mday, gm.tm_hour, gm.tm_min, gm.tm_sec );
@@ -139,19 +139,19 @@ void DateTime::set( const uint32& year,
 		throw BadDateFormat( BAD_DAY_VALUE );
 	}
 
-	if ( (hour > 59) ) {
+	if ( (hour > 59) || (hour < 0) ) {
 		throw BadTimeFormat( BAD_HOUR_VALUE );
 	}
 
-	if ( (minutes > 59) ) {
+	if ( (minutes > 59) || (minutes < 0) ) {
 		throw BadTimeFormat( BAD_MIN_VALUE );
 	}
 
-	if ( (seconds > 59) ) {
+	if ( (seconds > 59) || (seconds < 0) ) {
 		throw BadTimeFormat( BAD_SEC_VALUE );
 	}
 
-	if ( (milliseconds > 999) ) {
+	if ( (milliseconds > 999) || (milliseconds < 0) ) {
 		throw BadTimeFormat( BAD_MILLISEC_VALUE );
 	}
 
@@ -564,7 +564,7 @@ void DateTime::setDate( const uint32& year, const uint32& day )
 	if ( (day > 365) || (day < 1) ) {
 		throw BadDateFormat( BAD_DAY_VALUE );
 	}
-
+	
 	set( year, 1, 1, 0, 0, 0, 0 );
 	time_ += (day * DateTime::ONEDAY);
 }
@@ -586,7 +586,7 @@ uint32 DateTime::getDayOfYear() const
 uint32 DateTime::getDaysInYear() const
 {
 	uint32 result = 365;
-
+	
 	if ( isGregorianCalendarDate( *this ) ) {
 		if ( isLeapYear() ) {
 			result ++;
@@ -805,7 +805,7 @@ uint32 DateTime::getWeeksInYear() const
 	return (uint32) floor(static_cast<float>(getDaysInYear() / 7) ) + 1;
 }
 
-String DateTime::toString() const
+String DateTime::toString() const 
 {
 	return StringUtils::format( *this, TOSTRING_FORMAT );
 }
@@ -889,7 +889,7 @@ void ByMonth::incr( DateTime& dt, uint32 offset )
 	uint32 m = dt.getMonth();
 	uint32 d = dt.getDay();
 
-	uint32 origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+	int origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
 
 	if ( (m + offset) > 12 ) {
 		y += (m + offset) / 12;
@@ -900,7 +900,7 @@ void ByMonth::incr( DateTime& dt, uint32 offset )
 		m += offset;
 	}
 
-	uint32 newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+	int newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
 
 	if ( newMaxDaysInMon != origMaxDaysInMon ) {
 		//check to see if we need to move the day around
@@ -925,7 +925,7 @@ void ByMonth::decr( DateTime& dt, uint32 offset )
 	uint32 m = dt.getMonth();
 	uint32 d = dt.getDay();
 
-	uint32 origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+	int origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
 
 	if ( (m - offset) < 1 ) {
 
@@ -937,7 +937,7 @@ void ByMonth::decr( DateTime& dt, uint32 offset )
 		m -= offset;
 	}
 
-	uint32 newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+	int newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
 
 	if ( newMaxDaysInMon != origMaxDaysInMon ) {
 		//check to see if we need to move the day around
@@ -960,11 +960,11 @@ void ByYear::incr( DateTime& dt, uint32 offset )
 	uint32 m = dt.getMonth();
 	uint32 d = dt.getDay();
 
-	uint32 origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+	int origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
 
 	y += offset;
 
-	uint32 newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+	int newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
 
 	if ( newMaxDaysInMon != origMaxDaysInMon ) {
 		//check to see if we need to move the day around
@@ -987,11 +987,11 @@ void ByYear::decr( DateTime& dt, uint32 offset )
 	uint32 m = dt.getMonth();
 	uint32 d = dt.getDay();
 
-	uint32 origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+	int origMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
 
 	y -= offset;
 
-	uint32 newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
+	int newMaxDaysInMon = DateTime::getNumberOfDaysInMonth( y, (DateTime::Months)m );
 
 	if ( newMaxDaysInMon != origMaxDaysInMon ) {
 		//check to see if we need to move the day around
@@ -1020,10 +1020,10 @@ void DateTimeSpan::subtract( const DateTime& lhs, const DateTime& rhs )
 	end_ = lhs.time_;
 	delta_ = end_ - start_;
 
-	uint64 oneDay = DateTime::ONEDAY;
+	uint64 oneDay = DateTime::ONEDAY; 
 
-	//JEC  - this is a fix to make this a little more
-	//efficient, when making this call repeatedly in a loop it turns out
+	//JEC  - this is a fix to make this a little more 
+	//efficient, when making this call repeatedly in a loop it turns out 
 	//it burns quite a bit of CPU without these if/then tests
 	if ( delta_ < DateTime::ONEDAY ) {
 		years_ = 0;
@@ -1042,7 +1042,7 @@ void DateTimeSpan::subtract( const DateTime& lhs, const DateTime& rhs )
 		unsigned int em = lhs.getMonth();
 		unsigned int sy = rhs.getYear();
 
-		months_ = 0;
+		months_ = 0;		
 		while ( true ) {
 			if ( (*monthIt).getYear() == ey ) {
 				if ( (*monthIt).getMonth() == em ) {
@@ -1062,7 +1062,7 @@ void DateTimeSpan::subtract( const DateTime& lhs, const DateTime& rhs )
 		unsigned int ey = lhs.getYear();
 		unsigned int em = lhs.getMonth();
 		unsigned int sy = rhs.getYear();
-
+		
 		months_ = 0;
 		while ( true ) {
 			if ( (*monthIt).getYear() == ey ) {
@@ -1071,12 +1071,12 @@ void DateTimeSpan::subtract( const DateTime& lhs, const DateTime& rhs )
 				}
 			}
 			++months_;
-
+			
 			++monthIt;
 		}
-
+		
 		years_ = abs(static_cast<int>(ey-sy));
-
+		
 		if ( years_ > 0 ) {
 			if ( lhs > rhs ) {
 				if ( lhs.getMonth() < rhs.getMonth() ) {
@@ -1089,9 +1089,9 @@ void DateTimeSpan::subtract( const DateTime& lhs, const DateTime& rhs )
 				}
 			}
 		}
-
+		
 		days_ = delta_ / DateTime::ONEDAY;
-	}
+	}	
 }
 
 uint32 DateTimeSpan::getYears() const

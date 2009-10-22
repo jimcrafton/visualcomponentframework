@@ -262,12 +262,12 @@ void OSXLocalePeer::setLocale( const UnicodeString& language, const UnicodeStrin
 		CFRelease( integerNumFormatterRef_ );
 		integerNumFormatterRef_ = NULL;
 	}
-
+	
 	if ( NULL != realNumFormatterRef_ ) {
 		CFRelease( realNumFormatterRef_ );
 		realNumFormatterRef_ = NULL;
 	}
-
+	
 	if ( NULL != currencyNumFormatterRef_ ) {
 		CFRelease( currencyNumFormatterRef_ );
 		currencyNumFormatterRef_ = NULL;
@@ -289,39 +289,39 @@ void OSXLocalePeer::setLocale( const UnicodeString& language, const UnicodeStrin
                 throw RuntimeException( MAKE_ERROR_MSG_2( "LocaleRefFromLangOrRegionCode failed!" ) );
             }
         }
-
+		
 		CFTextString localeName;
-
+	
 		localeName = name;
-
-		localeRef_ = CFLocaleCreate( kCFAllocatorDefault, localeName );
+		
+		localeRef_ = CFLocaleCreate( kCFAllocatorDefault, localeName );		
 	}
-
+	
 	if ( NULL == localeRef_ ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2( "CFLocaleCreate failed for locale " + name ) );
 	}
-
-
+	
+	
 	integerNumFormatterRef_ = CFNumberFormatterCreate( kCFAllocatorDefault, localeRef_, kCFNumberFormatterDecimalStyle );
-
+	
 	if ( NULL == integerNumFormatterRef_ ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2( "CFNumberFormatterCreate failed for locale " + name ) );
 	}
-
-
+	
+	
 	realNumFormatterRef_ = CFNumberFormatterCreate( kCFAllocatorDefault, localeRef_, kCFNumberFormatterDecimalStyle );
-
+	
 	if ( NULL == realNumFormatterRef_ ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2( "CFNumberFormatterCreate failed for locale " + name ) );
 	}
-
+	
 	currencyNumFormatterRef_ = CFNumberFormatterCreate( kCFAllocatorDefault, localeRef_, kCFNumberFormatterCurrencyStyle );
-
+	
 	if ( NULL == currencyNumFormatterRef_ ) {
 		throw RuntimeException( MAKE_ERROR_MSG_2( "CFNumberFormatterCreate failed for locale " + name ) );
 	}
-
-
+	
+	
 }
 
 OSXLocalePeer::~OSXLocalePeer()
@@ -335,12 +335,12 @@ OSXLocalePeer::~OSXLocalePeer()
 		CFRelease( integerNumFormatterRef_ );
 		integerNumFormatterRef_ = NULL;
 	}
-
+	
 	if ( NULL != realNumFormatterRef_ ) {
 		CFRelease( realNumFormatterRef_ );
 		realNumFormatterRef_ = NULL;
 	}
-
+	
 	if ( NULL != currencyNumFormatterRef_ ) {
 		CFRelease( currencyNumFormatterRef_ );
 		currencyNumFormatterRef_ = NULL;
@@ -349,9 +349,9 @@ OSXLocalePeer::~OSXLocalePeer()
 
 int OSXLocalePeer::collate( const UnicodeString& s1, const UnicodeString& s2 )
 {
-
+    
 	int result = 0;
-
+	
     CollatorRef collatorRef = 0;
     OSStatus err = UCCreateCollator( collateLocaleRef_, 0, 0, &collatorRef );
     if ( err == noErr ) {
@@ -374,7 +374,7 @@ int OSXLocalePeer::collate( const UnicodeString& s1, const UnicodeString& s2 )
 
         UCDisposeCollator( &collatorRef );
     }
-
+	
 	return result;
 }
 
@@ -466,12 +466,12 @@ int OSXLocalePeer::toInt( const UnicodeString& str )
 {
 	int result = 0;
 	CFTextString tmp(str);
-
-	CFRefObject<CFNumberRef> num =
-		CFNumberFormatterCreateNumberFromString( kCFAllocatorDefault,
-													integerNumFormatterRef_,
-													tmp,
-													NULL,
+	
+	CFRefObject<CFNumberRef> num = 
+		CFNumberFormatterCreateNumberFromString( kCFAllocatorDefault, 
+													integerNumFormatterRef_, 
+													tmp, 
+													NULL, 
 													kCFNumberFormatterParseIntegersOnly );
 	if ( NULL != num ) {
 		if ( !CFNumberGetValue( num, kCFNumberIntType, &result ) ) {
@@ -486,12 +486,12 @@ unsigned int OSXLocalePeer::toUInt( const UnicodeString& str )
 	unsigned int result = 0;
 
 	CFTextString tmp(str);
-
-	CFRefObject<CFNumberRef> num =
-		CFNumberFormatterCreateNumberFromString( kCFAllocatorDefault,
-													integerNumFormatterRef_,
-													tmp,
-													NULL,
+	
+	CFRefObject<CFNumberRef> num = 
+		CFNumberFormatterCreateNumberFromString( kCFAllocatorDefault, 
+													integerNumFormatterRef_, 
+													tmp, 
+													NULL, 
 													kCFNumberFormatterParseIntegersOnly );
 	if ( NULL != num ) {
 		double val = 0;
@@ -502,7 +502,7 @@ unsigned int OSXLocalePeer::toUInt( const UnicodeString& str )
 			result = StringUtils::fromStringAsUInt( str );
 		}
 	}
-
+	
 	return result;
 }
 
@@ -510,19 +510,19 @@ double OSXLocalePeer::toDouble( const UnicodeString& str )
 {
 	double result = 0;
 	CFTextString tmp(str);
-
-	CFRefObject<CFNumberRef> num =
-		CFNumberFormatterCreateNumberFromString( kCFAllocatorDefault,
-													realNumFormatterRef_,
-													tmp,
-													NULL,
+	
+	CFRefObject<CFNumberRef> num = 
+		CFNumberFormatterCreateNumberFromString( kCFAllocatorDefault, 
+													realNumFormatterRef_, 
+													tmp, 
+													NULL, 
 													kCFNumberFormatterParseIntegersOnly );
 	if ( NULL != num ) {
 		if ( !CFNumberGetValue( num, kCFNumberDoubleType, &result ) ) {
 			result = StringUtils::fromStringAsDouble( str );
 		}
 	}
-
+	
 	return result;
 }
 
@@ -531,12 +531,12 @@ float OSXLocalePeer::toFloat( const UnicodeString& str )
 	float result = 0;
 
 	CFTextString tmp(str);
-
-	CFRefObject<CFNumberRef> num =
-		CFNumberFormatterCreateNumberFromString( kCFAllocatorDefault,
-													realNumFormatterRef_,
-													tmp,
-													NULL,
+	
+	CFRefObject<CFNumberRef> num = 
+		CFNumberFormatterCreateNumberFromString( kCFAllocatorDefault, 
+													realNumFormatterRef_, 
+													tmp, 
+													NULL, 
 													kCFNumberFormatterParseIntegersOnly );
 	if ( NULL != num ) {
 		if ( !CFNumberGetValue( num, kCFNumberFloatType, &result ) ) {
@@ -561,20 +561,6 @@ DateTime OSXLocalePeer::toDateTime( const UnicodeString& str )
     return result;
 }
 
-DateTime OSXLocalePeer::toDateTime( const UnicodeString& str, const String& format )
-{
-    throw NotImplementedException();
-}
-
-UnicodeString OSXLocalePeer::getAMSymbol()
-{
-    throw NotImplementedException();
-}
-
-UnicodeString OSXLocalePeer::getPMSymbol()
-{
-    throw NotImplementedException();
-}
 
 UnicodeString OSXLocalePeer::toLowerCase( const UnicodeString& s )
 {
@@ -583,7 +569,7 @@ UnicodeString OSXLocalePeer::toLowerCase( const UnicodeString& s )
 	CFStringRef tmp = CFStringCreateCopy(NULL,result);
 	result = tmp;
 	CFRelease(tmp);
-
+	
 	return result;
 }
 
@@ -663,7 +649,7 @@ int OSXLocalePeer::getCurrencyFractionalDigits()
 	if ( NULL != prop ) {
 		CFNumberGetValue( prop, kCFNumberIntType, &result );
 	}
-
+	
 	return result;
 }
 
@@ -784,7 +770,7 @@ UnicodeString OSXLocalePeer::toStringFromDate( const DateTime& val, const Unicod
 	uint32 hour;
 	uint32 minute;
 	uint32 second;
-	uint32 millisecond;
+	uint32 millisecond;	
 	val.get( &year, &month, &day, &hour, &minute, &second, &millisecond );
 
 	CFGregorianDate cfDate;
@@ -794,16 +780,16 @@ UnicodeString OSXLocalePeer::toStringFromDate( const DateTime& val, const Unicod
 	cfDate.hour = hour;
 	cfDate.minute = minute;
 	cfDate.second = ((double)second) + ( 1000.0/(double)millisecond );
-
+	
 	CFAbsoluteTime timeVal = CFGregorianDateGetAbsoluteTime( cfDate, NULL );
 	CFRefObject<CFDateRef> dt = CFDateCreate(NULL, timeVal);
-	CFDateFormatterRef dtFmt = CFDateFormatterCreate(NULL,
-													localeRef_,
-													kCFDateFormatterLongStyle,
+	CFDateFormatterRef dtFmt = CFDateFormatterCreate(NULL, 
+													localeRef_, 
+													kCFDateFormatterLongStyle, 
 													kCFDateFormatterNoStyle);
-
+													
 	result = CFDateFormatterCreateStringWithDate(NULL, dtFmt, dt);
-
+	
 	return result;
 }
 
@@ -817,9 +803,9 @@ UnicodeString OSXLocalePeer::toStringFromTime( const DateTime& val, const Unicod
 	uint32 hour;
 	uint32 minute;
 	uint32 second;
-	uint32 millisecond;
+	uint32 millisecond;	
 	val.get( &year, &month, &day, &hour, &minute, &second, &millisecond );
-
+	
 	CFGregorianDate cfDate;
 	cfDate.year = year;
 	cfDate.month = month;
@@ -827,25 +813,25 @@ UnicodeString OSXLocalePeer::toStringFromTime( const DateTime& val, const Unicod
 	cfDate.hour = hour;
 	cfDate.minute = minute;
 	cfDate.second = ((double)second) + ( 1000.0/(double)millisecond );
-
+	
 	CFAbsoluteTime timeVal = CFGregorianDateGetAbsoluteTime( cfDate, NULL );
 	CFRefObject<CFDateRef> dt = CFDateCreate(NULL, timeVal);
-	CFDateFormatterRef dtFmt = CFDateFormatterCreate(NULL,
-													localeRef_,
-													kCFDateFormatterNoStyle,
+	CFDateFormatterRef dtFmt = CFDateFormatterCreate(NULL, 
+													localeRef_, 
+													kCFDateFormatterNoStyle, 
 													kCFDateFormatterShortStyle);
-
+													
 	result = CFDateFormatterCreateStringWithDate(NULL, dtFmt, dt);
-
+	
 	return result;
 }
 
 uint32 OSXLocalePeer::getLanguageCode()
 {
 	CFTextString tmp(CFLocaleGetIdentifier(localeRef_));
-
+	
 	UnicodeString id = tmp;
-
+	
 	VCF_ASSERT( id.size() >= 2 );
 
 	return Locale::stringToLanguageCode( id.substr(0,2) );
@@ -855,15 +841,15 @@ uint32 OSXLocalePeer::getLanguageCode()
 uint32 OSXLocalePeer::getCountryCode()
 {
 	CFTextString tmp(CFLocaleGetIdentifier(localeRef_));
-
+	
 	UnicodeString id = tmp;
-
+	
 	VCF_ASSERT( id.size() >= 2 );
-
+	
 	size_t pos = id.find("_");
-
+	
 	VCF_ASSERT( pos != UnicodeString::npos );
-
+	
 
 	return Locale::stringToCountryCode( id.substr(pos+1,id.size()-(pos+1)) );
 }
@@ -876,7 +862,7 @@ String OSXLocalePeer::getLanguage()
 
  void OSXLocalePeer::setToCurrentThread()
  {
-
+ 
  }
 
 };

@@ -188,8 +188,13 @@ Resource* Win32ResourceBundle::getResource( const String& resourceName )
 
 	searchResName_ = resourceName;
 
+	String exeName;
+
 	#ifndef VCF_WIN32CE
 
+	HINSTANCE resInst = getResourceInstance();
+
+	
 	/**
 	JC
 	we are using the ansi version as there isn't
@@ -203,7 +208,7 @@ Resource* Win32ResourceBundle::getResource( const String& resourceName )
 	function pointer, and the EnumResourceTypesW uses a
 	ENUMRESTYPEPROCW argument.
 	*/
-	::EnumResourceTypesA( getResourceInstance(),
+	::EnumResourceTypesA( resInst,
 							 Win32ResourceBundle::EnumResTypeProcA,
 							 (LPARAM)this );
 
@@ -211,16 +216,16 @@ Resource* Win32ResourceBundle::getResource( const String& resourceName )
 		HRSRC resHandle = NULL;
 
 
-		resHandle = ::FindResourceA( getResourceInstance(),
+		resHandle = ::FindResourceA( resInst,
 			                              resourceName.ansi_c_str(),
 										  foundResType_ );
 
 
 		if ( NULL != resHandle ){
-			HGLOBAL	dataHandle = ::LoadResource( NULL, resHandle );
+			HGLOBAL	dataHandle = ::LoadResource( resInst, resHandle );
 			if ( NULL != dataHandle ){
 				void* data = ::LockResource( dataHandle );
-				int size = ::SizeofResource( getResourceInstance(), resHandle );
+				int size = ::SizeofResource( resInst, resHandle );
 				return new Resource( data, size, resourceName );
 			}
 		}
@@ -228,6 +233,23 @@ Resource* Win32ResourceBundle::getResource( const String& resourceName )
 			//throw exception- resource not found !!!!
 		}
 	}
+	else {
+		if ( System::isUnicodeEnabled() ) {
+			VCFChar fileName[MAX_PATH];
+			memset( fileName, 0, MAX_PATH*sizeof(VCFChar) );
+			::GetModuleFileNameW( resInst, fileName, MAX_PATH );
+			
+			exeName = fileName;
+		}
+		else {
+			char fileName[MAX_PATH];
+			memset( fileName, 0, MAX_PATH*sizeof(char) );
+			::GetModuleFileNameA( resInst, fileName, MAX_PATH );
+			
+			exeName = fileName;
+		}
+	}
+
 	#else
 	//how to do this in WinCE???
 	#endif
@@ -236,7 +258,10 @@ Resource* Win32ResourceBundle::getResource( const String& resourceName )
 
 	String localeName = System::getCurrentThreadLocale()->getName();
 
-	String fileName = System::findResourceDirectory() +	resourceName;
+	
+
+
+	String fileName = System::findResourceDirectoryForExecutable(exeName) +	resourceName;
 
 	if ( File::exists( fileName ) ) {
 		FileInputStream fs(fileName);

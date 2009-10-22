@@ -146,7 +146,7 @@ void StringsMessageLoader::loadMessageFile( const UnicodeString& fileName )
 
 	int line = 1;
 	int col = 1;
-	while ( (uint32)(P-start) < length ) {
+	while ( (P-start) < length ) {
 
 		switch ( *P ) {
 
@@ -228,7 +228,7 @@ void StringsMessageLoader::loadMessageFile( const UnicodeString& fileName )
 					case psAssignment : {
 						parseState_ = psValue;
 						tokenString = "";
-
+						
 						token = P + 1;
 					}
 					break;

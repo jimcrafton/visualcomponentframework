@@ -18,7 +18,7 @@ namespace VCF {
 
 /**
 \class DictionaryEnumerator Dictionary.h "vcf/FoundationKit/Dictionary.h"
-The DictionaryEnumerator simply iterates through all of the items in a
+The DictionaryEnumerator simply iterates through all of the items in a 
 Dictionary.
 @see Dictionary
 @see Enumerator
@@ -95,7 +95,7 @@ public:
 		}
 	};
 
-
+	
 private:
 	mutable MapType::iterator containerIterator_;
 	MapType* container_;
@@ -172,7 +172,7 @@ public:
     typedef uint32 size_type;
 
 
-	typedef VCF::Enumerator<pair> Enumerator;
+	typedef Enumerator<pair> Enumerator;
 
 
 
@@ -241,7 +241,7 @@ public:
 
 	/**
 	Returns whether or not the dictionary "owns" the
-	object values in it. If it does it will clean up these
+	object values in it. If it does it will clean up these 
 	instances when the dictionary is destroyed.
 	*/
 	bool getOwnsObjectValues() const {
@@ -249,8 +249,8 @@ public:
 	}
 
 	/**
-	Sets the owns object value flag, which tells the
-	dictionary whether or not it should clean up
+	Sets the owns object value flag, which tells the 
+	dictionary whether or not it should clean up 
 	object values when the dictionary is destroyed.
 	*/
 	void setOwnsObjectValues( const bool& val ) {
@@ -268,9 +268,9 @@ public:
 protected:
 	DictionaryMap data_;
 	//the "mutable" qualifier is only here to allow for use in the const method.
-	//stupid, really and ultimately needs to be fixed - see about making
+	//stupid, really and ultimately needs to be fixed - see about making 
 	//dataContainer_.getEnumerator const safe
-	mutable DictionaryEnumerator dataContainer_;
+	mutable DictionaryEnumerator dataContainer_; 
 	bool ownsObjectValues_;
 };
 
@@ -294,11 +294,11 @@ public:
 
 	std::vector<VariantData> data;
 
-
+	
 
 	/**
 	Returns whether or not the dictionary "owns" the
-	object values in it. If it does it will clean up these
+	object values in it. If it does it will clean up these 
 	instances when the dictionary is destroyed.
 	*/
 	bool getOwnsObjectValues() const {
@@ -306,8 +306,8 @@ public:
 	}
 
 	/**
-	Sets the owns object value flag, which tells the
-	dictionary whether or not it should clean up
+	Sets the owns object value flag, which tells the 
+	dictionary whether or not it should clean up 
 	object values when the dictionary is destroyed.
 	*/
 	void setOwnsObjectValues( const bool& val ) {

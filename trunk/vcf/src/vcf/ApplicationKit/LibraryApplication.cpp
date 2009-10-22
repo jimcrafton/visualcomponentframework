@@ -113,6 +113,18 @@ VCF::LibraryApplication* LibraryApplication::getRegisteredLibraryApplication( co
 	return result;
 }
 
+
+GraphicsResourceBundle* LibraryApplication::getResourceBundle( const String& libName )
+{
+	GraphicsResourceBundle* result = NULL;
+	LibraryApplication* libApp = LibraryApplication::getRegisteredLibraryApplication( libName );
+	if ( NULL != libApp ) {
+		result = libApp->getResourceBundle();
+	}
+
+	return result;
+}
+
 void LibraryApplication::load( VCF::LibraryApplication* libraryApp )
 {
 

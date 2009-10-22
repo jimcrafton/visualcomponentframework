@@ -21,8 +21,7 @@ where you installed the VCF.
 
 //#include "utils/Dictionary.h"
 
-namespace VCF
-{
+using namespace VCF;
 
 
 
@@ -55,7 +54,7 @@ void FoundationKit::internal_addInitializer( InitializationFunc funcPtr )
 		initializerFunctions = new std::vector<InitializationFunc>();
 	}
 
-	std::vector<InitializationFunc>::iterator found =
+	std::vector<InitializationFunc>::iterator found = 
 		std::find( initializerFunctions->begin(), initializerFunctions->end(), funcPtr );
 	if ( found == initializerFunctions->end() ) {
 		initializerFunctions->push_back( funcPtr );
@@ -69,13 +68,17 @@ void FoundationKit::internal_addFinalizer( FinalizationFunc funcPtr )
 		finalizerFunctions = new std::vector<FinalizationFunc>();
 	}
 
-	std::vector<FinalizationFunc>::iterator found =
+	std::vector<FinalizationFunc>::iterator found = 
 		std::find( finalizerFunctions->begin(), finalizerFunctions->end(), funcPtr );
 	if ( found == finalizerFunctions->end() ) {
 		finalizerFunctions->push_back( funcPtr );
 	}
 }
 
+void FoundationKit::internal_resetCommandLineArgs( int argc, char** argv )
+{
+	foundationKitCommandLine.splitLine( argc, argv );
+}
 
 void FoundationKit::init( int argc, char** argv )
 {
@@ -116,7 +119,7 @@ void FoundationKit::init( int argc, char** argv )
 	{
 		try {
 			REGISTER_CLASSINFO_EXTERNAL( ObjectWithCallbacks );
-			REGISTER_CLASSINFO_EXTERNAL( ComponentSetting );
+			REGISTER_CLASSINFO_EXTERNAL( ComponentSetting );			
 			REGISTER_CLASSINFO_EXTERNAL( Component );
 		}
 		catch ( BasicException& e ) {
@@ -164,7 +167,7 @@ void FoundationKit::terminate()
 
 	TextCodec::internal_freeAllRegisteredCodecs();
 
-	MessageLoader::internal_freeAllRegisteredMessageLoaders();
+	MessageLoader::internal_freeAllRegisteredMessageLoaders();	
 
 	ClassRegistry::terminate();
 
@@ -187,8 +190,8 @@ void FoundationKit::terminate()
 #ifdef _DEBUG
 	Object::dumpDebugInfo();
 #endif
-
-
+	
+	
 
 }
 
@@ -207,7 +210,6 @@ void FoundationKit::assertCondition( bool condition, const String& failureMessag
 	}
 }
 
-} // namespace VCF
 
 /**
 $Id$

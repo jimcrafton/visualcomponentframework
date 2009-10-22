@@ -65,7 +65,7 @@ public:
 		if ( NULL == inStream_ ) {
 			throw InvalidPointerException();
 		}
-		return inStream_->read( bytesToRead, sizeOfBytes );
+		return inStream_->read( bytesToRead, sizeOfBytes );		
 	}
 
 	virtual bool isEOS() {
@@ -90,16 +90,6 @@ public:
 			inStream_->read( val );
 			*data = (uint32)val;
 		}
-		else if ( type == "ll" ) {
-			int64 val = 0;
-			inStream_->read( val );
-			*data = val;
-		}
-		else if ( type == "+ll" ) {
-			uint64 val = 0;
-			inStream_->read( val );
-			*data = (uint64)val;
-		}
 		else if ( type == "h" ) {
 			short val = 0;
 			inStream_->read( val );
@@ -122,33 +112,33 @@ public:
 			size_t pos = val.find("T");
 
 			VCF_ASSERT( pos != String::npos );
-
+			
 			if ( pos != String::npos ) {
 				StringTokenizer dtPt(val.substr(0,pos),"-");
 				std::vector<String> vals;
 				dtPt.getElements(vals);
 				val.erase( 0, pos+1 );
 				pos = val.find("Z");
-
+				
 				VCF_ASSERT( pos != String::npos );
-
+				
 				if ( pos != String::npos ) {
 					StringTokenizer tmPt(val.substr(0,pos),":");
 					std::vector<String> vals2;
 					tmPt.getElements(vals2);
-
+					
 					DateTime dt;
-					dt.set( StringUtils::fromStringAsUInt(vals[0]),
-							StringUtils::fromStringAsUInt(vals[1]),
+					dt.set( StringUtils::fromStringAsUInt(vals[0]), 
+							StringUtils::fromStringAsUInt(vals[1]), 
 							StringUtils::fromStringAsUInt(vals[2]),
-							StringUtils::fromStringAsUInt(vals2[0]),
-							StringUtils::fromStringAsUInt(vals2[1]),
+							StringUtils::fromStringAsUInt(vals2[0]), 
+							StringUtils::fromStringAsUInt(vals2[1]), 
 							StringUtils::fromStringAsUInt(vals2[2]) );
 
-
+					
 					*data = dt;
-				}
-			}
+				}				
+			}			
 		}
 		else if ( type == "f" ) {
 			float val = 0.0f;
@@ -178,7 +168,7 @@ public:
 				//do nothing, attempt to create from a class ID
 			}
 
-			try {
+			try { 
 				if ( NULL == obj ) {
 					obj = ClassRegistry::createNewInstanceFromClassID( className );
 				}
@@ -279,18 +269,6 @@ public:
 			case pdULong : {
 				outStream_->write( String("+l") );
 				outStream_->write( (long)(*data) );
-			}
-			break;
-
-			case pdInt64 : {
-				outStream_->write( String("ll") );
-				outStream_->write( (int64)(*data) );
-			}
-			break;
-
-			case pdUInt64 : {
-				outStream_->write( String("+ll") );
-				outStream_->write( (uint64)(*data) );
 			}
 			break;
 

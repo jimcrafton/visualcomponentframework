@@ -42,6 +42,8 @@ public:
 
 	virtual GraphicsResourceBundle* getResourceBundle();
 
+
+	static GraphicsResourceBundle* getResourceBundle( const String& libName );
 	/**
 	*returns the library's resource bundle, which
 	*contains all the library's resources, such as

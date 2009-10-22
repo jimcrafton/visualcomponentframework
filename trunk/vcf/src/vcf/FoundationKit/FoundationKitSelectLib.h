@@ -30,11 +30,6 @@ where you installed the VCF.
 #		undef _LIB_CPLVERNUM
 #endif
 
-#ifdef VCF_WIN32CE
-#   define _LIB_CPLVCWINCE "ce"
-#else
-#   define _LIB_CPLVCWINCE ""
-#endif
 
 # if defined(__INTEL_COMPILER)
 #   define _LIB_CPLVERNUM "icl7"
@@ -42,9 +37,13 @@ where you installed the VCF.
 #   define _LIB_CPLVERNUM "icl6"
 # else
 #   if (_MSC_VER >= 1500)
-#     define _LIB_CPLVERNUM "vc90" _LIB_CPLVCWINCE
+#     define _LIB_CPLVERNUM "vc90"
 #   elif (_MSC_VER >= 1400)
-#	  define _LIB_CPLVERNUM "vc80" _LIB_CPLVCWINCE
+		#ifdef VCF_WIN32CE
+			#define _LIB_CPLVERNUM "vc80ce"
+		#else
+			#define _LIB_CPLVERNUM "vc80"
+		#endif
 #   elif (_MSC_VER >= 1310)
 #     define _LIB_CPLVERNUM "vc71"
 #   elif (_MSC_VER >= 1300)
