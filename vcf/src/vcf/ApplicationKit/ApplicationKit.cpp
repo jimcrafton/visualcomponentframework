@@ -52,6 +52,8 @@ DockManager* DockManager::dockManagerInstance = NULL;
 
 void ApplicationKit::init( int argc, char** argv )
 {
+	FoundationKit::internal_resetCommandLineArgs( argc, argv );
+
 	ApplicationKitRefCount ++;
 	if ( false == ApplicationKitIsInitialized ) {
 

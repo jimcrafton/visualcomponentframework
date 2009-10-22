@@ -492,15 +492,15 @@ public:
 	}
 
 	inline void assign(const_iterator first, const_iterator last) {
-		return collection_.assign(first,last);
+		collection_.assign(first,last);
 	}
 
 	inline void assign(size_type n, const ItemType& x = ItemType()) {
-		return collection_.assign(n,x);
+		collection_.assign(n,x);
 	}
 
 	inline iterator insert( size_type pos, const ItemType& x) {
-		return collection_.insert(collection_.begin()+pos,x);
+		collection_.insert(collection_.begin()+pos,x);
 	}
 
 	inline iterator insert(iterator it, const ItemType& x = ItemType()) {

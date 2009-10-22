@@ -45,6 +45,15 @@ Handle the extension based on the compiler
 # endif
 
 
+
+
+
+
+#include "vcf/ApplicationKit/ApplicationKit.h"
+
+
+
+
 /**
 All of this is here so that if we use this kit in our programs, all we
 have to do is pull in this one file (OpenGLKit.h) and we'll automatically
@@ -75,7 +84,6 @@ defined to use the DLL or static libraries.
 #endif //VCF_MSC
 
 
-#include "vcf/ApplicationKit/ApplicationKit.h"
 
 #include "vcf/OpenGLKit/OpenGLPeer.h"
 #include "vcf/OpenGLKit/OpenGLContext.h"

@@ -24,8 +24,10 @@ void ListModel::insert( const uint32 & index, const VariantData& item )
 
 void ListModel::remove( const uint32& index )
 {
-	if ( doRemove( index ) ) {
+	if ( index != ListModel::InvalidIndex ) {
+		if ( doRemove( index ) ) {
 		
+		}
 	}
 }
 

@@ -60,6 +60,7 @@ where you installed the VCF.
 
 
 #ifdef USE_SCINTILLAKIT_DLL
+#define SCINTILLAKIT_DLL
 //	using dynamic link library
 #	ifdef _DEBUG
 #		pragma comment(lib, "ScintillaKit_"_LIB_CPLVERNUM"_d.lib")
