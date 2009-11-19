@@ -205,6 +205,10 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Base64Codec.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\FoundationKit.cpp"
 				>
 				<FileConfiguration
@@ -231,28 +235,6 @@
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl"
 				>
-			</File>
-			<File
-				RelativePath="..\..\..\src\vcf\FoundationKit\IniFini.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -1260,6 +1242,28 @@
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\ErrorLog.h"
 				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\IniFini.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Library.cpp"
