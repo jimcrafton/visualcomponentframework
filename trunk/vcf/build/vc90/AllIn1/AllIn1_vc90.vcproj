@@ -1827,6 +1827,18 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath="..\..\..\src\vcf\FoundationKit\VCFTime.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath="..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp"
 					>
 					<FileConfiguration
@@ -3437,6 +3449,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\src\vcf\ApplicationKit\InputValidation.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\src\vcf\ApplicationKit\Item.h"
 					>
 				</File>
@@ -4210,6 +4226,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\src\vcf\ApplicationKit\ImageList.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\src\vcf\ApplicationKit\InputValidation.cpp"
 					>
 				</File>
 				<File
