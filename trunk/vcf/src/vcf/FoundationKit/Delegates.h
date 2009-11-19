@@ -379,7 +379,7 @@ new custom class using this as a base class.
 
 #define OBJECTWITHCALLBACKS_CLASSID		"2d386e10-4b81-4c71-801f-d38d2fdb8e88"
 
-class FOUNDATIONKIT_API ObjectWithCallbacks : public Object {
+class FOUNDATIONKIT_API ObjectWithCallbacks : public HeapObject {
 public:
 	
 	ObjectWithCallbacks():callbacks_(NULL){}	
