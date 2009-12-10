@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="RegExKitDLL_vc90"
+	Name="RegExKitDLL"
 	ProjectGUID="{C9146FB5-0C90-4A69-8AB7-DBE64884A86C}"
 	RootNamespace="RegExKitDLL_vc90"
 	TargetFrameworkVersion="131072"
@@ -79,6 +79,7 @@
 				OutputFile="..\..\..\bin\RegExKit_vc90.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="..\..\..\lib"
 				ProgramDatabaseFile=".\..\..\..\lib/RegExKit_vc90.pdb"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
