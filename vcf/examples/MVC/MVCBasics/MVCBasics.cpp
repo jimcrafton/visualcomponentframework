@@ -249,7 +249,7 @@ public:
 
 	void onKeyUp( KeyboardEvent* e ) {
 
-		if ( e->getVirtualCode() == vkDelete ) {
+		if ( e->virtualKeyCode == vkDelete ) {
 			CircleModel* model = (CircleModel*)getView()->getViewModel();
 
 			model->empty();
@@ -335,7 +335,7 @@ public:
 
 	void onKeyUp( KeyboardEvent* e ) {
 
-		if ( e->getVirtualCode() == vkDelete ) {
+		if ( e->virtualKeyCode == vkDelete ) {
 			model_->empty();
 		}
 	}

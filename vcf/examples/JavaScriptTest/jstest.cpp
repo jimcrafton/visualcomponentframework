@@ -47,7 +47,7 @@ using namespace VCF;
 
 
 
-class HarryTheBear : public Object {
+class HarryTheBear : public HeapObject {
 public:
 	HarryTheBear(){}
 
@@ -59,7 +59,7 @@ public:
 
 
 
-class HarveyTheBug : public Object {
+class HarveyTheBug : public HeapObject {
 public:
 	HarveyTheBug():feelingGassy_(false){}
 
@@ -87,7 +87,7 @@ public:
 };
 
 
-class HermesTheFleet : public Object {
+class HermesTheFleet : public HeapObject {
 public:
 
 	DELEGATE(EventDelegate,StateChanged);
@@ -131,11 +131,11 @@ protected:
 };
 
 // This RTTI information will glue us to the JS engine.
-_class_rtti_( HarryTheBear, "VCF::Object", "9083a1ec-73ac-4d89-b899-f0716e8f3c68" )
+_class_rtti_( HarryTheBear, "VCF::HeapObject", "9083a1ec-73ac-4d89-b899-f0716e8f3c68" )
     _procedure_( boo )
 _class_rtti_end_
 
-_class_rtti_( HarveyTheBug, "VCF::Object", "f574705a-c9c4-4b81-b916-61e71d4531c2" )
+_class_rtti_( HarveyTheBug, "VCF::HeapObject", "f574705a-c9c4-4b81-b916-61e71d4531c2" )
     _procedure_( scram )
 	_property_(bool,"feelingGassy",feelingGassy,setFeelingGassy,"" )
 _class_rtti_end_
@@ -144,7 +144,7 @@ _class_rtti_( PrintMe, "VCF::Object", "21614fe1-de12-407e-abcc-049ff386178e" )
     _procedure1_( print, const String&, "s" )	
 _class_rtti_end_
 
-_class_rtti_( HermesTheFleet, "VCF::Object", "66440e9c-f172-4186-b829-07d19758608e" )
+_class_rtti_( HermesTheFleet, "VCF::HeapObject", "66440e9c-f172-4186-b829-07d19758608e" )
 	_property_(bool,"running",running,setRunning,"" )
 	_property_(int,"numLaps",numLaps,setNumLaps,"" )
 	_event_(VCF::EventHandler,StateChanged)
