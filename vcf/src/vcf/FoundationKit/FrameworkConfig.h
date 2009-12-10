@@ -198,10 +198,17 @@ Setup compiler names, and some compiler-specific warnings
 #ifdef _MSC_VER
 	#define VCF_MSC
 
+// For some reason, HeapObject inheriting from RefCounted is causing compilation failures during *rtti.inl.
+// The reason given on the MS help page doesn't seem to apply, so I don't know why it's failing. In any case, 
+// setting this pragma stops it failing.  Apparently it's needed from VC70 onwards, but I've only tried it on VC90 - ACH
+	#if (_MSC_VER >= 1300)
+		#pragma pointers_to_members( full_generality, virtual_inheritance )
+	#endif
+
 	#if (_MSC_VER >= 1500)
 		#define VCF_VC90
 		#undef VCF_COMPILER_NAME
-		#define VCF_COMPILER_NAME	"VC90"	
+		#define VCF_COMPILER_NAME	"VC90"
 		#define _WIN32_WINNT 0x0500
 	#elif (_MSC_VER >= 1400)
 		#define VCF_VC80

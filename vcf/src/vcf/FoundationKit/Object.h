@@ -199,10 +199,11 @@ Object with refcounting methods that originally belonged to Object class.  This 
 the Object class to live peacefully on the stack.  HeapObject should always be created
 on the heap!
 */
-class FOUNDATIONKIT_API HeapObject: public Object {
+class FOUNDATIONKIT_API HeapObject: public Object, public RefCounted {
 public:
 	HeapObject();
     HeapObject(const HeapObject &obj);
+	HeapObject& operator= (const HeapObject &obj){return *this;} // don't copy the refcount
 
 	/**
 	*increments the reference count of the object
@@ -212,13 +213,14 @@ public:
 
 	/**
 	decrements the reference count of the object
+	@return long the current reference count of the object, if 0 is returned then object has been deleted
 	*/
     virtual long release();
 
 	/**
 	returns the number of outstanding references for this object
 	*/
-    long getRefCount() const{
+    virtual long getRefCount() const{
 		return refCount_;
 	}
 

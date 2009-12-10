@@ -884,7 +884,7 @@ JSBool JavaScriptEngine::resolve(JSContext *cx, JSObject *obj, jsval id)
 	if ( found != eng->m_jsObjectInstances.end() ) {
 		Object* vcfObj = found->second.instance_;
 		if ( found->second.releasable_ ) {
-			ulong res = vcfObj->addRef();
+			ulong res = ((RefCounted*)vcfObj)->addRef();
 			StringUtils::trace( Format( "refcount: %d Object::toString(): %s\n" ) % res % vcfObj->toString() );
 		}
 	}
@@ -958,7 +958,7 @@ void JavaScriptEngine::finalize(JSContext *cx, JSObject *obj)
 
 		if ( entry.releasable_ ) {
 
-			ulong res = vcfObj->release();
+			ulong res = ((HeapObject*)vcfObj)->release();
 			if ( res ) {
 				StringUtils::trace( Format( "refcount: %d Object::toString(): %s\n" ) % res % vcfObj->toString() );
 			}
