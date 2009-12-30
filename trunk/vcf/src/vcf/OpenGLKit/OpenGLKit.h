@@ -105,13 +105,13 @@ public:
 	/**
 	Initializes the OpenGLKit
 	*/
-	static void init( int argc, char** argv ){;}
+	static void init( int argc, char** argv );
 
 	/**
 	Terminates the OpenGLKit, and frees any resources that were 
 	allocated by the init() call.
 	*/
-	static void terminate(){;}
+	static void terminate();
 };
 
 };
