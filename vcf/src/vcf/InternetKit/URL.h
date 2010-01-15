@@ -408,7 +408,7 @@ namespace VCF {
 			int pos = data.find( "://" );
 			if ( pos != String::npos ) {
 				result = data.substr( 0, pos );
-				data.erase( 0, pos + 3 );
+				data = data.erase( 0, pos + 3 );
 			}
 
 			return result;
@@ -437,7 +437,7 @@ namespace VCF {
 			int pos = schemePart.find( "/" );
 			if ( pos != String::npos ) {
 				urlPath = schemePart.substr(pos,schemePart.size()-(pos));
-				schemePart.erase( pos,schemePart.size()-pos);
+				schemePart = schemePart.erase( pos,schemePart.size()-pos);
 			}
 
 
@@ -445,12 +445,12 @@ namespace VCF {
 
 			if ( pos != String::npos ) {
 				user = schemePart.substr(0,pos);
-				schemePart.erase( 0, pos+1);
+				schemePart = schemePart.erase( 0, pos+1);
 
 				pos = user.find( ":" );
 				if ( pos != String::npos ) {
 					pwd = user.substr(pos+1,user.size()-(pos+1));
-					user.erase( pos+1,user.size()-(pos+1));
+					user = user.erase( pos+1,user.size()-(pos+1));
 				}
 
 				if ( validate ) {
@@ -467,7 +467,7 @@ namespace VCF {
 
 			if ( pos != String::npos ) {				
 				port = schemePart.substr(pos+1,schemePart.size()-(pos+1));
-				schemePart.erase( pos,schemePart.size()-(pos));				
+				schemePart = schemePart.erase( pos,schemePart.size()-(pos));				
 			}
 
 			host = schemePart;
@@ -516,7 +516,7 @@ namespace VCF {
 
 		String getDataAsString() {
 			String result;
-			result.append( (const char*)outputBuf_.getBuffer(), outputBuf_.getSize() );
+			result.assign( (const char*)outputBuf_.getBuffer(), outputBuf_.getSize() );
 
 			return result;
 		}

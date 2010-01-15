@@ -1223,12 +1223,12 @@ STDMETHODIMP Win32HTMLBrowser::TranslateUrl( DWORD dwTranslate, OLECHAR *pchURLI
 		if ( browserCtrl->shouldNotifyForURLTranslation() ) {
 			HTMLTranslateURLEvent e(browserCtrl, HTMLBrowserControl::heTranslateURLRequested);
 
-			e.scheme.append( components.lpszScheme, components.dwSchemeLength );
-			e.host.append( components.lpszHostName, components.dwHostNameLength );
-			e.user.append( components.lpszUserName, components.dwUserNameLength );
-			e.password.append( components.lpszPassword, components.dwPasswordLength );
-			e.url.append( components.lpszUrlPath, components.dwUrlPathLength );
-			e.extra.append( components.lpszExtraInfo, components.dwExtraInfoLength );
+			e.scheme.assign( components.lpszScheme, components.dwSchemeLength );
+			e.host.assign( components.lpszHostName, components.dwHostNameLength );
+			e.user.assign( components.lpszUserName, components.dwUserNameLength );
+			e.password.assign( components.lpszPassword, components.dwPasswordLength );
+			e.url.assign( components.lpszUrlPath, components.dwUrlPathLength );
+			e.extra.assign( components.lpszExtraInfo, components.dwExtraInfoLength );
 
 			browserCtrl->TranslateURLRequested( &e );
 
@@ -1339,7 +1339,7 @@ STDMETHODIMP Win32HTMLBrowser::TranslateUrl( DWORD dwTranslate, OLECHAR *pchURLI
 					if ( !binary.empty() ) {
 						resDir = System::findResourceDirectoryForExecutable( FilePath( binary ) );
 						
-						resDir.erase( resDir.size()-1, 1 );
+						resDir = resDir.erase( resDir.size()-1, 1 );
 					}
 				}
 				
