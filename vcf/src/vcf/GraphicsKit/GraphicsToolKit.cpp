@@ -249,7 +249,7 @@ Image* GraphicsToolkit::internal_createImage( const String& fileName )
 		*/
 		if ( !ext.empty() ) {
 			if ( ext[0] == '.' ) {
-				ext.erase(0,1);
+				ext = ext.erase(0,1);
 			}
 		}
 		std::map<String,String>::iterator it = contentTypes_.find( ext );
@@ -309,7 +309,7 @@ void GraphicsToolkit::internal_saveImage( const String& fileName, Image* image )
 	*/
 	if ( !ext.empty() ) {
 		if ( ext[0] == '.' ) {
-			ext.erase(0,1);
+			ext = ext.erase(0,1);
 		}
 	}
 	std::map<String,String>::iterator it = contentTypes_.find( ext );

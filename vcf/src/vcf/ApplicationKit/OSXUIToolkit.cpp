@@ -466,7 +466,7 @@ public:
 		size_t pos = result.find( "&" );
 		while ( pos != String::npos ) {
 			if ( result[pos+1] != '&' ) {
-				result.erase( pos, 1 );
+				result = result.erase( pos, 1 );
 			}
 			else {
 				pos ++;

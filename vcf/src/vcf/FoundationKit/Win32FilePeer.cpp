@@ -62,7 +62,7 @@ void Win32FilePeer::create(  uint32 openFlags  )
 			size_t pos = tmp.find( "\\" );
 			while ( pos != String::npos ) {
 				dirPaths.push_back( tmp.substr( 0, pos ) );
-				tmp.erase( 0, pos+1 );
+				tmp = tmp.erase( 0, pos+1 );
 				pos = tmp.find( "\\" );
 			}
 			if ( dirPaths.size() == 1 ) {

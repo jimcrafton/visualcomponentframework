@@ -135,7 +135,7 @@ public:
 								dsCurrent++;
 							}
 							
-							val.append( dsPtr, dsCurrent - dsPtr );
+							val = val.append( dsPtr, dsCurrent - dsPtr );
 
 							//short month
 
@@ -168,7 +168,7 @@ public:
 								dsCurrent++;
 							}
 							
-							val.append( dsPtr, dsCurrent - dsPtr );
+							val = val.append( dsPtr, dsCurrent - dsPtr );
 
 							//short month
 
@@ -203,14 +203,14 @@ public:
 									dsCurrent++;
 								}
 								
-								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+								val = val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
 							}
 							else {
 								if ( ((dsPtr+2)-dsStart) > dsSize ) {
 									throw RuntimeException( "Date string too small" );
 								}
 								//day 01-31
-								val.append( dsPtr, 2 );
+								val = val.append( dsPtr, 2 );
 							}
 
 							
@@ -229,7 +229,7 @@ public:
 									dsCurrent++;
 								}
 								
-								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 4 ) );
+								val = val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 4 ) );
 								extraIncr = 1;
 							}
 							else {
@@ -237,7 +237,7 @@ public:
 									throw RuntimeException( "Date string too small" );
 								}
 								//year with century
-								val.append( dsPtr, 4 );
+								val = val.append( dsPtr, 4 );
 							}
 
 							year = locale_->toUInt( val );
@@ -255,7 +255,7 @@ public:
 									dsCurrent++;
 								}
 								
-								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+								val = val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
 								extraIncr = 1;
 							}
 							else {
@@ -263,7 +263,7 @@ public:
 									throw RuntimeException( "Date string too small" );
 								}
 								//year with century
-								val.append( dsPtr, 2 );
+								val = val.append( dsPtr, 2 );
 							}
 
 							year = locale_->toUInt( val );
@@ -282,7 +282,7 @@ public:
 									dsCurrent++;
 								}
 								
-								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+								val = val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
 								extraIncr = 1;
 							}
 							else {
@@ -290,7 +290,7 @@ public:
 									throw RuntimeException( "Date string too small" );
 								}
 								//year with century
-								val.append( dsPtr, 2 );
+								val = val.append( dsPtr, 2 );
 							}
 
 							hour = locale_->toUInt( val );
@@ -308,7 +308,7 @@ public:
 									dsCurrent++;
 								}
 								
-								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+								val = val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
 								extraIncr = 1;
 							}
 							else {
@@ -316,7 +316,7 @@ public:
 									throw RuntimeException( "Date string too small" );
 								}
 								//year with century
-								val.append( dsPtr, 2 );
+								val = val.append( dsPtr, 2 );
 							}
 
 							hour = locale_->toUInt( val );
@@ -334,7 +334,7 @@ public:
 									dsCurrent++;
 								}
 								
-								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+								val = val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
 								extraIncr = 1;
 							}
 							else {
@@ -342,7 +342,7 @@ public:
 									throw RuntimeException( "Date string too small" );
 								}
 								//year with century
-								val.append( dsPtr, 2 );
+								val = val.append( dsPtr, 2 );
 							}
 
 							month = locale_->toUInt( val );
@@ -360,7 +360,7 @@ public:
 									dsCurrent++;
 								}
 								
-								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+								val = val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
 								extraIncr = 1;
 							}
 							else {
@@ -368,7 +368,7 @@ public:
 									throw RuntimeException( "Date string too small" );
 								}
 								//year with century
-								val.append( dsPtr, 2 );
+								val = val.append( dsPtr, 2 );
 							}
 
 							minute = locale_->toUInt( val );
@@ -386,7 +386,7 @@ public:
 								dsCurrent++;
 							}
 								
-							val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+							val = val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
 							extraIncr = 1;
 							
 							//minute = locale_->toUInt( val );
@@ -404,7 +404,7 @@ public:
 									dsCurrent++;
 								}
 								
-								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 3 ) );
+								val = val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 3 ) );
 								extraIncr = 1;
 							}
 							else {
@@ -412,7 +412,7 @@ public:
 									throw RuntimeException( "Date string too small" );
 								}
 								//year with century
-								val.append( dsPtr, 3 );
+								val = val.append( dsPtr, 3 );
 							}
 
 							millis = locale_->toUInt( val );
@@ -430,7 +430,7 @@ public:
 									dsCurrent++;
 								}
 								
-								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+								val = val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
 								extraIncr = 1;
 							}
 							else {
@@ -438,7 +438,7 @@ public:
 									throw RuntimeException( "Date string too small" );
 								}
 								//year with century
-								val.append( dsPtr, 2 );
+								val = val.append( dsPtr, 2 );
 							}
 
 							second = locale_->toUInt( val );
@@ -456,7 +456,7 @@ public:
 								dsCurrent++;
 							}
 							
-							val.append( dsPtr, dsCurrent - dsPtr );
+							val = val.append( dsPtr, dsCurrent - dsPtr );
 							extraIncr = 1;
 						}
 						break;
@@ -472,7 +472,7 @@ public:
 									dsCurrent++;
 								}
 								
-								val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
+								val = val.append( dsPtr, minVal<size_t>( dsCurrent - dsPtr, 2 ) );
 								extraIncr = 1;
 							}
 							else {
@@ -480,7 +480,7 @@ public:
 									throw RuntimeException( "Date string too small" );
 								}
 								//year with century
-								val.append( dsPtr, 2 );
+								val = val.append( dsPtr, 2 );
 							}
 
 
@@ -497,7 +497,7 @@ public:
 								dsCurrent++;
 							}
 							
-							val.append( dsPtr, dsCurrent - dsPtr );
+							val = val.append( dsPtr, dsCurrent - dsPtr );
 
 							day = locale_->toUInt( val );
 
@@ -1739,8 +1739,8 @@ UnicodeString Win32LocalePeer::changeToGenericNumberString( const UnicodeString&
 
 	size_t pos = result.find( s );
 	if ( pos != UnicodeString::npos ) {
-		result.erase( pos, s.size() );
-		result.insert( pos, L"." );
+		result = result.erase( pos, s.size() );
+		result = result.insert( pos, L"." );
 	}
 
 	err = GetLocaleInfoW( lcid_, LOCALE_STHOUSAND, tmp, 255 );
@@ -1753,7 +1753,7 @@ UnicodeString Win32LocalePeer::changeToGenericNumberString( const UnicodeString&
 	s = tmp;
 	pos = result.find( s );
 	while ( pos != UnicodeString::npos ) {
-		result.erase( pos, s.size() );
+		result = result.erase( pos, s.size() );
 		pos = result.find( s );
 	}
 #else
@@ -1765,8 +1765,8 @@ UnicodeString Win32LocalePeer::changeToGenericNumberString( const UnicodeString&
 
 		size_t pos = result.find( s );
 		if ( pos != UnicodeString::npos ) {
-			result.erase( pos, s.size() );
-			result.insert( pos, L"." );
+			result = result.erase( pos, s.size() );
+			result = result.insert( pos, L"." );
 		}
 
 		err = GetLocaleInfoW( lcid_, LOCALE_STHOUSAND, tmp, 255 );
@@ -1779,7 +1779,7 @@ UnicodeString Win32LocalePeer::changeToGenericNumberString( const UnicodeString&
 		s = tmp;
 		pos = result.find( s );
 		while ( pos != UnicodeString::npos ) {
-			result.erase( pos, s.size() );
+			result = result.erase( pos, s.size() );
 			pos = result.find( s );
 		}
 	}
@@ -1791,8 +1791,8 @@ UnicodeString Win32LocalePeer::changeToGenericNumberString( const UnicodeString&
 		AnsiString tmpRes = result;
 		size_t pos = tmpRes.find( s );
 		if ( pos != AnsiString::npos ) {
-			tmpRes.erase( pos, s.size() );
-			tmpRes.insert( pos, "." );
+			tmpRes = tmpRes.erase( pos, s.size() );
+			tmpRes = tmpRes.insert( pos, "." );
 		}
 
 		err = GetLocaleInfoA( lcid_, LOCALE_STHOUSAND, tmp, 255 );
@@ -1805,7 +1805,7 @@ UnicodeString Win32LocalePeer::changeToGenericNumberString( const UnicodeString&
 		s = tmp;
 		pos = tmpRes.find( s );
 		while ( pos != AnsiString::npos ) {
-			tmpRes.erase( pos, s.size() );
+			tmpRes = tmpRes.erase( pos, s.size() );
 			pos = tmpRes.find( s );
 		}
 
@@ -1895,15 +1895,15 @@ double Win32LocalePeer::toDoubleAsCurrency( const UnicodeString& str )
 	UnicodeString s2 = str;
 	size_t pos = s2.find( s );
 	if ( pos != UnicodeString::npos ) {
-		s2.erase( pos, s.size() );
-		s2.insert( pos, L"." );
+		s2 = s2.erase( pos, s.size() );
+		s2 = s2.insert( pos, L"." );
 	}
 
 	GetLocaleInfoW( lcid_, LOCALE_SMONTHOUSANDSEP, tmp, 255 );
 	s = tmp;
 	pos = s2.find( s );
 	while ( pos != UnicodeString::npos ) {
-		s2.erase( pos, s.size() );
+		s2 = s2.erase( pos, s.size() );
 		pos = s2.find( s );
 	}
 
@@ -1912,7 +1912,7 @@ double Win32LocalePeer::toDoubleAsCurrency( const UnicodeString& str )
 	s = tmp;
 	pos = s2.find( s );
 	while ( pos != UnicodeString::npos ) {
-		s2.erase( pos, s.size() );
+		s2 = s2.erase( pos, s.size() );
 		pos = s2.find( s );
 	}
 
@@ -1928,15 +1928,15 @@ double Win32LocalePeer::toDoubleAsCurrency( const UnicodeString& str )
 		UnicodeString s2 = str;
 		size_t pos = s2.find( s );
 		if ( pos != UnicodeString::npos ) {
-			s2.erase( pos, s.size() );
-			s2.insert( pos, L"." );
+			s2 = s2.erase( pos, s.size() );
+			s2 = s2.insert( pos, L"." );
 		}
 
 		GetLocaleInfoW( lcid_, LOCALE_SMONTHOUSANDSEP, tmp, 255 );
 		s = tmp;
 		pos = s2.find( s );
 		while ( pos != UnicodeString::npos ) {
-			s2.erase( pos, s.size() );
+			s2 = s2.erase( pos, s.size() );
 			pos = s2.find( s );
 		}
 
@@ -1945,7 +1945,7 @@ double Win32LocalePeer::toDoubleAsCurrency( const UnicodeString& str )
 		s = tmp;
 		pos = s2.find( s );
 		while ( pos != UnicodeString::npos ) {
-			s2.erase( pos, s.size() );
+			s2 = s2.erase( pos, s.size() );
 			pos = s2.find( s );
 		}
 
@@ -1961,15 +1961,15 @@ double Win32LocalePeer::toDoubleAsCurrency( const UnicodeString& str )
 		AnsiString s2 = str;
 		size_t pos = s2.find( s );
 		if ( pos != AnsiString::npos ) {
-			s2.erase( pos, s.size() );
-			s2.insert( pos, "." );
+			s2 = s2.erase( pos, s.size() );
+			s2 = s2.insert( pos, "." );
 		}
 
 		GetLocaleInfoA( lcid_, LOCALE_SMONTHOUSANDSEP, tmp, 255 );
 		s = tmp;
 		pos = s2.find( s );
 		while ( pos != AnsiString::npos ) {
-			s2.erase( pos, s.size() );
+			s2 = s2.erase( pos, s.size() );
 			pos = s2.find( s );
 		}
 
@@ -1978,7 +1978,7 @@ double Win32LocalePeer::toDoubleAsCurrency( const UnicodeString& str )
 		s = tmp;
 		pos = s2.find( s );
 		while ( pos != AnsiString::npos ) {
-			s2.erase( pos, s.size() );
+			s2 = s2.erase( pos, s.size() );
 			pos = s2.find( s );
 		}
 

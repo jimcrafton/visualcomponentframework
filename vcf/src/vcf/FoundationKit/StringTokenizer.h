@@ -62,7 +62,7 @@ public:
 			String result;
 			size_t pos = data_.find_first_of( delimiter_, ptr_-start_ );
 			if ( pos != String::npos ) {
-				result.append( ptr_,  (start_ + pos)-ptr_ );
+				result = result.append( ptr_,  (start_ + pos)-ptr_ );
 				ptr_ = start_ + pos+1;
 				pos = delimiter_.find( *ptr_ );
 				while ( (pos != String::npos) && ((size_t)(ptr_-start_) < dataSize_) ) {
@@ -72,7 +72,7 @@ public:
 			}
 			else {
 				if ( (size_t)(ptr_-start_) < dataSize_ ) {
-					result.append( ptr_, dataSize_ - (ptr_-start_) );
+					result = result.append( ptr_, dataSize_ - (ptr_-start_) );
 				}
 				ptr_ = start_ + dataSize_;
 			}
@@ -96,7 +96,7 @@ public:
 		if ( !backward_ ) {
 			size_t pos = data_.find_first_of( delimiter_, ptr_-start_ );
 			if ( pos != String::npos ) {
-				result.append( ptr_,  (start_ + pos)-ptr_ );
+				result = result.append( ptr_,  (start_ + pos)-ptr_ );
 				ptr_ = start_ + pos+1;
 				pos = delimiter_.find( *ptr_ );
 				while ( (pos != String::npos) && ((size_t)(ptr_-start_) < dataSize_) ) {
@@ -106,7 +106,7 @@ public:
 			}
 			else {
 				if ( (size_t)(ptr_-start_) < dataSize_ ) {
-					result.append( ptr_, dataSize_ - (ptr_-start_) );
+					result = result.append( ptr_, dataSize_ - (ptr_-start_) );
 				}
 				ptr_ = start_ + dataSize_;
 			}
@@ -116,10 +116,10 @@ public:
 			if ( pos != String::npos ) {
 				//pos ++;
 				if ( (size_t)(ptr_-start_) == dataSize_ ) {
-					result.append( start_ + pos+1, ptr_ - (start_ + pos) );
+					result = result.append( start_ + pos+1, ptr_ - (start_ + pos) );
 				}
 				else {
-					result.append( start_ + pos+1, ptr_ - (start_ + pos)+1 );
+					result = result.append( start_ + pos+1, ptr_ - (start_ + pos)+1 );
 				}
 				//pos --;
 				ptr_ = (start_ + pos) - 1;
@@ -132,7 +132,7 @@ public:
 			}
 			else {
 				if ( (ptr_-start_) > 0 ) {
-					result.append( start_, ptr_-start_ +1 );
+					result = result.append( start_, ptr_-start_ +1 );
 				}
 				ptr_ = start_;
 			}
@@ -146,7 +146,7 @@ public:
 		if ( backward_ ) {
 			size_t pos = data_.find_first_of( delimiter_, backPtr_-start_ );
 			if ( pos != String::npos ) {
-				result.append( backPtr_,  (start_ + pos)-backPtr_ );
+				result = result.append( backPtr_,  (start_ + pos)-backPtr_ );
 				backPtr_ = start_ + pos+1;
 				pos = delimiter_.find( *backPtr_ );
 				while ( (pos != String::npos) && ((size_t)(backPtr_-start_) < dataSize_) ) {
@@ -156,7 +156,7 @@ public:
 			}
 			else {
 				if ( (size_t)(backPtr_-start_) < dataSize_ ) {
-					result.append( backPtr_, dataSize_ - (backPtr_-start_) );
+					result = result.append( backPtr_, dataSize_ - (backPtr_-start_) );
 				}
 				backPtr_ = start_ + dataSize_;
 			}
@@ -166,10 +166,10 @@ public:
 			if ( pos != String::npos ) {
 				//pos ++;
 				if ( (size_t)(backPtr_-start_) == dataSize_ ) {
-					result.append( start_ + pos+1, backPtr_ - (start_ + pos) );
+					result = result.append( start_ + pos+1, backPtr_ - (start_ + pos) );
 				}
 				else {
-					result.append( start_ + pos+1, backPtr_ - (start_ + pos)+1 );
+					result = result.append( start_ + pos+1, backPtr_ - (start_ + pos)+1 );
 				}
 				//pos --;
 				backPtr_ = (start_ + pos) - 1;
@@ -182,7 +182,7 @@ public:
 			}
 			else {
 				if ( (backPtr_-start_) > 0 ) {
-					result.append( start_, backPtr_-start_ +1 );
+					result = result.append( start_, backPtr_-start_ +1 );
 				}
 				backPtr_ = start_;
 			}

@@ -40,7 +40,7 @@ Image* OSXGraphicsResourceBundle::getImage( const String& resourceName )
 	if ( !ext.empty() ){
 		size_t pos = ext.find(".");
 		if ( pos != String::npos ) {
-			ext.erase( pos, 1 );
+			ext = ext.erase( pos, 1 );
 		}
 	}
 	

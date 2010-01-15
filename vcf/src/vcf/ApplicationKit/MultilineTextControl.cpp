@@ -79,7 +79,7 @@ String MultilineTextControl::getTextForLine( const uint32& lineIndex )
 			//P--;
 		}
 
-		result.append( lineStart, (P-lineStart) );
+		result = result.append( lineStart, (P-lineStart) );
 	}
 
 	return result;

@@ -65,10 +65,10 @@ bool Win32Registry::openKey( const String& keyname, const bool& createIfNonExist
 {
 	bool result = false;
 
-	String tmpKeyname = keyname;
+	String tmpKeyname = keyname.replace_if( '/', '\\' );
 
-	std::replace_if( tmpKeyname.begin(), tmpKeyname.end(),
-					std::bind2nd(std::equal_to<VCFChar>(),'/') , '\\' );
+	//std::replace_if( tmpKeyname.begin(), tmpKeyname.end(),
+	//				std::bind2nd(std::equal_to<VCFChar>(),'/') , '\\' );
 
 	HKEY tmp = currentKeyHandle_;
 	if ( true == createIfNonExistant ){
@@ -108,10 +108,7 @@ bool Win32Registry::openKey( const String& keyname, const bool& createIfNonExist
 
 bool Win32Registry::removeKey( const String& keyname )
 {
-	String tmpKeyname = keyname;
-
-	std::replace_if( tmpKeyname.begin(), tmpKeyname.end(),
-					std::bind2nd(std::equal_to<VCFChar>(),'/') , '\\' );
+	String tmpKeyname = keyname.replace_if( '/', '\\' );
 #ifdef VCF_WIN32CE
 	if ( ERROR_SUCCESS == RegDeleteKey( rootKeyHandle_, tmpKeyname.c_str() ) ) {
 		return true;

@@ -421,7 +421,7 @@ bool XMLParser::nextNode()
 				}
 
 				String test;
-				test.append( P, 25 );
+				test = test.append( P, 25 );
 				if ( test.find( "DOCTYPE" ) != String::npos ) {
 					while ( ((*P != XMLParser::TagClose) && (*P != '[')) && (*P != 0) ) {
 						P++;
@@ -464,7 +464,7 @@ bool XMLParser::nextNode()
 
 					tokenString_ = "";
 
-					tokenString_.append( tokenPtr_, P - tokenPtr_ );
+					tokenString_ = tokenString_.append( tokenPtr_, P - tokenPtr_ );
 					if ( NULL != currentNode_ ) {
 						currentNode_->setCDATA( currentNode_->getCDATA() + tokenString_ );
 							XMLParserEvent event( this, currentNode_ );
@@ -527,7 +527,7 @@ bool XMLParser::nextNode()
 				P++;
 			}
 
-			tokenString_.append( tokenPtr_, P - tokenPtr_ );
+			tokenString_ = tokenString_.append( tokenPtr_, P - tokenPtr_ );
 			if ( NULL != currentNode_ ) {
 				currentNode_->setCDATA( currentNode_->getCDATA() + decodeText( tokenString_ ) );
 				XMLParserEvent event( this, currentNode_ );
@@ -587,7 +587,7 @@ const VCFChar* XMLParser::parseNode( const VCFChar* nodePtrStart, const VCFChar*
 	P = skipTillWhitespace( start, end-start );
 
 	String s;
-	s.append( start, P - start );
+	s.assign( start, P - start );
 	currentNode_->setName( s );
 
 	P = skipWhitespace( P, end-P );
@@ -637,7 +637,7 @@ const VCFChar* XMLParser::parseAttrs( const VCFChar* attrPtrStart, const VCFChar
 
 		String name;
 		String value;
-		name.append( nameStart, P - nameStart );
+		name.assign( nameStart, P - nameStart );
 
 		P = assignmentStart;
 
@@ -682,7 +682,7 @@ const VCFChar* XMLParser::parseAttrs( const VCFChar* attrPtrStart, const VCFChar
 				throw RuntimeException( "Malformed XML Attribute - string literal expected, but no beginning quote (\") found." );
 			}
 
-			value.append( valueStart, P - valueStart );
+			value = value.append( valueStart, P - valueStart );
 
 			value = decodeText( value );
 
@@ -739,15 +739,15 @@ String XMLParser::decodeText( const String& text )
 			case ';' : {
 				if ( (*(P-1) != '&') && (NULL != entityStart) ) {
 
-					result.append( currentStart, entityStart - currentStart );
+					result = result.append( currentStart, entityStart - currentStart );
 
 					entityStart++;
 					entityStart = skipWhitespace( entityStart, P-entityStart );
 
 					const VCFChar* end = skipTillWhitespace( entityStart, P-entityStart );
 
-					entity = "";
-					entity.append( entityStart, end-entityStart );
+					
+					entity.assign( entityStart, end-entityStart );
 
 					if ( entity[0] == '#' ) {
 
@@ -755,7 +755,7 @@ String XMLParser::decodeText( const String& text )
 						String numRef = entity.substr(1,entity.size()-1);
 
 						if( (numRef[0] == 'x') || (numRef[0] == 'X') ) {
-							numRef.erase(0,1);
+							numRef = numRef.erase(0,1);
                             number = StringUtils::fromStringAsHexNumber( numRef );
 						}
 						else {
@@ -780,7 +780,7 @@ String XMLParser::decodeText( const String& text )
 					}
 
 
-					result.append( entity );
+					result = result.append( entity );
 
 					currentStart = P+1;
 				}
@@ -795,7 +795,7 @@ String XMLParser::decodeText( const String& text )
 	}
 	else {
 		if ( start != currentStart ) {
-			result.append( currentStart, P - currentStart );
+			result = result.append( currentStart, P - currentStart );
 		}
 	}
 

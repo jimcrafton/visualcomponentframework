@@ -704,7 +704,7 @@ bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFileAs( Document* doc
 					String s = (*it);
 					size_t length = (*it).length();// + FilePath::getDirectorySeparator().length();
 
-					appDir.erase( appDir.length()-length, length );
+					appDir = appDir.erase( appDir.length()-length, length );
 					
 					if ( File::exists( appDir ) ) {
 						found = true;
@@ -736,7 +736,7 @@ bool DocumentManagerImpl<AppClass,DocInterfacePolicy>::saveFileAs( Document* doc
 
 			// adds the filter's extension if specified but missing from the filename
 			String selectedFilter = saveDialog.getSelectedFilter();
-			selectedFilter.erase( 0, 1 );
+			selectedFilter = selectedFilter.erase( 0, 1 );
 			if ( ( !selectedFilter.empty() ) && ( selectedFilter != L".*" ) && 
 			     ( selectedFilter != fp.getExtension() ) ) {
 				fp = fp + selectedFilter;
@@ -1176,7 +1176,7 @@ Document* DocumentManagerImpl<AppClass,DocInterfacePolicy>::newDefaultDocument( 
 		size_t pos = types.find(";");
 		while ( pos != String::npos ) {
 			newDocument->addSupportedClipboardFormat( types.substr(0,pos) ) ;
-			types.erase(0,pos+1);
+			types = types.erase(0,pos+1);
 			pos = types.find(";");
 		}
 		if ( !types.empty() ) {

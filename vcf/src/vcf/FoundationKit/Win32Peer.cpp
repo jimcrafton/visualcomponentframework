@@ -49,7 +49,7 @@ VCF::String Win32Utils::getErrorString( const DWORD& errorCode )
 									0,
 									NULL );
 
-	result.append( msgBuf, bufSize );
+	result = result.append( msgBuf, bufSize );
 
 	// Free the buffer.
 	LocalFree( msgBuf );
@@ -64,7 +64,7 @@ VCF::String Win32Utils::getErrorString( const DWORD& errorCode )
 										0,
 										NULL );
 
-		result.append( msgBuf, bufSize );
+		result = result.append( msgBuf, bufSize );
 
 		// Free the buffer.
 		LocalFree( msgBuf );
@@ -79,7 +79,7 @@ VCF::String Win32Utils::getErrorString( const DWORD& errorCode )
 										0,
 										NULL );
 
-		result.append( msgBuf, bufSize );
+		result = result.append( msgBuf, bufSize );
 		// Free the buffer.
 		LocalFree( msgBuf );
 	}

@@ -146,7 +146,7 @@ int CommandLine::splitLine( const String& commandLine )
 			while ( tmpArgEnd < P ) {
 				if ( *tmpArgEnd == '\"' ) {
 					if ( tmpArgStart != tmpArgEnd ) {
-						arg.append( tmpArgStart, tmpArgEnd - tmpArgStart );
+						arg = arg.append( tmpArgStart, tmpArgEnd - tmpArgStart );
 						tmpArgStart = tmpArgEnd;
 					}
 					tmpArgStart++;					
@@ -156,7 +156,7 @@ int CommandLine::splitLine( const String& commandLine )
 			}
 			
 			if ( arg.empty() ) {
-				arg.append( tmpArgStart, tmpArgEnd - tmpArgStart );
+				arg.assign( tmpArgStart, tmpArgEnd - tmpArgStart );
 			}
 			
 			args.push_back( arg );

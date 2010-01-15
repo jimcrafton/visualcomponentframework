@@ -191,7 +191,9 @@ void FoundationKit::terminate()
 	Object::dumpDebugInfo();
 #endif
 	
-	
+#ifdef USE_STRINGPOOL	
+	StringPool::terminate();
+#endif
 
 }
 

@@ -117,7 +117,7 @@ public:
 				StringTokenizer dtPt(val.substr(0,pos),"-");
 				std::vector<String> vals;
 				dtPt.getElements(vals);
-				val.erase( 0, pos+1 );
+				val = val.erase( 0, pos+1 );
 				pos = val.find("Z");
 				
 				VCF_ASSERT( pos != String::npos );

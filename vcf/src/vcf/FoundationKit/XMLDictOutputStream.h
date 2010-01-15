@@ -95,7 +95,7 @@ public:
 
 	AnsiString getTabs() {
 		AnsiString result;
-		result.append( tabCount_, '\t' );		
+		result = result.append( tabCount_, '\t' );		
 		return result;
 	}
 

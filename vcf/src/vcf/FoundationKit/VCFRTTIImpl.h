@@ -167,7 +167,7 @@ public:
 
 		while ( pos != VCF::String::npos ) {
 			addAsString( tmp.substr( 0, pos ) );
-			tmp.erase( 0, pos+1 );
+			tmp = tmp.erase( 0, pos+1 );
 			pos = tmp.find( "," );
 		}
 		if ( !tmp.empty() ) {
@@ -2919,6 +2919,10 @@ static PropertyDescriptorType getDescriptor( const std::type_info& typeInfo )
 		result = pdString;
 	}
 	else if ( typeName.find( "UnicodeString" ) != String::npos ) {
+		result = pdString;
+	}
+	
+	else if ( typeName.find( "FastString" ) != String::npos ) {
 		result = pdString;
 	}
 	else if ( typeName.find( "AnsiString" ) != String::npos ) {

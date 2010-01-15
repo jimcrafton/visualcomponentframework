@@ -13,14 +13,1452 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+#define USE_STRINGPOOL
 
-namespace VCF{
+#ifdef USE_STRINGPOOL
+	#include <deque>
+
+	#ifdef _MSC_VER 
+		#include <comdef.h>
+	#endif 
+#endif
+
+
+
+namespace VCF  {
 
 
 typedef std::basic_string<char> AnsiString;
 
 
 class TextCodec;
+
+
+
+
+
+
+#ifdef USE_STRINGPOOL
+	
+
+
+typedef VCFChar U16Char;
+
+
+
+
+
+
+inline size_t RoundUp(size_t cb, size_t units)
+{
+    return ((cb + units - 1) / units) * units;
+}
+
+//#define HAVE_MMX
+
+
+class StringPool;
+class FastString;
+
+
+union MemHeader {
+	struct {
+		//MemHeader* prev;			
+		size_t  size;
+		unsigned char* next;
+		unsigned char* limit;
+		size_t refcount;
+	};
+	U16Char alignment; //here to align the struct
+};
+
+
+class StringData;
+
+typedef void* (*UnmanagedAllocatorFunc)( size_t sizeBytesToAlloc );
+typedef void (*UnmanagedDeallocatorFunc)( void* ptr, size_t sizeBytesToFree );
+
+
+class StringExtraData;
+
+class StringData {
+private:
+
+	enum StringStateBits {
+		NotPoolManaged =	0x0001,
+		SubString	=	0x0002,
+	};
+
+	StringData(){}
+
+
+	friend class StringPool;
+	friend class FastString;
+
+	U16Char* strPtr;
+	size_t length;
+	size_t refcount;
+	MemHeader* memHdr;
+	StringPool* pool;	
+	uint32 hashID;
+	char* ansiStrPtr;
+	StringExtraData* extra;
+	uint32 bits;
+};	
+
+
+
+
+class StringRange {
+public:
+	StringRange():strPtr(NULL),length(0){}
+	StringRange(const U16Char* s, size_t l): strPtr(s),length(l){}
+
+	const U16Char* strPtr;
+	size_t length;
+};
+
+
+
+
+
+
+class FOUNDATIONKIT_API StringPool {
+public:
+	enum { 
+		MIN_CBCHUNK = 32000,
+        MAX_CHARALLOC = 0xFFFFFFFF-1, //too low?? 1024*1024,
+		NoEntry = (uint32)-1,
+	};
+
+
+	StringPool();
+	~StringPool();	
+
+
+
+	//utility functions 
+	static bool freeMem( void* ptr, size_t ptrMemBytesToFree ) {
+		#ifdef WIN32
+			bool result = ::VirtualFree( ptr, ptrMemBytesToFree, MEM_RELEASE ) ? true : false;
+			if ( !result ) {
+				printf( "StringPool::freeMem failed. GetLastError(): %d\n", ::GetLastError() );
+			}
+
+			return result;
+		#endif
+	}
+
+	static void* allocMem( size_t sizeBytesToAllocate ) {
+		void* result = NULL;
+		#ifdef WIN32
+			result = ::VirtualAlloc(NULL, sizeBytesToAllocate, MEM_COMMIT, PAGE_READWRITE);
+		#endif
+
+		return result;
+
+	}
+
+
+	static size_t wstrlen( const U16Char *s1 ) {
+		return ::wcslen( (const wchar_t*)s1 );
+	}
+
+	static const U16Char* wmemchr( const U16Char* buf, U16Char c, size_t count ) {
+		return  (const U16Char*) ::wmemchr( (const wchar_t*)buf, c, count );
+	}
+
+	static int wmemcmp(const U16Char *s1, const U16Char *s2, size_t n) {
+		int result = 0;
+
+		#ifdef HAVE_MMX
+		size_t numChars = (n / 4); //4 chars at a time
+		size_t leftOver = (n % 4);
+
+		__asm {
+			emms
+			mov         esi, s1            // input pointer
+			mov         edi, s2              // output pointer
+			mov         ecx, numChars
+	do_loop:
+
+			dec         ecx
+			jnz         do_loop
+			emms
+		}
+		#else
+		result = ::wmemcmp( (const wchar_t*)s1, (const wchar_t*)s2, n );
+		#endif
+		return result;
+	}
+
+	static U16Char* wmemcpy( U16Char* dest, const U16Char* src, uint32 len ) {
+		U16Char* result = dest;
+#ifdef HAVE_MMX
+		size_t numChars = (len / 4); //4 chars at a time
+		size_t leftOver = (len % 4);
+
+		__asm {
+			emms
+			mov         esi, src            // input pointer
+			mov         edi, dest              // output pointer
+			mov         ecx, numChars
+	do_loop:
+			movq        mm0, [esi]
+			movq        [edi], mm0
+
+			add         esi, 8
+			add         edi, 8
+
+			dec         ecx
+			jnz         do_loop
+			
+
+			emms //reset to fpu
+		}
+		if ( leftOver > 0 ) {
+			memcpy( dest + numChars*4, src + numChars*4, leftOver );
+		}
+
+#else
+		result = ::wmemcpy( (wchar_t*)dest, (wchar_t*)src, len );
+#endif
+
+		return result;
+	}
+
+
+	
+
+	static uint32 hash( const U16Char* str, size_t length )
+    {
+        uint32 result = 0;
+		size_t len = length < 256 ? length : 256;
+#if 1
+		result = 0;
+		for (size_t i=0;i<len;i+=1 ) {        
+            result = str[i] + (result << 6) + (result << 16) - result;			
+		}
+#else
+		//alternate hash algorithm
+		unsigned char *bp = (unsigned char *)str; /* start of buffer */
+		unsigned char *be = bp + length*sizeof(U16Char);    /* beyond end of buffer */
+
+		uint32 hval = 0x811c9dc5;
+
+		/* FNV-1 hash each octet in the buffer */
+		while (bp < be) {
+			/* multiply by the 32 bit FNV magic prime mod 2^32 */
+			hval += (hval<<1) + (hval<<4) + (hval<<7) + (hval<<8) + (hval<<24);
+
+			/* xor the bottom with the current octet */
+			hval ^= (uint32)*bp++;
+		}
+		/* return our new hash value */
+      
+		result = hval;
+#endif
+
+        return result;
+    }
+
+
+
+
+
+
+	//core public functions
+	StringData* allocate(const U16Char* begin, const U16Char* end);
+	StringData* allocate( size_t length );
+
+
+	StringData* transformAnsiToUnicode( const char* str, size_t length, int encoding );
+
+	//adds a series of string pointers together to form one single string data instance
+	//used by FastString::set
+	StringData* concatenate( const std::vector<StringRange>& strArray );
+	
+
+
+	StringData* find( const U16Char* str, size_t length, const uint32& hash = 0 );
+
+	void debug();
+
+	static StringData* allocateUnmanagedString( const U16Char* str, size_t length );
+	static StringData* allocateUnmanagedString( const char* str, size_t length, int encoding );
+
+	static bool isSubString( StringData* handle );
+
+	static StringData* addString( const U16Char* str, size_t length );
+	static StringData* addString( const char* str, size_t length, int encoding );
+
+	static uint32 incStringRefcount( StringData* handle );
+	static uint32 decStringRefcount( StringData* handle );
+	static bool equals( StringData* lhs, StringData* rhs );
+	static int compare( StringData* lhs, StringData* rhs );
+	
+	static StringData* insert( StringData* src, StringData* dest, size_t insertPos );
+	static StringData* insert( const U16Char* src, size_t srcLength, StringData* dest, size_t insertPos );
+	static StringData* insert( U16Char ch, StringData* dest, size_t insertPos, size_t repeatCount );
+	static StringData* erase( StringData* src, size_t startPos, size_t length );
+	static StringData* subStr( StringData* src, size_t startPos, size_t length );
+
+	static char* transformToAnsi( StringData* handle, int encoding );	
+	
+	size_t uniqueEntries() const {
+		return stringMap_.size();
+	}
+
+	size_t totalBytesAllocated() {
+		return totalBytesAllocated_;
+	}
+
+
+	uint32 getThreadID() const {
+		return threadID_;
+	}
+
+	void makeCurrentPool() {
+		StringPool::stringPoolStack->push_back(this);
+	}
+
+	static StringPool* popCurrentPool() {
+		if ( NULL == StringPool::stringPoolStack ) {
+			return NULL;
+		}
+		else if ( StringPool::stringPoolStack->empty() ) {
+			return NULL;
+		}
+
+		StringPool* result = getCurrentPool();
+
+		StringPool::stringPoolStack->pop_back();
+
+		return result;
+	}
+
+	bool compactsMemory() const {
+		return compactMemory_;
+	}
+
+	void setCompactsMemory( bool val ) {
+		compactMemory_ = val;
+	}
+
+	bool onlyUsesMemoryPooling() const {
+		return onlyUseMemPooling_;
+	}
+
+	void setOnlyUsesMemoryPooling( bool val );
+
+	static unsigned int getNativeEncoding(int encoding);
+
+	static StringPool* getCurrentPool() {
+
+		if ( NULL == StringPool::stringPoolStack ) {
+			return NULL;
+		}
+
+		if ( StringPool::stringPoolStack->empty() ) {
+			return NULL;
+		}
+
+		return StringPool::stringPoolStack->back();
+	}	
+
+	static StringPool* getUsablePool();
+
+
+
+
+
+	static void terminate();
+private:
+
+	UnmanagedAllocatorFunc stringAllocator_;
+	UnmanagedDeallocatorFunc stringDeallocator_;
+
+	static void* defStrAlloc( size_t sizeInBytes ) {
+		return ::malloc( sizeInBytes );
+	}
+
+	static void defStrDealloc( void* ptr, size_t ) {
+		::free(ptr);
+	}
+
+	bool onlyUseMemPooling_;
+
+	unsigned char*  next_;   // first available byte
+	unsigned char*  limit_;  // one past last available byte
+	std::vector<MemHeader*> allocatedHdrs_;
+
+	MemHeader* nextHdr( MemHeader* current );
+	MemHeader* prevHdr( MemHeader* current );
+
+	MemHeader* currentHdr_;   // current block
+	size_t   granularity_;
+	
+	size_t totalBytesAllocated_;
+	uint32 threadID_;
+	bool compactMemory_;
+
+	void initStringData( StringData* data, const U16Char* strPtr, size_t length );
+	
+	
+
+
+	void freeStringData( StringData* handle );
+	void freeMemHeader( MemHeader* memHdr );
+	
+	typedef std::multimap<uint32,StringData*> StringMapT;
+	//typedef std::map<uint32,StringData*> StringMapT;
+
+	typedef StringMapT::iterator StringMapIter;
+	typedef StringMapT::const_iterator StringMapConstIter;
+	typedef std::pair<StringMapIter,StringMapIter> StringMapRangeT;
+	typedef std::pair<StringMapConstIter,StringMapConstIter> StringMapConstRangeT;
+	typedef StringMapT::value_type StringMapPairT;
+
+	StringMapT stringMap_;
+
+
+	static std::deque<StringPool*>* stringPoolStack;
+
+
+	static DWORD threadPoolTLSIndex;
+	class StringPoolTLSGuard {
+	public:
+		StringPoolTLSGuard() {}
+
+		~StringPoolTLSGuard() {
+
+			std::vector<StringPool*>::iterator it = threadPools.begin();
+			while ( it != threadPools.end() ) {
+				StringPool* pool = *it;
+				delete pool;
+				++it;
+			}
+
+			if ( 0 != StringPool::threadPoolTLSIndex ) {
+				TlsFree( StringPool::threadPoolTLSIndex );
+			}
+		}
+
+		std::vector<StringPool*> threadPools;
+	};
+
+	friend class StringPoolTLSGuard;
+
+	static StringPoolTLSGuard* poolTLSGuard;
+};
+
+
+
+class StringLiteral {
+public:
+	enum {
+		InitialStorageSize = 256
+	};
+	StringLiteral():strPtr_(NULL){}
+	StringLiteral( const StringLiteral& rhs ){}
+	StringLiteral( const char* s ):strPtr_(NULL){
+		size_t len = strlen(s);
+		if ( len > storage.size() ) {
+			storage.resize(len);
+		}
+		
+		do {
+			len --;
+			storage[len] = s[len];
+		}while ( len != 0 );
+
+		strPtr_ = &storage[0];
+	}
+	StringLiteral( const U16Char* s ):strPtr_(s){}
+
+	operator const U16Char* () const {
+		return strPtr_;
+	}
+protected:
+	static std::vector<U16Char> storage;
+	const U16Char* strPtr_;
+};
+
+
+
+/**
+our immutable string class
+*/
+class FOUNDATIONKIT_API FastString {
+public:
+
+
+	enum LanguageEncoding { 
+		leUnknown = -1,
+		leDefault = 0,
+		leIBM037 = 100,
+		leIBM437,
+		leIBM500,
+		leArabic708,
+		leArabic449,
+		leArabicTransparent,
+		leDOSArabic,
+		leGreek,
+		leBaltic,
+		leLatin1,
+		leLatin2,
+		leCyrillic,
+		leTurkish,
+		leMultilingualLatin1,
+		lePortuguese,
+		leIcelandic,
+		leHebrew,
+		leFrenchCanadian,
+		leArabic864,
+		leNordic,
+		leRussianCyrillic,
+		leModernGreek,
+		leEBCDICLatin2,
+		leThai,
+		leEBCDICGreekModern,
+		leShiftJIS,
+		leSimplifiedChinese,
+		leKorean,
+		leChineseTraditionalBig5,
+		leEBCDICTurkish,
+		leEBCDICLatin1,
+		leEBCDICUSCanada,
+		leEBCDICGermany,
+		leEBCDICDenmarkNorway,
+		leEBCDICFinlandSweden,
+		leEBCDICItaly,
+		leEBCDICLatinAmericaSpain,
+		leEBCDICUnitedKingdom,
+		leEBCDICFrance,
+		leEBCDICInternational,
+		leEBCDICIcelandic,
+		leUTF16LittleEndianByteOrder,
+		leUTF16BigEndianByteOrder,
+		leANSICentralEuropean,
+		leANSICyrillic,
+		leANSILatin1,
+		leANSIGreek,
+		leANSITurkish,
+		leANSIHebrew,
+		leANSIArabic,
+		leANSIBaltic,
+		leANSIVietnamese,
+		leJohabKorean,
+		leMacRoman,
+		leMacJapanese,
+		leMacTraditionalChineseBig5,
+		leMacKorean,
+		leMacArabic,
+		leMacHebrew,
+		leMacGreek,
+		leMacCyrillic,
+		leMacSimplifiedChinese,
+		leMacRomanian,
+		leMacUkrainian,
+		leMacThai,
+		leMacLatin2,
+		leMacIcelandic,
+		leMacTurkish,
+		leMacCroatian,
+		leUTF32LittleEndianByteOrder,
+		leUTF32BigEndianByteOrder,
+		leCNSTaiwan,
+		leTCATaiwan,
+		leEtenTaiwan,
+		leIBM5550Taiwan,
+		leTeleTextTaiwan,
+		leWangTaiwan,
+		leIA5WesternEuropean,
+		leIA5German,
+		leIA5Swedish,
+		leIA5Norwegian,
+		leUSASCII,
+		leT61,
+		leISO6937,
+		leIBM273Germany,
+		leIBM277DenmarkNorway,
+		leIBM278FinlandSweden,
+		leIBM280Italy,
+		leIBM284LatinAmericaSpain,
+		leIBM285UnitedKingdom,
+		leIBM290JapaneseKatakanaExt,
+		leIBM297France,
+		leIBM420Arabic,
+		leIBM423Greek,
+		leIBM424Hebrew,
+		leIBMKoreanExtended,
+		leIBMThai,
+		leRussianKOI8R,
+		leIBM871Icelandic,
+		leIBM880CyrillicRussian,
+		leIBM905Turkish,
+		leIBM00924Latin1,
+		leEUCJapaneseJIS,
+		leSimplifiedChineseGB2312,
+		leKoreanWansung,
+		leEBCDICCyrillicSerbianBulgarian,
+		leUkrainianKOI8U,
+		leISO88591Latin1,
+		leISO88592CentralEuropean,
+		leISO88593Latin3,
+		leISO88594Baltic,
+		leISO88595Cyrillic,
+		leISO88596Arabic,
+		leISO88597Greek,
+		leISO88598HebrewVisual,
+		leISO88599Turkish,
+		leISO885913Estonian,
+		leISO885915Latin9,
+		leEuropa3,
+		leISO88598HebrewLogical,
+		leISO2022JapaneseNoHalfwidthKatakana,
+		leISO2022JapaneseWithHalfwidthKatakana,
+		leISO2022JapaneseAllow1ByteKana,
+		leISO2022Korean,
+		leISO2022SimplifiedChinese,
+		leISO2022TraditionalChinese,
+		leEBCDICJapaneseExt,
+		leEBCDICUSCanadaAndJapanese,
+		leEBCDICKoreanExtAndKorean,
+		leEBCDICSimplifiedChineseExtSimplifiedChinese,
+		leEBCDICSimplifiedChinese,
+		leEBCDICUSCanadaAndTraditionalChinese,
+		leEBCDICJapaneseLatinExtAndJapanese,
+		leEUCJapanese,
+		leEUCSimplifiedChinese,
+		leEUCKorean,
+		leEUCTraditionalChinese,
+		leHZGB2312SimplifiedChinese,
+		leGB18030SimplifiedChinese,
+		leISCIIDevanagari,
+		leISCIIBengali,
+		leISCIITamil,
+		leISCIITelugu,
+		leISCIIAssamese,
+		leISCIIOriya,
+		leISCIIKannada,
+		leISCIIMalayalam,
+		leISCIIGujarati,
+		leISCIIPunjabi,
+		leUTF7,
+		leUTF8
+	};
+
+	typedef char AnsiChar;
+
+	//JC - see VCFChar.h for definiton of WideChar
+	typedef VCF::WideChar UniChar;
+
+	#ifdef VCF_OSX
+	typedef std::basic_string< WideChar, std::char_traits<WideChar> > STLString;
+#else
+	typedef std::basic_string<UniChar> STLString;
+#endif
+	typedef STLString::size_type size_type;
+
+	enum BOMMarkers {		
+		UTF8BOMSize = sizeof(uchar) * 3,
+		UTF16BOMSize = sizeof(ushort),
+		UTF32BOMSize = sizeof(uint32),
+		UTF8BOM = 0xEFBBBF,
+		UTF16LittleEndianBOM = 0xFFFE,
+		UTF16BigEndianBOM = 0xFEFF,
+		UTF32LittleEndianBOM = 0xFFFE0000,
+		UTF32BigEndianBOM = 0x0000FEFF
+	};
+
+	typedef STLString::traits_type traits_type;
+	typedef STLString::allocator_type allocator_type;
+
+
+	typedef UniChar char_type;
+
+	//Note that this is const only for iterator
+	//access
+    typedef const U16Char* const_iterator;
+	typedef size_t size_type;
+	typedef ptrdiff_t difference_type;
+	typedef U16Char value_type;
+    typedef const U16Char *const_pointer;
+    typedef const U16Char& const_reference;
+
+	#if (_MSC_VER <= 1200) && !defined(__GNUC__)
+	//	typedef std::reverse_iterator<iterator, value_type,
+	//				reference, pointer, difference_type> reverse_iterator;
+
+		typedef std::reverse_iterator<const_iterator, value_type,
+					const_reference, const_pointer, difference_type>
+					const_reverse_iterator;
+	#else
+//		typedef std::reverse_iterator<iterator> reverse_iterator;
+		typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+	#endif
+		
+
+	enum {
+		npos = (size_type) -1
+	};
+
+
+
+	//basic_string compat
+	FastString( size_t count, const U16Char& ch ): data_(NULL)  {
+		FastString::STLString tmp(count, ch );
+		assign( tmp.c_str(), tmp.size() );
+	}
+
+	FastString( const U16Char& ch ): data_(NULL)  {
+		assign( &ch, 1 );
+	}
+
+	FastString( const U16Char* str ): data_(NULL)  {
+		assign( str, StringPool::wstrlen(str) );
+	}
+
+	FastString( const U16Char* str, size_t length ): data_(NULL) {
+		assign( str, length );
+	}
+
+	
+	FastString( const char* str ): data_(NULL)  {
+		assign( str, strlen(str) );
+	}
+
+	FastString( const char* str, size_t length, LanguageEncoding encoding=leDefault ): data_(NULL) {
+		assign( str, length, encoding );
+	}
+
+	FastString( const unsigned char* str, size_t length, LanguageEncoding encoding=leDefault ): data_(NULL) {
+		assign( (const char*)str, length, encoding );
+	}
+
+	FastString( const AnsiString& str, LanguageEncoding encoding=leDefault ): data_(NULL) {
+		assign( str.c_str(), str.size(), encoding );
+	}
+
+	FastString( const STLString& str ): data_(NULL) {
+		assign( str.c_str(), str.size() );
+	}
+
+	FastString(): data_(NULL){}
+
+	FastString( const FastString& f ):data_(f.data_) {
+		StringPool::incStringRefcount(data_);
+	}
+
+
+	~FastString() {
+		StringPool::decStringRefcount(data_);
+	}
+
+	FastString& operator=( const U16Char* rhs ) {
+		assign( rhs, StringPool::wstrlen(rhs) );
+		return *this;
+	}
+
+	FastString& operator=( const char* rhs ) {
+		assign( rhs, strlen(rhs) );
+		return *this;
+	}
+
+	FastString& operator=( const FastString& rhs ) {
+		if ( data_ != rhs.data_ ) {
+			StringPool::decStringRefcount(data_);
+
+			data_ = rhs.data_;
+
+			StringPool::incStringRefcount(data_);
+		}
+		return *this;
+	}
+
+	void assign( const U16Char* str, size_t length ) {
+		StringPool::decStringRefcount(data_);
+
+		data_ = StringPool::addString( str, length );
+		
+		StringPool::incStringRefcount(data_);
+	}
+
+	void assign( const char* str, size_t length, LanguageEncoding encoding=leDefault ) {
+		StringPool::decStringRefcount(data_);
+
+		data_ = StringPool::addString( str, length, encoding );
+		
+		StringPool::incStringRefcount(data_);
+	}
+
+	const U16Char* c_str() const {
+		if ( NULL == data_ ) {
+			return L"";
+		}
+
+		return data_->strPtr;
+	}
+
+	const char* ansi_c_str(LanguageEncoding encoding=leDefault) const {
+		if ( NULL == data_ ) {
+			return NULL;
+		}
+
+		if ( NULL == data_->ansiStrPtr ) {
+			StringPool::transformToAnsi( data_, encoding );
+		}
+
+		return data_->ansiStrPtr;
+	}
+
+
+	size_t length() const {
+		if ( NULL == data_ ) {
+			return 0;
+		}
+		return data_->length;
+	}
+
+	size_t size() const {
+		if ( NULL == data_ ) {
+			return 0;
+		}
+		return data_->length;
+	}
+
+	size_t size_in_bytes() const {
+		if ( NULL == data_ ) {
+			return 0;
+		}
+		return data_->length * sizeof(U16Char);
+	}
+
+	LanguageEncoding encoding() const;
+
+
+	bool operator == ( const FastString& rhs ) const {
+		return StringPool::equals(data_, rhs.data_ );
+	}
+
+	bool operator == ( const U16Char* rhs ) const {
+		return operator ==( FastString(rhs) );
+	}
+
+	bool operator == ( const char* rhs ) const {
+		return operator ==(FastString(rhs));
+	}
+
+
+	inline 
+	bool operator !=( const FastString& rhs ) const {
+		return !StringPool::equals(data_, rhs.data_ );
+	}
+
+	inline 
+	bool operator <( const FastString& rhs ) const 	{
+		return (StringPool::compare( data_, rhs.data_ ) < 0) ? true : false;
+	}
+
+	inline 
+	bool operator <=( const FastString& rhs ) const 	{
+		return (StringPool::compare( data_, rhs.data_ ) <= 0) ? true : false;
+	}
+
+	inline 
+	bool operator >( const FastString& rhs ) const {
+		return (StringPool::compare( data_, rhs.data_ ) > 0) ? true : false;
+	}
+
+	inline 
+	bool operator >=( const FastString& rhs ) const {
+		return (StringPool::compare( data_, rhs.data_ ) >= 0) ? true : false;
+	}
+
+	void clear() {
+		StringPool::decStringRefcount(data_);
+		data_ = NULL;
+	}
+
+	bool empty() const {
+		if ( NULL == data_ ) {
+			return true;
+		}
+
+		return size() == 0;
+	}
+
+	bool valid() const {
+		if ( NULL == data_ ) {
+			return false;
+		}
+		return data_->refcount > 0;
+	}
+
+	bool isSubstr() const {
+		return StringPool::isSubString(data_);
+	}
+
+	int compare( const FastString& rhs ) const {
+		return StringPool::compare( data_, rhs.data_ );
+	}
+
+	FastString substr( size_type pos, size_type length ) const {
+		return FastString( StringPool::subStr( data_, pos, length ) );
+		//return FastString( data_->strPtr + pos, length );
+	}
+	
+    const_iterator begin() const {
+		if ( NULL == data_ ) {
+			return NULL;
+		}
+		return data_->strPtr;
+	}
+
+    const_iterator end() const {
+		if ( NULL == data_ ) {
+			return NULL;
+		}
+
+		return data_->strPtr + data_->length;
+	}
+    
+    const_reverse_iterator rbegin() const {
+		return const_reverse_iterator( end() );
+	}
+
+    const_reverse_iterator rend() const {
+		return const_reverse_iterator( begin() );
+	}
+
+    const U16Char& at(size_t pos) const {
+		if ( pos >= length() ) {
+			throw std::out_of_range("array index is too large");
+		}
+		return data_->strPtr[ pos ];
+	}
+
+    const U16Char& operator[](size_t pos) const {
+		return data_->strPtr[ pos ];
+	}
+
+	void swap( FastString& str ) {
+		if ( str.data_ != data_ ) {			
+			StringData* tmp = data_;
+			data_ = str.data_;
+			str.data_ = tmp;
+		}
+	}
+
+
+	size_type find_first_not_of(const FastString& str, size_type pos = 0) const {
+		return find_first_not_of( str.c_str(), pos, str.size() );
+	}
+
+	size_type find_first_not_of(const U16Char* strPtr, size_type pos, size_type length ) const {
+		size_t sz = size();
+		if (length < sz) {
+			const U16Char *const currentPtr = c_str() + sz;
+			for (const U16Char* P = c_str() + pos; P < currentPtr; ++P) {
+				if (FastString::traits_type::find(strPtr, length, *P) == 0) {
+					return (P - c_str());
+				}
+			}
+		}
+
+		return (FastString::npos);		
+	}
+
+	size_type find_first_of(const FastString& str, size_type pos = 0) const {
+		return find_first_of( str.c_str(), pos, str.size() );
+	}
+	
+	size_type find_first_of(const U16Char* strPtr, size_type pos, size_type length ) const {
+		
+		if (0 < length && pos < size()) {
+			const U16Char *const currentPtr = c_str() + size();
+			for (const U16Char* P = c_str() + pos; P < currentPtr; ++P)
+				if (FastString::traits_type::find(strPtr, length, *P) != 0)
+					return (P - c_str());	// found a match
+		}
+
+		return (FastString::npos);
+	}
+
+	size_type find_last_of(const FastString& str, size_type pos = npos) const {
+		return find_last_of( str.c_str(), pos, str.size() );
+	}
+
+	size_type find_last_of(const U16Char* strPtr, size_type pos, size_type length ) const {
+		if (0 < length && 0 < size() ) {
+			for (const U16Char* P = c_str() 
+				+ (pos < size() ? pos : size() - 1); ; --P) {
+
+				if (FastString::traits_type::find(strPtr, length, *P) != 0) {
+					return (P - c_str());	// found a match
+				}
+				else if (P == c_str()) {
+					break;	// at beginning, no more chance for match
+				}
+			}
+		}
+		
+		return (FastString::npos);
+	}
+
+	size_type find(const FastString& str, size_type pos = 0) const {
+		return find( str.c_str(), pos, str.size() ); 
+	}
+
+	size_type find(const U16Char* strPtr, size_type pos = 0) const {
+		return find( strPtr, pos, StringPool::wstrlen(strPtr) ); 
+	}
+
+	size_type find( U16Char ch, size_type pos = 0) const {
+		return find( (const U16Char*)&ch, pos, 1); 
+	}
+
+	size_type find( const U16Char* searchStr, size_type pos, size_type len) const {
+		size_type strLen = length();
+
+		if ( 0 == strLen) {
+			return FastString::npos;
+		}
+
+		if (len == 0 && pos <= strLen) {
+			return (pos);
+		}
+
+		size_type searchLength = strLen - pos;
+		const U16Char* sourceStr = data_->strPtr;
+
+		if ( pos < strLen && (len <= searchLength) ) {
+			const U16Char *currentStr1, *currentStr2;
+			
+			for (searchLength -= len - 1, currentStr2 = sourceStr + pos;
+					(currentStr1 = StringPool::wmemchr(currentStr2, *searchStr, searchLength )) != 0;
+					searchLength -= currentStr1 - currentStr2 + 1, currentStr2 = currentStr1 + 1) {
+
+				if (StringPool::wmemcmp(currentStr1, searchStr, len) == 0) {
+					return (currentStr1 - sourceStr); 
+				}
+			}
+		}
+		return FastString::npos; 
+	}
+
+
+
+	size_type rfind(U16Char c, size_type pos = npos) const {
+		return rfind( &c, pos, 1 );
+	}
+
+	size_type rfind(const U16Char* strPtr, size_type pos = npos) const {
+		return rfind( strPtr, pos, StringPool::wstrlen(strPtr) );
+	}
+
+	size_type rfind(const FastString& str, size_type pos = npos) const {
+		return rfind( str.c_str(), pos, str.length() );
+	}
+
+	size_type rfind( const U16Char *strPtr, size_type pos, size_type len) const {
+		size_type strLen = length();
+		
+		if ( 0 == strLen) {
+			return FastString::npos;
+		}
+
+		if (len == 0) {
+			return (pos < strLen ? pos : strLen);
+		}
+
+		if (len <= strLen) {
+			const U16Char* ptr = data_->strPtr;
+
+			for (const U16Char* currentStr1 = ptr + + (pos < strLen - len ? pos : strLen - len); ; --currentStr1)
+				if ( (*currentStr1 == *strPtr) && StringPool::wmemcmp(currentStr1, strPtr, len) == 0)
+					return (currentStr1 - ptr);
+				else if (currentStr1 == ptr)
+					break;
+		}
+		return FastString::npos;
+	}
+
+	//os specific string type conversion
+#ifdef WIN32	
+	//win32
+
+#ifdef _MSC_VER 
+	operator _bstr_t () const {
+		return _bstr_t( c_str() );
+	}
+
+	FastString& operator=( const _bstr_t& rhs ) {
+		assign( (const wchar_t*)rhs, rhs.length() );
+		return *this;
+	}
+
+	operator _variant_t () const {
+		
+		return _variant_t( _bstr_t(c_str()) );
+	}
+
+	FastString& operator=( const _variant_t& rhs ) {
+		_bstr_t b = rhs;
+		assign( (const wchar_t*)b, b.length() );
+		return *this;
+	}	
+#endif
+
+
+	BSTR toBSTR() const {
+		return SysAllocString(c_str());
+	}
+
+	FastString& assignBSTR( const BSTR& rhs ) {
+		assign( (const U16Char*)rhs, SysStringLen(rhs) );
+		return *this;
+	}
+
+
+	operator VARIANT() const {
+		VARIANT result;
+		VariantInit( &result );
+		result.bstrVal = SysAllocString(c_str());
+		result.vt = VT_BSTR;
+
+		return result;
+	}
+
+	FastString& operator=( const VARIANT& rhs ) {
+		if ( rhs.vt == VT_BSTR ) {
+			assign( (const U16Char*)rhs.bstrVal, SysStringLen(rhs.bstrVal) );
+		}
+		return *this;
+	}
+#endif
+
+	//stl conversion support
+	operator std::wstring() const {
+		return std::wstring(c_str());
+	}
+
+	FastString& operator=( const std::wstring& rhs ) {
+		assign( rhs.c_str(), rhs.length() );
+		return *this;
+	}
+
+
+	//stl conversion support
+	operator std::string() const {
+		return std::string(ansi_c_str());
+	}
+
+	FastString& operator=( const std::string& rhs ) {
+		assign( rhs.c_str(), rhs.length() );
+		return *this;
+	}
+
+
+	
+
+	//utility
+
+	FastString replace_if( const U16Char& chToFind, const U16Char& chToReplace ) const {
+		STLString tmp = *this;
+		std::replace_if( tmp.begin(), tmp.end(),
+					std::bind2nd(std::equal_to<U16Char>(),chToFind) , chToReplace );
+
+		return FastString(tmp.c_str(),tmp.size());
+	}
+
+
+	FastString replace( size_type pos, size_type length, const FastString& replaceStr ) const {
+		return replace( pos, length, replaceStr.c_str(), replaceStr.size() );
+	}
+
+	FastString replace( size_type pos, size_type length, const U16Char* replaceStrPtr, size_type strLength ) const {
+		FastString::STLString tmp = *this;
+		tmp.replace( pos, length, replaceStrPtr, strLength );
+
+		return FastString(tmp);
+	}
+
+
+	FastString insert( size_type pos, const FastString& str ) const {
+		return FastString( StringPool::insert(  str.data_, data_, pos ) );
+	}
+
+	FastString insert( size_type pos, const value_type* str ) const {
+		return FastString( StringPool::insert(  str, StringPool::wstrlen((const wchar_t*)str), data_, pos ) );
+	}
+
+	FastString insert( size_type pos, const value_type* str, size_type strLength ) const {
+		return FastString( StringPool::insert(  str, strLength, data_, pos ) );
+	}
+
+	FastString insert( size_type pos, size_type count,  value_type ch ) const {
+		return FastString( StringPool::insert(  ch, data_, pos, count ) );
+	}
+
+	FastString insert( size_type pos, value_type ch ) const {
+		return FastString( StringPool::insert(  ch, data_, pos, 1 ) );
+	}
+
+	FastString insert( size_type pos, const AnsiChar* str ) const {
+		return insert( pos, str, strlen(str) );
+	}
+
+	FastString insert( size_type pos, const AnsiChar* str, size_type strLength ) const {
+		
+		return insert( pos, FastString(str,strLength) );
+	}
+
+	FastString append( value_type ch ) const {
+		value_type tmp[2] = {ch,0};
+		return append( FastString( tmp, 1 ) );
+	}
+
+	FastString append( const char* strPtr,  size_type length ) const {
+		return append( FastString( strPtr, length ) );
+	}
+
+	FastString append( const value_type* strPtr,  size_type length ) const {
+		return append( FastString( strPtr, length ) );
+	}
+
+	//here for STL compat
+	FastString append( size_type count, value_type ch ) const {
+		if ( NULL == data_ ) {
+			return FastString( ch );
+		}
+
+		return StringPool::insert(  ch, data_, length(), count );
+	}
+
+
+	FastString append( const FastString& str ) const {
+		return insert( length(), str );
+	}
+
+	FastString prepend( const FastString& str ) const {
+		return insert( 0, str );
+	}
+
+
+	FastString erase( size_type pos = 0, size_type count = npos ) const {
+		return FastString( StringPool::erase( data_, pos, count ) );
+	}
+
+	FastString erase( const_iterator first, const_iterator last ) const {
+		return FastString( StringPool::erase( data_, first - begin(), last - first ) );
+	}
+
+	FastString erase( const_iterator it ) const {
+		return FastString( StringPool::erase( data_, it - begin(), 1 ) );
+	}
+
+	size_type copy( value_type* strPtr,  size_type length, size_type offset = 0 ) const {		
+		StringPool::wmemcpy( strPtr, c_str() + offset, length );
+		return length - offset;
+	}
+
+	size_type copy( char* strPtr,  size_type length, size_type offset = 0 ) const {		
+		AnsiString s = *this;
+		return s.copy( strPtr, length );
+	}
+
+	friend
+	FastString operator+ (const FastString& lhs, const FastString& rhs );
+
+	FastString& operator+= ( const FastString& rhs ) {
+		*this = insert( length(), rhs );
+		return *this;
+	}
+
+	FastString& operator+= ( const value_type* rhs ) {
+		*this = insert( length(), FastString(rhs) );
+		return *this;
+	}
+
+	FastString& operator+= ( const AnsiChar* rhs ) {
+		*this = insert( length(), FastString(rhs) );
+		return *this;
+	}
+
+
+	
+	FastString set( size_t pos, const U16Char& ch ) const;
+
+
+	uint64 sizeOf() const;
+
+	void decode_ansi( TextCodec* codec, AnsiChar* str, size_type& strSize, LanguageEncoding encoding=leDefault ) const ;
+	FastString decode( TextCodec* codec, LanguageEncoding encoding=leDefault ) const ;
+	void encode( TextCodec* codec, const AnsiChar* str, size_type n, LanguageEncoding encoding=leDefault );
+	void encode( TextCodec* codec, const FastString& str, LanguageEncoding encoding=leDefault );
+
+
+
+	static void transformAnsiToUnicode( const AnsiChar* str, size_type stringLength, FastString& newStr, LanguageEncoding encoding=leDefault );
+
+	static AnsiChar* transformUnicodeToAnsi( const FastString& str, LanguageEncoding encoding=leDefault );
+
+	static UniChar transformAnsiCharToUnicodeChar( AnsiChar c, LanguageEncoding encoding=leDefault );
+	static AnsiChar transformUnicodeCharToAnsiChar( UniChar c, LanguageEncoding encoding=leDefault );
+
+	static int adjustForBOMMarker( AnsiChar*& stringPtr, uint32& len );
+
+protected:
+
+	FastString( StringData* data ):data_(NULL) {
+		assign(data);
+	}
+
+	void assign( StringData* data ) {
+		StringPool::decStringRefcount(data_);
+
+		data_ = data;
+		
+		StringPool::incStringRefcount(data_);
+	}
+
+
+	FastString& operator=( StringData* data ) {
+		assign( data );
+		return *this;
+	}
+
+	StringData* data_;
+};
+
+
+
+inline FastString operator+ (const FastString& lhs, const FastString& rhs )
+{		
+	return lhs.insert( lhs.length(), rhs );
+}
+
+
+
+
+
+class StringExtraData {
+public:
+	StringExtraData():encoding(FastString::leDefault),
+						subStrStart(StringExtraData::SubStrNPos),
+						subStrEnd(StringExtraData::SubStrNPos),
+						substrParent(NULL),
+						nextSubstr(NULL) {}
+	enum {
+		SubStrNPos = (size_t)-1,
+	};
+
+	FastString::LanguageEncoding encoding;
+	size_t subStrStart; 
+	size_t subStrEnd;
+	StringData* substrParent;
+	StringData* nextSubstr;
+};
+
+
+inline FastString::LanguageEncoding FastString::encoding() const 
+{
+	if ( NULL == data_ ) {
+		return leUnknown;
+	}
+
+	if ( NULL != data_->extra ) {
+		return data_->extra->encoding;
+	}
+	return leDefault;
+}	
+
+
+typedef FastString UnicodeString;
+
+
+
+
+
+inline UnicodeString operator +( const UnicodeString::UniChar* lhs, const UnicodeString& rhs )
+{
+	UnicodeString result(lhs) ;
+
+	result += rhs;
+
+	return result;
+}
+
+
+inline UnicodeString operator +( const UnicodeString& lhs, const UnicodeString::UniChar* rhs )
+{
+	UnicodeString result(lhs) ;
+
+	result += rhs;
+
+	return result;
+}
+
+
+inline UnicodeString operator +( const UnicodeString::UniChar& lhs, const UnicodeString& rhs )
+{
+	UnicodeString result(lhs) ;
+
+	result += rhs;
+
+	return result;
+}
+
+
+inline UnicodeString operator +( const UnicodeString& lhs, const UnicodeString::UniChar& rhs )
+{
+	UnicodeString result(lhs) ;
+
+	result += rhs;
+
+	return result;
+}
+
+
+inline UnicodeString operator +( const UnicodeString::AnsiChar& lhs, const UnicodeString& rhs )
+{
+	UnicodeString result(UnicodeString::transformAnsiCharToUnicodeChar( lhs ));
+	result += rhs;
+	return result;
+}
+
+
+inline UnicodeString operator +( const UnicodeString& lhs, const UnicodeString::AnsiChar& rhs )
+{
+	UnicodeString result(lhs);
+	result += UnicodeString::transformAnsiCharToUnicodeChar( rhs  );
+	return result;
+}
+
+
+inline UnicodeString operator +( const UnicodeString::AnsiChar* lhs, const UnicodeString& rhs )
+{
+	UnicodeString result(lhs, strlen(lhs));
+
+	result += rhs;
+	return result;
+}
+
+
+inline UnicodeString operator +( const UnicodeString& lhs, const UnicodeString::AnsiChar* rhs )
+{
+	UnicodeString result(lhs);
+	UnicodeString tmp(rhs, strlen(rhs));
+	result += tmp;
+	return result;
+}
+
+
+
+#endif
+
 
 
 /**
@@ -65,6 +1503,10 @@ These encoding/decoding methods are:
 In addition there are also a whole series of typedefs, again solely to make the
 class compatible with the std::basic_string class.
 */
+
+#ifndef USE_STRINGPOOL
+
+
 class FOUNDATIONKIT_API UnicodeString {
 public:
 		
@@ -851,6 +2293,14 @@ public:
 		return data_.erase( first, last );
 	}
 
+	UnicodeString replace_if( const UniChar& chToFind, const UniChar& chToReplace ) const {
+		UnicodeString tmp(*this);
+		std::replace_if( tmp.data_.begin(), tmp.data_.end(),
+					std::bind2nd(std::equal_to<UniChar>(),chToFind) , chToReplace );
+
+		return tmp;
+	}
+
 	UnicodeString& replace(size_type p0, size_type n0, const UnicodeString& str) {
 		data_.replace( p0, n0, str.data_ );
 		modified();
@@ -1126,9 +2576,6 @@ protected:
 	
 };
 
-
-
-
 inline UnicodeString operator +( const UnicodeString& lhs, const UnicodeString& rhs )
 {
 	UnicodeString result (lhs);
@@ -1244,6 +2691,15 @@ inline bool operator >=( const UnicodeString& lhs, const UnicodeString& rhs )
 {
 	return lhs.data_ >= rhs.data_;
 }
+
+
+
+//typedef std::basic_string<VCFChar> String;
+
+typedef UnicodeString String;
+
+
+#endif
 
 
 

@@ -72,7 +72,7 @@ void StringsMessageLoader::processEscapeSequence( UnicodeString& escapeSeqString
 		switch ( escapeSeqString.at(0) ) {
 			case 'x' : {
 				if ( escapeSeqString.size() == 4 ) {
-					escapeSeqString.erase( 0, 1 );
+					escapeSeqString = escapeSeqString.erase( 0, 1 );
 					int c = 0;
 					sscanf( escapeSeqString.ansi_c_str(), "%03x", &c );
 
@@ -84,7 +84,7 @@ void StringsMessageLoader::processEscapeSequence( UnicodeString& escapeSeqString
 			case 'U' : {
 				//unicode character
 				if ( escapeSeqString.size() == 5 ) {
-					escapeSeqString.erase( 0, 1 );
+					escapeSeqString = escapeSeqString.erase( 0, 1 );
 
 					int c = 0;
 					sscanf( escapeSeqString.ansi_c_str(), "%04x", &c );
@@ -156,7 +156,7 @@ void StringsMessageLoader::loadMessageFile( const UnicodeString& fileName )
 				//for token string appending
 
 				if ( (psKey == parseState_) || (psValue == parseState_) ){
-					tokenString.append( token, P-token );
+					tokenString = tokenString.append( token, P-token );
 				}
 
 				if ( *P == '\r' ) {
@@ -218,7 +218,7 @@ void StringsMessageLoader::loadMessageFile( const UnicodeString& fileName )
 						if ( *(P-1) != '\\' ) {
 							parseState_ = psToken;
 
-							tokenString.append( token, P-token );
+							tokenString = tokenString.append( token, P-token );
 
 							key = tokenString;
 						}
@@ -237,7 +237,7 @@ void StringsMessageLoader::loadMessageFile( const UnicodeString& fileName )
 						if ( *(P-1) != '\\' ) {
 							parseState_ = psToken;
 
-							tokenString.append( token, P-token );
+							tokenString = tokenString.append( token, P-token );
 
 							value = tokenString;
 
@@ -253,7 +253,7 @@ void StringsMessageLoader::loadMessageFile( const UnicodeString& fileName )
 
 						escapeSeqString = "";
 
-						escapeSeqString.append( token, P-token );
+						escapeSeqString = escapeSeqString.append( token, P-token );
 
 
 						if ( !escapeSeqString.empty() ) {
@@ -300,7 +300,7 @@ void StringsMessageLoader::loadMessageFile( const UnicodeString& fileName )
 
 					escapeSeqString = "";
 
-					tokenString.append( token, P-token );
+					tokenString = tokenString.append( token, P-token );
 
 					parseState_ = psEscapeSequence;
 
@@ -347,7 +347,7 @@ void StringsMessageLoader::loadMessageFile( const UnicodeString& fileName )
 
 						escapeSeqString = "";
 
-						escapeSeqString.append( token, (P-token)+1 );
+						escapeSeqString = escapeSeqString.append( token, (P-token)+1 );
 
 						if ( !escapeSeqString.empty() ) {
 							processEscapeSequence( escapeSeqString, tokenString );

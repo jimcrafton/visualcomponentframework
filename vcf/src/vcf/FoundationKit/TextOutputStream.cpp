@@ -97,7 +97,7 @@ uint64 TextOutputStream::write( const unsigned char* bytesToWrite, uint64 sizeOf
 	}
 	else {		
 		if ( textBuffer_.size() < seekPos_ ) {
-			textBuffer_.reserve( seekPos_ );
+//			textBuffer_.reserve( seekPos_ );
 		}
 		textBuffer_.insert( seekPos_, (const char*)bytesToWrite, sizeOfBytes );
 

@@ -141,7 +141,7 @@ bool OSXFileOpenDialog::execute()
 				size_t pos = ext.find( "*." );
 				
 				if ( pos != String::npos ) {
-					ext.erase( pos, 2 );
+					ext = ext.erase( pos, 2 );
 				}
 				CFTextString tmp(ext);
 				[fileTypes addObject: (NSString*) tmp];
@@ -152,7 +152,7 @@ bool OSXFileOpenDialog::execute()
 			size_t pos = ext.find( "*." );
 			
 			if ( pos != String::npos ) {
-				ext.erase( pos, 2 );
+				ext = ext.erase( pos, 2 );
 			}
 			CFTextString tmp(ext);
 			[fileTypes addObject: (NSString*) tmp];

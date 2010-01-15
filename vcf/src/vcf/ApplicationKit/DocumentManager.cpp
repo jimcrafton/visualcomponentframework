@@ -626,7 +626,7 @@ void DocumentManager::prepareOpenDialog( CommonFileOpenDialog* openDialog )
 
 			String filter = fti.extension;
 			if ( filter[0] != '.' ) {
-				filter.insert(0,".");
+				filter = filter.insert(0,".");
 			}
 			openDialog->addFilter( info.description + " (*" + filter + ")", "*" + filter );
 			++it2;
@@ -656,7 +656,7 @@ void DocumentManager::prepareSaveDialog( CommonFileSaveDialog* saveDialog, Docum
 		
 		String filter = fti.extension;
 		if ( filter[0] != '.' ) {
-			filter.insert(0,".");
+			filter = filter.insert(0,".");
 		}
 
 		saveDialog->addFilter( desc + " file (*" + filter + ")", "*" + filter );
@@ -673,7 +673,7 @@ MIMEType DocumentManager::getDocTypeFromFileExtension( const String& fileName )
 	
 	String ext = FilePath::getExtension(fileName);
 	if ( ext[0] == '.' ) {
-		ext.erase( 0, 1 );
+		ext = ext.erase( 0, 1 );
 	}
 
 	while ( it != docInfo_.end() ) {
@@ -699,7 +699,7 @@ MIMEType DocumentManager::getFileTypeFromFileExtension( const String& fileName )
 	
 	String ext = FilePath::getExtension(fileName);
 	if ( ext[0] == '.' ) {
-		ext.erase( 0, 1 );
+		ext = ext.erase( 0, 1 );
 	}
 
 	bool done = false;
@@ -1004,7 +1004,7 @@ void DocumentManager::onDocWndDropped( DropTargetEvent* e )
 			if ( dataObj->saveToStream( FILE_DATA_TYPE, &stream ) ) {
 				//create a string from the output streams data
 				String fileNames;
-				fileNames.append( (VCF::WideChar*)stream.getBuffer(), stream.getSize()/sizeof(VCF::WideChar) );
+				fileNames = fileNames.append( (VCF::WideChar*)stream.getBuffer(), stream.getSize()/sizeof(VCF::WideChar) );
 
 				//create a string tokenizer, with the delimeter set to '\n'
 				StringTokenizer tok( fileNames, "\n");
