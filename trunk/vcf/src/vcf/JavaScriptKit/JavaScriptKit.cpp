@@ -32,13 +32,13 @@ String convertClassNameToJSClassName( const String& className )
 	if ( pos != String::npos ) {
 		String namespaceStr = result.substr( 0, pos );
 		if ( namespaceStr == "VCF" ) {
-			result.erase( 0, pos+1 );
+			result = result.erase( 0, pos+1 );
 		}
 	}
 
 	pos = result.find( ':' );
 	while ( pos != String::npos ) {
-		result.erase( pos, 1 );
+		result = result.erase( pos, 1 );
 		pos = result.find( ':' );
 	}
 

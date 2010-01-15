@@ -1094,7 +1094,7 @@ void IKFilter::initFromResource( const String& resourceName )
 		
 		String data;
 		
-		data.append( (const char*)res->getData(), res->getDataSize() );
+		data.assign( (const char*)res->getData(), res->getDataSize() );
 
 		initProgram( data ); 
 
@@ -1299,7 +1299,7 @@ void IKFilter::initProgram( const String& data )
 			}
 
 			if ( NULL != res ) {
-				src.append( (const char*)res->getData(), res->getDataSize() );
+				src = src.append( (const char*)res->getData(), res->getDataSize() );
 				delete res;
 
 				src += "\n\n";
