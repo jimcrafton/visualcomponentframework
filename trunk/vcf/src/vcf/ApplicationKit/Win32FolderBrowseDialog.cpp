@@ -107,7 +107,7 @@ HTREEITEM Win32FolderBrowseDialog::getFinalItem( HWND treeCtrl, HTREEITEM driveR
 	while ( it != pathComponents.end() ) {
 		String compareTo = StringUtils::lowerCase( *it );
 		if ( compareTo[compareTo.size()-1] == '/' ) {
-			compareTo.erase( compareTo.size()-1, 1 );
+			compareTo = compareTo.erase( compareTo.size()-1, 1 );
 		}
 		if ( !compareTo.empty() ) {
 			HTREEITEM child = TreeView_GetChild( treeCtrl, driveRoot );

@@ -298,15 +298,19 @@ void Directory::Finder::goUpDir( File* file )
 
 		rootSearchFinder_->relativePathToRootSearch_= rootSearchFinder_->activeFinder_->relativePathToRootSearch_;
 		if ( NULL == rootSearchFinder_->activeFinder_->parentFinder_ ) {
-			rootSearchFinder_->relativePathToRootSearch_.erase();
-			rootSearchFinder_->activeFinder_->relativePathToRootSearch_.erase();
+			rootSearchFinder_->relativePathToRootSearch_ = 
+				rootSearchFinder_->relativePathToRootSearch_.erase();
+			rootSearchFinder_->activeFinder_->relativePathToRootSearch_ = 
+				rootSearchFinder_->activeFinder_->relativePathToRootSearch_.erase();
 		}
 	} else {
 		// in the root directory for this recursive search we don't want to go forever
 		rootSearchFinder_->activeFinder_->goSearchAgain_ = false;
 
-		rootSearchFinder_->relativePathToRootSearch_.erase();
-		rootSearchFinder_->activeFinder_->relativePathToRootSearch_.erase();
+		rootSearchFinder_->relativePathToRootSearch_ = 
+			rootSearchFinder_->relativePathToRootSearch_.erase();
+		rootSearchFinder_->activeFinder_->relativePathToRootSearch_ = 
+			rootSearchFinder_->activeFinder_->relativePathToRootSearch_.erase();
 	}
 }
 

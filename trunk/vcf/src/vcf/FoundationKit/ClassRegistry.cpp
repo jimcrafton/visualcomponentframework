@@ -475,7 +475,7 @@ void ClassRegistry::internal_addClass( const String& className, Class* classToRe
 
 	std::map<String,Class*>::iterator found;
 	bool classNotFound = true;
-	if  ( classID != "" ) {
+	if  ( !classID.empty() ) {
 		found = classRegistry->classIDMap_.find( classID );
 		classNotFound = !( found != classIDMap_.end() );
 	}

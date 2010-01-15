@@ -83,7 +83,7 @@ void FilePath::splitDrive( const String& fullname, String& drive, String& pathna
 		drive = fullname.substr( 0, lastDrivePos + 1 );
 		pathname  = fullname.substr( lastDrivePos + 1, fullname.size() - lastDrivePos - 1 );
 	} else {
-		drive.erase();
+		drive = drive.erase();
 		pathname = fullname;
 	}
 
@@ -124,8 +124,9 @@ void FilePath::splitPath( const String& fullname, String& path, String& name )
 	if ( lastDirsepPos != String::npos ) {
 		path = fullname.substr( 0, lastDirsepPos + 1 );
 		name  = fullname.substr( lastDirsepPos + 1, fullname.size() - lastDirsepPos - 1 );
-	} else {
-		path.erase();
+	} 
+	else {
+		path = path.erase();
 		name = fullname;
 	}
 
@@ -157,7 +158,7 @@ String FilePath::getPathName( const String& fullname, const bool& includeDriveNa
 			path = fullname.substr( 0, lastDirsepPos + 1 );
 		} 
 		else {
-			path.erase();
+			path = path.erase();
 		}
 	}
 	return path;
@@ -173,7 +174,7 @@ void FilePath::splitExtension( const String& fullname, String& root, String& ext
 		ext  = fullname.substr( lastExtPos, fullname.size() - lastExtPos );
 	} else {
 		root = fullname;
-		ext.erase();
+		ext = ext.erase();
 	}
 
 	VCF_ASSERT( fullname == root + ext ); 
@@ -359,7 +360,7 @@ String FilePath::getExpandedRelativePathName( const String& fullPath, const Stri
 			//remove the last dir component
 			//equivalent of "going back a dir", or "cd .."
 			workPathComponents.pop_back();
-			fullPathCopy.erase( 0, pos+3 );
+			fullPathCopy = fullPathCopy.erase( 0, pos+3 );
 			pos = fullPathCopy.find( L".." + sep, 0 );
 		}
 		std::vector<String>::iterator it = workPathComponents.begin();
@@ -378,7 +379,7 @@ String FilePath::getExpandedRelativePathName( const String& fullPath, const Stri
 		//remove the ./ notation and prepend the
 		//working dir to file name
 		if ( pos != String::npos ) {
-			fullPathCopy.erase( pos, 2 );
+			fullPathCopy = fullPathCopy.erase( pos, 2 );
 			result = workDir + fullPathCopy;
 		}
 		else if ( fullPathCopy[0] != FilePath::DirectorySeparator ) {
@@ -421,10 +422,7 @@ std::vector<String> FilePath::getPathComponents( const String& path )
 */
 String FilePath::transformToNative( const String& filename )
 {
-	String result = filename;
-	std::replace_if( result.begin(), result.end(),
-					std::bind2nd(std::equal_to<VCFChar>(),'\\') , '/' );
-	return result;
+	return filename.replace_if( '\\', '/' );
 }
 
 String FilePath::transformToOSSpecific( const String& filename )
@@ -434,12 +432,7 @@ String FilePath::transformToOSSpecific( const String& filename )
 	convertChar = '\\';
 #endif
 
-	String result = filename;
-
-	std::replace_if( result.begin(), result.end(),
-					std::bind2nd(std::equal_to<VCFChar>(),'/') , convertChar );
-
-	return result;
+	return filename.replace_if( '/', convertChar );
 }
 
 String FilePath::makeDirectoryName(  const String& fullname, const bool& remove )
@@ -454,7 +447,7 @@ String FilePath::makeDirectoryName(  const String& fullname, const bool& remove 
 		/* check against both separators under windows */
 		if ( hasSep ) {
 			if ( remove ) {
-				fn.erase( size-1, 1 );
+				fn = fn.erase( size-1, 1 );
 			}
 		} else {
 			if ( !remove ) {

@@ -228,7 +228,7 @@ void Win32Font::init()
 		tmpLF.lfHeight = fontHeight;
 
 		if ( fontName_.empty() ) {
-			fontName_.append( tmpLF.lfFaceName, LF_FACESIZE );
+			fontName_.assign( tmpLF.lfFaceName, LF_FACESIZE );
 		}
 		else {
 			memset( ((LOGFONTW*)logFont_)->lfFaceName, 0, LF_FACESIZE*sizeof(VCFChar) );
@@ -241,7 +241,7 @@ void Win32Font::init()
 		tmpLF.lfHeight = fontHeight;
 
 		if ( fontName_.empty() ) {
-			fontName_.append( tmpLF.lfFaceName, LF_FACESIZE );
+			fontName_.assign( tmpLF.lfFaceName, LF_FACESIZE );
 		}
 		else {
 			AnsiString tmpFntName = fontName_;

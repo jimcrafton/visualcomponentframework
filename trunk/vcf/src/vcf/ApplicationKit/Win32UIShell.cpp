@@ -408,9 +408,13 @@ template<> struct comtype<ifc> { \
 typedef comet::com_ptr<ifc> ifc##Ptr;\
 \
 
-
+ 
+#ifndef USE_STRINGPOOL
 COM_PTR(IShellLinkW)
 typedef comet::com_ptr<IPersistFile> IPersistFilePtr;
+#endif
+
+
 
 
 
@@ -420,8 +424,13 @@ void Win32UIShell::createFileShortcut( const String& originalFileName, const Str
 
 	shellLink->SetPath( originalFileName.c_str() );  // Path to the object we are referring to
 
+	
 	IPersistFilePtr persistFile;
+#ifndef USE_STRINGPOOL
 	persistFile = com_cast(shellLink);
+#else
+	persistFile = shellLink;
+#endif
 	persistFile->Save( shortcutFileName.c_str(), TRUE );
 }
 
@@ -470,7 +479,7 @@ void Win32UIShell::createFileAssociation( const FileAssociationInfo& info, bool 
 {
 	String ext = info.extension;
 	if ( ext[0] != '.' ) {
-		ext.insert( 0, "." );
+		ext = ext.insert( 0, "." );
 	}
 
 	Registry reg;
@@ -539,7 +548,7 @@ void Win32UIShell::removeFileAssociation( const FileAssociationInfo& info, bool 
 {
 	String ext = info.extension;
 	if ( ext[0] != '.' ) {
-		ext.insert( 0, "." );
+		ext = ext.insert( 0, "." );
 	}
 
 	Registry reg;

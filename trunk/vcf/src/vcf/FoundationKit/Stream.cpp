@@ -162,7 +162,7 @@ void InputStream::read( String& val )
 			
 			switch ( bom ) {
 				case UnicodeString::UTF8BOM : {
-					tmpStr.append( start, sz );
+					tmpStr = tmpStr.append( start, sz );
 				}
 				break;
 
@@ -185,7 +185,7 @@ void InputStream::read( String& val )
 						done = (done || (size == 0));
 					}
 
-					val.append( (UnicodeString::UniChar*)start, (tmp - start) / sizeof(UnicodeString::UniChar) );
+					val = val.append( (UnicodeString::UniChar*)start, (tmp - start) / sizeof(UnicodeString::UniChar) );
 
 				}
 				break;
@@ -198,7 +198,7 @@ void InputStream::read( String& val )
 				break;
 
 				default : {
-					tmpStr.append( start, sz );
+					tmpStr = tmpStr.append( start, sz );
 				}
 				break;
 			}
@@ -206,10 +206,10 @@ void InputStream::read( String& val )
 		else {
 
 			if ( BOM16Str ) {				
-				val.append( (UnicodeString::UniChar*)start, tmp - start );
+				val = val.append( (UnicodeString::UniChar*)start, tmp - start );
 			}
 			else {
-				tmpStr.append( start, tmp - start );
+				tmpStr = tmpStr.append( start, tmp - start );
 			}
 		}
 

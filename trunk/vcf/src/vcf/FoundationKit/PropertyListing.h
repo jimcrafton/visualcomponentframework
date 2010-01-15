@@ -133,7 +133,7 @@ namespace VCF {
 			Dictionary* currentDict = this;
 			while ( pos != String::npos ) {
 				dictVal = currentDict->get( tmp.substr(0,pos) );
-				tmp.erase( 0, pos+1);
+				tmp = tmp.erase( 0, pos+1);
 				pos = tmp.find( "/" );
 
 				currentDict = (Dictionary*) (Object*)dictVal;
@@ -155,7 +155,7 @@ namespace VCF {
 			const Dictionary* currentDict = this;
 			while ( pos != String::npos ) {
 				dictVal = currentDict->get( tmp.substr(0,pos) );
-				tmp.erase( 0, pos+1);
+				tmp = tmp.erase( 0, pos+1);
 				pos = tmp.find( "/" );
 
 				currentDict = (const Dictionary*) (Object*)dictVal;

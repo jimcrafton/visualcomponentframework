@@ -133,7 +133,7 @@ String System::findResourceDirectory( const String& fileName, Locale* locale )
 
 				//if depth == 1 then case C:
 				//if depth == 2 then case D:
-				appDir.erase( appDir.length()-length, length );
+				appDir = appDir.erase( appDir.length()-length, length );
 
 				tmp = appDir + "Resources";
 				if ( File::exists( tmp ) ) {
@@ -482,7 +482,7 @@ String System::getInfoFileFromFileName( const String& fileName )
 				}
 			}
 			
-			fileDir.erase( fileDir.length()-length, length );
+			fileDir = fileDir.erase( fileDir.length()-length, length );
 
 			depth ++;
 			it ++;
@@ -720,7 +720,7 @@ String System::getBundlePathFromExecutableName( const String& fileName )
 
 		int length = dirComponent.length();// + FilePath::getDirectorySeparator().length();
 		
-		dirComponent.erase( dirComponent.size()-1, 1 );//trim off trailing "/"
+		dirComponent = dirComponent.erase( dirComponent.size()-1, 1 );//trim off trailing "/"
 
 		
 		//the match is not an equals, because the bundle might be
@@ -730,7 +730,7 @@ String System::getBundlePathFromExecutableName( const String& fileName )
 			break;
 		}
 		
-		appDir.erase( appDir.length()-length, length );
+		appDir = appDir.erase( appDir.length()-length, length );
 
 		depth ++;
 		it ++;

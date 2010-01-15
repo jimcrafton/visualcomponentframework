@@ -96,7 +96,7 @@ String OSXTextPeer::getText( unsigned int start, unsigned int length )
 	NSMutableString* str = [textStorage_ mutableString];
 	[str getCharacters:buffer range:range];
 	
-	result.append( buffer, length );
+	result = result.append( buffer, length );
 	
 	delete [] buffer;
 	

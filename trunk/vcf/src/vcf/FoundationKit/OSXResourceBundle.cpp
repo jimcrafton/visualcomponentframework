@@ -58,7 +58,7 @@ String OSXResourceBundle::getVFF( const String& resourceName )
 			tmpResName = fp.getBaseName();
 			size_t pos = ext.find(".");
 			if ( pos != String::npos ) {
-				ext.erase( pos, 1 );
+				ext = ext.erase( pos, 1 );
 			}
 		}
 		else {
@@ -105,7 +105,7 @@ Resource* OSXResourceBundle::getResource( const String& resourceName )
 			tmpResName = fp.getBaseName();
 			size_t pos = ext.find(".");
 			if ( pos != String::npos ) {
-				ext.erase( pos, 1 );
+				ext = ext.erase( pos, 1 );
 			}
 		}
 	

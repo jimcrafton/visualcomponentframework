@@ -82,7 +82,7 @@ ProgramInfo* ResourceBundle::getProgramInfo()
 		size_t pos = resDir.rfind( "Resources" );
 
 		if ( pos != String::npos ) {
-			resDir.erase( pos, resDir.size()-pos );
+			resDir = resDir.erase( pos, resDir.size()-pos );
 			String infoFilename = resDir + "Info.plist";
 
 			bool found = false;

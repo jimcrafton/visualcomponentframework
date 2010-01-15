@@ -170,14 +170,14 @@ String MIMEType::canonicalValue( const String& value )
 					state = inQuotes;
 
 					if ( (P-current) > 0 ) {
-						result.append( current, (P-current)-1);
+						result = result.append( current, (P-current)-1);
 					}
 					current = P+1;
 				}
 				else if ( state == inQuotes && *(P-1) != '\\' ) {
 					state = 0;
 
-					result.append( current, (P-current));
+					result = result.append( current, (P-current));
 					current = P+1;
 
 				}
@@ -189,7 +189,7 @@ String MIMEType::canonicalValue( const String& value )
 					state = inComments;
 
 					if ( (P-current) > 0 ) {
-						result.append( current, (P-current)-1);
+						result = result.append( current, (P-current)-1);
 					}
 				}
 			}
@@ -209,7 +209,7 @@ String MIMEType::canonicalValue( const String& value )
 	}
 
 	if ( current < P ) {
-		result.append( current, P-current);
+		result = result.append( current, P-current);
 	}
 
 	StringUtils::trimWhiteSpaces( result );

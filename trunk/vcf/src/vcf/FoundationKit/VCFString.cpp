@@ -2,7 +2,7 @@
 
 /*
 Copyright 2000-2004 The VCF Project.
-Please see License.txt in the top level directory
+Please see License.txt in the top FastString::level directory
 where you installed the VCF.
 */
 
@@ -17,6 +17,1496 @@ where you installed the VCF.
 
 
 namespace VCF {
+
+
+
+
+#ifdef USE_STRINGPOOL	
+
+DWORD StringPool::threadPoolTLSIndex = 0;
+
+StringPool::StringPoolTLSGuard* StringPool::poolTLSGuard = NULL;
+std::deque<StringPool*>* StringPool::stringPoolStack = NULL;
+
+
+void StringPool::debug()
+{
+	printf( ">>>>>>>>>StringPool::debug()<<<<<<<<<<<\n" );
+	printf( "allocatedHdrs length: %u\n", allocatedHdrs_.size() );
+
+	std::vector<MemHeader*>::iterator it =  allocatedHdrs_.begin();
+	while ( it != allocatedHdrs_.end() ) {
+		MemHeader* m = *it;
+		
+		printf( "MemHeader %p, refc: %u, size: %u\n", m, m->refcount, m->size );
+		++it;
+	}
+
+
+	StringMapIter it2 = this->stringMap_.begin();
+	size_t prevHash = 0;
+
+	printf( "strings in map: %u\n", stringMap_.size() );
+	while( it2 != stringMap_.end() ) {
+		size_t h = it2->first;
+		StringData* s = it2->second;
+
+		if ( prevHash != h ) {
+			printf( "Hash key: %u\n", h );
+		}
+
+		printf( "\tStr %p[%u, refc: %u, hdr: %p] : %.*S%s\n", 
+				s, 
+				s->length, 
+				s->refcount, 
+				s->memHdr, 
+				(s->length > 20) ? 20 : s->length, 
+				s->strPtr,
+				(s->length > 20) ? "..." : "" );
+
+		prevHash = h;
+
+		++it2;
+	}	
+}
+
+
+StringPool* StringPool::getUsablePool()
+{
+	if ( NULL == StringPool::stringPoolStack ) {
+		StringPool::stringPoolStack = new std::deque<StringPool*>();
+	}
+
+	if ( !StringPool::stringPoolStack->empty() ) {
+		return StringPool::stringPoolStack->back();
+	}
+
+	if ( 0 == StringPool::threadPoolTLSIndex ) {
+		StringPool::threadPoolTLSIndex = TlsAlloc();
+		
+		if ( TLS_OUT_OF_INDEXES == StringPool::threadPoolTLSIndex ) {
+			static std::bad_alloc outOfTLS;
+			throw(outOfTLS);
+		}
+	}
+
+	StringPool* currentThreadPool = (StringPool*) TlsGetValue( StringPool::threadPoolTLSIndex );
+	if ( NULL == currentThreadPool ) {
+		currentThreadPool = new StringPool();
+
+		if ( NULL == StringPool::poolTLSGuard ) {
+			StringPool::poolTLSGuard = new StringPool::StringPoolTLSGuard();
+		}
+
+		StringPool::poolTLSGuard->threadPools.push_back( currentThreadPool );
+		TlsSetValue( StringPool::threadPoolTLSIndex, currentThreadPool );
+	}
+
+	return currentThreadPool;
+}
+
+
+
+unsigned int StringPool::getNativeEncoding(int encoding)
+{
+	unsigned int result = -1;
+#ifdef WIN32
+	
+
+	FastString::LanguageEncoding tmp = (FastString::LanguageEncoding)encoding;
+	if ( encoding == FastString::leDefault ) {
+		tmp = FastString::leUTF8 ;
+		//Locale* locale = System::getCurrentThreadLocale();
+		//if ( NULL != locale ) {
+		//	tmp = locale->getEncoding();
+		//}
+	}
+
+
+	
+	switch (tmp) {				
+		case FastString::leIBM037: {result=037;}break;
+		case FastString::leIBM437: {result=437;}break;
+		case FastString::leIBM500: {result=500;}break;
+		case FastString::leArabic708: {result=708;}break;
+		case FastString::leArabic449: {result=709;}break;
+		case FastString::leArabicTransparent: {result=710;}break;
+		case FastString::leDOSArabic: {result=720;}break;
+		case FastString::leGreek: {result=737;}break;
+		case FastString::leBaltic: {result=775;}break;
+		case FastString::leLatin1: {result=850;}break;
+		case FastString::leLatin2: {result=852;}break;
+		case FastString::leCyrillic: {result=855;}break;
+		case FastString::leTurkish: {result=857;}break;
+		case FastString::leMultilingualLatin1: {result=858;}break;
+		case FastString::lePortuguese: {result=860;}break;
+		case FastString::leIcelandic: {result=861;}break;
+		case FastString::leHebrew: {result=862;}break;
+		case FastString::leFrenchCanadian: {result=863;}break;
+		case FastString::leArabic864: {result=864;}break;
+		case FastString::leNordic: {result=865;}break;
+		case FastString::leRussianCyrillic: {result=866;}break;
+		case FastString::leModernGreek: {result=869;}break;
+		case FastString::leEBCDICLatin2: {result=870;}break;
+		case FastString::leThai: {result=874;}break;
+		case FastString::leEBCDICGreekModern: {result=875;}break;
+		case FastString::leShiftJIS: {result=932;}break;
+		case FastString::leSimplifiedChinese: {result=936;}break;
+		case FastString::leKorean: {result=949;}break;
+		case FastString::leChineseTraditionalBig5: {result=950;}break;
+		case FastString::leEBCDICTurkish: {result=1026;}break;
+		case FastString::leEBCDICLatin1: {result=1047;}break;
+		case FastString::leEBCDICUSCanada: {result=1140;}break;
+		case FastString::leEBCDICGermany: {result=1141;}break;
+		case FastString::leEBCDICDenmarkNorway: {result=1142;}break;
+		case FastString::leEBCDICFinlandSweden: {result=1143;}break;
+		case FastString::leEBCDICItaly: {result=1144;}break;
+		case FastString::leEBCDICLatinAmericaSpain: {result=1145;}break;
+		case FastString::leEBCDICUnitedKingdom: {result=1146;}break;
+		case FastString::leEBCDICFrance: {result=1147;}break;
+		case FastString::leEBCDICInternational: {result=1148;}break;
+		case FastString::leEBCDICIcelandic: {result=1149;}break;
+		case FastString::leUTF16LittleEndianByteOrder: {result=1200;}break;
+		case FastString::leUTF16BigEndianByteOrder: {result=1201;}break;
+		case FastString::leANSICentralEuropean: {result=1250;}break;
+		case FastString::leANSICyrillic: {result=1251;}break;
+		case FastString::leANSILatin1: {result=1252;}break;
+		case FastString::leANSIGreek: {result=1253;}break;
+		case FastString::leANSITurkish: {result=1254;}break;
+		case FastString::leANSIHebrew: {result=1255;}break;
+		case FastString::leANSIArabic: {result=1256;}break;
+		case FastString::leANSIBaltic: {result=1257;}break;
+		case FastString::leANSIVietnamese: {result=1258;}break;
+		case FastString::leJohabKorean: {result=1361;}break;
+		case FastString::leMacRoman: {result=10000;}break;
+		case FastString::leMacJapanese: {result=10001;}break;
+		case FastString::leMacTraditionalChineseBig5: {result=10002;}break;
+		case FastString::leMacKorean: {result=10003;}break;
+		case FastString::leMacArabic: {result=10004;}break;
+		case FastString::leMacHebrew: {result=10005;}break;
+		case FastString::leMacGreek: {result=10006;}break;
+		case FastString::leMacCyrillic: {result=10007;}break;
+		case FastString::leMacSimplifiedChinese: {result=10008;}break;
+		case FastString::leMacRomanian: {result=10010;}break;
+		case FastString::leMacUkrainian: {result=10017;}break;
+		case FastString::leMacThai: {result=10021;}break;
+		case FastString::leMacLatin2: {result=10029;}break;
+		case FastString::leMacIcelandic: {result=10079;}break;
+		case FastString::leMacTurkish: {result=10081;}break;
+		case FastString::leMacCroatian: {result=10082;}break;
+		case FastString::leUTF32LittleEndianByteOrder: {result=12000;}break;
+		case FastString::leUTF32BigEndianByteOrder: {result=12001;}break;
+		case FastString::leCNSTaiwan: {result=20000;}break;
+		case FastString::leTCATaiwan: {result=20001;}break;
+		case FastString::leEtenTaiwan: {result=20002;}break;
+		case FastString::leIBM5550Taiwan: {result=20003;}break;
+		case FastString::leTeleTextTaiwan: {result=20004;}break;
+		case FastString::leWangTaiwan: {result=20005;}break;
+		case FastString::leIA5WesternEuropean: {result=20105;}break;
+		case FastString::leIA5German: {result=20106;}break;
+		case FastString::leIA5Swedish: {result=20107;}break;
+		case FastString::leIA5Norwegian: {result=20108;}break;
+		case FastString::leUSASCII: {result=20127;}break;
+		case FastString::leT61: {result=20261;}break;
+		case FastString::leISO6937: {result=20269;}break;
+		case FastString::leIBM273Germany: {result=20273;}break;
+		case FastString::leIBM277DenmarkNorway: {result=20277;}break;
+		case FastString::leIBM278FinlandSweden: {result=20278;}break;
+		case FastString::leIBM280Italy: {result=20280;}break;
+		case FastString::leIBM284LatinAmericaSpain: {result=20284;}break;
+		case FastString::leIBM285UnitedKingdom: {result=20285;}break;
+		case FastString::leIBM290JapaneseKatakanaExt: {result=20290;}break;
+		case FastString::leIBM297France: {result=20297;}break;
+		case FastString::leIBM420Arabic: {result=20420;}break;
+		case FastString::leIBM423Greek: {result=20423;}break;
+		case FastString::leIBM424Hebrew: {result=20424;}break;
+		case FastString::leIBMKoreanExtended: {result=20833;}break;
+		case FastString::leIBMThai: {result=20838;}break;
+		case FastString::leRussianKOI8R: {result=20866;}break;
+		case FastString::leIBM871Icelandic: {result=20871;}break;
+		case FastString::leIBM880CyrillicRussian: {result=20880;}break;
+		case FastString::leIBM905Turkish: {result=20905;}break;
+		case FastString::leIBM00924Latin1: {result=20924;}break;
+		case FastString::leEUCJapaneseJIS: {result=20932;}break;
+		case FastString::leSimplifiedChineseGB2312: {result=20936;}break;
+		case FastString::leKoreanWansung: {result=20949;}break;
+		case FastString::leEBCDICCyrillicSerbianBulgarian: {result=21025;}break;
+		case FastString::leUkrainianKOI8U: {result=21866;}break;
+		case FastString::leISO88591Latin1: {result=28591;}break;
+		case FastString::leISO88592CentralEuropean: {result=28592;}break;
+		case FastString::leISO88593Latin3: {result=28593;}break;
+		case FastString::leISO88594Baltic: {result=28594;}break;
+		case FastString::leISO88595Cyrillic: {result=28595;}break;
+		case FastString::leISO88596Arabic: {result=28596;}break;
+		case FastString::leISO88597Greek: {result=28597;}break;
+		case FastString::leISO88598HebrewVisual: {result=28598;}break;
+		case FastString::leISO88599Turkish: {result=28599;}break;
+		case FastString::leISO885913Estonian: {result=28603;}break;
+		case FastString::leISO885915Latin9: {result=28605;}break;
+		case FastString::leEuropa3: {result=29001;}break;
+		case FastString::leISO88598HebrewLogical: {result=38598;}break;
+		case FastString::leISO2022JapaneseNoHalfwidthKatakana: {result=50220;}break;
+		case FastString::leISO2022JapaneseWithHalfwidthKatakana: {result=50221;}break;
+		case FastString::leISO2022JapaneseAllow1ByteKana: {result=50222;}break;
+		case FastString::leISO2022Korean: {result=50225;}break;
+		case FastString::leISO2022SimplifiedChinese: {result=50227;}break;
+		case FastString::leISO2022TraditionalChinese: {result=50229;}break;
+		case FastString::leEBCDICJapaneseExt: {result=50930;}break;
+		case FastString::leEBCDICUSCanadaAndJapanese: {result=50931;}break;
+		case FastString::leEBCDICKoreanExtAndKorean: {result=50933;}break;
+		case FastString::leEBCDICSimplifiedChineseExtSimplifiedChinese: {result=50935;}break;
+		case FastString::leEBCDICSimplifiedChinese: {result=50936;}break;
+		case FastString::leEBCDICUSCanadaAndTraditionalChinese: {result=50937;}break;
+		case FastString::leEBCDICJapaneseLatinExtAndJapanese: {result=50939;}break;
+		case FastString::leEUCJapanese: {result=51932;}break;
+		case FastString::leEUCSimplifiedChinese: {result=51936;}break;
+		case FastString::leEUCKorean: {result=51949;}break;
+		case FastString::leEUCTraditionalChinese: {result=51950;}break;
+		case FastString::leHZGB2312SimplifiedChinese: {result=52936;}break;
+		case FastString::leGB18030SimplifiedChinese: {result=54936;}break;
+		case FastString::leISCIIDevanagari: {result=57002;}break;
+		case FastString::leISCIIBengali: {result=57003;}break;
+		case FastString::leISCIITamil: {result=57004;}break;
+		case FastString::leISCIITelugu: {result=57005;}break;
+		case FastString::leISCIIAssamese: {result=57006;}break;
+		case FastString::leISCIIOriya: {result=57007;}break;
+		case FastString::leISCIIKannada: {result=57008;}break;
+		case FastString::leISCIIMalayalam: {result=57009;}break;
+		case FastString::leISCIIGujarati: {result=57010;}break;
+		case FastString::leISCIIPunjabi: {result=57011;}break;
+		case FastString::leUTF7: {result=65000;}break;
+		case FastString::leUTF8: {result=65001;}break;
+	}
+	
+#endif
+	return result;
+}
+
+void StringPool::terminate()
+{
+	delete StringPool::poolTLSGuard;
+	delete StringPool::stringPoolStack;
+}
+
+
+StringPool::StringPool():
+	onlyUseMemPooling_(false),
+	next_(NULL),
+	limit_(NULL),
+	currentHdr_(NULL),
+	granularity_(0),
+	totalBytesAllocated_(0),
+	threadID_(0),
+	compactMemory_(false),
+	stringAllocator_(NULL),
+	stringDeallocator_(NULL)
+{
+	
+#ifdef WIN32
+
+	SYSTEM_INFO si;
+	GetSystemInfo(&si);
+	granularity_ = RoundUp(sizeof(MemHeader) + MIN_CBCHUNK,
+								si.dwAllocationGranularity);
+
+	threadID_ = ::GetCurrentThreadId();
+#endif
+
+}
+
+StringPool::~StringPool()
+{
+	StringMapIter it2 = this->stringMap_.begin();
+	
+	while( it2 != stringMap_.end() ) {		
+		StringData* s = it2->second;		
+
+		s->pool = NULL;
+
+		++it2;
+	}	
+
+
+
+	std::vector<MemHeader*>::iterator it = allocatedHdrs_.begin();
+	while ( it != allocatedHdrs_.end() ) {
+		MemHeader* hdr = *it;
+
+		size_t sz = hdr->size;
+		if ( StringPool::freeMem(hdr, hdr->size) ) {
+			totalBytesAllocated_ -= sz;
+		}
+
+		++it;
+	}
+
+	allocatedHdrs_.clear();
+
+	printf( "StringPool::~StringPool() totalBytesAllocated_: %u\n", totalBytesAllocated_ );
+}
+
+
+void StringPool::setOnlyUsesMemoryPooling( bool val )
+{
+	if ( val != onlyUseMemPooling_ ) {
+		onlyUseMemPooling_ = val;
+		if ( onlyUseMemPooling_ ) {
+			stringMap_.clear();
+		}
+	}	
+}
+
+MemHeader* StringPool::nextHdr( MemHeader* current ) 
+{
+	MemHeader* result = NULL;
+
+	if ( allocatedHdrs_.empty() ) {
+		return NULL;
+	}
+
+	std::vector<MemHeader*>::iterator found = std::find( allocatedHdrs_.begin(), allocatedHdrs_.end(), current );
+	if ( found != allocatedHdrs_.end() ) {
+		++found;
+		if ( found != allocatedHdrs_.end() ) {
+			result = *found;
+		}
+	}
+
+	return result;
+}
+
+MemHeader* StringPool::prevHdr( MemHeader* current )
+{
+	MemHeader* result = NULL;
+
+	if ( allocatedHdrs_.empty() ) {
+		return NULL;
+	}
+
+	std::vector<MemHeader*>::iterator found = std::find( allocatedHdrs_.begin(), allocatedHdrs_.end(), current );
+	if ( found != allocatedHdrs_.end() && found != allocatedHdrs_.begin() ) {
+		--found;		
+		result = *found;
+	}
+
+	return result;
+}
+
+StringData* StringPool::allocateUnmanagedString( const U16Char* str, size_t length )
+{
+	StringData* result = NULL;
+
+	return result;
+}
+
+StringData* StringPool::allocateUnmanagedString( const char* str, size_t length, int encoding )
+{
+	StringData* result = NULL;
+
+	return result;
+}
+
+StringData* StringPool::allocate( size_t length )
+{
+	size_t bytesLength = sizeof(StringData) + (length * sizeof(U16Char)) + sizeof(U16Char);
+	if ((next_ + bytesLength) <= limit_) {
+		StringData* data = (StringData*)next_;
+
+		initStringData( data, NULL, length );
+
+		next_ += bytesLength;
+		currentHdr_->next = next_;
+		currentHdr_->refcount ++;
+		return data;
+	}
+	
+	unsigned char* nextBytes = NULL;
+	size_t allocSize = 0;
+
+	if (bytesLength <= MAX_CHARALLOC) {	
+		allocSize = RoundUp(bytesLength + sizeof(MemHeader), granularity_);
+
+		nextBytes = reinterpret_cast<unsigned char*>( StringPool::allocMem(allocSize) );
+	}
+
+	if (!nextBytes) {
+		static std::bad_alloc outOfMemException;
+		throw(outOfMemException);
+	}
+
+	totalBytesAllocated_ += allocSize;
+	
+	limit_ = reinterpret_cast<unsigned char*>(nextBytes + allocSize);
+	MemHeader* currentHdr = reinterpret_cast<MemHeader*>(nextBytes);
+//	currentHdr->prev = currentHdr_;
+	currentHdr->size = allocSize;
+	currentHdr->refcount = 0;
+	
+
+	currentHdr_ = currentHdr;
+	next_ = reinterpret_cast<unsigned char*>(currentHdr + sizeof(U16Char));
+	currentHdr_->next = next_;
+	currentHdr_->limit = limit_;
+	
+	allocatedHdrs_.push_back( currentHdr_ );
+	
+	return allocate(length);
+}
+
+void StringPool::initStringData( StringData* data, const U16Char* strPtr, size_t length )
+{
+	data->length = length;
+	data->memHdr = currentHdr_;
+	data->pool = this;
+	data->refcount = 0;
+	data->strPtr = (U16Char*) (next_ + sizeof(StringData));
+	data->hashID = 0;
+	data->ansiStrPtr = 0;
+	data->extra = NULL;
+	data->bits = 0;
+
+	if ( NULL != strPtr ) {
+		StringPool::wmemcpy( data->strPtr, strPtr, data->length );
+		data->strPtr[data->length] = 0;
+		if ( !onlyUseMemPooling_ ) {
+			data->hashID = StringPool::hash(data->strPtr, data->length);
+		}
+	}
+}
+
+StringData* StringPool::allocate(const U16Char* begin, const U16Char* end)
+{
+	size_t length = sizeof(StringData) + ((end - begin) * sizeof(U16Char)) + sizeof(U16Char);
+	if ((next_ + length) <= limit_) {
+		StringData* data = (StringData*)next_;
+		
+		initStringData( data, begin, (end - begin) );
+
+		next_ += length;
+		currentHdr_->next = next_;
+		currentHdr_->refcount ++;
+		return data;
+	}
+	
+	unsigned char* nextBytes = NULL;
+	size_t allocSize = 0;
+
+	if (length <= MAX_CHARALLOC) {	
+		allocSize = RoundUp(length + sizeof(MemHeader), granularity_);
+		nextBytes = reinterpret_cast<unsigned char*>( StringPool::allocMem( allocSize ) );
+	}
+
+	if (!nextBytes) {
+		static std::bad_alloc outOfMemException;
+		throw(outOfMemException);
+	}
+
+	totalBytesAllocated_ += allocSize;
+	
+	limit_ = reinterpret_cast<unsigned char*>(nextBytes + allocSize);
+	MemHeader* currentHdr = reinterpret_cast<MemHeader*>(nextBytes);
+//	currentHdr->prev = currentHdr_;
+	currentHdr->size = allocSize;
+	currentHdr->refcount = 0;
+	
+
+	currentHdr_ = currentHdr;
+	next_ = reinterpret_cast<unsigned char*>(currentHdr + sizeof(U16Char));
+	currentHdr_->next = next_;
+	currentHdr_->limit = limit_;
+	allocatedHdrs_.push_back( currentHdr_ );
+
+	return allocate(begin, end);
+}
+
+
+StringData* StringPool::find( const U16Char* str, size_t length, const uint32& hashID )
+{
+	StringData* result = NULL;
+
+	
+
+	if ( stringMap_.empty() ) {
+		return NULL;
+	}
+
+
+	if ( onlyUseMemPooling_ ) {
+		return NULL;
+	}
+
+	uint32 realHashID = (0 == hashID) ? StringPool::hash(str,length) : hashID;
+
+	StringMapRangeT found = stringMap_.equal_range( realHashID );
+	StringMapIter current = found.first;
+	
+	size_t rangeCount = 0;
+	while ( current != found.second ) {
+		rangeCount ++;
+		++current;
+	}
+
+	current = found.first;
+	if ( rangeCount == 1 ) {
+		StringData* data = current->second;
+
+		if ( data->length == length ) {
+			result = data;
+		}
+	}
+	else {
+		while ( current != found.second ) {
+			StringData* data = current->second;
+			if ( data->length == length ) {
+				if ( 0 == StringPool::wmemcmp( data->strPtr, str, length ) ) {
+					result = data;
+					break;
+				}
+			}
+			
+			++current ;
+		}
+	}
+
+	return result;
+}
+
+
+StringData* StringPool::transformAnsiToUnicode( const char* str, size_t length, int encoding )
+{
+	StringData* result = NULL;
+
+	if ( length == 0 ) {
+		return NULL;
+	}
+
+
+	unsigned int enc = StringPool::getNativeEncoding(encoding);
+
+	int size = MultiByteToWideChar( enc, 0, str, length, NULL, 0 );
+
+	if ( size <= 0 ) {
+		//throw RuntimeException( L"size > 0 MultiByteToWideChar() failed in UnicodeString::transformAnsiToUnicode()" );
+		return NULL;
+	}
+
+	StringData* newStr = allocate( (size_t)size );
+
+	size = MultiByteToWideChar( enc, 0, str, length, newStr->strPtr, newStr->length );
+
+	newStr->strPtr[size] = 0;
+
+	result = find( newStr->strPtr, newStr->length );
+
+	if ( NULL == result ) {
+
+		if ( !onlyUseMemPooling_ ) {
+			newStr->hashID = hash(newStr->strPtr, newStr->length);
+			stringMap_.insert(StringMapPairT(newStr->hashID,newStr));		
+		}
+
+		newStr->extra = new StringExtraData();
+		newStr->extra->encoding = (FastString::LanguageEncoding)encoding;
+
+
+		result = newStr;
+	}
+	else {
+		size_t bytesLength = sizeof(StringData) + (newStr->length * sizeof(U16Char)) + sizeof(U16Char);
+
+		printf( "reclaim the memory, found an existing instance for transformAnsiToUnicode()\n\tstr: %s\n",str );
+		//reclaim the memory, we don't need it after all, since we found an existing
+		//match
+		next_ -= bytesLength;
+		totalBytesAllocated_ -= bytesLength;
+
+		freeStringData( newStr );
+	}
+
+	return result;
+}
+
+StringData* StringPool::addString( const char* str, size_t length, int encoding )
+{
+	StringData* result = NULL;
+	StringPool* pool = StringPool::getUsablePool();
+	if ( NULL == pool ) {
+		return NULL;
+	}
+
+	result = pool->transformAnsiToUnicode( str, length, encoding );	
+
+	return result;
+}
+
+StringData* StringPool::addString( const U16Char* str, size_t length )
+{
+	StringData* result = NULL;
+
+	StringPool* pool = StringPool::getUsablePool();
+	if ( NULL == pool ) {
+		return result;
+	}
+	
+	result = pool->find( str, length );
+
+
+	if ( result == NULL ) {
+		StringData* newStr = pool->allocate( str, str+length );
+		result = newStr;
+
+		//////////////////////////////////////////////////////
+		//PERFORMANCE WARNING!!
+		//multimap::insert is *expensive*. This is what changes
+		//loading and parsing around 34,000 entries in a dictionary
+		//from taking between 250ms to 137ms (with the insert) to
+		//taking 45ms (without the insert). Ultimately the
+		//multimap needs to go in favor of some other 
+		//associative container.
+		//////////////////////////////////////////////////////
+		if ( !pool->onlyUseMemPooling_ ) {
+			pool->stringMap_.insert(StringMapPairT(newStr->hashID,result));
+		}		
+	}
+
+	return result;
+}
+
+char* StringPool::transformToAnsi( StringData* handle, int encoding )
+{
+	char* result = NULL;
+
+	StringData* data = (StringData*)handle;
+
+	if ( NULL != data ) {
+		int len = data->length;
+		if ( data->length == 0 ) {
+			len = 1;
+		}
+
+		unsigned int enc = StringPool::getNativeEncoding(encoding);
+
+		int size = ::WideCharToMultiByte( enc, 0, data->strPtr, len,
+											NULL, 0, NULL, NULL );
+
+		if ( size <= 0 ) {
+			return NULL;
+		}
+
+		result = new char[size+1];
+
+		if (  0 == ::WideCharToMultiByte( enc, 0, data->strPtr, len,
+											result, size, NULL, NULL ) ) {
+				//WideCharToMultiByte failed
+				delete [] result;
+				result = NULL;
+		}
+		else {
+			result[size] = 0;
+			data->ansiStrPtr = result;
+		}
+	}
+
+	return result;
+}
+
+uint32 StringPool::incStringRefcount( StringData* data )
+{
+	if ( NULL != data ) {
+		if ( data->pool->getThreadID() == ::GetCurrentThreadId() ) {
+			data->refcount++;
+		}
+		else {
+			//we need to lock it?
+			data->refcount++;
+		}
+		return data->refcount;
+	}
+
+	return 0;
+}
+
+
+void StringPool::freeMemHeader( MemHeader* memHdr )
+{
+	std::vector<MemHeader*>::iterator found = 
+		std::find( allocatedHdrs_.begin(), 
+					allocatedHdrs_.end(), memHdr );
+	if ( found != allocatedHdrs_.end() ) {
+		allocatedHdrs_.erase( found );
+	}
+
+	size_t bytesFreed = memHdr->size;
+	if ( StringPool::freeMem(memHdr, 0 ) ) {
+		totalBytesAllocated_ -= bytesFreed;
+	}
+	else {
+		printf( "StringPool::freeMem failed. GetLastError(): %d\n", GetLastError() );
+	}
+}
+
+void StringPool::freeStringData( StringData* data )
+{
+	if ( NULL != data->extra ) {
+
+		//adjust child substring nodes
+		if ( NULL != data->extra->nextSubstr ) {
+			StringData* next = data->extra->nextSubstr;
+			while ( next != NULL ) {
+				if ( NULL != next->extra ) {
+					StringData* nx = next->extra->nextSubstr;
+					next->extra->substrParent = NULL;
+					next->extra->nextSubstr = NULL;
+
+					//re-hash the string data here to make it "independent"
+
+					//if the string already exists, then just 
+
+
+					next = nx;
+
+					//if ( NULL != next ) {
+					//	next->extra->nextSubstr = NULL;
+					//}
+				}
+				else {
+					next = NULL;
+				}
+			}
+		}	
+
+		delete data->extra;
+		data->extra = NULL;
+	}
+	
+
+	if ( data->memHdr->refcount > 0 ) {
+		data->memHdr->refcount --;
+	}
+	else {
+		if ( compactsMemory() ) {
+			//printf( "Memhdr refcount is already at 0!!!\n" );
+		}
+	}
+
+
+	if ( 0 == data->memHdr->refcount ) {
+		if ( compactsMemory() ) {
+			bool outstandingStrHandles = false;
+			bool deleteMemHdr = true;
+
+			if ( data->memHdr == currentHdr_ ) {
+				if ( next_ == reinterpret_cast<unsigned char*>(currentHdr_ + sizeof(U16Char)) ) {
+					//at begining , maybe we take out the whole thing
+
+					MemHeader* prev = this->prevHdr( currentHdr_ );
+
+					if ( NULL != prev ) {
+						if ( prev->next < prev->limit ) {							
+							currentHdr_ = prev;
+							next_ = currentHdr_->next;
+							limit_ = currentHdr_->limit;
+							deleteMemHdr = true;
+						}
+					}
+				}
+				else {
+					deleteMemHdr = false;
+				}
+			}				
+
+			if ( !stringMap_.empty() ) {
+				StringPool::StringMapIter it = stringMap_.begin();
+				size_t count = 0;
+				std::vector<StringPool::StringMapIter> removeEntries(stringMap_.size());
+				while ( it != stringMap_.end() ) {
+					StringData* strData = it->second;
+					if ( strData->memHdr == data->memHdr ) {
+
+						if ( strData->refcount > 0 ) {
+							//printf( "String data %p[%u characters] {%.*S%s} still has ref count(%u) > 0\n", 
+							//	strData, 
+							//	strData->length, 
+							//	(strData->length > 20) ? 20 : strData->length, 
+							//	strData->strPtr,  
+							//	(strData->length > 20) ? "..." : "",
+							//	strData->refcount );
+
+
+							outstandingStrHandles = true;
+							deleteMemHdr = false;
+						}
+						else {
+							removeEntries[count] = it;
+							count++;
+						}
+
+						++it;						
+					}
+					else {
+						++it;
+					}
+				}
+
+				for (size_t ri=0;ri<count;ri++) {
+					stringMap_.erase(removeEntries[ri]);
+				}
+			}
+
+			if ( deleteMemHdr ) {
+				freeMemHeader( data->memHdr );
+			}
+			else if ( !deleteMemHdr && !outstandingStrHandles ) {	
+				//reset it back to the beginning
+				next_ = reinterpret_cast<unsigned char*>(currentHdr_ + sizeof(U16Char));
+				currentHdr_->next = next_;
+				limit_ = currentHdr_->limit;
+			}
+		}
+	}
+}
+
+uint32 StringPool::decStringRefcount( StringData* data )
+{
+	if ( NULL != data ) {
+		StringPool* pool = data->pool;
+
+		if ( NULL == pool ) {
+			if ( data->refcount > 0 ) {
+				data->refcount--;
+			}
+			if ( 0 == data->refcount ) {
+				if ( data->bits & StringData::NotPoolManaged ) {
+					
+				}
+				else {
+					printf( "Orphaned StringData %p!\n", data );
+				}
+			}
+		}
+		else if ( pool->getThreadID() == ::GetCurrentThreadId() ) {
+			if ( data->refcount > 0 ) {
+				data->refcount--;
+			}
+
+			if ( 0 == data->refcount ) {
+				pool->freeStringData( data );
+				return 0;
+			}			
+		}
+		else {
+			//we need to lock it?
+			data->refcount--;
+		}
+		return data->refcount;
+	}
+
+	return 0;
+}
+
+bool StringPool::equals( StringData* lhs, StringData* rhs )
+{
+	if ( lhs == rhs ) {
+		return true;
+	}	
+
+	if ( NULL == rhs || NULL == lhs ) {
+		return false;
+	}
+
+	if ( lhs->bits & StringData::NotPoolManaged ) {
+		
+	}	
+
+	if ( lhs->length != rhs->length ) {
+		return false;
+	}
+
+	if ( lhs->hashID != rhs->hashID ) {
+		return false;
+	}	
+
+	if ( (lhs->pool == rhs->pool) || (lhs->pool->getThreadID() == rhs->pool->getThreadID()) ) {
+		return 0 == StringPool::wmemcmp( lhs->strPtr, rhs->strPtr, lhs->length );
+	}
+	else {
+		//different threads, different pools, do we need to lock here??
+		return 0 == StringPool::wmemcmp( lhs->strPtr, rhs->strPtr, lhs->length );
+	}
+
+	return false;
+}
+
+bool StringPool::isSubString( StringData* handle )
+{
+	if ( NULL == handle ) {
+		return false;
+	}
+
+	if ( NULL == handle->extra ) {
+		return false;
+	}
+
+	if ( NULL != handle->extra ) {
+		return (NULL != handle->extra->substrParent);
+	}
+
+	return false;
+}
+
+int StringPool::compare( StringData* lhs, StringData* rhs )
+{
+	if ( lhs == rhs ) {
+		return 0;
+	}	
+
+	if ( lhs->length == rhs->length && lhs->hashID == rhs->hashID ) {
+		return 0;
+	}
+
+	size_t sz = lhs->length < rhs->length ? lhs->length : rhs->length;
+
+	if ( (lhs->pool == rhs->pool) || (lhs->pool->getThreadID() == rhs->pool->getThreadID()) ) {
+		return  ::wcscmp(  lhs->strPtr, rhs->strPtr );//StringPool::wmemcmp( lhs->strPtr, rhs->strPtr, sz );
+	}
+	else {
+		//different threads, different pools, do we need to lock here??
+		return ::wcscmp(  lhs->strPtr, rhs->strPtr );//StringPool::wmemcmp( lhs->strPtr, rhs->strPtr, sz );
+	}
+
+	return 0;
+}
+
+StringData* StringPool::insert( const U16Char* src, size_t srcLength, StringData* dest, size_t insertPos )
+{
+	if ( insertPos > dest->length ) {
+		return NULL;
+	}
+
+
+	StringData* result = NULL;
+
+	StringPool* pool = dest->pool;
+
+	size_t size = dest->length + srcLength;
+	
+	StringData* newStr = pool->allocate( size );
+
+	if ( 0 == insertPos ) {
+		StringPool::wmemcpy( newStr->strPtr, src, srcLength );
+		StringPool::wmemcpy( &newStr->strPtr[srcLength], dest->strPtr, dest->length );		
+	}
+	else if ( dest->length -1 == insertPos ) {
+		StringPool::wmemcpy( newStr->strPtr, dest->strPtr, dest->length );
+		StringPool::wmemcpy( &newStr->strPtr[dest->length], src, srcLength );
+	}
+	else {		
+		StringPool::wmemcpy( newStr->strPtr, dest->strPtr, insertPos );
+		StringPool::wmemcpy( &newStr->strPtr[insertPos], src, srcLength );	
+		StringPool::wmemcpy( &newStr->strPtr[insertPos+srcLength], &dest->strPtr[insertPos], dest->length - insertPos );	
+	}
+
+	result = pool->find( newStr->strPtr, newStr->length );
+
+	if ( NULL == result ) {
+		if ( !pool->onlyUseMemPooling_ ) {
+			newStr->hashID = StringPool::hash(newStr->strPtr, newStr->length);
+
+			pool->stringMap_.insert(StringMapPairT(newStr->hashID,newStr));		
+		}
+
+		result = newStr;
+	}
+	else {
+		size_t bytesLength = sizeof(StringData) + (newStr->length * sizeof(U16Char)) + sizeof(U16Char);
+
+		//reclaim the memory, we don't need it after all, since we found an existing
+		//match
+		pool->next_ -= bytesLength;
+		pool->totalBytesAllocated_ -= bytesLength;
+
+		pool->freeStringData( newStr );
+	}
+	
+
+	return result;
+}	
+
+StringData* StringPool::insert( StringData* src, StringData* dest, size_t insertPos )
+{	
+	StringData* result = NULL;
+
+	StringPool* pool = NULL;
+
+	if ( NULL == src ) {
+		return result;
+	}
+
+	if ( NULL != dest ) {
+		if ( insertPos > dest->length ) {
+			return result;
+		}
+
+
+		if ( (src->pool == dest->pool) || (src->pool->getThreadID() == dest->pool->getThreadID()) ) {
+			pool = dest->pool;
+		}
+		else {
+			pool = StringPool::getUsablePool();
+		}
+	}
+	else {
+
+		if ( insertPos > 0 ) {
+			return NULL;
+		}
+
+		pool = StringPool::getUsablePool();
+	}
+
+
+	
+
+	
+
+	size_t size = src->length;
+	if ( NULL != dest ) {
+		size += dest->length;
+	}
+	
+	StringData* newStr = pool->allocate( size );
+
+	if ( 0 == insertPos ) {
+		StringPool::wmemcpy( newStr->strPtr, src->strPtr, src->length );
+		if ( NULL != dest ) {
+			StringPool::wmemcpy( &newStr->strPtr[src->length], dest->strPtr, dest->length );		
+		}
+	}
+	else if ( dest->length -1 == insertPos ) {
+		StringPool::wmemcpy( newStr->strPtr, dest->strPtr, dest->length );
+		StringPool::wmemcpy( &newStr->strPtr[dest->length], src->strPtr, src->length );
+	}
+	else {		
+		StringPool::wmemcpy( newStr->strPtr, dest->strPtr, insertPos );
+		StringPool::wmemcpy( &newStr->strPtr[insertPos], src->strPtr, src->length );	
+		StringPool::wmemcpy( &newStr->strPtr[insertPos+src->length], &dest->strPtr[insertPos], dest->length - insertPos );	
+	}
+
+	newStr->strPtr[newStr->length] = 0;
+
+	result = pool->find( newStr->strPtr, newStr->length );
+
+	if ( NULL == result ) {
+		if ( !pool->onlyUseMemPooling_ ) {
+			newStr->hashID = StringPool::hash(newStr->strPtr, newStr->length);
+
+			pool->stringMap_.insert(StringMapPairT(newStr->hashID,newStr));		
+		}
+
+		result = newStr;
+	}
+	else {
+		size_t bytesLength = sizeof(StringData) + (newStr->length * sizeof(U16Char)) + sizeof(U16Char);
+
+		//reclaim the memory, we don't need it after all, since we found an existing
+		//match
+		pool->next_ -= bytesLength;
+		pool->totalBytesAllocated_ -= bytesLength;
+
+		pool->freeStringData( newStr );
+	}
+	
+
+	return result;
+}
+
+StringData* StringPool::insert( U16Char ch, StringData* dest, size_t insertPos, size_t repeatCount )
+{
+	if ( NULL == dest ) {
+		return NULL;
+	}
+
+	if ( insertPos > dest->length ) {
+		return NULL;
+	}
+
+
+	if ( 0 == repeatCount ) {
+		return NULL;
+	}
+
+	StringData* result = NULL;
+
+	StringPool* pool = dest->pool;	
+
+	size_t size = dest->length + repeatCount;
+	
+	StringData* newStr = pool->allocate( size );
+
+	if ( 0 == insertPos ) {
+		for (size_t i=0;i<repeatCount;i++ ) {
+			newStr->strPtr[i] = ch;
+		}
+		StringPool::wmemcpy( &newStr->strPtr[repeatCount], dest->strPtr, dest->length );		
+	}
+	else if ( dest->length -1 == insertPos ) {
+		StringPool::wmemcpy( newStr->strPtr, dest->strPtr, dest->length );		
+		for (size_t i=0;i<repeatCount;i++ ) {
+			newStr->strPtr[dest->length + i] = ch;
+		}
+	}
+	else {		
+		StringPool::wmemcpy( newStr->strPtr, dest->strPtr, insertPos );
+		for (size_t i=0;i<repeatCount;i++ ) {
+			newStr->strPtr[insertPos + i] = ch;
+		}		
+		StringPool::wmemcpy( &newStr->strPtr[insertPos+repeatCount], &dest->strPtr[insertPos], dest->length - insertPos );	
+	}
+
+	result = pool->find( newStr->strPtr, newStr->length );
+
+	if ( NULL == result ) {
+		if ( !pool->onlyUseMemPooling_ ) {
+			newStr->hashID = StringPool::hash(newStr->strPtr, newStr->length);
+
+			pool->stringMap_.insert(StringMapPairT(newStr->hashID,newStr));		
+		}
+
+		result = newStr;
+	}
+	else {
+		size_t bytesLength = sizeof(StringData) + (newStr->length * sizeof(U16Char)) + sizeof(U16Char);
+
+		//reclaim the memory, we don't need it after all, since we found an existing
+		//match
+		pool->next_ -= bytesLength;
+		pool->totalBytesAllocated_ -= bytesLength;
+
+		pool->freeStringData( newStr );
+	}
+	
+
+	return result;
+}
+
+StringData* StringPool::erase( StringData* src, size_t startPos, size_t length )
+{
+	StringData* result = NULL;
+
+	if ( startPos > src->length ) {
+		return NULL;
+	}
+
+	if ( (startPos+length) > src->length ) {
+		return NULL;
+	}
+
+	if ( 0 == startPos && length >= src->length ) {
+		StringPool::decStringRefcount(src);
+		return NULL;
+	}
+
+	StringPool* pool = src->pool;	
+
+	size_t size = length > src->length ? (src->length - startPos) : src->length - length;
+	
+	StringData* newStr = pool->allocate( size );
+	
+	if ( 0 == startPos ) {
+		StringPool::wmemcpy( newStr->strPtr, &src->strPtr[length], newStr->length );		
+	}
+	else {		
+		StringPool::wmemcpy( newStr->strPtr, src->strPtr, startPos );
+		StringPool::wmemcpy( &newStr->strPtr[startPos], &src->strPtr[startPos + length], src->length - (startPos + length) );	
+	}
+
+	result = pool->find( newStr->strPtr, newStr->length );
+
+	if ( NULL == result ) {
+		if ( !pool->onlyUseMemPooling_ ) {
+			newStr->hashID = StringPool::hash(newStr->strPtr, newStr->length);
+
+			pool->stringMap_.insert(StringMapPairT(newStr->hashID,newStr));		
+		}
+
+		result = newStr;
+	}
+	else {
+		size_t bytesLength = sizeof(StringData) + (newStr->length * sizeof(U16Char)) + sizeof(U16Char);
+
+		//reclaim the memory, we don't need it after all, since we found an existing
+		//match
+		pool->next_ -= bytesLength;
+		pool->totalBytesAllocated_ -= bytesLength;
+
+		pool->freeStringData( newStr );
+	}
+
+	return result;
+}
+
+StringData* StringPool::subStr( StringData* src, size_t startPos, size_t length )
+{
+	StringData* result = NULL;
+	StringPool* pool = src->pool;
+
+	if ( startPos > src->length || (startPos + length) > src->length ) {
+		return NULL;
+	}
+
+
+	if ( NULL != src->extra ) {
+		if ( NULL != src->extra->nextSubstr ) {
+			StringData* next = src->extra->nextSubstr;
+			while ( next != NULL ) {
+
+				if ( NULL != next->extra ) {
+					if ( next->length == length && next->extra->subStrStart == startPos ) {
+						return next;
+					}
+
+					next = next->extra->nextSubstr;
+				}
+				else {
+					next = NULL;
+				}
+			}
+		}
+	}
+
+	size_t bytesLength = sizeof(StringData);// + (length * sizeof(U16Char)) + sizeof(U16Char);
+	if ((pool->next_ + bytesLength) <= pool->limit_) {
+		StringData* data = (StringData*)pool->next_;
+
+		pool->initStringData( data, NULL , length );
+
+		data->strPtr = src->strPtr + startPos;
+
+		data->extra = new StringExtraData();
+		data->extra->subStrStart = startPos;
+		data->extra->subStrEnd = startPos+length;
+		data->extra->substrParent = src;
+
+		if ( NULL == src->extra ) {
+			src->extra = new StringExtraData();
+		}
+		src->extra->nextSubstr = data;
+
+
+		pool->next_ += bytesLength;
+		pool->currentHdr_->next = pool->next_;
+		pool->currentHdr_->refcount ++;
+		return data;
+	}
+
+
+
+	unsigned char* nextBytes = NULL;
+	size_t allocSize = 0;
+
+	if (bytesLength <= MAX_CHARALLOC) {	
+		allocSize = RoundUp(bytesLength + sizeof(MemHeader), pool->granularity_);
+		nextBytes = reinterpret_cast<unsigned char*>( StringPool::allocMem(allocSize) );
+	}
+
+	if (!nextBytes) {
+		static std::bad_alloc outOfMemException;
+		throw(outOfMemException);
+	}
+
+	pool->totalBytesAllocated_ += allocSize;
+	
+	pool->limit_ = reinterpret_cast<unsigned char*>(nextBytes + allocSize);
+	MemHeader* currentHdr = reinterpret_cast<MemHeader*>(nextBytes);
+//	currentHdr->prev = currentHdr_;
+	currentHdr->size = allocSize;
+	currentHdr->refcount = 0;
+	
+
+	pool->currentHdr_ = currentHdr;
+	pool->next_ = reinterpret_cast<unsigned char*>(currentHdr + sizeof(U16Char));
+	pool->currentHdr_->next = pool->next_;
+	pool->currentHdr_->limit = pool->limit_;
+	
+	pool->allocatedHdrs_.push_back( pool->currentHdr_ );
+
+	return subStr( src, startPos, length );
+}
+
+
+StringData* StringPool::concatenate( const std::vector<StringRange>& strArray )
+{
+	StringData* result = NULL;
+
+
+	size_t size = 0;
+	for (size_t i=0;i<strArray.size();i++ ) {
+		size += strArray[i].length;
+	}	
+	
+	StringData* newStr = allocate( size );
+
+	U16Char* tmp = newStr->strPtr;
+	for (size_t j=0;j<strArray.size();j++ ) {
+		StringPool::wmemcpy( tmp, strArray[j].strPtr, strArray[j].length );		
+		tmp += strArray[j].length;
+	}
+
+	result = find( newStr->strPtr, newStr->length );
+
+
+	if ( NULL == result ) {
+		if ( !onlyUseMemPooling_ ) {
+			newStr->hashID = StringPool::hash(newStr->strPtr, newStr->length);
+
+			stringMap_.insert(StringMapPairT(newStr->hashID,newStr));		
+		}
+
+		result = newStr;
+	}
+	else {
+		size_t bytesLength = sizeof(StringData) + (newStr->length * sizeof(U16Char)) + sizeof(U16Char);
+
+		//reclaim the memory, we don't need it after all, since we found an existing
+		//match
+		next_ -= bytesLength;
+		totalBytesAllocated_ -= bytesLength;
+		freeStringData( newStr );
+	}
+
+
+	return result;
+}
+
+
+std::vector<U16Char> StringLiteral::storage(StringLiteral::InitialStorageSize);
+
+
+FastString FastString::set( size_t pos, const U16Char& ch ) const
+{
+	std::vector<StringRange> strings(3);	
+	strings[0].strPtr = c_str();
+	strings[0].length = pos;
+	strings[1].strPtr = &ch;
+	strings[1].length = 1;
+	strings[2].strPtr = strings[0].strPtr + strings[0].length + strings[1].length;
+	strings[2].length = size() - strings[0].length + strings[1].length;
+
+
+	return FastString( StringPool::getCurrentPool()->concatenate(strings) );
+}
+
+
+uint64 FastString::sizeOf() const
+{
+
+	uint64 result  = sizeof(FastString);
+
+	result +=  size() * sizeof(VCFChar);
+
+	return result;
+}
+
+void FastString::decode_ansi( TextCodec* codec, AnsiChar* str, size_type& strSize, LanguageEncoding encoding ) const 
+{
+	VCF_ASSERT ( str != NULL );
+
+	uint32 size = codec->convertToAnsiString( *this, str, strSize, encoding );
+
+	if ( size < strSize ) {
+		str[size] = 0;
+	}
+
+	strSize = size;
+}
+
+FastString FastString::decode( TextCodec* codec, LanguageEncoding encoding ) const 
+{
+	return codec->convertToUnicodeString( *this, encoding );
+}
+
+void FastString::encode( TextCodec* codec, const FastString::AnsiChar* str, size_type n, LanguageEncoding encoding )
+{
+	VCF_ASSERT ( str != NULL );
+	*this = codec->convertToUnicodeString( str, n, encoding );
+}
+
+void FastString::encode( TextCodec* codec, const FastString& str, LanguageEncoding encoding )
+{
+	*this = codec->convertToUnicodeString( str, encoding );
+}
+
+
+
+void FastString::transformAnsiToUnicode( const FastString::AnsiChar* str, FastString::size_type stringLength, 
+										FastString& newStr, 
+										FastString::LanguageEncoding encoding )
+{
+
+	newStr.assign( StringPool::getCurrentPool()->transformAnsiToUnicode( str, stringLength, encoding ) );
+}
+
+
+FastString::AnsiChar* FastString::transformUnicodeToAnsi( const FastString& str, FastString::LanguageEncoding encoding )
+{
+
+	str.ansi_c_str( encoding );
+	return NULL;
+}
+
+
+FastString::UniChar FastString::transformAnsiCharToUnicodeChar( FastString::AnsiChar c, LanguageEncoding encoding )
+{
+	return 1;
+}
+
+FastString::AnsiChar FastString::transformUnicodeCharToAnsiChar( FastString::UniChar c, LanguageEncoding encoding )
+{
+	return 0;
+}
+
+int FastString::adjustForBOMMarker( FastString::AnsiChar*& stringPtr, uint32& len )
+{
+	return 0;
+}
+
+
+
+
+#endif //USE_STRINGPOOL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#ifndef USE_STRINGPOOL	
+
+
 
 
 
@@ -352,7 +1842,7 @@ unsigned int UnicodeStringGetEncoding(UnicodeString::LanguageEncoding encoding)
 void UnicodeString::transformAnsiToUnicode( const UnicodeString::AnsiChar* str, UnicodeString::size_type stringLength, UnicodeString::StringData& newStr, LanguageEncoding encoding )
 {
 	if ( stringLength == 0 ) {
-		newStr.erase(0,newStr.size());
+		newStr = newStr.erase(0,newStr.size());
 	}
 	else {
 
@@ -362,7 +1852,7 @@ void UnicodeString::transformAnsiToUnicode( const UnicodeString::AnsiChar* str, 
 
 		/***
 		What code page do we want to use here???? CP_ACP may not be the
-		most appropriate one to use. First let's try and examine the
+		most appropriate one to use. First FastString::let's try and examine the
 		current locale
 		*/
 
@@ -1177,6 +2667,8 @@ uint64 UnicodeString::sizeOf() const
 
 	return result;
 }
+
+#endif //#ifdef FOOBAR
 
 };
 

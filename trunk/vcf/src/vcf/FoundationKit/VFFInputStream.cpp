@@ -271,7 +271,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 
 							
 							if ( (pdObject == prop->getType() || pdVariant == prop->getType()) && ('@' == value[0]) ) {
-								value.erase( 0, 1 );
+								value = value.erase( 0, 1 );
 								if ( !value.empty() ) {
 									//need to adjust this for arrays/collections!
 									deferredProperties_.push_back( new DeferredPropertySetter( value, prop->getName(), prop->getSource(), key ) );
@@ -513,12 +513,12 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 							//property on, and the name of the component to try and retreive
 							//once we get to that point.
 							
-							value.erase( 0, 1 );
+							value = value.erase( 0, 1 );
 							if ( !value.empty() ) {
 								deferredProp = true;
 							}
 							else {
-								value.insert( 0, L"@" );
+								value = value.insert( 0, L"@" );
 							}
 						}
 
@@ -745,7 +745,7 @@ void VFFInputStream::assignDeferredProperties( Component* component )
 					Property* valProp = NULL;
 					String componentName;
 					componentName = propName.substr(0,pos);
-					propName.erase( 0, pos+1 );
+					propName = propName.erase( 0, pos+1 );
 
 					if ( component->bindVariable( &foundComponent, componentName ) ) {
 						Class* valClass = foundComponent->getClass();						
@@ -779,8 +779,8 @@ void VFFInputStream::assignDeferredProperties( Component* component )
 								propVal = valProp->get();
 							}
 							
-							propName.erase( 0, pos+1 );		
-						}while ( pos != String::npos );
+							propName = propName.erase( 0, pos+1 );		
+						} while ( pos != String::npos );
 
 						if ( NULL == propVal ) {
 							data = VariantData::null();

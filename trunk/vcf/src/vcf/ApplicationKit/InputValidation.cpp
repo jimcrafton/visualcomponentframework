@@ -696,7 +696,7 @@ String NumericValidator::getValidText()
 
 	// Insert the negative sign if it's there
 	if (isNegative) {
-		result.insert(0, negativeSign_);
+		result = result.insert(0, negativeSign_);
 	}
 
 	return getSeparatedText(result);
@@ -925,17 +925,17 @@ void NumericValidator::handleEvent( Event* e )
 			if (flags_ & nvfOnKillFocus_RemoveExtraLeadingZeros && nLen > 0) {
 				bool bIsNegative = (String(1,text[0]) == negativeSign_);
 				if (bIsNegative) {
-					text.erase(0,1);
+					text = text.erase(0,1);
 				}
 
 				text = StringUtils::trimLeft( text, '0' );
 
 				if ( text.empty() || String(1,text[0]) == decimalPoint_ ) {
-					text.insert(0, "0");
+					text = text.insert(0, "0");
 				}
 
 				if (bIsNegative) {
-					text.insert(0, negativeSign_);
+					text = text.insert(0, negativeSign_);
 				}
 			}
 			else if (!(flags_ & nvfOnKillFocus_Max) || (nLen == 0 && flags_ & nvfOnKillFocus_DontPadWithZerosIfEmpty)) {
@@ -1267,7 +1267,7 @@ String NumericValidator::getNumericText(const String& text, bool useMathSymbols 
 
 	// Add the negative sign to the front of the number
 	if (isNegative) {
-		result.insert(0, useMathSymbols ? L"-" : negativeSign_);
+		result = result.insert(0, useMathSymbols ? L"-" : negativeSign_);
 	}
 
 
@@ -1325,7 +1325,7 @@ void NumericValidator::insertZeros(String& text, int pos, int count)
 	}
 
 	for (int zero = 0; zero < count; zero++) {
-		text.insert(pos, "0");
+		text = text.insert(pos, "0");
 	}
 }
 
@@ -1379,7 +1379,11 @@ String NumericValidator::getMask()
 
 	for (size_t iPos = 0, nLen = result.length(); iPos < nLen; iPos++) 	{
 		if (result[iPos] == '0') {
+#ifdef USE_STRINGPOOL
+			result = result.set(iPos,'#');
+#else
 			result[iPos] = '#';
+#endif
 		}
 	}	
 

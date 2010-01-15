@@ -48,7 +48,7 @@ void DefaultTextModel::empty()
 
 void DefaultTextModel::doInsertText( const uint32& index, const String& text )
 {
-	text_.insert( index, text );	
+	text_ = text_.insert( index, text );	
 }
 
 void DefaultTextModel::doReplaceText( const uint32& index, const uint32& count, const String& text )
@@ -64,11 +64,11 @@ void DefaultTextModel::doReplaceText( const uint32& index, const uint32& count, 
 	// this relies on STL to be smart enough to delete only
 	// the count character that are part of the string
 	if ( !text_.empty() ) {
-		text_.erase( index, count );
+		text_ = text_.erase( index, count );
 	}
 
 	//insert new text
-	text_.insert( index, text );	
+	text_ = text_.insert( index, text );	
 }
 
 void DefaultTextModel::doRemoveText( const uint32& index, const uint32& count )
@@ -77,7 +77,7 @@ void DefaultTextModel::doRemoveText( const uint32& index, const uint32& count )
 
 	// this relies on STL to be smart enough to delete only
 	// the count character that are part of the string
-	text_.erase( index, count );	
+	text_ = text_.erase( index, count );	
 }
 
 

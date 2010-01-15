@@ -1226,9 +1226,8 @@ UnicodeString Locale::translate( const UnicodeString& id )
 UnicodeString Locale::languageCodeToString( LanguageCodes code )
 {
 	UnicodeString result;
-
-	result.append( 1, (char)((code & 0xFF00) >> 8) );
-	result.append( 1, (char)(code & 0xFF) );
+	result = result.append( 1, (char)((code & 0xFF00) >> 8));
+	result = result.append( 1, (char)(code & 0xFF) );
 
 	return result;
 }
@@ -1236,9 +1235,8 @@ UnicodeString Locale::languageCodeToString( LanguageCodes code )
 UnicodeString Locale::countryCodeToString( CountryCodes code )
 {
 	UnicodeString result;
-
-	result.append( 1, (char)((code & 0xFF00) >> 8) );
-	result.append( 1, (char)(code & 0xFF) );
+	result = result.append( 1, (char)((code & 0xFF00) >> 8));	
+	result = result.append( 1, (char)(code & 0xFF) );
 
 	return result;
 }

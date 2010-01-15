@@ -354,7 +354,7 @@ String VFFParser::tokenString()
 	}
 
 	if ( length > 0 ) {
-		result.append( current_.tokenPtr, length );
+		result.assign( current_.tokenPtr, length );
 	}
 
 	return result;

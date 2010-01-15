@@ -592,7 +592,7 @@ void TextControl::internal_processKeyDown( KeyboardEvent* ke )
 					}
 
 					if ( 0 != length ) {
-						text.erase( pos, length );
+						text = text.erase( pos, length );
 						model->setValueAsString( text, getModelKey() );
 						if ( didInputValidationFail() ) {
 							ke->ignoreKeystroke = true;
@@ -681,7 +681,7 @@ void TextControl::internal_processKeyDown( KeyboardEvent* ke )
 				
 				
 				if ( 0 != length ) {
-					text.erase( pos, length );
+					text = text.erase( pos, length );
 					model->setValueAsString( text, getModelKey() );
 					if ( didInputValidationFail() ) {
 						ke->ignoreKeystroke = true;
@@ -795,10 +795,10 @@ void TextControl::internal_processKeyDown( KeyboardEvent* ke )
 						String newText = model->getValueAsString( getModelKey() );
 
 						if ( length > 0 ) {
-							newText.erase( pos, length );
+							newText = newText.erase( pos, length );
 						}
 
-						newText.insert( pos, text );
+						newText = newText.insert( pos, text );
 						
 						//check with the formatter and format our
 						//new text. If formatted text is *smaller*
@@ -843,10 +843,10 @@ void TextControl::internal_processKeyDown( KeyboardEvent* ke )
 						String newText = model->getValueAsString( getModelKey() );
 
 						if ( length > 0 ) {
-							newText.erase( pos, length );
+							newText = newText.erase( pos, length );
 						}
 
-						newText.insert( pos, text );
+						newText = newText.insert( pos, text );
 						
 						if ( model->getFormatter() != NULL ) {
 							String tmp = model->getFormatter()->convertFromModel( getModelKey(), newText );
@@ -978,10 +978,10 @@ void TextControl::internal_processKeyPress( KeyboardEvent* ke )
 						*/
 
 						if ( length > 0 ) {
-							newText.erase( pos, length );
+							newText = newText.erase( pos, length );
 						}
 
-						newText.insert( pos, text );
+						newText = newText.insert( pos, text );
 						
 						if ( model->getFormatter() != NULL ) {
 							String tmp = model->getFormatter()->convertFromModel( getModelKey(), newText );
