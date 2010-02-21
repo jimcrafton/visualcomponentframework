@@ -217,7 +217,7 @@ public:
 
 		ListModelEvent itemEvent( this, lmeItemRemoved );
 
-		std::vector<DataType>::iterator it = data_.begin();
+		_typename_ std::vector<DataType>::iterator it = data_.begin();
 		
 		while ( it != data_.end() ) {
 			itemEvent.item = NULL;
