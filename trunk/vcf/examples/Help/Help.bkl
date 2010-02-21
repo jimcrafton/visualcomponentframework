@@ -3,27 +3,35 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
-    <mkdir id="mkdir_help" cond="PLATFORM_WIN32=='1' and OPTION_APPLICATIONKIT=='1'">
-        <dir>Help</dir>
-        <dependency-of>all</dependency-of>
-    </mkdir>
+    <set var="CWD">$(VCF_DIR)\examples\Help</set>
 
     <exe id="Help" template="vcf_exe_gui" cond="PLATFORM_WIN32=='1' and OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>Help.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)\Help.cpp</sources>
         <vcf-use-ApplicationKit/>
-        <clean-files>
-            "Help\Help*.chm"
-        </clean-files>
+        <if cond="FORMAT not in ['xcode2', 'symbian', 'msvc6prj',
+                'msevc4prj','msvs2003prj','msvs2005prj','msvs2008prj']">
+            <clean-files>
+                "$(CWD)\Help\Help*.chm"
+            </clean-files>
+        </if>
     </exe>
 
-    <action id="hhc_Help" cond="PLATFORM_WIN32=='1' and OPTION_APPLICATIONKIT=='1'">
-        <is-phony>1</is-phony>
-        <dependency-of>all</dependency-of>
-        <command>
-            -hhc "Help App.hhp"
-        </command>
-    </action>
+    <if cond="FORMAT not in ['xcode2', 'symbian', 'msvc6prj',
+            'msevc4prj','msvs2003prj','msvs2005prj','msvs2008prj']">
+        <mkdir id="mkdir_help" cond="PLATFORM_WIN32=='1' and OPTION_APPLICATIONKIT=='1'">
+            <dir>$(CWD)\Help</dir>
+            <dependency-of>all</dependency-of>
+        </mkdir>
+
+        <action id="hhc_Help" cond="PLATFORM_WIN32=='1' and OPTION_APPLICATIONKIT=='1'">
+            <is-phony>1</is-phony>
+            <dependency-of>all</dependency-of>
+            <command>
+                -hhc "$(CWD)\Help App.hhp"
+            </command>
+        </action>
+    </if>
 </makefile>
 
 <!--

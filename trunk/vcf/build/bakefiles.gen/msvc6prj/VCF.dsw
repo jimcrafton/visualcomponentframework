@@ -140,6 +140,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "glew_lib"=VCF_glew_lib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "FoundationKit"=VCF_FoundationKit.dsp - Package Owner=<4>
 
 Package=<5>
@@ -306,6 +318,24 @@ Project_Dep_Name js_dll
 End Project Dependency
 Begin Project Dependency
 Project_Dep_Name FoundationKit
+End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ImageKit"=VCF_ImageKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+Begin Project Dependency
+Project_Dep_Name glew_lib
+End Project Dependency
+Begin Project Dependency
+Project_Dep_Name OpenGLKit
 End Project Dependency
 }}}
 

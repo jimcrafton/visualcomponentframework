@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Alignment</set>
+
     <exe id="Alignment" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>Alignment.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/Alignment.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

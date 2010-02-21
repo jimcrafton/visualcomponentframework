@@ -3,10 +3,12 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Chatterbox</set>
+
     <exe id="Chatterbox" template="vcf_exe_gui"
             cond="OPTION_HTMLKIT=='1' and OPTION_NETWORKKIT=='1'">
-        <dirname>.</dirname>
-        <sources>Chatterbox.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/Chatterbox.cpp</sources>
         <vcf-use-HTMLKit/>
         <vcf-use-NetworkKit/>
     </exe>

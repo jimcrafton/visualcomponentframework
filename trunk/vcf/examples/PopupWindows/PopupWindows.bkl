@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/PopupWindows</set>
+
     <exe id="PopupWindows" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>PopupWindows.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/PopupWindows.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

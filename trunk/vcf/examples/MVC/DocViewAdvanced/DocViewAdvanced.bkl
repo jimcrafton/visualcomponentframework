@@ -3,10 +3,12 @@
 <makefile>
     <include file="../../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/MVC/DocViewAdvanced</set>
+
     <exe id="DocViewAdvanced" template="vcf_exe_gui"
             cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>DocViewAdvanced.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/DocViewAdvanced.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

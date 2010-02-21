@@ -3,10 +3,12 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/CPBrowser</set>
+
     <exe id="CPBrowser" template="vcf_exe_gui"
            cond="OPTION_HTMLKIT=='1' and OPTION_INTERNETKIT=='1' and OPTION_XMLKIT=='1'">
-        <dirname>.</dirname>
-        <sources>CPBrowser.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/CPBrowser.cpp</sources>
         <vcf-use-HTMLKit/>
         <vcf-use-InternetKit/>
         <vcf-use-XMLKit/>

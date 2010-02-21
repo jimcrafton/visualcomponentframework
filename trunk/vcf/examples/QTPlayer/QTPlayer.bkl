@@ -3,26 +3,28 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/QTPlayer</set>
+
     <exe id="QTPlayer" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
+        <dirname>$(CWD)</dirname>
         <headers>
-            MainWindow.h
-            QTPlayerAbout.h
-            QTPlayerApplication.h
-            QuickTimeControl.h
-            QuickTimeMovie.h
-            StatusBarControl.h
+            $(CWD)/MainWindow.h
+            $(CWD)/QTPlayerAbout.h
+            $(CWD)/QTPlayerApplication.h
+            $(CWD)/QuickTimeControl.h
+            $(CWD)/QuickTimeMovie.h
+            $(CWD)/StatusBarControl.h
         </headers>
         <sources>
-            MainWindow.cpp
-            QTPlayer.cpp
-            QTPlayerAbout.cpp
-            QTPlayerApplication.cpp
-            QuickTimeControl.cpp
-            QuickTimeMovie.cpp
-            StatusBarControl.cpp
+            $(CWD)/MainWindow.cpp
+            $(CWD)/QTPlayer.cpp
+            $(CWD)/QTPlayerAbout.cpp
+            $(CWD)/QTPlayerApplication.cpp
+            $(CWD)/QuickTimeControl.cpp
+            $(CWD)/QuickTimeMovie.cpp
+            $(CWD)/StatusBarControl.cpp
         </sources>
-        <win32-res>QTResFile.rc</win32-res>
+        <win32-res>$(CWD)/QTResFile.rc</win32-res>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

@@ -3,10 +3,12 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/ClassRegistryBrowser</set>
+
     <exe id="ClassRegistryBrowser" template="vcf_exe_gui" cond="OPTION_HTMLKIT=='1'">
-        <dirname>.</dirname>
-        <sources>ClassRegistryBrowser.cpp</sources>
-        <win32-res>ClassRegistryBrowser.rc</win32-res>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/ClassRegistryBrowser.cpp</sources>
+        <win32-res>$(CWD)/ClassRegistryBrowser.rc</win32-res>
         <vcf-use-HTMLKit/>
     </exe>
 </makefile>

@@ -3,10 +3,12 @@
 <makefile>
     <include file="../../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/MVC/BusinessObjectValidation</set>
+
     <exe id="BusinessObjectValidation" template="vcf_exe_gui"
             cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>BusinessObjectValidation.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/BusinessObjectValidation.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

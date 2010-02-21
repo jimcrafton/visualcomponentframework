@@ -3,11 +3,13 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Localization</set>
+
     <exe id="Localization" template="vcf_exe_console"
             cond="OPTION_FOUNDATIONKIT=='1'">
-        <dirname>.</dirname>
+        <dirname>$(CWD)</dirname>
         <exename>Localization</exename>
-        <sources>Localization.cpp</sources>
+        <sources>$(CWD)/Localization.cpp</sources>
         <vcf-use-FoundationKit/>
     </exe>
 </makefile>

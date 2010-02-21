@@ -44,6 +44,7 @@
     <subproject id="DragAndDrop" template="example"/>
     <subproject id="EventBasics" template="example"/>
     <subproject id="FilesAndDirectories" template="example"/>
+    <subproject id="FilterTest" template="example"/>
     <subproject id="FrameStyles" template="example"/>
     <subproject id="Gradients" template="example"/>
     <subproject id="GraphicsAndMouseMoves" template="example"/>

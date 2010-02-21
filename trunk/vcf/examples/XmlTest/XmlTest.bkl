@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
-    <exe id="XmlTest" template="vcf_exe_console" cond="OPTION_XMLKIT=='1'">
-        <dirname>.</dirname>
-        <sources>XmlTest.cpp</sources>
+    <set var="CWD">$(VCF_DIR)/examples/XmlTest</set>
+
+    <exe id="XmlTest" template="vcf_exe_console" cond="OPTION_INTERNETKIT=='1' and OPTION_XMLKIT=='1'">
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/XmlTest.cpp</sources>
         <vcf-use-InternetKit/>
         <vcf-use-XMLKit/>
     </exe>

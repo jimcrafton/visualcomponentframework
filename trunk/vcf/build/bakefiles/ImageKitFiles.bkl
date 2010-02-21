@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <set var="IMAGEKIT_HDR" hints="files">
+        vcf/ImageKit/ImageKit.h
+    </set>
+
+    <set var="IMAGEKIT_SRC" hints="files">
+        vcf/ImageKit/ImageKit.cpp
+    </set>
+
+</makefile>

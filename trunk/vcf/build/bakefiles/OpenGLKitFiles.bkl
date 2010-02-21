@@ -13,6 +13,7 @@
     <set var="OPENGLKIT_SRC" hints="files">
         vcf/OpenGLKit/OpenGLControl.cpp
         vcf/OpenGLKit/OpenGLContext.cpp
+        vcf/OpenGLKit/OpenGLKit.cpp
         vcf/OpenGLKit/OpenGLToolkit.cpp
     </set>
 

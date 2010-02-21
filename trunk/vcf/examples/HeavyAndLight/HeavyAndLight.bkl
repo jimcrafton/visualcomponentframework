@@ -3,10 +3,12 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/HeavyAndLight</set>
+
     <exe id="HeavyAndLight" template="vcf_exe_gui"
             cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>HeavyAndLight.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/HeavyAndLight.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

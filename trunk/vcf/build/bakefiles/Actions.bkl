@@ -70,6 +70,12 @@
             <depends>JavaScriptKit_dll</depends>
         </action>
         
+        <action id="ImageKit" cond="OPTION_IMAGEKIT=='1'">
+            <is-phony>1</is-phony>
+            <depends>ImageKit_lib</depends>
+            <depends>ImageKit_dll</depends>
+        </action>
+        
         <action id="ScintillaKit" cond="OPTION_SCINTILLAKIT=='1'">
             <is-phony>1</is-phony>
             <depends>ScintillaKit_lib</depends>
@@ -140,6 +146,11 @@
         <action id="scintilla" cond="OPTION_SCINTILLA=='1'">
             <is-phony>1</is-phony>
             <depends>scintilla_lib</depends>
+        </action>
+
+        <action id="glew" cond="OPTION_GLEW=='1'">
+            <is-phony>1</is-phony>
+            <depends>glew_lib</depends>
         </action>
 
     </if>

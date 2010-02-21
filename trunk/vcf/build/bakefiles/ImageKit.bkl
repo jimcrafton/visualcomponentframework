@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="ImageKitFiles.bkl"/>
+
+    <template id="ImageKit_base">
+        <set var="LIBRARY_NAME">$(IMAGEKIT_NAME)</set>
+
+        <headers>$(IMAGEKIT_HDR)</headers>
+        <sources>$(IMAGEKIT_SRC)</sources>
+
+        <vcf-include-glew/>
+        <vcf-use-OpenGLKit/>
+
+        <library>glew_lib</library>
+        <define>GLEW_STATIC</define>
+    </template>
+
+    <lib id="ImageKit_lib" template="ImageKit_base,vcf_lib"
+            cond="OPTION_SHARED=='0' and OPTION_IMAGEKIT=='1' and OPTION_ALLIN1=='0'">
+        <depends>OpenGLKit_lib</depends>
+    </lib>
+
+    <dll id="ImageKit_dll" template="ImageKit_base,vcf_dll"
+            cond="OPTION_SHARED=='1' and OPTION_IMAGEKIT=='1' and OPTION_ALLIN1=='0'">
+        <define>IMAGEKIT_DLL</define>
+        <define>IMAGEKIT_EXPORTS</define>
+
+        <res-include>../../src/vcf/ImageKit</res-include>
+        <win32-res>../src/vcf/ImageKit/ImageKit.rc</win32-res>
+
+        <depends>OpenGLKit_dll</depends>
+    </dll>
+
+    <set var="MSVC6PRJ_MERGED_TARGETS" append="1"
+            cond="OPTION_IMAGEKIT=='1' and OPTION_ALLIN1=='0'">
+        ImageKit=ImageKit_lib+ImageKit_dll
+    </set>
+</makefile>

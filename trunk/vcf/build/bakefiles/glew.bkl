@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="glewFiles.bkl"/>
+
+    <template id="glew_base">
+        <set var="LIBRARY_NAME">$(GLEW_NAME)</set>
+
+        <headers>$(GLEW_HDR)</headers>
+        <sources>$(GLEW_SRC)</sources>
+
+        <vcf-include-glew/>
+    </template>
+
+    <lib id="glew_lib" template="glew_base,vcf_lib"
+            cond="OPTION_GLEW=='1'">
+        <define>GLEW_STATIC</define>
+    </lib>
+</makefile>

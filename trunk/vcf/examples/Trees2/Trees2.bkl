@@ -3,9 +3,12 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
-    <exe id="Trees2" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>Trees2.cpp</sources>
+    <set var="CWD">$(VCF_DIR)/examples/Trees2</set>
+
+    <exe id="Trees2" template="vcf_exe_gui"
+            cond="OPTION_APPLICATIONKIT=='1' and OPTION_XMLKIT=='1'">
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/Trees2.cpp</sources>
         <vcf-use-ApplicationKit/>
         <vcf-use-XMLKit/>
     </exe>

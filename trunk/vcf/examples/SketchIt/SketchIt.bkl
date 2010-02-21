@@ -3,20 +3,22 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/SketchIt</set>
+
     <exe id="SketchIt" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
+        <dirname>$(CWD)</dirname>
         <headers>
- 	    SketchModel.h
-            SketchTools.h
-            SketchView.h
-            SketchWindow.h
+            $(CWD)/SketchModel.h
+            $(CWD)/SketchTools.h
+            $(CWD)/SketchView.h
+            $(CWD)/SketchWindow.h
         </headers>
         <sources>
-            SketchIt.cpp
-	    SketchModel.cpp
-            SketchTools.cpp
-            SketchView.cpp
-            SketchWindow.cpp
+            $(CWD)/SketchIt.cpp
+            $(CWD)/SketchModel.cpp
+            $(CWD)/SketchTools.cpp
+            $(CWD)/SketchView.cpp
+            $(CWD)/SketchWindow.cpp
         </sources>
         <vcf-use-ApplicationKit/>
     </exe>

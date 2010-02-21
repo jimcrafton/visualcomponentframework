@@ -3,13 +3,15 @@
 <makefile>
     <include file="../../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/MVC/Scribble3</set>
+
     <exe id="Scribble3" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
+        <dirname>$(CWD)</dirname>
         <headers>
-            ScribbleModel.h
-            ScribbleView.h
+            $(CWD)/ScribbleModel.h
+            $(CWD)/ScribbleView.h
         </headers>
-        <sources>Scribble3.cpp</sources>
+        <sources>$(CWD)/Scribble3.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

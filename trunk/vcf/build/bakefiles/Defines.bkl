@@ -121,6 +121,12 @@
         </include>
     </define-tag>
 
+    <define-tag name="vcf-include-glew" rules="dll,lib,exe,module">
+        <include>
+            $(vcf.joinPaths( VCF_INCLUDE, 'vcf/ImageKit/glew/include' ))
+        </include>
+    </define-tag>
+
 
     <!--
     Using libraries.
@@ -192,6 +198,12 @@
     <define-tag name="vcf-use-scintilla" rules="dll,lib,exe,module">
         <vcf-include-scintilla/>
         <vcf-lib>$(SCINTILLA_FILENAME)</vcf-lib>
+    </define-tag>
+
+    <define-tag name="vcf-use-glew" rules="dll,lib,exe,module">
+        <vcf-include-glew/>
+        <vcf-lib>$(GLEW_FILENAME)</vcf-lib>
+        <define>GLEW_STATIC</define>
     </define-tag>
 
 
@@ -336,6 +348,19 @@
         </set>
         <vcf-lib>$(JAVASCRIPTKIT)</vcf-lib>
         <define>$(JAVASCRIPTKIT_DLL)</define>
+    </define-tag>
+
+    <set var="IMAGEKIT_DLL">
+        <if cond="OPTION_SHARED=='1'">IMAGEKIT_DLL</if>
+    </set>
+    <define-tag name="vcf-use-ImageKit" rules="dll,lib,exe,module">
+        <vcf-use-glew/>
+        <vcf-use-OpenGLKit/>
+        <set var="IMAGEKIT">
+            <if cond="OPTION_ALLIN1=='0'">$(IMAGEKIT_FILENAME)</if>
+        </set>
+        <vcf-lib>$(IMAGEKIT)</vcf-lib>
+        <define>$(IMAGEKIT_DLL)</define>
     </define-tag>
 
     <set var="SCINTILLAKIT_DLL">

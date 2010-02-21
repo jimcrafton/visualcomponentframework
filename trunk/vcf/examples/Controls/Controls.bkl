@@ -3,21 +3,23 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Controls</set>
+
     <exe id="Controls" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
+        <dirname>$(CWD)</dirname>
         <headers>
-            ControlsAbout.h
-            ControlsApplication.h
-            MainWindow.h
-            Spacers.h
+            $(CWD)/ControlsAbout.h
+            $(CWD)/ControlsApplication.h
+            $(CWD)/MainWindow.h
+            $(CWD)/Spacers.h
         </headers>
         <sources>
-            Controls.cpp
-            ControlsAbout.cpp
-            ControlsApplication.cpp
-            MainWindow.cpp
+            $(CWD)/Controls.cpp
+            $(CWD)/ControlsAbout.cpp
+            $(CWD)/ControlsApplication.cpp
+            $(CWD)/MainWindow.cpp
         </sources>
-        <win32-res>Controls.rc</win32-res>
+        <win32-res>$(CWD)/Controls.rc</win32-res>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

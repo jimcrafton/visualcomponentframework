@@ -3,10 +3,12 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/LocaleUI</set>
+
     <exe id="LocaleUI" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
+        <dirname>$(CWD)</dirname>
         <exename>LocaleUI</exename>
-        <sources>LocaleUI.cpp</sources>
+        <sources>$(CWD)/LocaleUI.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

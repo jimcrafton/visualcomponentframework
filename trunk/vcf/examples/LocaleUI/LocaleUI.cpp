@@ -133,7 +133,7 @@ public:
 		setCaption( "LocaleUI" );
 
 		DateTimeLabel* label;
-
+/*
 		label = new DateTimeLabel();
 
 		label->setLocale( "en", "US" );
@@ -198,7 +198,7 @@ public:
 		add( label, AlignTop );
 
 		label->start();
-
+*/
 		label = new DateTimeLabel();
 
 		Locale loc2( Locale::lcRussian, Locale::ccRussianFederation );

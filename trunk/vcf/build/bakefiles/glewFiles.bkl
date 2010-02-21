@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<makefile>
+
+    <set var="GLEW_HDR" hints="files">
+        vcf/ImageKit/glew/include/GL/glew.h
+        vcf/ImageKit/glew/include/GL/glxew.h
+        vcf/ImageKit/glew/include/GL/wglew.h
+    </set>
+
+    <set var="GLEW_SRC" hints="files">
+        vcf/ImageKit/glew/src/glew.c
+    </set>
+
+</makefile>
+
+<!--
+$Id$
+-->

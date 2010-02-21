@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Colors</set>
+
     <exe id="Colors" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>Colors.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/Colors.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

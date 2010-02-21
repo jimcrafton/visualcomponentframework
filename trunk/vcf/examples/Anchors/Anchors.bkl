@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Anchors</set>
+
     <exe id="Anchors" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>Anchors.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/Anchors.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

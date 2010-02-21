@@ -3,18 +3,20 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/TeXLabel</set>
+
     <exe id="TeXLabel" template="vcf_exe_gui" cond="FORMAT!='borland' and OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
+        <dirname>$(CWD)</dirname>
         <headers>
-            TeXLabel.hpp
-            TeXLabel.tab.hpp
-            TeXTypes.hpp
+            $(CWD)/TeXLabel.hpp
+            $(CWD)/TeXLabel.tab.hpp
+            $(CWD)/TeXTypes.hpp
         </headers>
         <sources>
-            TeXLabel.cpp
-            TeXLabel.scan.cpp
-            TeXLabel.tab.cpp
-            TeXTypes.cpp        
+            $(CWD)/TeXLabel.cpp
+            $(CWD)/TeXLabel.scan.cpp
+            $(CWD)/TeXLabel.tab.cpp
+            $(CWD)/TeXTypes.cpp        
         </sources>
         <vcf-use-ApplicationKit/>
     </exe>

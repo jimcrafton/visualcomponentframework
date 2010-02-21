@@ -3,10 +3,12 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/GraphicsBasics</set>
+
     <exe id="GraphicsBasics" template="vcf_exe_gui"
             cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>GraphicsBasics.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/GraphicsBasics.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

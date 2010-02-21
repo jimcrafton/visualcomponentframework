@@ -3,10 +3,12 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/StrokesAndFills</set>
+
     <exe id="StrokesAndFills" template="vcf_exe_gui"
             cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>StrokesAndFills.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/StrokesAndFills.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

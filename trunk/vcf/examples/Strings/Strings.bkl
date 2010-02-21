@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Strings</set>
+
     <exe id="Strings" template="vcf_exe_console" cond="OPTION_FOUNDATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>Strings.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/Strings.cpp</sources>
         <vcf-use-FoundationKit/>
     </exe>
 </makefile>

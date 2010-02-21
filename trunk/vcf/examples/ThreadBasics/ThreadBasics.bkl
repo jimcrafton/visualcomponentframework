@@ -3,10 +3,12 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/ThreadBasics</set>
+
     <exe id="ThreadBasics" template="vcf_exe_console"
             cond="OPTION_FOUNDATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>ThreadBasics.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/ThreadBasics.cpp</sources>
         <vcf-use-FoundationKit/>
     </exe>
 </makefile>

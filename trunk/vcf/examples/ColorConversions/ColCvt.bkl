@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/ColCvt</set>
+
     <exe id="ColCvt" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>ColCvt.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/ColCvt.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>
