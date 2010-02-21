@@ -14,6 +14,9 @@ where you installed the VCF.
 #endif
 
 
+#ifdef _LIB_CPLVERNUM
+#   undef _LIB_CPLVERNUM
+#endif
 
 
 /**
