@@ -109,7 +109,7 @@ namespace VCF {
 	*/
 	template <class T> class RefCount: public virtual RefCounted, public T {
 	public:
-		RefCount(T* target): refCount_(1), /*subject_(target)*/{}
+		RefCount(T* target): refCount_(1)/*, subject_(target)*/{}
 		~RefCount(){
 //			delete subject_;
 		}
