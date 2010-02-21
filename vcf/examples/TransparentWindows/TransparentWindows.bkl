@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/TransparentWindows</set>
+
     <exe id="TransparentWindows" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>TransparentWindows.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/TransparentWindows.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

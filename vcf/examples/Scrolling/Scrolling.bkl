@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Scrolling</set>
+
     <exe id="Scrolling" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>Scrolling.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/Scrolling.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

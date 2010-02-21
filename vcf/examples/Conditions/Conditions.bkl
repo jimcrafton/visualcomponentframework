@@ -3,10 +3,12 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Conditions</set>
+
     <exe id="Conditions" template="vcf_exe_console"
             cond="OPTION_FOUNDATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>Conditions.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/Conditions.cpp</sources>
         <vcf-use-FoundationKit/>
     </exe>
 </makefile>

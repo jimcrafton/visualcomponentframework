@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<makefile>
+    <include file="../../build/bakefiles/VCFCommon.bkl"/>
+
+    <set var="CWD">$(VCF_DIR)/examples/FilterTest</set>
+
+    <exe id="FilterTest" template="vcf_exe_gui"
+            cond="OPTION_SCINTILLAKIT=='1' and OPTION_IMAGEKIT=='1'">
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/FilterTest.cpp</sources>
+        <vcf-use-ScintillaKit/>
+        <vcf-use-ImageKit/>
+    </exe>
+</makefile>
+
+<!--
+$Id$
+-->

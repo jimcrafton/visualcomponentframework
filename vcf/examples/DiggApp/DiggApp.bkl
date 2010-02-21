@@ -3,9 +3,12 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
-    <exe id="DiggApp" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>DiggApp.cpp</sources>
+    <set var="CWD">$(VCF_DIR)/examples/DiggApp</set>
+
+    <exe id="DiggApp" template="vcf_exe_gui"
+            cond="OPTION_APPLICATIONKIT=='1' and OPTION_INTERNETKIT=='1' and OPTION_XMLKIT=='1'">
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/DiggApp.cpp</sources>
         <vcf-use-ApplicationKit/>
         <vcf-use-InternetKit/>
         <vcf-use-XMLKit/>

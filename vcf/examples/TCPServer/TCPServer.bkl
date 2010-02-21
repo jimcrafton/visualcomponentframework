@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/TCPServer</set>
+
     <exe id="TCPServer" template="vcf_exe_console" cond="OPTION_NETWORKKIT=='1'">
-        <dirname>.</dirname>
-        <sources>TCPServer.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/TCPServer.cpp</sources>
         <vcf-use-NetworkKit/>
     </exe>
 </makefile>

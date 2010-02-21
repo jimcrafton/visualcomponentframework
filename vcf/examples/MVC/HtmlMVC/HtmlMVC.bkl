@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/MVC/HtmlMVC</set>
+
     <exe id="HtmlMVC" template="vcf_exe_gui" cond="OPTION_HTMLKIT=='1'">
-        <dirname>.</dirname>
-        <sources>HtmlMVC.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/HtmlMVC.cpp</sources>
         <vcf-use-HTMLKit/>
     </exe>
 </makefile>

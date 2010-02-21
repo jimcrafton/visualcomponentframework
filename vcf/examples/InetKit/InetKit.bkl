@@ -3,13 +3,18 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/InetKit</set>
+
     <exe id="InetKit" template="vcf_exe_gui" cond="OPTION_INTERNETKIT=='1'">
-        <dirname>.</dirname>
-        <sources>InetKit.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/InetKit.cpp</sources>
         <vcf-use-InternetKit/>
-        <clean-files>
-            test.html
-        </clean-files>
+        <if cond="FORMAT not in ['xcode2', 'symbian', 'msvc6prj',
+                'msevc4prj','msvs2003prj','msvs2005prj','msvs2008prj']">
+            <clean-files>
+                $(CWD)/test.html
+            </clean-files>
+        </if>
     </exe>
 </makefile>
 

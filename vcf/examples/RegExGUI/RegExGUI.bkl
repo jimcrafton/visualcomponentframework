@@ -3,10 +3,12 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/RegExGUI</set>
+
     <exe id="RegExGUI" template="vcf_exe_gui"
             cond="OPTION_APPLICATIONKIT=='1' and OPTION_REGEXKIT=='1'">
-        <dirname>.</dirname>
-        <sources>RegExGUI.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/RegExGUI.cpp</sources>
         <vcf-use-ApplicationKit/>
         <vcf-use-RegExKit/>
     </exe>

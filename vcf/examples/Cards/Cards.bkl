@@ -3,14 +3,16 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Cards</set>
+
     <exe id="Cards" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
         <dirname>.</dirname>
         <headers>
-            Cardclass.h
-            CardContainer.h
-            Cards.h
+            $(CWD)/Cardclass.h
+            $(CWD)/CardContainer.h
+            $(CWD)/Cards.h
         </headers>
-        <sources>Cards.cpp</sources>
+        <sources>$(CWD)/Cards.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

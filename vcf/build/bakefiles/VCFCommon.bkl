@@ -19,7 +19,7 @@
         $(VCF_DIR)$(DIRSEP)lib
     </set>
 
-    <include file="Templates.bkl"/>
+    <include file="Templates.bkl" once="1"/>
 
 </makefile>
 

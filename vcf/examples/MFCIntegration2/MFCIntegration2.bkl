@@ -3,23 +3,25 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/MFCIntegration2</set>
+
     <exe id="MFCIntegration2" template="vcf_exe" cond="PLATFORM_WIN32=='1' and OPTION_GRAPHICSKIT=='1'">
         <app-type>gui</app-type>
-        <dirname>.</dirname>
+        <dirname>$(CWD)</dirname>
         <headers>
-            ChildView.h
-            MainFrm.h
-            MFCIntegration2.h
-            Resource.h
-            StdAfx.h
+            $(CWD)/ChildView.h
+            $(CWD)/MainFrm.h
+            $(CWD)/MFCIntegration2.h
+            $(CWD)/Resource.h
+            $(CWD)/StdAfx.h
         </headers>
         <sources>
-            ChildView.cpp
-            MainFrm.cpp
-            MFCIntegration2.cpp
-            StdAfx.cpp
+            $(CWD)/ChildView.cpp
+            $(CWD)/MainFrm.cpp
+            $(CWD)/MFCIntegration2.cpp
+            $(CWD)/StdAfx.cpp
         </sources>
-        <win32-res>MFCIntegration2.rc</win32-res>
+        <win32-res>$(CWD)/MFCIntegration2.rc</win32-res>
         <vcf-use-GraphicsKit/>
         <define>_AFXDLL</define>
     </exe>

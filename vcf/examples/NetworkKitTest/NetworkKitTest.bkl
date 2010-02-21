@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/NetworkKitTest</set>
+
     <exe id="NetworkKitTest" template="vcf_exe_console" cond="OPTION_NETWORKKIT=='1'">
-        <dirname>.</dirname>
-        <sources>NetworkKitTest.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/NetworkKitTest.cpp</sources>
         <vcf-use-NetworkKit/>
     </exe>
 </makefile>

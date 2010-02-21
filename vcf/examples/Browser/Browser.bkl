@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Browser</set>
+
     <exe id="Browser" template="vcf_exe_gui" cond="OPTION_HTMLKIT=='1'">
-        <dirname>.</dirname>
-        <sources>Browser.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/Browser.cpp</sources>
         <vcf-use-HTMLKit/>
     </exe>
 </makefile>

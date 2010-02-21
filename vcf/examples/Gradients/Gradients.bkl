@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Gradients</set>
+
     <exe id="Gradients" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>Gradients.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/Gradients.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

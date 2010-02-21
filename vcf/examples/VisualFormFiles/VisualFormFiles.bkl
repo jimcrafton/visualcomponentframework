@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/VisualFormFiles</set>
+
     <exe id="VisualFormFiles" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>VisualFormFiles.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/VisualFormFiles.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

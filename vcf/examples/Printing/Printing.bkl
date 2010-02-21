@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Printing</set>
+
     <exe id="Printing" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>Printing.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/Printing.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

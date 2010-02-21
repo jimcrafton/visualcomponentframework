@@ -4,6 +4,7 @@
 
     <input>
         VCF.bkl
+        Examples.bkl
         ../../examples/*.bkl
         ../../examples/*/*.bkl
         ../../examples/*/*/*.bkl
@@ -19,15 +20,15 @@
     </add-formats>
 
 
-    <del-formats files="../../examples/*.bkl">
-        msvc6prj,msvs2003prj,msvs2005prj,msvs2008prj
+    <del-formats files="Examples.bkl">
+        borland,mingw,gnu,msvc
     </del-formats>
 
     <!--
     Do not generate dsw/dsp/sln/vcproj files for the following bkls, 
     since they will overwrite existed ones.
     -->
-    <del-formats files="../../examples/*/*.bkl,../../examples/*/*/*.bkl">
+    <del-formats files="../../examples/*.bkl,../../examples/*/*.bkl,../../examples/*/*/*.bkl">
         msvc6prj,msvs2003prj,msvs2005prj,msvs2008prj
     </del-formats>
     <del-formats files="../../src/BlackBox/*.bkl">
@@ -69,8 +70,22 @@
         -o..\bakefiles.gen\msvs2008prj\VCF.sln
     </add-flags>
 
-    <add-flags files="*" formats="borland,mingw,msvc,gnu">-DVCF_ROOT_BKGEN=../..</add-flags>
-    <add-flags files="*" formats="msvc6prj,msvs2003prj,msvs2005prj,msvs2008prj">-DVCF_ROOT_BKGEN=../../..</add-flags>
+    <add-flags files="Examples.bkl" formats="msvc6prj">
+        -o..\bakefiles.gen\msvc6prj\examples\VCFExamples.dsw
+    </add-flags>
+    <add-flags files="Examples.bkl" formats="msvs2003prj">
+        -o..\bakefiles.gen\msvs2003prj\examples\VCFExamples.sln
+    </add-flags>
+    <add-flags files="Examples.bkl" formats="msvs2005prj">
+        -o..\bakefiles.gen\msvs2005prj\examples\VCFExamples.sln
+    </add-flags>
+    <add-flags files="Examples.bkl" formats="msvs2008prj">
+        -o..\bakefiles.gen\msvs2008prj\examples\VCFExamples.sln
+    </add-flags>
+
+    <add-flags files="VCF.bkl" formats="borland,mingw,msvc,gnu">-DVCF_ROOT_BKGEN=../..</add-flags>
+    <add-flags files="VCF.bkl" formats="msvc6prj,msvs2003prj,msvs2005prj,msvs2008prj">-DVCF_ROOT_BKGEN=../../..</add-flags>
+    <add-flags files="Examples.bkl" formats="msvc6prj,msvs2003prj,msvs2005prj,msvs2008prj">-DVCF_ROOT_BKGEN=../../../..</add-flags>
     <add-flags files="../../*/*">-DVCF_ROOT_BKGEN=..</add-flags>
     <add-flags files="../../*/*/*">-DVCF_ROOT_BKGEN=../..</add-flags>
     <add-flags files="../../*/*/*/*">-DVCF_ROOT_BKGEN=../../..</add-flags>

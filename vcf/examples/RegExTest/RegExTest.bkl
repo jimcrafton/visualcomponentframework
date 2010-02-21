@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/RegExTest</set>
+
     <exe id="RegExTest" template="vcf_exe_console" cond="OPTION_REGEXKIT=='1'">
-        <dirname>.</dirname>
-        <sources>RegExTest.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/RegExTest.cpp</sources>
         <vcf-use-RegExKit/>
     </exe>
 </makefile>

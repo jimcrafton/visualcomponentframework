@@ -3,25 +3,27 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/ParticleEditor</set>
+
     <exe id="ParticleEditor" template="vcf_exe_gui" cond="OPTION_OPENGLKIT=='1'">
-        <dirname>.</dirname>
-        <include>.</include>
+        <dirname>$(CWD)</dirname>
+        <include>$(CWD)</include>
         <headers>
-            vrtoad/Math.h
-            ColorPicker.h
-            ParticleEditor.h
-            ParticleRenderer.h
-            ParticleResource.h
-            ParticleResourceManager.h
-            ParticleSystem.h
-            Spinner.h
-            XMLParticleResourceHandler.h
+            $(CWD)/vrtoad/Math.h
+            $(CWD)/ColorPicker.h
+            $(CWD)/ParticleEditor.h
+            $(CWD)/ParticleRenderer.h
+            $(CWD)/ParticleResource.h
+            $(CWD)/ParticleResourceManager.h
+            $(CWD)/ParticleSystem.h
+            $(CWD)/Spinner.h
+            $(CWD)/XMLParticleResourceHandler.h
         </headers>
         <sources>
-            main.cpp
-            ParticleEditor.cpp
-            ParticleRenderer.cpp
-            ParticleSystem.cpp            
+            $(CWD)/main.cpp
+            $(CWD)/ParticleEditor.cpp
+            $(CWD)/ParticleRenderer.cpp
+            $(CWD)/ParticleSystem.cpp            
         </sources>
         <vcf-use-OpenGLKit/>
     </exe>

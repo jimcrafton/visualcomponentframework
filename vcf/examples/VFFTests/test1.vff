@@ -1,6 +1,6 @@
 object Window1 : VCF::Window, 'ED88C0A1-26AB-11d4-B539-00C04F0196DA'
 
-	alignment = VCF::TypedEnum<enum VCF::AlignmentType> @ 00E12BC8, refcount: 0
+	alignment = AlignNone
 
 	anchor = []
 
@@ -12,11 +12,11 @@ object Window1 : VCF::Window, 'ED88C0A1-26AB-11d4-B539-00C04F0196DA'
 
 	caption = 'Window1'
 
-	color.blue = 0.89020
+	color.blue = 0.94118
 
-	color.green = 0.87451
+	color.green = 0.94118
 
-	color.red = 0.87843
+	color.red = 0.94118
 
 	cursor = 0
 
@@ -42,15 +42,35 @@ object Window1 : VCF::Window, 'ED88C0A1-26AB-11d4-B539-00C04F0196DA'
 
 	font.underlined = false
 
-	frameStyle = VCF::TypedEnum<enum VCF::FrameStyleType> @ 00E13E10, refcount: 0
+	frameStyle = fstSizeable
 
 	height = 500.00000
 
 	isTopmost = false
 
+	keepsArrowKeys = false
+
+	keepsReturnCharacter = false
+
+	keepsTabKey = false
+
 	left = 0.00000
 
+	maxHeight = -1.00000
+
+	maxWidth = -1.00000
+
 	menuBar = null
+
+	minHeight = -1.00000
+
+	minWidth = -1.00000
+
+	model = null
+
+	modelKey = 
+
+	name = 'Window1'
 
 	popupMenu = null
 
@@ -60,6 +80,8 @@ object Window1 : VCF::Window, 'ED88C0A1-26AB-11d4-B539-00C04F0196DA'
 
 	tabStop = true
 
+	tag = 5
+
 	toolTipText = ''
 
 	top = 0.00000
@@ -68,13 +90,18 @@ object Window1 : VCF::Window, 'ED88C0A1-26AB-11d4-B539-00C04F0196DA'
 
 	useParentFont = false
 
+	usingRenderBuffer = false
+
 	visible = false
 
-	whatThisHelpString = ''
+	whatsThisHelpString = ''
 
 	width = 500.00000
 
 	delegates 
+
+		ComponentAdded = [
+			Window1@Frame::handleEvent]
 
 		FrameClose = [
 			Window1@onClose]

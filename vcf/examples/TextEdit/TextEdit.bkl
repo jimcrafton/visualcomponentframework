@@ -3,22 +3,24 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/TextEdit</set>
+
     <exe id="TextEdit" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
+        <dirname>$(CWD)</dirname>
         <headers>
-            DataExchange.h
-            FindDialog.h
-            ReplaceDialog.h
-            TextEdit.h
-            TextEditDocument.h
-            TextEditWindow.h
+            $(CWD)/DataExchange.h
+            $(CWD)/FindDialog.h
+            $(CWD)/ReplaceDialog.h
+            $(CWD)/TextEdit.h
+            $(CWD)/TextEditDocument.h
+            $(CWD)/TextEditWindow.h
         </headers>
         <sources>
-            FindDialog.cpp
-            ReplaceDialog.cpp
-            TextEdit.cpp
-            TextEditDocument.cpp
-            TextEditWindow.cpp
+            $(CWD)/FindDialog.cpp
+            $(CWD)/ReplaceDialog.cpp
+            $(CWD)/TextEdit.cpp
+            $(CWD)/TextEditDocument.cpp
+            $(CWD)/TextEditWindow.cpp
         </sources>
         <vcf-use-ApplicationKit/>
     </exe>

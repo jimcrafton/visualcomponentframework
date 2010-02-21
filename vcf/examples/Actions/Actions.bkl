@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Actions</set>
+
     <exe id="Actions" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>Actions.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/Actions.cpp</sources>
         <win32-res>Actions.rc</win32-res>
         <vcf-use-ApplicationKit/>
     </exe>

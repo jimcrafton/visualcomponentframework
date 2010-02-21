@@ -94,6 +94,14 @@
         </set>
 
 
+        <set var="ALLIN1_IMAGEKIT_HDR" hints="files">
+            <if cond="OPTION_IMAGEKIT=='1'">$(IMAGEKIT_HDR)</if>
+        </set>
+        <set var="ALLIN1_IMAGEKIT_SRC" hints="files">
+            <if cond="OPTION_IMAGEKIT=='1'">$(IMAGEKIT_SRC)</if>
+        </set>
+
+
         <set var="ALLIN1_SCINTILLAKIT_HDR" hints="files">
             <if cond="OPTION_SCINTILLAKIT=='1'">$(SCINTILLAKIT_HDR)</if>
         </set>
@@ -114,6 +122,7 @@
             $(ALLIN1_REGEXKIT_HDR)
             $(ALLIN1_XMLKIT_HDR)
             $(ALLIN1_JAVASCRIPTKIT_HDR)
+            $(ALLIN1_IMAGEKIT_HDR)
             $(ALLIN1_SCINTILLAKIT_HDR)
         </headers>
         <sources>
@@ -128,6 +137,7 @@
             $(ALLIN1_REGEXKIT_SRC)
             $(ALLIN1_XMLKIT_SRC)
             $(ALLIN1_JAVASCRIPTKIT_SRC)
+            $(ALLIN1_IMAGEKIT_SRC)
             $(ALLIN1_SCINTILLAKIT_SRC)
         </sources>
 
@@ -204,7 +214,16 @@
         <library>$(ALLIN1_SCINTILLA_LIB)</library>
         <vcf-include-scintilla/>
 
+        <set var="ALLIN1_GLEW_LIB">
+            <if cond="OPTION_GLEW=='1'">glew_lib</if>
+        </set>
+        <library>$(ALLIN1_GLEW_LIB)</library>
+        <define>GLEW_STATIC</define>
+        <vcf-include-glew/>
+
         <vcf-include-thirdparty/>
+
+        <define>VCF_ALLIN1</define>
     </template>
 
     <lib id="Allin1_lib" template="Allin1_base,vcf_lib"
@@ -235,11 +254,17 @@
         <define>XMLKIT_EXPORTS</define>
         <define>JAVASCRIPTKIT_DLL</define>
         <define>JAVASCRIPTKIT_EXPORTS</define>
+        <define>IMAGEKIT_DLL</define>
+        <define>IMAGEKIT_EXPORTS</define>
         <!--
         <define>SCINTILLAKIT_DLL</define>
         <define>SCINTILLAKIT_EXPORTS</define>
+        <res-include>../../src/thirdparty/common/scintilla/win32</res-include>
+        <win32-res>../src/thirdparty/common/scintilla/win32/ScintRes.rc</win32-res>
         -->
 
+        <res-include>../../src/vcf/ImageKit</res-include>
+        <win32-res>../src/vcf/ImageKit/ImageKit.rc</win32-res>
         <res-include>../../build/resources/win32</res-include>
         <win32-res>../build/resources/win32/ApplicationKit.rc</win32-res>
     </dll>

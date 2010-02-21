@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/OpenGLShapes</set>
+
     <exe id="OpenGLShapes" template="vcf_exe_gui" cond="OPTION_OPENGLKIT=='1'">
-        <dirname>.</dirname>
-        <sources>OpenGLShapes.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/OpenGLShapes.cpp</sources>
         <vcf-use-OpenGLKit/>
     </exe>
 </makefile>

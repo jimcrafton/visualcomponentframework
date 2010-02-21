@@ -3,10 +3,12 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/CommonDirectories</set>
+
     <exe id="CommonDirectories" template="vcf_exe_console"
             cond="OPTION_FOUNDATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>CommonDirectories.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/CommonDirectories.cpp</sources>
         <vcf-use-FoundationKit/>
     </exe>
 </makefile>

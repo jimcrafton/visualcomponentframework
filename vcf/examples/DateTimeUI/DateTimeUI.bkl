@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/DateTimeUI</set>
+
     <exe id="DateTimeUI" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>DateTimeUI.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/DateTimeUI.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

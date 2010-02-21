@@ -3,19 +3,21 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Win32Integration</set>
+
     <exe id="Win32Integration" template="vcf_exe" cond="PLATFORM_WIN32=='1' and OPTION_APPLICATIONKIT=='1'">
         <app-type>gui</app-type>
-        <dirname>.</dirname>
+        <dirname>$(CWD)</dirname>
         <headers>
-            resource.h
-            StdAfx.h
-            Win32Integration.h
+            $(CWD)/resource.h
+            $(CWD)/StdAfx.h
+            $(CWD)/Win32Integration.h
         </headers>
         <sources>
-            StdAfx.cpp
-            Win32Integration.cpp
+            $(CWD)/StdAfx.cpp
+            $(CWD)/Win32Integration.cpp
         </sources>
-        <win32-res>Win32Integration.rc</win32-res>
+        <win32-res>$(CWD)/Win32Integration.rc</win32-res>
         <vcf-use-ApplicationKit/>
         <define>_AFXDLL</define>
     </exe>

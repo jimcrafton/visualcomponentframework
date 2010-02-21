@@ -3,10 +3,12 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/DragAndDrop</set>
+
     <exe id="DragAndDrop" template="vcf_exe_gui"
             cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>DragAndDrop.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/DragAndDrop.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>

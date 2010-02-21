@@ -3,9 +3,11 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/UDPClient</set>
+
     <exe id="UDPClient" template="vcf_exe_console" cond="OPTION_NETWORKKIT=='1'">
-        <dirname>.</dirname>
-        <sources>UDPClient.cpp</sources>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/UDPClient.cpp</sources>
         <vcf-use-NetworkKit/>
     </exe>
 </makefile>

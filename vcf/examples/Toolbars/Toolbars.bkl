@@ -3,10 +3,12 @@
 <makefile>
     <include file="../../build/bakefiles/VCFCommon.bkl"/>
 
+    <set var="CWD">$(VCF_DIR)/examples/Toolbars</set>
+
     <exe id="Toolbars" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
-        <sources>Toolbars.cpp</sources>
-        <win32-res>tb.rc</win32-res>
+        <dirname>$(CWD)</dirname>
+        <sources>$(CWD)/Toolbars.cpp</sources>
+        <win32-res>$(CWD)/tb.rc</win32-res>
         <vcf-use-ApplicationKit/>
     </exe>
 </makefile>
