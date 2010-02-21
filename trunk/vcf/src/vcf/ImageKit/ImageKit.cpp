@@ -1429,6 +1429,7 @@ IMAGEKIT_API void _vpl_terminate(OSHandleID handle)
 
 }
 
+#ifndef VCF_ALLIN1
 
 BOOL WINAPI DllMain(
     HINSTANCE hinstDLL,
@@ -1460,3 +1461,5 @@ BOOL WINAPI DllMain(
 	}
 	return TRUE;
 }
+
+#endif
