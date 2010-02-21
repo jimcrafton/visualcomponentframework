@@ -13,7 +13,7 @@ where you installed the VCF.
 #   pragma once
 #endif
 
-#define USE_STRINGPOOL
+//#define USE_STRINGPOOL
 
 #ifdef USE_STRINGPOOL
 	#include <deque>
