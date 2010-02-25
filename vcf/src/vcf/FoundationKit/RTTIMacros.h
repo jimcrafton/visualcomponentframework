@@ -198,7 +198,7 @@ you are finished defining your RTTI.
 										\
 
 
-#define _property_typef_ro_( type, propName, getFunc, typeName, description ) \
+#define _property_typedef_ro_( type, propName, getFunc, typeName, description ) \
 	VCF::registerTypeDefReadOnlyProperty<type>( tmpClassName, VCF::String(propName), \
 							                    (VCF::TypedProperty<type>::GetFunction)&RttiClassType::getFunc, \
 									            VCF::String(typeName),description ); \
