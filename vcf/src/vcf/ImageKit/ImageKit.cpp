@@ -536,23 +536,24 @@ void IKImage::setHandle( const uint32& val )
 
 void IKImage::initFromData( const uchar* data, const size_t& size, const MIMEType& type )
 {
-
+	throw BasicException("IKImage::initFromData not implemented.");
 }
 
 void IKImage::initFromData( const uchar* data, const size_t& size )
 {
-
+	throw BasicException("IKImage::initFromData not implemented.");
 }
 
 void IKImage::initFromBits( const uchar* data, const Dimensions& dimensions )
 {
-
+	throw BasicException("IKImage::initFromData not implemented.");
 }
 
 void IKImage::initFromFile( const String& fileName )
 {
 	Image* img = GraphicsToolkit::createImage( fileName );
 	if ( NULL != img ) {
+		filename_ = fileName;
 		initFromImage( img );
 		delete img;
 	}
@@ -602,23 +603,44 @@ void IKImage::render( const double& x, const double& y )
 	glEnd();
 }
 
-void IKImage::renderToFBO( int fbo )
+void IKImage::renderToFBO( int fbo, const Dimensions& fboSize )
 {
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fbo );
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity();
 
-	glOrtho(0, size_.width, 0, size_.height, -1, 1);
-	glViewport(0,0,size_.width, size_.height);
+	double sh = (double)fboSize.height / (double)size_.height;
+	double sw = (double)fboSize.width / (double)size_.width;
+
+
+	Matrix2D mat = //Matrix2D::translation(-(size_.width/2.0),-(size_.height/2.0)) * 
+					Matrix2D::scaling( sh, sw );// *
+				//	Matrix2D::translation(size_.width/2.0,size_.height/2.0) * 
+				//	Matrix2D::translation(0,0);
+
+	glOrtho(0, fboSize.width, 0, fboSize.height, -1, 1);
+	glViewport(0,0,fboSize.width, fboSize.height);
+
+	
+	glPushMatrix();
+		
+	GLMatrix m;
+	m = mat;
+	glMultMatrixd( m );		
+	
 
 	bind();
 
 	render(0,0);
+
+	glPopMatrix();
+	
 }
 
-void IKImage::renderToImage( Image* image )
+void IKImage::renderToImage( Image* image  )
 {
-	IKImage tmpImg(size_);
+
+	IKImage tmpImg(Dimensions(image->getWidth(),image->getHeight()));
 
 	int tmpFBO = 0;
 	
@@ -627,12 +649,12 @@ void IKImage::renderToImage( Image* image )
 	tmpImg.bind();
 	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, tmpImg.getHandle(), 0);
 
-	renderToFBO( ImageKit::getDefaultFBO() );
+	renderToFBO( ImageKit::getDefaultFBO(), Dimensions(image->getWidth(),image->getHeight()) );
 
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0 );
 
 
-	bind();
+	tmpImg.bind();
 
 	//glTexImage2D(GL_TEXTURE_2D, 0, 
 	//			Image::itColor , 
