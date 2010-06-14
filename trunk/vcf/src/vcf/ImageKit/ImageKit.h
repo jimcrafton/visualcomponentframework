@@ -106,7 +106,11 @@ namespace VCF {
 
 
 struct IMAGEKIT_API Dimensions {
+	
 	Dimensions(): width(0), height(0){}
+
+	Dimensions(uint32 w, uint32 h): width(w), height(h){}
+
 	Dimensions( const Size& sz ): width(sz.width_), height(sz.height_){}
 
 	Dimensions& operator=( const Size& rhs ) {
@@ -261,6 +265,11 @@ public:
 	void setHandle( const uint32& val );
 
 	void renderToImage( Image* image );
+	
+
+	String getFileName() const {
+		return filename_;
+	}
 protected:
 
 	friend class IKImageContext;
@@ -269,6 +278,7 @@ protected:
 	uint32 imageHandle_;
 	Dimensions size_;
 	IKFilter* filter_;	
+	String filename_;
 
 	static std::map<uint32,Dimensions> texDimensionsMap;
 
@@ -290,7 +300,7 @@ protected:
 	
 
 	void render( const double& x, const double& y );
-	void renderToFBO( int fbo );
+	void renderToFBO( int fbo, const Dimensions& fboSize );
 	
 };
 
