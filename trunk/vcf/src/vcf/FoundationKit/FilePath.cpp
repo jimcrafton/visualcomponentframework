@@ -211,7 +211,7 @@ String FilePath::getExtension( const String& fullname )
 	String path;
 	size_t lastExtPos = fullname.find_last_of( FilePath::getExtensionSeparator() );
 	if ( lastExtPos != String::npos ) {
-		path = fullname.substr( lastExtPos, fullname.size() - 1 );
+		path = fullname.substr( lastExtPos, fullname.size() - lastExtPos );
 	}
 	return path;
 }

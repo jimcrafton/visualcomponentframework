@@ -58,7 +58,7 @@ inline size_t RoundUp(size_t cb, size_t units)
 
 
 class StringPool;
-class FastString;
+class UnicodeString;
 
 
 union MemHeader {
@@ -93,7 +93,7 @@ private:
 
 
 	friend class StringPool;
-	friend class FastString;
+	friend class UnicodeString;
 
 	U16Char* strPtr;
 	size_t length;
@@ -275,7 +275,7 @@ public:
 	StringData* transformAnsiToUnicode( const char* str, size_t length, int encoding );
 
 	//adds a series of string pointers together to form one single string data instance
-	//used by FastString::set
+	//used by UnicodeString::set
 	StringData* concatenate( const std::vector<StringRange>& strArray );
 	
 
@@ -489,7 +489,7 @@ protected:
 /**
 our immutable string class
 */
-class FOUNDATIONKIT_API FastString {
+class FOUNDATIONKIT_API UnicodeString {
 public:
 
 
@@ -707,66 +707,73 @@ public:
 
 
 	//basic_string compat
-	FastString( size_t count, const U16Char& ch ): data_(NULL)  {
-		FastString::STLString tmp(count, ch );
+	UnicodeString( size_t count, const U16Char& ch ): data_(NULL)  {
+		UnicodeString::STLString tmp(count, ch );
 		assign( tmp.c_str(), tmp.size() );
 	}
 
-	FastString( const U16Char& ch ): data_(NULL)  {
+	UnicodeString( const U16Char& ch ): data_(NULL)  {
 		assign( &ch, 1 );
 	}
 
-	FastString( const U16Char* str ): data_(NULL)  {
+	UnicodeString( const char& ch ): data_(NULL)  {
+		U16Char uch = UnicodeString::transformAnsiCharToUnicodeChar(ch);
+		assign( &uch, 1 );
+	}
+
+	
+
+	UnicodeString( const U16Char* str ): data_(NULL)  {
 		assign( str, StringPool::wstrlen(str) );
 	}
 
-	FastString( const U16Char* str, size_t length ): data_(NULL) {
+	UnicodeString( const U16Char* str, size_t length ): data_(NULL) {
 		assign( str, length );
 	}
 
 	
-	FastString( const char* str ): data_(NULL)  {
+	UnicodeString( const char* str ): data_(NULL)  {
 		assign( str, strlen(str) );
 	}
 
-	FastString( const char* str, size_t length, LanguageEncoding encoding=leDefault ): data_(NULL) {
+	UnicodeString( const char* str, size_t length, LanguageEncoding encoding=leDefault ): data_(NULL) {
 		assign( str, length, encoding );
 	}
 
-	FastString( const unsigned char* str, size_t length, LanguageEncoding encoding=leDefault ): data_(NULL) {
+	UnicodeString( const unsigned char* str, size_t length, LanguageEncoding encoding=leDefault ): data_(NULL) {
 		assign( (const char*)str, length, encoding );
 	}
 
-	FastString( const AnsiString& str, LanguageEncoding encoding=leDefault ): data_(NULL) {
+	UnicodeString( const AnsiString& str, LanguageEncoding encoding=leDefault ): data_(NULL) {
 		assign( str.c_str(), str.size(), encoding );
 	}
 
-	FastString( const STLString& str ): data_(NULL) {
+	UnicodeString( const STLString& str ): data_(NULL) {
 		assign( str.c_str(), str.size() );
 	}
 
-	FastString(): data_(NULL){}
+	UnicodeString(): data_(NULL){}
 
-	FastString( const FastString& f ):data_(f.data_) {
+	UnicodeString( const UnicodeString& f ):data_(f.data_) {
 		StringPool::incStringRefcount(data_);
 	}
 
 
-	~FastString() {
+	~UnicodeString() {
 		StringPool::decStringRefcount(data_);
 	}
 
-	FastString& operator=( const U16Char* rhs ) {
+	UnicodeString& operator=( const U16Char* rhs ) {
 		assign( rhs, StringPool::wstrlen(rhs) );
 		return *this;
 	}
 
-	FastString& operator=( const char* rhs ) {
+	UnicodeString& operator=( const char* rhs ) {
 		assign( rhs, strlen(rhs) );
 		return *this;
 	}
 
-	FastString& operator=( const FastString& rhs ) {
+	UnicodeString& operator=( const UnicodeString& rhs ) {
 		if ( data_ != rhs.data_ ) {
 			StringPool::decStringRefcount(data_);
 
@@ -838,41 +845,41 @@ public:
 	LanguageEncoding encoding() const;
 
 
-	bool operator == ( const FastString& rhs ) const {
+	bool operator == ( const UnicodeString& rhs ) const {
 		return StringPool::equals(data_, rhs.data_ );
 	}
 
 	bool operator == ( const U16Char* rhs ) const {
-		return operator ==( FastString(rhs) );
+		return operator ==( UnicodeString(rhs) );
 	}
 
 	bool operator == ( const char* rhs ) const {
-		return operator ==(FastString(rhs));
+		return operator ==(UnicodeString(rhs));
 	}
 
 
 	inline 
-	bool operator !=( const FastString& rhs ) const {
+	bool operator !=( const UnicodeString& rhs ) const {
 		return !StringPool::equals(data_, rhs.data_ );
 	}
 
 	inline 
-	bool operator <( const FastString& rhs ) const 	{
+	bool operator <( const UnicodeString& rhs ) const 	{
 		return (StringPool::compare( data_, rhs.data_ ) < 0) ? true : false;
 	}
 
 	inline 
-	bool operator <=( const FastString& rhs ) const 	{
+	bool operator <=( const UnicodeString& rhs ) const 	{
 		return (StringPool::compare( data_, rhs.data_ ) <= 0) ? true : false;
 	}
 
 	inline 
-	bool operator >( const FastString& rhs ) const {
+	bool operator >( const UnicodeString& rhs ) const {
 		return (StringPool::compare( data_, rhs.data_ ) > 0) ? true : false;
 	}
 
 	inline 
-	bool operator >=( const FastString& rhs ) const {
+	bool operator >=( const UnicodeString& rhs ) const {
 		return (StringPool::compare( data_, rhs.data_ ) >= 0) ? true : false;
 	}
 
@@ -900,13 +907,13 @@ public:
 		return StringPool::isSubString(data_);
 	}
 
-	int compare( const FastString& rhs ) const {
+	int compare( const UnicodeString& rhs ) const {
 		return StringPool::compare( data_, rhs.data_ );
 	}
 
-	FastString substr( size_type pos, size_type length ) const {
-		return FastString( StringPool::subStr( data_, pos, length ) );
-		//return FastString( data_->strPtr + pos, length );
+	UnicodeString substr( size_type pos, size_type length ) const {
+		return UnicodeString( StringPool::subStr( data_, pos, length ) );
+		//return UnicodeString( data_->strPtr + pos, length );
 	}
 	
     const_iterator begin() const {
@@ -943,7 +950,7 @@ public:
 		return data_->strPtr[ pos ];
 	}
 
-	void swap( FastString& str ) {
+	void swap( UnicodeString& str ) {
 		if ( str.data_ != data_ ) {			
 			StringData* tmp = data_;
 			data_ = str.data_;
@@ -952,7 +959,7 @@ public:
 	}
 
 
-	size_type find_first_not_of(const FastString& str, size_type pos = 0) const {
+	size_type find_first_not_of(const UnicodeString& str, size_type pos = 0) const {
 		return find_first_not_of( str.c_str(), pos, str.size() );
 	}
 
@@ -961,16 +968,16 @@ public:
 		if (length < sz) {
 			const U16Char *const currentPtr = c_str() + sz;
 			for (const U16Char* P = c_str() + pos; P < currentPtr; ++P) {
-				if (FastString::traits_type::find(strPtr, length, *P) == 0) {
+				if (UnicodeString::traits_type::find(strPtr, length, *P) == 0) {
 					return (P - c_str());
 				}
 			}
 		}
 
-		return (FastString::npos);		
+		return (UnicodeString::npos);		
 	}
 
-	size_type find_first_of(const FastString& str, size_type pos = 0) const {
+	size_type find_first_of(const UnicodeString& str, size_type pos = 0) const {
 		return find_first_of( str.c_str(), pos, str.size() );
 	}
 	
@@ -979,14 +986,14 @@ public:
 		if (0 < length && pos < size()) {
 			const U16Char *const currentPtr = c_str() + size();
 			for (const U16Char* P = c_str() + pos; P < currentPtr; ++P)
-				if (FastString::traits_type::find(strPtr, length, *P) != 0)
+				if (UnicodeString::traits_type::find(strPtr, length, *P) != 0)
 					return (P - c_str());	// found a match
 		}
 
-		return (FastString::npos);
+		return (UnicodeString::npos);
 	}
 
-	size_type find_last_of(const FastString& str, size_type pos = npos) const {
+	size_type find_last_of(const UnicodeString& str, size_type pos = npos) const {
 		return find_last_of( str.c_str(), pos, str.size() );
 	}
 
@@ -995,7 +1002,7 @@ public:
 			for (const U16Char* P = c_str() 
 				+ (pos < size() ? pos : size() - 1); ; --P) {
 
-				if (FastString::traits_type::find(strPtr, length, *P) != 0) {
+				if (UnicodeString::traits_type::find(strPtr, length, *P) != 0) {
 					return (P - c_str());	// found a match
 				}
 				else if (P == c_str()) {
@@ -1004,10 +1011,10 @@ public:
 			}
 		}
 		
-		return (FastString::npos);
+		return (UnicodeString::npos);
 	}
 
-	size_type find(const FastString& str, size_type pos = 0) const {
+	size_type find(const UnicodeString& str, size_type pos = 0) const {
 		return find( str.c_str(), pos, str.size() ); 
 	}
 
@@ -1023,7 +1030,7 @@ public:
 		size_type strLen = length();
 
 		if ( 0 == strLen) {
-			return FastString::npos;
+			return UnicodeString::npos;
 		}
 
 		if (len == 0 && pos <= strLen) {
@@ -1045,7 +1052,7 @@ public:
 				}
 			}
 		}
-		return FastString::npos; 
+		return UnicodeString::npos; 
 	}
 
 
@@ -1058,7 +1065,7 @@ public:
 		return rfind( strPtr, pos, StringPool::wstrlen(strPtr) );
 	}
 
-	size_type rfind(const FastString& str, size_type pos = npos) const {
+	size_type rfind(const UnicodeString& str, size_type pos = npos) const {
 		return rfind( str.c_str(), pos, str.length() );
 	}
 
@@ -1066,7 +1073,7 @@ public:
 		size_type strLen = length();
 		
 		if ( 0 == strLen) {
-			return FastString::npos;
+			return UnicodeString::npos;
 		}
 
 		if (len == 0) {
@@ -1082,7 +1089,7 @@ public:
 				else if (currentStr1 == ptr)
 					break;
 		}
-		return FastString::npos;
+		return UnicodeString::npos;
 	}
 
 	//os specific string type conversion
@@ -1094,7 +1101,7 @@ public:
 		return _bstr_t( c_str() );
 	}
 
-	FastString& operator=( const _bstr_t& rhs ) {
+	UnicodeString& operator=( const _bstr_t& rhs ) {
 		assign( (const wchar_t*)rhs, rhs.length() );
 		return *this;
 	}
@@ -1104,7 +1111,7 @@ public:
 		return _variant_t( _bstr_t(c_str()) );
 	}
 
-	FastString& operator=( const _variant_t& rhs ) {
+	UnicodeString& operator=( const _variant_t& rhs ) {
 		_bstr_t b = rhs;
 		assign( (const wchar_t*)b, b.length() );
 		return *this;
@@ -1116,7 +1123,7 @@ public:
 		return SysAllocString(c_str());
 	}
 
-	FastString& assignBSTR( const BSTR& rhs ) {
+	UnicodeString& assignBSTR( const BSTR& rhs ) {
 		assign( (const U16Char*)rhs, SysStringLen(rhs) );
 		return *this;
 	}
@@ -1131,7 +1138,7 @@ public:
 		return result;
 	}
 
-	FastString& operator=( const VARIANT& rhs ) {
+	UnicodeString& operator=( const VARIANT& rhs ) {
 		if ( rhs.vt == VT_BSTR ) {
 			assign( (const U16Char*)rhs.bstrVal, SysStringLen(rhs.bstrVal) );
 		}
@@ -1144,7 +1151,7 @@ public:
 		return std::wstring(c_str());
 	}
 
-	FastString& operator=( const std::wstring& rhs ) {
+	UnicodeString& operator=( const std::wstring& rhs ) {
 		assign( rhs.c_str(), rhs.length() );
 		return *this;
 	}
@@ -1152,10 +1159,11 @@ public:
 
 	//stl conversion support
 	operator std::string() const {
-		return std::string(ansi_c_str());
+		const AnsiChar* str = ansi_c_str();
+		return std::string(str==NULL?"":str);
 	}
 
-	FastString& operator=( const std::string& rhs ) {
+	UnicodeString& operator=( const std::string& rhs ) {
 		assign( rhs.c_str(), rhs.length() );
 		return *this;
 	}
@@ -1165,98 +1173,98 @@ public:
 
 	//utility
 
-	FastString replace_if( const U16Char& chToFind, const U16Char& chToReplace ) const {
+	UnicodeString replace_if( const U16Char& chToFind, const U16Char& chToReplace ) const {
 		STLString tmp = *this;
 		std::replace_if( tmp.begin(), tmp.end(),
 					std::bind2nd(std::equal_to<U16Char>(),chToFind) , chToReplace );
 
-		return FastString(tmp.c_str(),tmp.size());
+		return UnicodeString(tmp.c_str(),tmp.size());
 	}
 
 
-	FastString replace( size_type pos, size_type length, const FastString& replaceStr ) const {
+	UnicodeString replace( size_type pos, size_type length, const UnicodeString& replaceStr ) const {
 		return replace( pos, length, replaceStr.c_str(), replaceStr.size() );
 	}
 
-	FastString replace( size_type pos, size_type length, const U16Char* replaceStrPtr, size_type strLength ) const {
-		FastString::STLString tmp = *this;
+	UnicodeString replace( size_type pos, size_type length, const U16Char* replaceStrPtr, size_type strLength ) const {
+		UnicodeString::STLString tmp = *this;
 		tmp.replace( pos, length, replaceStrPtr, strLength );
 
-		return FastString(tmp);
+		return UnicodeString(tmp);
 	}
 
 
-	FastString insert( size_type pos, const FastString& str ) const {
-		return FastString( StringPool::insert(  str.data_, data_, pos ) );
+	UnicodeString insert( size_type pos, const UnicodeString& str ) const {
+		return UnicodeString( StringPool::insert(  str.data_, data_, pos ) );
 	}
 
-	FastString insert( size_type pos, const value_type* str ) const {
-		return FastString( StringPool::insert(  str, StringPool::wstrlen((const wchar_t*)str), data_, pos ) );
+	UnicodeString insert( size_type pos, const value_type* str ) const {
+		return UnicodeString( StringPool::insert(  str, StringPool::wstrlen((const wchar_t*)str), data_, pos ) );
 	}
 
-	FastString insert( size_type pos, const value_type* str, size_type strLength ) const {
-		return FastString( StringPool::insert(  str, strLength, data_, pos ) );
+	UnicodeString insert( size_type pos, const value_type* str, size_type strLength ) const {
+		return UnicodeString( StringPool::insert(  str, strLength, data_, pos ) );
 	}
 
-	FastString insert( size_type pos, size_type count,  value_type ch ) const {
-		return FastString( StringPool::insert(  ch, data_, pos, count ) );
+	UnicodeString insert( size_type pos, size_type count,  value_type ch ) const {
+		return UnicodeString( StringPool::insert(  ch, data_, pos, count ) );
 	}
 
-	FastString insert( size_type pos, value_type ch ) const {
-		return FastString( StringPool::insert(  ch, data_, pos, 1 ) );
+	UnicodeString insert( size_type pos, value_type ch ) const {
+		return UnicodeString( StringPool::insert(  ch, data_, pos, 1 ) );
 	}
 
-	FastString insert( size_type pos, const AnsiChar* str ) const {
+	UnicodeString insert( size_type pos, const AnsiChar* str ) const {
 		return insert( pos, str, strlen(str) );
 	}
 
-	FastString insert( size_type pos, const AnsiChar* str, size_type strLength ) const {
+	UnicodeString insert( size_type pos, const AnsiChar* str, size_type strLength ) const {
 		
-		return insert( pos, FastString(str,strLength) );
+		return insert( pos, UnicodeString(str,strLength) );
 	}
 
-	FastString append( value_type ch ) const {
+	UnicodeString append( value_type ch ) const {
 		value_type tmp[2] = {ch,0};
-		return append( FastString( tmp, 1 ) );
+		return append( UnicodeString( tmp, 1 ) );
 	}
 
-	FastString append( const char* strPtr,  size_type length ) const {
-		return append( FastString( strPtr, length ) );
+	UnicodeString append( const char* strPtr,  size_type length ) const {
+		return append( UnicodeString( strPtr, length ) );
 	}
 
-	FastString append( const value_type* strPtr,  size_type length ) const {
-		return append( FastString( strPtr, length ) );
+	UnicodeString append( const value_type* strPtr,  size_type length ) const {
+		return append( UnicodeString( strPtr, length ) );
 	}
 
 	//here for STL compat
-	FastString append( size_type count, value_type ch ) const {
+	UnicodeString append( size_type count, value_type ch ) const {
 		if ( NULL == data_ ) {
-			return FastString( ch );
+			return UnicodeString( ch );
 		}
 
 		return StringPool::insert(  ch, data_, length(), count );
 	}
 
 
-	FastString append( const FastString& str ) const {
+	UnicodeString append( const UnicodeString& str ) const {
 		return insert( length(), str );
 	}
 
-	FastString prepend( const FastString& str ) const {
+	UnicodeString prepend( const UnicodeString& str ) const {
 		return insert( 0, str );
 	}
 
 
-	FastString erase( size_type pos = 0, size_type count = npos ) const {
-		return FastString( StringPool::erase( data_, pos, count ) );
+	UnicodeString erase( size_type pos = 0, size_type count = npos ) const {
+		return UnicodeString( StringPool::erase( data_, pos, count ) );
 	}
 
-	FastString erase( const_iterator first, const_iterator last ) const {
-		return FastString( StringPool::erase( data_, first - begin(), last - first ) );
+	UnicodeString erase( const_iterator first, const_iterator last ) const {
+		return UnicodeString( StringPool::erase( data_, first - begin(), last - first ) );
 	}
 
-	FastString erase( const_iterator it ) const {
-		return FastString( StringPool::erase( data_, it - begin(), 1 ) );
+	UnicodeString erase( const_iterator it ) const {
+		return UnicodeString( StringPool::erase( data_, it - begin(), 1 ) );
 	}
 
 	size_type copy( value_type* strPtr,  size_type length, size_type offset = 0 ) const {		
@@ -1270,40 +1278,50 @@ public:
 	}
 
 	friend
-	FastString operator+ (const FastString& lhs, const FastString& rhs );
+	UnicodeString operator+ (const UnicodeString& lhs, const UnicodeString& rhs );
 
-	FastString& operator+= ( const FastString& rhs ) {
+	UnicodeString& operator+= ( const UnicodeString& rhs ) {
 		*this = insert( length(), rhs );
 		return *this;
 	}
 
-	FastString& operator+= ( const value_type* rhs ) {
-		*this = insert( length(), FastString(rhs) );
+	UnicodeString& operator+= ( const value_type* rhs ) {
+		*this = insert( length(), UnicodeString(rhs) );
 		return *this;
 	}
 
-	FastString& operator+= ( const AnsiChar* rhs ) {
-		*this = insert( length(), FastString(rhs) );
+	UnicodeString& operator+= ( const AnsiChar* rhs ) {
+		*this = insert( length(), UnicodeString(rhs) );
+		return *this;
+	}
+
+	UnicodeString& operator+=(UniChar c) {
+		*this = insert( length(), UnicodeString(c) );
+		return *this;
+	}
+
+	UnicodeString& operator+=(AnsiChar c) {
+		*this = insert( length(), UnicodeString(c) );
 		return *this;
 	}
 
 
 	
-	FastString set( size_t pos, const U16Char& ch ) const;
+	UnicodeString set( size_t pos, const U16Char& ch ) const;
 
 
 	uint64 sizeOf() const;
 
 	void decode_ansi( TextCodec* codec, AnsiChar* str, size_type& strSize, LanguageEncoding encoding=leDefault ) const ;
-	FastString decode( TextCodec* codec, LanguageEncoding encoding=leDefault ) const ;
+	UnicodeString decode( TextCodec* codec, LanguageEncoding encoding=leDefault ) const ;
 	void encode( TextCodec* codec, const AnsiChar* str, size_type n, LanguageEncoding encoding=leDefault );
-	void encode( TextCodec* codec, const FastString& str, LanguageEncoding encoding=leDefault );
+	void encode( TextCodec* codec, const UnicodeString& str, LanguageEncoding encoding=leDefault );
 
 
 
-	static void transformAnsiToUnicode( const AnsiChar* str, size_type stringLength, FastString& newStr, LanguageEncoding encoding=leDefault );
+	static void transformAnsiToUnicode( const AnsiChar* str, size_type stringLength, UnicodeString& newStr, LanguageEncoding encoding=leDefault );
 
-	static AnsiChar* transformUnicodeToAnsi( const FastString& str, LanguageEncoding encoding=leDefault );
+	static AnsiChar* transformUnicodeToAnsi( const UnicodeString& str, LanguageEncoding encoding=leDefault );
 
 	static UniChar transformAnsiCharToUnicodeChar( AnsiChar c, LanguageEncoding encoding=leDefault );
 	static AnsiChar transformUnicodeCharToAnsiChar( UniChar c, LanguageEncoding encoding=leDefault );
@@ -1312,7 +1330,7 @@ public:
 
 protected:
 
-	FastString( StringData* data ):data_(NULL) {
+	UnicodeString( StringData* data ):data_(NULL) {
 		assign(data);
 	}
 
@@ -1325,7 +1343,7 @@ protected:
 	}
 
 
-	FastString& operator=( StringData* data ) {
+	UnicodeString& operator=( StringData* data ) {
 		assign( data );
 		return *this;
 	}
@@ -1335,7 +1353,7 @@ protected:
 
 
 
-inline FastString operator+ (const FastString& lhs, const FastString& rhs )
+inline UnicodeString operator+ (const UnicodeString& lhs, const UnicodeString& rhs )
 {		
 	return lhs.insert( lhs.length(), rhs );
 }
@@ -1346,7 +1364,7 @@ inline FastString operator+ (const FastString& lhs, const FastString& rhs )
 
 class StringExtraData {
 public:
-	StringExtraData():encoding(FastString::leDefault),
+	StringExtraData():encoding(UnicodeString::leDefault),
 						subStrStart(StringExtraData::SubStrNPos),
 						subStrEnd(StringExtraData::SubStrNPos),
 						substrParent(NULL),
@@ -1355,7 +1373,7 @@ public:
 		SubStrNPos = (size_t)-1,
 	};
 
-	FastString::LanguageEncoding encoding;
+	UnicodeString::LanguageEncoding encoding;
 	size_t subStrStart; 
 	size_t subStrEnd;
 	StringData* substrParent;
@@ -1363,7 +1381,7 @@ public:
 };
 
 
-inline FastString::LanguageEncoding FastString::encoding() const 
+inline UnicodeString::LanguageEncoding UnicodeString::encoding() const 
 {
 	if ( NULL == data_ ) {
 		return leUnknown;
@@ -1376,7 +1394,7 @@ inline FastString::LanguageEncoding FastString::encoding() const
 }	
 
 
-typedef FastString UnicodeString;
+//typedef UnicodeString UnicodeString;
 
 
 

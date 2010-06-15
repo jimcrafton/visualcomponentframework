@@ -17,6 +17,11 @@ static String ComponentSettingScopeNames[] = { L"sUser",
                                          L"sLocal" };
 
 
+
+
+_class_abstract_rtti_(HeapObject, "VCF::Object", "HeapObject")
+_class_rtti_end_
+
 _class_abstract_rtti_(ObjectWithCallbacks, "VCF::HeapObject", OBJECTWITHCALLBACKS_CLASSID)
 _class_rtti_end_
 
