@@ -32,10 +32,14 @@ public:
 	virtual void swapBuffers();
 
 	virtual void makeCurrent();
+
+	virtual void shareWith( OpenGLPeer* peer );
 private:
 	Control* owningControl_;
 	HGLRC hrc_;
+	HWND owningHwnd_;
 	bool isInitialized_;
+	bool destroyHwnd_;
 };
 
 }; //end of namespace VCF

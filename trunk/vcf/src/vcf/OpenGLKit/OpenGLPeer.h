@@ -30,6 +30,8 @@ public:
 	virtual void swapBuffers() = 0;
 
 	virtual void makeCurrent() = 0;
+
+	virtual void shareWith( OpenGLPeer* peer ) = 0;
 };
 
 }; //end of namespace VCF

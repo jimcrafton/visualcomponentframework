@@ -33,6 +33,8 @@ public:
 	void swapBuffers();
 
 	void makeCurrent();
+
+	void shareWith( OpenGLContext* ctx );
 private:
 	OpenGLPeer* glPeer_;
 };

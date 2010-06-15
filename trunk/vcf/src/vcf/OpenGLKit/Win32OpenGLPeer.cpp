@@ -17,10 +17,13 @@ where you installed the VCF.
 
 using namespace VCF;
 
+
 Win32OpenGLPeer::Win32OpenGLPeer( Control* owningControl ):
 		owningControl_(owningControl),
 		hrc_(NULL),
-		isInitialized_(false)
+		owningHwnd_(NULL),
+		isInitialized_(false),
+		destroyHwnd_(false)
 {		
 	
 }
@@ -30,6 +33,10 @@ Win32OpenGLPeer::~Win32OpenGLPeer()
 	// We don't need the DC to release the rendering context
 	wglMakeCurrent( NULL, NULL );
 	wglDeleteContext( hrc_ );	
+
+	if ( NULL != owningHwnd_ && destroyHwnd_ ) {
+		DestroyWindow(owningHwnd_);		
+	}
 }
 
 void Win32OpenGLPeer::initGL( Control* control )
@@ -40,8 +47,52 @@ void Win32OpenGLPeer::initGL( Control* control )
 
 	owningControl_ = control;
 
-	HWND hwnd = (HWND)(control->getPeer()->getHandleID());
-	HDC dc = ::GetDC(hwnd);
+	if ( NULL != owningControl_ ) {
+		owningHwnd_ = (HWND)(owningControl_->getPeer()->getHandleID());
+	}
+	else {
+		//create a temp window
+		static WNDCLASSEXW wcex = {0};
+
+		if ( NULL == wcex.lpszClassName ) {
+			wcex.cbSize = sizeof(wcex);
+			
+			wcex.style			= 0;
+			wcex.lpfnWndProc	= (WNDPROC)DefWindowProcW;
+			wcex.cbClsExtra		= 0;
+			wcex.cbWndExtra		= 0;
+			wcex.hInstance		= ::GetModuleHandleW(NULL);
+			wcex.hIcon			= NULL;
+			wcex.hCursor		= NULL;
+			wcex.hbrBackground	= 0;
+			wcex.lpszMenuName	= NULL;
+			wcex.lpszClassName	= L"Win32OpenGLPeerTmp";
+			wcex.hIconSm		= NULL;
+			RegisterClassExW(&wcex);
+		}
+		
+		owningHwnd_ = ::CreateWindowExW( 0,
+											wcex.lpszClassName,
+											NULL,
+											WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
+											0,
+											0,
+											1,
+											1,
+											NULL,
+											NULL, wcex.hInstance, NULL );
+		
+		if ( NULL != owningHwnd_ ) {
+			destroyHwnd_ = true;
+		}
+		
+	}
+
+	if ( NULL == owningHwnd_ ) {
+		throw RuntimeException( "Unable to retreive or create a Window Handle for GL peer." );
+	}
+
+	HDC dc = ::GetDC(owningHwnd_);
 
 	if ( NULL != dc ){
 		PIXELFORMATDESCRIPTOR pfd =
@@ -85,7 +136,7 @@ void Win32OpenGLPeer::initGL( Control* control )
 		isInitialized_ = ( wglMakeCurrent( dc, hrc_ ) ) ? true : false;
 		VCF_ASSERT(isInitialized_);
 
-		ReleaseDC(hwnd,dc);
+		ReleaseDC(owningHwnd_,dc);
 	}
 }
 
@@ -104,8 +155,7 @@ void Win32OpenGLPeer::initGL(GraphicsContext * context)
 		it with a ReleaseDC() call. using the checkHandle() and releaseHandle() calls will
 		do all of this automatically.
 		*/
-		HWND hwnd = (HWND)(owningControl_->getPeer()->getHandleID());
-		HDC dc = ::GetDC(hwnd);
+		HDC dc = ::GetDC(owningHwnd_);
 
 		dc = (HDC)context->getPeer()->getContextID();
 		if ( NULL != dc ){
@@ -150,66 +200,35 @@ void Win32OpenGLPeer::initGL(GraphicsContext * context)
 			isInitialized_ = ( wglMakeCurrent( dc, hrc_ ) ) ? true : false;
 			VCF_ASSERT(isInitialized_);
 
-			ReleaseDC(hwnd,dc);
+			ReleaseDC(owningHwnd_,dc);
 		}
 }
 
 void Win32OpenGLPeer::swapBuffers()
 {
-	HWND hwnd = (HWND)(owningControl_->getPeer()->getHandleID());
-	HDC dc = ::GetDC(hwnd);
+	HDC dc = ::GetDC(owningHwnd_);
 
 	if ( NULL != dc ){
-		//Win32Context* win32Ctx = dynamic_cast<Win32Context*>(glContext_->getPeer());
-		//VCF_ASSERT(NULL != win32Ctx);
-		//if ( NULL == win32Ctx ){
-		//	throw BasicException("Win32OpenGLPeer error: cannot get context peer",__LINE__);		//throw exception for release mode -- this is a bad error!
-		//}
-		//win32Ctx->checkHandle();
-
-		/**
-		JC - see Win32OpenGLPeer::initGL for the reason for 
-		commenting this out.
-		*/
-		//HWND hwnd = (HWND)(owningControl_->getPeer()->getHandleID());
-		//HDC dc = ::GetDC(hwnd);
-
-		//HDC dc = (HDC)glContext_->getPeer()->getContextID();
-
 		::SwapBuffers( dc );
 
-		ReleaseDC(hwnd,dc);
-		//win32Ctx->releaseHandle();
+		ReleaseDC(owningHwnd_,dc);
 	}
 }
 
 void Win32OpenGLPeer::makeCurrent()
 {
-	HWND hwnd = (HWND)(owningControl_->getPeer()->getHandleID());
-	HDC dc = ::GetDC(hwnd);
+	HDC dc = ::GetDC(owningHwnd_);
 	if ( NULL != dc ){
-		//Win32Context* win32Ctx = dynamic_cast<Win32Context*>(glContext_->getPeer());
-		//VCF_ASSERT(NULL != win32Ctx);
-		//if ( NULL == win32Ctx ){
-		//	throw BasicException("Win32OpenGLPeer error: cannot get context peer",__LINE__);		//throw exception for release mode -- this is a bad error!
-		//}
-		//win32Ctx->checkHandle();
-
-		/**
-		JC - see Win32OpenGLPeer::initGL for the reason for 
-		commenting this out.
-		*/
-		//HWND hwnd = (HWND)(owningControl_->getPeer()->getHandleID());
-		//HDC dc = ::GetDC(hwnd);
-
-		//HDC dc = (HDC)glContext_->getPeer()->getContextID();
-
 		wglMakeCurrent( dc, hrc_ );
-
-		//win32Ctx->releaseHandle();
 	}
 }
 
+void Win32OpenGLPeer::shareWith( OpenGLPeer* peer )
+{
+	Win32OpenGLPeer* glPeer = (Win32OpenGLPeer*)peer;
+
+	wglShareLists( hrc_, glPeer->hrc_);
+}
 
 /**
 $Id$

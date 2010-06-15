@@ -42,6 +42,11 @@ void OpenGLContext::makeCurrent()
 	glPeer_->makeCurrent();
 }
 
+void OpenGLContext::shareWith( OpenGLContext* ctx )
+{
+	glPeer_->shareWith(ctx->glPeer_);
+}
+
 
 /**
 $Id: OpenGLContext.cpp 2654 2006-04-28 17:31:05Z kdmix $
