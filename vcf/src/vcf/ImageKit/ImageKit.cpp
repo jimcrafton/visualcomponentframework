@@ -613,10 +613,7 @@ void IKImage::renderToFBO( int fbo, const Dimensions& fboSize )
 	double sw = (double)fboSize.width / (double)size_.width;
 
 
-	Matrix2D mat = //Matrix2D::translation(-(size_.width/2.0),-(size_.height/2.0)) * 
-					Matrix2D::scaling( sh, sw );// *
-				//	Matrix2D::translation(size_.width/2.0,size_.height/2.0) * 
-				//	Matrix2D::translation(0,0);
+	Matrix2D mat = Matrix2D::scaling( sw, sh );
 
 	glOrtho(0, fboSize.width, 0, fboSize.height, -1, 1);
 	glViewport(0,0,fboSize.width, fboSize.height);
@@ -633,7 +630,7 @@ void IKImage::renderToFBO( int fbo, const Dimensions& fboSize )
 
 	render(0,0);
 
-	glPopMatrix();
+	glPopMatrix();	
 	
 }
 
@@ -646,6 +643,11 @@ void IKImage::renderToImage( Image* image  )
 	
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, ImageKit::getDefaultFBO() );
 
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);	
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
 	tmpImg.bind();
 	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, tmpImg.getHandle(), 0);
 
@@ -655,17 +657,6 @@ void IKImage::renderToImage( Image* image  )
 
 
 	tmpImg.bind();
-
-	//glTexImage2D(GL_TEXTURE_2D, 0, 
-	//			Image::itColor , 
-	//			size_.width, 
-	//			size_.height, 
-	//			0, 
-	//			GL_BGRA_EXT, 
-	//			GL_UNSIGNED_BYTE, 
-	//			NULL );
-
-
 	glGetTexImage( GL_TEXTURE_2D, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image->getData() );
 }
 
@@ -694,14 +685,24 @@ void IKImageContext::controlDestroyed(ComponentEvent* e)
 
 IKImageContext::IKImageContext():
 	opacity_(1.0),
-		glPeer_(NULL)
+	glPeer_(NULL),
+	deletePeer_(true)
 {
+
+	glPeer_ = OpenGLToolkit::createOpenGLPeer( NULL );
+
+
+	glPeer_->initGL( (Control*)NULL );
+
+	glPeer_->makeCurrent();
+
 	ImageKit::initDefaultFBO();
 }
 
 IKImageContext::IKImageContext( Control* control ):
 	opacity_(1.0),
-		glPeer_(NULL)
+		glPeer_(NULL),
+		deletePeer_(false)
 {
 
 	std::map<Control*,OpenGLPeer*>::iterator found = IKImageContext::glPeerMap.find( control );
@@ -732,6 +733,10 @@ IKImageContext::~IKImageContext()
 {
 	if ( NULL != glPeer_ ) {
 		glPeer_->swapBuffers();
+	}
+
+	if ( deletePeer_ && NULL != glPeer_ ) {
+		delete glPeer_;
 	}
 }
 
