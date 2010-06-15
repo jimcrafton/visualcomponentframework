@@ -213,6 +213,7 @@ protected:
 	Size viewSize;
 
 	OpenGLPeer* glPeer_;
+	bool deletePeer_;
 
 
 	static void controlDestroyed(ComponentEvent* e); 
