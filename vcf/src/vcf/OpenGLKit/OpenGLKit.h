@@ -88,7 +88,7 @@ defined to use the DLL or static libraries.
 #include "vcf/OpenGLKit/OpenGLPeer.h"
 #include "vcf/OpenGLKit/OpenGLContext.h"
 #include "vcf/OpenGLKit/OpenGLControl.h"
-
+#include "vcf/OpenGLKit/VCFOpenGL.h"
 
 namespace VCF {
 

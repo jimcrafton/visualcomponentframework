@@ -52,7 +52,12 @@ void OpenGLControl::makeCurrent()
 	}
 }
 
-
+void OpenGLControl::shareWith( OpenGLControl* control )
+{
+	if ( NULL != glContext_ ){
+		glContext_->shareWith(control->glContext_);
+	}
+}
 
 /**
 $Id$

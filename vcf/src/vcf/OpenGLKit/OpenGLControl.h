@@ -72,6 +72,8 @@ public:
 	virtual void swapBuffers();	
 
 	void makeCurrent();
+
+	void shareWith( OpenGLControl* control );
 protected:
 	OpenGLContext* glContext_;
 };
