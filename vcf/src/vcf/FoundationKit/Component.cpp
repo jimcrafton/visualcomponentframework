@@ -108,7 +108,7 @@ void Component::destroy()
 	components_.clear();
 }
 
-String Component::getName() const
+String Component::getName()
 {
 	return name_;
 }

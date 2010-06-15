@@ -2,7 +2,7 @@
 
 /*
 Copyright 2000-2004 The VCF Project.
-Please see License.txt in the top FastString::level directory
+Please see License.txt in the top UnicodeString::level directory
 where you installed the VCF.
 */
 
@@ -113,9 +113,9 @@ unsigned int StringPool::getNativeEncoding(int encoding)
 #ifdef WIN32
 	
 
-	FastString::LanguageEncoding tmp = (FastString::LanguageEncoding)encoding;
-	if ( encoding == FastString::leDefault ) {
-		tmp = FastString::leUTF8 ;
+	UnicodeString::LanguageEncoding tmp = (UnicodeString::LanguageEncoding)encoding;
+	if ( encoding == UnicodeString::leDefault ) {
+		tmp = UnicodeString::leUTF8 ;
 		//Locale* locale = System::getCurrentThreadLocale();
 		//if ( NULL != locale ) {
 		//	tmp = locale->getEncoding();
@@ -125,157 +125,157 @@ unsigned int StringPool::getNativeEncoding(int encoding)
 
 	
 	switch (tmp) {				
-		case FastString::leIBM037: {result=037;}break;
-		case FastString::leIBM437: {result=437;}break;
-		case FastString::leIBM500: {result=500;}break;
-		case FastString::leArabic708: {result=708;}break;
-		case FastString::leArabic449: {result=709;}break;
-		case FastString::leArabicTransparent: {result=710;}break;
-		case FastString::leDOSArabic: {result=720;}break;
-		case FastString::leGreek: {result=737;}break;
-		case FastString::leBaltic: {result=775;}break;
-		case FastString::leLatin1: {result=850;}break;
-		case FastString::leLatin2: {result=852;}break;
-		case FastString::leCyrillic: {result=855;}break;
-		case FastString::leTurkish: {result=857;}break;
-		case FastString::leMultilingualLatin1: {result=858;}break;
-		case FastString::lePortuguese: {result=860;}break;
-		case FastString::leIcelandic: {result=861;}break;
-		case FastString::leHebrew: {result=862;}break;
-		case FastString::leFrenchCanadian: {result=863;}break;
-		case FastString::leArabic864: {result=864;}break;
-		case FastString::leNordic: {result=865;}break;
-		case FastString::leRussianCyrillic: {result=866;}break;
-		case FastString::leModernGreek: {result=869;}break;
-		case FastString::leEBCDICLatin2: {result=870;}break;
-		case FastString::leThai: {result=874;}break;
-		case FastString::leEBCDICGreekModern: {result=875;}break;
-		case FastString::leShiftJIS: {result=932;}break;
-		case FastString::leSimplifiedChinese: {result=936;}break;
-		case FastString::leKorean: {result=949;}break;
-		case FastString::leChineseTraditionalBig5: {result=950;}break;
-		case FastString::leEBCDICTurkish: {result=1026;}break;
-		case FastString::leEBCDICLatin1: {result=1047;}break;
-		case FastString::leEBCDICUSCanada: {result=1140;}break;
-		case FastString::leEBCDICGermany: {result=1141;}break;
-		case FastString::leEBCDICDenmarkNorway: {result=1142;}break;
-		case FastString::leEBCDICFinlandSweden: {result=1143;}break;
-		case FastString::leEBCDICItaly: {result=1144;}break;
-		case FastString::leEBCDICLatinAmericaSpain: {result=1145;}break;
-		case FastString::leEBCDICUnitedKingdom: {result=1146;}break;
-		case FastString::leEBCDICFrance: {result=1147;}break;
-		case FastString::leEBCDICInternational: {result=1148;}break;
-		case FastString::leEBCDICIcelandic: {result=1149;}break;
-		case FastString::leUTF16LittleEndianByteOrder: {result=1200;}break;
-		case FastString::leUTF16BigEndianByteOrder: {result=1201;}break;
-		case FastString::leANSICentralEuropean: {result=1250;}break;
-		case FastString::leANSICyrillic: {result=1251;}break;
-		case FastString::leANSILatin1: {result=1252;}break;
-		case FastString::leANSIGreek: {result=1253;}break;
-		case FastString::leANSITurkish: {result=1254;}break;
-		case FastString::leANSIHebrew: {result=1255;}break;
-		case FastString::leANSIArabic: {result=1256;}break;
-		case FastString::leANSIBaltic: {result=1257;}break;
-		case FastString::leANSIVietnamese: {result=1258;}break;
-		case FastString::leJohabKorean: {result=1361;}break;
-		case FastString::leMacRoman: {result=10000;}break;
-		case FastString::leMacJapanese: {result=10001;}break;
-		case FastString::leMacTraditionalChineseBig5: {result=10002;}break;
-		case FastString::leMacKorean: {result=10003;}break;
-		case FastString::leMacArabic: {result=10004;}break;
-		case FastString::leMacHebrew: {result=10005;}break;
-		case FastString::leMacGreek: {result=10006;}break;
-		case FastString::leMacCyrillic: {result=10007;}break;
-		case FastString::leMacSimplifiedChinese: {result=10008;}break;
-		case FastString::leMacRomanian: {result=10010;}break;
-		case FastString::leMacUkrainian: {result=10017;}break;
-		case FastString::leMacThai: {result=10021;}break;
-		case FastString::leMacLatin2: {result=10029;}break;
-		case FastString::leMacIcelandic: {result=10079;}break;
-		case FastString::leMacTurkish: {result=10081;}break;
-		case FastString::leMacCroatian: {result=10082;}break;
-		case FastString::leUTF32LittleEndianByteOrder: {result=12000;}break;
-		case FastString::leUTF32BigEndianByteOrder: {result=12001;}break;
-		case FastString::leCNSTaiwan: {result=20000;}break;
-		case FastString::leTCATaiwan: {result=20001;}break;
-		case FastString::leEtenTaiwan: {result=20002;}break;
-		case FastString::leIBM5550Taiwan: {result=20003;}break;
-		case FastString::leTeleTextTaiwan: {result=20004;}break;
-		case FastString::leWangTaiwan: {result=20005;}break;
-		case FastString::leIA5WesternEuropean: {result=20105;}break;
-		case FastString::leIA5German: {result=20106;}break;
-		case FastString::leIA5Swedish: {result=20107;}break;
-		case FastString::leIA5Norwegian: {result=20108;}break;
-		case FastString::leUSASCII: {result=20127;}break;
-		case FastString::leT61: {result=20261;}break;
-		case FastString::leISO6937: {result=20269;}break;
-		case FastString::leIBM273Germany: {result=20273;}break;
-		case FastString::leIBM277DenmarkNorway: {result=20277;}break;
-		case FastString::leIBM278FinlandSweden: {result=20278;}break;
-		case FastString::leIBM280Italy: {result=20280;}break;
-		case FastString::leIBM284LatinAmericaSpain: {result=20284;}break;
-		case FastString::leIBM285UnitedKingdom: {result=20285;}break;
-		case FastString::leIBM290JapaneseKatakanaExt: {result=20290;}break;
-		case FastString::leIBM297France: {result=20297;}break;
-		case FastString::leIBM420Arabic: {result=20420;}break;
-		case FastString::leIBM423Greek: {result=20423;}break;
-		case FastString::leIBM424Hebrew: {result=20424;}break;
-		case FastString::leIBMKoreanExtended: {result=20833;}break;
-		case FastString::leIBMThai: {result=20838;}break;
-		case FastString::leRussianKOI8R: {result=20866;}break;
-		case FastString::leIBM871Icelandic: {result=20871;}break;
-		case FastString::leIBM880CyrillicRussian: {result=20880;}break;
-		case FastString::leIBM905Turkish: {result=20905;}break;
-		case FastString::leIBM00924Latin1: {result=20924;}break;
-		case FastString::leEUCJapaneseJIS: {result=20932;}break;
-		case FastString::leSimplifiedChineseGB2312: {result=20936;}break;
-		case FastString::leKoreanWansung: {result=20949;}break;
-		case FastString::leEBCDICCyrillicSerbianBulgarian: {result=21025;}break;
-		case FastString::leUkrainianKOI8U: {result=21866;}break;
-		case FastString::leISO88591Latin1: {result=28591;}break;
-		case FastString::leISO88592CentralEuropean: {result=28592;}break;
-		case FastString::leISO88593Latin3: {result=28593;}break;
-		case FastString::leISO88594Baltic: {result=28594;}break;
-		case FastString::leISO88595Cyrillic: {result=28595;}break;
-		case FastString::leISO88596Arabic: {result=28596;}break;
-		case FastString::leISO88597Greek: {result=28597;}break;
-		case FastString::leISO88598HebrewVisual: {result=28598;}break;
-		case FastString::leISO88599Turkish: {result=28599;}break;
-		case FastString::leISO885913Estonian: {result=28603;}break;
-		case FastString::leISO885915Latin9: {result=28605;}break;
-		case FastString::leEuropa3: {result=29001;}break;
-		case FastString::leISO88598HebrewLogical: {result=38598;}break;
-		case FastString::leISO2022JapaneseNoHalfwidthKatakana: {result=50220;}break;
-		case FastString::leISO2022JapaneseWithHalfwidthKatakana: {result=50221;}break;
-		case FastString::leISO2022JapaneseAllow1ByteKana: {result=50222;}break;
-		case FastString::leISO2022Korean: {result=50225;}break;
-		case FastString::leISO2022SimplifiedChinese: {result=50227;}break;
-		case FastString::leISO2022TraditionalChinese: {result=50229;}break;
-		case FastString::leEBCDICJapaneseExt: {result=50930;}break;
-		case FastString::leEBCDICUSCanadaAndJapanese: {result=50931;}break;
-		case FastString::leEBCDICKoreanExtAndKorean: {result=50933;}break;
-		case FastString::leEBCDICSimplifiedChineseExtSimplifiedChinese: {result=50935;}break;
-		case FastString::leEBCDICSimplifiedChinese: {result=50936;}break;
-		case FastString::leEBCDICUSCanadaAndTraditionalChinese: {result=50937;}break;
-		case FastString::leEBCDICJapaneseLatinExtAndJapanese: {result=50939;}break;
-		case FastString::leEUCJapanese: {result=51932;}break;
-		case FastString::leEUCSimplifiedChinese: {result=51936;}break;
-		case FastString::leEUCKorean: {result=51949;}break;
-		case FastString::leEUCTraditionalChinese: {result=51950;}break;
-		case FastString::leHZGB2312SimplifiedChinese: {result=52936;}break;
-		case FastString::leGB18030SimplifiedChinese: {result=54936;}break;
-		case FastString::leISCIIDevanagari: {result=57002;}break;
-		case FastString::leISCIIBengali: {result=57003;}break;
-		case FastString::leISCIITamil: {result=57004;}break;
-		case FastString::leISCIITelugu: {result=57005;}break;
-		case FastString::leISCIIAssamese: {result=57006;}break;
-		case FastString::leISCIIOriya: {result=57007;}break;
-		case FastString::leISCIIKannada: {result=57008;}break;
-		case FastString::leISCIIMalayalam: {result=57009;}break;
-		case FastString::leISCIIGujarati: {result=57010;}break;
-		case FastString::leISCIIPunjabi: {result=57011;}break;
-		case FastString::leUTF7: {result=65000;}break;
-		case FastString::leUTF8: {result=65001;}break;
+		case UnicodeString::leIBM037: {result=037;}break;
+		case UnicodeString::leIBM437: {result=437;}break;
+		case UnicodeString::leIBM500: {result=500;}break;
+		case UnicodeString::leArabic708: {result=708;}break;
+		case UnicodeString::leArabic449: {result=709;}break;
+		case UnicodeString::leArabicTransparent: {result=710;}break;
+		case UnicodeString::leDOSArabic: {result=720;}break;
+		case UnicodeString::leGreek: {result=737;}break;
+		case UnicodeString::leBaltic: {result=775;}break;
+		case UnicodeString::leLatin1: {result=850;}break;
+		case UnicodeString::leLatin2: {result=852;}break;
+		case UnicodeString::leCyrillic: {result=855;}break;
+		case UnicodeString::leTurkish: {result=857;}break;
+		case UnicodeString::leMultilingualLatin1: {result=858;}break;
+		case UnicodeString::lePortuguese: {result=860;}break;
+		case UnicodeString::leIcelandic: {result=861;}break;
+		case UnicodeString::leHebrew: {result=862;}break;
+		case UnicodeString::leFrenchCanadian: {result=863;}break;
+		case UnicodeString::leArabic864: {result=864;}break;
+		case UnicodeString::leNordic: {result=865;}break;
+		case UnicodeString::leRussianCyrillic: {result=866;}break;
+		case UnicodeString::leModernGreek: {result=869;}break;
+		case UnicodeString::leEBCDICLatin2: {result=870;}break;
+		case UnicodeString::leThai: {result=874;}break;
+		case UnicodeString::leEBCDICGreekModern: {result=875;}break;
+		case UnicodeString::leShiftJIS: {result=932;}break;
+		case UnicodeString::leSimplifiedChinese: {result=936;}break;
+		case UnicodeString::leKorean: {result=949;}break;
+		case UnicodeString::leChineseTraditionalBig5: {result=950;}break;
+		case UnicodeString::leEBCDICTurkish: {result=1026;}break;
+		case UnicodeString::leEBCDICLatin1: {result=1047;}break;
+		case UnicodeString::leEBCDICUSCanada: {result=1140;}break;
+		case UnicodeString::leEBCDICGermany: {result=1141;}break;
+		case UnicodeString::leEBCDICDenmarkNorway: {result=1142;}break;
+		case UnicodeString::leEBCDICFinlandSweden: {result=1143;}break;
+		case UnicodeString::leEBCDICItaly: {result=1144;}break;
+		case UnicodeString::leEBCDICLatinAmericaSpain: {result=1145;}break;
+		case UnicodeString::leEBCDICUnitedKingdom: {result=1146;}break;
+		case UnicodeString::leEBCDICFrance: {result=1147;}break;
+		case UnicodeString::leEBCDICInternational: {result=1148;}break;
+		case UnicodeString::leEBCDICIcelandic: {result=1149;}break;
+		case UnicodeString::leUTF16LittleEndianByteOrder: {result=1200;}break;
+		case UnicodeString::leUTF16BigEndianByteOrder: {result=1201;}break;
+		case UnicodeString::leANSICentralEuropean: {result=1250;}break;
+		case UnicodeString::leANSICyrillic: {result=1251;}break;
+		case UnicodeString::leANSILatin1: {result=1252;}break;
+		case UnicodeString::leANSIGreek: {result=1253;}break;
+		case UnicodeString::leANSITurkish: {result=1254;}break;
+		case UnicodeString::leANSIHebrew: {result=1255;}break;
+		case UnicodeString::leANSIArabic: {result=1256;}break;
+		case UnicodeString::leANSIBaltic: {result=1257;}break;
+		case UnicodeString::leANSIVietnamese: {result=1258;}break;
+		case UnicodeString::leJohabKorean: {result=1361;}break;
+		case UnicodeString::leMacRoman: {result=10000;}break;
+		case UnicodeString::leMacJapanese: {result=10001;}break;
+		case UnicodeString::leMacTraditionalChineseBig5: {result=10002;}break;
+		case UnicodeString::leMacKorean: {result=10003;}break;
+		case UnicodeString::leMacArabic: {result=10004;}break;
+		case UnicodeString::leMacHebrew: {result=10005;}break;
+		case UnicodeString::leMacGreek: {result=10006;}break;
+		case UnicodeString::leMacCyrillic: {result=10007;}break;
+		case UnicodeString::leMacSimplifiedChinese: {result=10008;}break;
+		case UnicodeString::leMacRomanian: {result=10010;}break;
+		case UnicodeString::leMacUkrainian: {result=10017;}break;
+		case UnicodeString::leMacThai: {result=10021;}break;
+		case UnicodeString::leMacLatin2: {result=10029;}break;
+		case UnicodeString::leMacIcelandic: {result=10079;}break;
+		case UnicodeString::leMacTurkish: {result=10081;}break;
+		case UnicodeString::leMacCroatian: {result=10082;}break;
+		case UnicodeString::leUTF32LittleEndianByteOrder: {result=12000;}break;
+		case UnicodeString::leUTF32BigEndianByteOrder: {result=12001;}break;
+		case UnicodeString::leCNSTaiwan: {result=20000;}break;
+		case UnicodeString::leTCATaiwan: {result=20001;}break;
+		case UnicodeString::leEtenTaiwan: {result=20002;}break;
+		case UnicodeString::leIBM5550Taiwan: {result=20003;}break;
+		case UnicodeString::leTeleTextTaiwan: {result=20004;}break;
+		case UnicodeString::leWangTaiwan: {result=20005;}break;
+		case UnicodeString::leIA5WesternEuropean: {result=20105;}break;
+		case UnicodeString::leIA5German: {result=20106;}break;
+		case UnicodeString::leIA5Swedish: {result=20107;}break;
+		case UnicodeString::leIA5Norwegian: {result=20108;}break;
+		case UnicodeString::leUSASCII: {result=20127;}break;
+		case UnicodeString::leT61: {result=20261;}break;
+		case UnicodeString::leISO6937: {result=20269;}break;
+		case UnicodeString::leIBM273Germany: {result=20273;}break;
+		case UnicodeString::leIBM277DenmarkNorway: {result=20277;}break;
+		case UnicodeString::leIBM278FinlandSweden: {result=20278;}break;
+		case UnicodeString::leIBM280Italy: {result=20280;}break;
+		case UnicodeString::leIBM284LatinAmericaSpain: {result=20284;}break;
+		case UnicodeString::leIBM285UnitedKingdom: {result=20285;}break;
+		case UnicodeString::leIBM290JapaneseKatakanaExt: {result=20290;}break;
+		case UnicodeString::leIBM297France: {result=20297;}break;
+		case UnicodeString::leIBM420Arabic: {result=20420;}break;
+		case UnicodeString::leIBM423Greek: {result=20423;}break;
+		case UnicodeString::leIBM424Hebrew: {result=20424;}break;
+		case UnicodeString::leIBMKoreanExtended: {result=20833;}break;
+		case UnicodeString::leIBMThai: {result=20838;}break;
+		case UnicodeString::leRussianKOI8R: {result=20866;}break;
+		case UnicodeString::leIBM871Icelandic: {result=20871;}break;
+		case UnicodeString::leIBM880CyrillicRussian: {result=20880;}break;
+		case UnicodeString::leIBM905Turkish: {result=20905;}break;
+		case UnicodeString::leIBM00924Latin1: {result=20924;}break;
+		case UnicodeString::leEUCJapaneseJIS: {result=20932;}break;
+		case UnicodeString::leSimplifiedChineseGB2312: {result=20936;}break;
+		case UnicodeString::leKoreanWansung: {result=20949;}break;
+		case UnicodeString::leEBCDICCyrillicSerbianBulgarian: {result=21025;}break;
+		case UnicodeString::leUkrainianKOI8U: {result=21866;}break;
+		case UnicodeString::leISO88591Latin1: {result=28591;}break;
+		case UnicodeString::leISO88592CentralEuropean: {result=28592;}break;
+		case UnicodeString::leISO88593Latin3: {result=28593;}break;
+		case UnicodeString::leISO88594Baltic: {result=28594;}break;
+		case UnicodeString::leISO88595Cyrillic: {result=28595;}break;
+		case UnicodeString::leISO88596Arabic: {result=28596;}break;
+		case UnicodeString::leISO88597Greek: {result=28597;}break;
+		case UnicodeString::leISO88598HebrewVisual: {result=28598;}break;
+		case UnicodeString::leISO88599Turkish: {result=28599;}break;
+		case UnicodeString::leISO885913Estonian: {result=28603;}break;
+		case UnicodeString::leISO885915Latin9: {result=28605;}break;
+		case UnicodeString::leEuropa3: {result=29001;}break;
+		case UnicodeString::leISO88598HebrewLogical: {result=38598;}break;
+		case UnicodeString::leISO2022JapaneseNoHalfwidthKatakana: {result=50220;}break;
+		case UnicodeString::leISO2022JapaneseWithHalfwidthKatakana: {result=50221;}break;
+		case UnicodeString::leISO2022JapaneseAllow1ByteKana: {result=50222;}break;
+		case UnicodeString::leISO2022Korean: {result=50225;}break;
+		case UnicodeString::leISO2022SimplifiedChinese: {result=50227;}break;
+		case UnicodeString::leISO2022TraditionalChinese: {result=50229;}break;
+		case UnicodeString::leEBCDICJapaneseExt: {result=50930;}break;
+		case UnicodeString::leEBCDICUSCanadaAndJapanese: {result=50931;}break;
+		case UnicodeString::leEBCDICKoreanExtAndKorean: {result=50933;}break;
+		case UnicodeString::leEBCDICSimplifiedChineseExtSimplifiedChinese: {result=50935;}break;
+		case UnicodeString::leEBCDICSimplifiedChinese: {result=50936;}break;
+		case UnicodeString::leEBCDICUSCanadaAndTraditionalChinese: {result=50937;}break;
+		case UnicodeString::leEBCDICJapaneseLatinExtAndJapanese: {result=50939;}break;
+		case UnicodeString::leEUCJapanese: {result=51932;}break;
+		case UnicodeString::leEUCSimplifiedChinese: {result=51936;}break;
+		case UnicodeString::leEUCKorean: {result=51949;}break;
+		case UnicodeString::leEUCTraditionalChinese: {result=51950;}break;
+		case UnicodeString::leHZGB2312SimplifiedChinese: {result=52936;}break;
+		case UnicodeString::leGB18030SimplifiedChinese: {result=54936;}break;
+		case UnicodeString::leISCIIDevanagari: {result=57002;}break;
+		case UnicodeString::leISCIIBengali: {result=57003;}break;
+		case UnicodeString::leISCIITamil: {result=57004;}break;
+		case UnicodeString::leISCIITelugu: {result=57005;}break;
+		case UnicodeString::leISCIIAssamese: {result=57006;}break;
+		case UnicodeString::leISCIIOriya: {result=57007;}break;
+		case UnicodeString::leISCIIKannada: {result=57008;}break;
+		case UnicodeString::leISCIIMalayalam: {result=57009;}break;
+		case UnicodeString::leISCIIGujarati: {result=57010;}break;
+		case UnicodeString::leISCIIPunjabi: {result=57011;}break;
+		case UnicodeString::leUTF7: {result=65000;}break;
+		case UnicodeString::leUTF8: {result=65001;}break;
 	}
 	
 #endif
@@ -606,7 +606,7 @@ StringData* StringPool::transformAnsiToUnicode( const char* str, size_t length, 
 		}
 
 		newStr->extra = new StringExtraData();
-		newStr->extra->encoding = (FastString::LanguageEncoding)encoding;
+		newStr->extra->encoding = (UnicodeString::LanguageEncoding)encoding;
 
 
 		result = newStr;
@@ -922,9 +922,9 @@ bool StringPool::equals( StringData* lhs, StringData* rhs )
 		return false;
 	}
 
-	if ( lhs->hashID != rhs->hashID ) {
+	if ( lhs->hashID != rhs->hashID && !(lhs->bits & StringData::SubString || rhs->bits & StringData::SubString) ) {
 		return false;
-	}	
+	}
 
 	if ( (lhs->pool == rhs->pool) || (lhs->pool->getThreadID() == rhs->pool->getThreadID()) ) {
 		return 0 == StringPool::wmemcmp( lhs->strPtr, rhs->strPtr, lhs->length );
@@ -1286,6 +1286,7 @@ StringData* StringPool::subStr( StringData* src, size_t startPos, size_t length 
 		data->extra->subStrStart = startPos;
 		data->extra->subStrEnd = startPos+length;
 		data->extra->substrParent = src;
+		data->bits |= StringData::SubString;
 
 		if ( NULL == src->extra ) {
 			src->extra = new StringExtraData();
@@ -1382,7 +1383,7 @@ StringData* StringPool::concatenate( const std::vector<StringRange>& strArray )
 std::vector<U16Char> StringLiteral::storage(StringLiteral::InitialStorageSize);
 
 
-FastString FastString::set( size_t pos, const U16Char& ch ) const
+UnicodeString UnicodeString::set( size_t pos, const U16Char& ch ) const
 {
 	std::vector<StringRange> strings(3);	
 	strings[0].strPtr = c_str();
@@ -1393,21 +1394,21 @@ FastString FastString::set( size_t pos, const U16Char& ch ) const
 	strings[2].length = size() - strings[0].length + strings[1].length;
 
 
-	return FastString( StringPool::getCurrentPool()->concatenate(strings) );
+	return UnicodeString( StringPool::getCurrentPool()->concatenate(strings) );
 }
 
 
-uint64 FastString::sizeOf() const
+uint64 UnicodeString::sizeOf() const
 {
 
-	uint64 result  = sizeof(FastString);
+	uint64 result  = sizeof(UnicodeString);
 
 	result +=  size() * sizeof(VCFChar);
 
 	return result;
 }
 
-void FastString::decode_ansi( TextCodec* codec, AnsiChar* str, size_type& strSize, LanguageEncoding encoding ) const 
+void UnicodeString::decode_ansi( TextCodec* codec, AnsiChar* str, size_type& strSize, LanguageEncoding encoding ) const 
 {
 	VCF_ASSERT ( str != NULL );
 
@@ -1420,54 +1421,204 @@ void FastString::decode_ansi( TextCodec* codec, AnsiChar* str, size_type& strSiz
 	strSize = size;
 }
 
-FastString FastString::decode( TextCodec* codec, LanguageEncoding encoding ) const 
+UnicodeString UnicodeString::decode( TextCodec* codec, LanguageEncoding encoding ) const 
 {
 	return codec->convertToUnicodeString( *this, encoding );
 }
 
-void FastString::encode( TextCodec* codec, const FastString::AnsiChar* str, size_type n, LanguageEncoding encoding )
+void UnicodeString::encode( TextCodec* codec, const UnicodeString::AnsiChar* str, size_type n, LanguageEncoding encoding )
 {
 	VCF_ASSERT ( str != NULL );
 	*this = codec->convertToUnicodeString( str, n, encoding );
 }
 
-void FastString::encode( TextCodec* codec, const FastString& str, LanguageEncoding encoding )
+void UnicodeString::encode( TextCodec* codec, const UnicodeString& str, LanguageEncoding encoding )
 {
 	*this = codec->convertToUnicodeString( str, encoding );
 }
 
 
 
-void FastString::transformAnsiToUnicode( const FastString::AnsiChar* str, FastString::size_type stringLength, 
-										FastString& newStr, 
-										FastString::LanguageEncoding encoding )
+void UnicodeString::transformAnsiToUnicode( const UnicodeString::AnsiChar* str, UnicodeString::size_type stringLength, 
+										UnicodeString& newStr, 
+										UnicodeString::LanguageEncoding encoding )
 {
 
 	newStr.assign( StringPool::getCurrentPool()->transformAnsiToUnicode( str, stringLength, encoding ) );
 }
 
 
-FastString::AnsiChar* FastString::transformUnicodeToAnsi( const FastString& str, FastString::LanguageEncoding encoding )
+UnicodeString::AnsiChar* UnicodeString::transformUnicodeToAnsi( const UnicodeString& str, UnicodeString::LanguageEncoding encoding )
 {
-
-	str.ansi_c_str( encoding );
-	return NULL;
+	
+	return StringPool::getCurrentPool()->transformToAnsi( str.data_, encoding )	;
 }
 
 
-FastString::UniChar FastString::transformAnsiCharToUnicodeChar( FastString::AnsiChar c, LanguageEncoding encoding )
+UnicodeString::UniChar UnicodeString::transformAnsiCharToUnicodeChar( UnicodeString::AnsiChar c, LanguageEncoding encoding )
 {
-	return 1;
+	UnicodeString::UniChar result = 0;
+
+	unsigned int sysEncoding = StringPool::getNativeEncoding( encoding ) ;
+
+#ifdef VCF_WIN
+	UINT codePage = CP_ACP;
+
+	if ( sysEncoding != (unsigned int)-1 ) {
+		codePage = sysEncoding;
+	}
+
+	int err = MultiByteToWideChar( codePage, 0, &c, 1, (LPWSTR)&result, 1 );
+
+	if ( !(err > 0) ) {
+		throw RuntimeException( L"size > 0 MultiByteToWideChar() failed" );
+	}
+
+#elif defined(VCF_OSX)
+	char str[2] = {c,0};
+	CFStringRef cfStr =
+			CFStringCreateWithCString( NULL, str, CFStringGetSystemEncoding() );
+
+	int size = CFStringGetLength( cfStr );
+	if ( !(size > 0) ) {
+		throw RuntimeException( L"size <= 0 CFStringCreateWithCString() failed in UnicodeString::transformAnsiToUnicode()" );
+	}
+
+	UniChar unicodeText[2];
+	CFRange range = {0,2};
+	CFStringGetCharacters(cfStr,range,unicodeText);
+	result = unicodeText[0];
+	CFRelease( cfStr );
+
+#elif defined(VCF_POSIX)
+	UnicodeString::UniChar tmp[2] = {0,0};
+	mbstowcs( tmp, &c, 1 );
+	result = tmp[0];
+#endif
+
+	return result;
 }
 
-FastString::AnsiChar FastString::transformUnicodeCharToAnsiChar( FastString::UniChar c, LanguageEncoding encoding )
+UnicodeString::AnsiChar UnicodeString::transformUnicodeCharToAnsiChar( UnicodeString::UniChar c, LanguageEncoding encoding )
 {
-	return 0;
+	AnsiChar result = 0;
+
+	unsigned int sysEncoding = StringPool::getNativeEncoding( encoding ) ;
+
+#ifdef VCF_WIN
+
+	UINT codePage = CP_ACP;
+
+	if ( sysEncoding != (unsigned int)-1 ) {
+		codePage = sysEncoding;
+	}
+
+	if (  0 == ::WideCharToMultiByte( codePage, 0, (LPCWSTR)&c, 1,
+									&result, 1, NULL, NULL ) ) {
+		result = 0;
+		throw RuntimeException( L"WideCharToMultiByte() failed" );
+	}
+
+
+#elif defined(VCF_OSX)
+	String str;
+	str +=c;
+
+
+	CFTextString tmp;
+	tmp = str;
+	CFRange r = {0,tmp.length()};
+	CFIndex size2 = 0;
+	CFStringGetBytes( tmp, r, CFStringGetSystemEncoding(), '?', false, NULL, 0, &size2 );
+
+	if ( !(size2 > 0) ) {
+		throw RuntimeException( L"size <= 0 CFStringGetBytes() failed" );
+	}
+
+	size2 = minVal<CFIndex>( 1, size2 );
+
+
+	if (  0 == ::CFStringGetBytes( tmp, r, CFStringGetSystemEncoding(), '?', false,
+									(UInt8*)&result, size2, &size2 ) ) {
+		//CFStringGetBytes failed
+		throw RuntimeException( L"CFStringGetBytes failed" );
+		result = 0;
+	}
+
+#elif defined(VCF_POSIX)
+	int size = wctomb(NULL, c);
+
+
+	if ( size < 0 ) {
+		throw RuntimeException( L"size < 0 wctomb() failed" );
+	}
+
+	UnicodeString::AnsiChar* tmp = new UnicodeString::AnsiChar[size+1];
+
+	if ( wctomb( tmp, c ) < 0 ) {
+		throw RuntimeException( L"wctomb() failed" );
+		result = 0;
+	}
+	else {
+		result = tmp[0];
+	}
+
+	delete [] tmp;
+
+#endif
+	return result;
 }
 
-int FastString::adjustForBOMMarker( FastString::AnsiChar*& stringPtr, uint32& len )
+int UnicodeString::adjustForBOMMarker( UnicodeString::AnsiChar*& stringPtr, uint32& len )
 {
-	return 0;
+	int result = 0;
+
+	uint32 bom = 0;
+	if ( len > UnicodeString::UTF16BOMSize ) {
+		bom  = ((stringPtr[0] << 8) | stringPtr[1]) & 0x0000FFFF;
+		if ( UnicodeString::UTF16LittleEndianBOM == bom ) {
+			stringPtr += UnicodeString::UTF16BOMSize; //skip over the BOM
+			len -= UnicodeString::UTF16BOMSize;
+			result = UnicodeString::UTF16LittleEndianBOM;
+		}
+		else {
+			if ( UnicodeString::UTF16BigEndianBOM == bom ) {
+				result = UnicodeString::UTF16BigEndianBOM;
+				StringUtils::trace( "Unable to translate UTF16BigEndianBOM string\n" );
+			}
+			else {
+				if ( len > UnicodeString::UTF8BOMSize ) {
+					bom = 0;
+					bom  = ((stringPtr[0] << 16) | (stringPtr[1] << 8) | stringPtr[0]) & 0x00FFFFFF;
+					if ( UnicodeString::UTF8BOM == bom ) {
+						result = UnicodeString::UTF8BOM;
+						stringPtr += UnicodeString::UTF8BOMSize; //skip over the BOM
+						len -= UnicodeString::UTF8BOMSize;
+					}
+					else {
+						if ( len > UnicodeString::UTF8BOMSize ) {
+							bom = 0;
+							bom  = (stringPtr[0] << 24) | (stringPtr[1] << 16) | (stringPtr[2] << 8) | stringPtr[3];
+
+							if ( (UnicodeString::UTF32LittleEndianBOM == bom) ||
+									(UnicodeString::UTF32BigEndianBOM == bom) ) {
+								StringUtils::trace( "Unable to translate UTF32 BOM string\n" );
+
+								if ( UnicodeString::UTF32LittleEndianBOM == bom ) {
+									result = UnicodeString::UTF32LittleEndianBOM;
+								}
+								else if ( UnicodeString::UTF32BigEndianBOM == bom ) {
+									result = UnicodeString::UTF32BigEndianBOM;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return result;
 }
 
 
@@ -1503,7 +1654,10 @@ int FastString::adjustForBOMMarker( FastString::AnsiChar*& stringPtr, uint32& le
 
 
 
-
+/**
+This is the original UnicodeString string implementation, that does NOT use a string pool, but is 
+just a thin layer over the std::basic_string<> class.
+*/
 #ifndef USE_STRINGPOOL	
 
 
@@ -1852,7 +2006,7 @@ void UnicodeString::transformAnsiToUnicode( const UnicodeString::AnsiChar* str, 
 
 		/***
 		What code page do we want to use here???? CP_ACP may not be the
-		most appropriate one to use. First FastString::let's try and examine the
+		most appropriate one to use. First UnicodeString::let's try and examine the
 		current locale
 		*/
 

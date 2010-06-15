@@ -844,6 +844,12 @@ void VFFInputStream::assignDeferredProperties( Component* component )
 						if ( NULL != cb ) {
 							delegateProperty->getDelegateInstance()->add( cb );
 						}
+						else {
+							StringUtils::trace( "Null callback found when attempting to set callback function " + s + "\n" );
+						}
+					}
+					else {
+						StringUtils::trace( "Null source found when attempting to set callback function " + s + "\n" );
 					}
 
 					++cbIt;

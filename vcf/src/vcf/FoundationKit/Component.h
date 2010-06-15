@@ -319,7 +319,7 @@ public:
 	The name of the component should be unique.
 	@return String the name of the component.
 	*/
-	virtual String getName() const ;
+	virtual String getName() ;
 
 	/**
 	sets the name of the component. For naming conventions/rules
@@ -498,7 +498,7 @@ public:
 	application is running, or the object has no title?)"
 	@return int32 the tag value of the Component
 	*/
-	int32 getTag() const{
+	int32 getTag() {
 		return tag_;
 	}
 
