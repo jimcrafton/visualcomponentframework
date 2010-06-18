@@ -103,7 +103,7 @@ void Action::removeTarget( UIComponent* target )
 	}
 }
 
-UIComponent* Action::getTarget( const uint32& index )
+UIComponent* Action::getTarget( const uint32& index ) const
 {
 	return targets_.at( index );
 }

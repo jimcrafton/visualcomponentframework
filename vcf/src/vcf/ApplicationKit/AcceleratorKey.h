@@ -235,7 +235,7 @@ public:
 	*specific alpha numeric key, like "V", or "1" or "F1"
 	*@return uint32 the keycode for this AcceleratorKey
 	*/
-	uint32 getKeyCode() const {
+	uint32 getKeyCode() {
 		return keyCode_;
 	}
 
@@ -246,7 +246,7 @@ public:
 	*modifier mask may be made up of any combination
 	*of the Ctrl, Shift, and Alt keys.
 	*/
-	uint32 getModifierMask() const {
+	uint32 getModifierMask() {
 		return modifierMask_;
 	}
 

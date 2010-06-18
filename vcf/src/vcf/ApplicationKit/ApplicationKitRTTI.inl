@@ -329,7 +329,7 @@ _class_rtti_(PagedContainer, "VCF::StandardContainer", "VCF::PagedContainer")
 _class_rtti_end_
 
 _class_rtti_(HorizontalLayoutContainer, "VCF::StandardContainer", HORIZONTALLAYOUTCONTAINER_CLASSID)
-_property_( int32, "numberOfColumns", getNumberOfColumns, setNumberOfColumns, "" );
+_property_( uint32, "numberOfColumns", getNumberOfColumns, setNumberOfColumns, "" );
 _property_( double, "maxRowHeight", getMaxRowHeight, setMaxRowHeight, "" );
 _property_( double, "rowSpacerHeight", getRowSpacerHeight, setRowSpacerHeight, "" );
 _property_( bool, "maximizeLastRow", getMaximizeLastRow, setMaximizeLastRow, "" );
@@ -572,7 +572,7 @@ _class_abstract_rtti_(ListModel, "VCF::Model", LISTMODEL_CLASSID)
 	_delegate_(ListModelDelegate, ItemAdded )
 	_delegate_(ListModelDelegate, ItemRemoved )
 	_property_( uint32, "currentIndex", getCurrentIndex, setCurrentIndex, "" )	
-	_property_array_( String, "items", getAsString,setAsString,insert,remove,getCount, "" )
+	_property_array_( String, "items", getAsString,setAsString,insertString,remove,getCount, "" )
 	_property_array_( VariantData, "objects", get,set,insert,remove,getCount, "" )
 	_property_collection2_( VariantData, String, "subItems", getSubItemAtKey,setSubItemAtKey,insertSubItemAtKey,removeSubItemAtKey,getSubItemsCountAtKey, "" )
 _class_rtti_end_
