@@ -129,7 +129,7 @@ public:
 	represents. This image is frequently used to represent check marks
 	for things like tree or list controls.
 	*/
-	virtual int32 getStateImageIndex() const {
+	virtual int32 getStateImageIndex(){
 		return -1;
 	}
 
@@ -137,7 +137,7 @@ public:
 		stateChanged();
 	}
 
-	virtual int32 getImageIndex() const {
+	virtual int32 getImageIndex()  {
 		return imageIndex_;
 	}
 
@@ -176,7 +176,7 @@ public:
 
 	virtual void paint( GraphicsContext* context, Rect* paintRect ) {}
 
-	bool isSelected() const {
+	bool isSelected() {
 		return selected_;
 	}
 
@@ -191,7 +191,7 @@ public:
 	the item(s). Some controls will completely 
 	ignore this value.
 	*/
-	uint32 getDisplayState() const {
+	uint32 getDisplayState() {
 		return displayState_;
 	}
 

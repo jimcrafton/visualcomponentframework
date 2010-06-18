@@ -59,7 +59,7 @@ public:
 
 	virtual void clearChildren();
 
-	virtual bool isChecked() const;
+	virtual bool isChecked() ;
 
 	virtual void setChecked( const bool& checked );
 
@@ -81,7 +81,7 @@ public:
 
 	virtual MenuItem* findChildNamed( const String& name, const bool& exactMatch=true );
 
-	virtual bool isEnabled() const;
+	virtual bool isEnabled() ;
 
 	virtual void setEnabled( const bool& enabled );
 
@@ -89,17 +89,17 @@ public:
 
 	virtual void setVisible( const bool& visible );
 
-	virtual bool getRadioItem() const;
+	virtual bool getRadioItem() ;
 
 	virtual void setRadioItem( const bool& value );
 
 	virtual void setCaption( const String& caption );
 
-	virtual String getCaption() const;
+	virtual String getCaption() ;
 
 	virtual MenuItemPeer* getPeer() const;
 
-	virtual bool isSeparator() const;
+	virtual bool isSeparator() ;
 
 	virtual void setSeparator( const bool& separator );
 
@@ -121,9 +121,9 @@ public:
 
 	virtual void setAcceleratorKey( AcceleratorKey* accelerator );
 
-	virtual AcceleratorKey* getAccelerator() const;
+	virtual AcceleratorKey* getAccelerator() ;
 
-	virtual uint32 getChildIndex( MenuItem* child ) const;
+	virtual uint32 getChildIndex( MenuItem* child ) ;
 	
 	virtual Object* clone(bool deep=false) const;
 

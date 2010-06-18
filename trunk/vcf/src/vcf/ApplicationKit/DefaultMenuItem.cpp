@@ -280,7 +280,7 @@ void DefaultMenuItem::clearChildren()
 	//peer_->clearChildren();
 }
 
-bool DefaultMenuItem::isChecked() const
+bool DefaultMenuItem::isChecked() 
 {
 	return ((displayState_ & MenuItem::mdsChecked) == MenuItem::mdsChecked) ? true : false;// peer_->isChecked();
 }
@@ -329,7 +329,7 @@ MenuItem* DefaultMenuItem::getChildAt( const uint32& index )
 	return menuItems_[index];
 }
 
-bool DefaultMenuItem::isEnabled() const
+bool DefaultMenuItem::isEnabled() 
 {
 	bool result = (displayState_ & MenuItem::mdsEnabled) ? true : false;
 
@@ -393,7 +393,7 @@ void DefaultMenuItem::setVisible( const bool& visible )
 	}
 }
 
-bool DefaultMenuItem::getRadioItem() const
+bool DefaultMenuItem::getRadioItem() 
 {
 	return (displayState_ & MenuItem::mdsRadioItem) ? true : false;
 }
@@ -431,7 +431,7 @@ void DefaultMenuItem::setCaption( const String& caption )
 	}
 }
 
-String DefaultMenuItem::getCaption() const
+String DefaultMenuItem::getCaption() 
 {
 	return caption_;
 }
@@ -515,7 +515,7 @@ void DefaultMenuItem::setCanPaint( const bool& val )
 }
 
 
-bool DefaultMenuItem::isSeparator() const
+bool DefaultMenuItem::isSeparator() 
 {
 	return (displayState_ & MenuItem::mdsSeparator) ? true : false;;
 }
@@ -547,7 +547,7 @@ void DefaultMenuItem::setImageIndex( const int32& imageIndex )
 }
 
 
-AcceleratorKey* DefaultMenuItem::getAccelerator()  const
+AcceleratorKey* DefaultMenuItem::getAccelerator()  
 {
 	AcceleratorKey* result = NULL;
 
@@ -621,18 +621,22 @@ void DefaultMenuItem::onAccelerator( KeyboardEvent* e )
 
 Object* DefaultMenuItem::clone(bool deep) const
 {
-	DefaultMenuItem* result = new DefaultMenuItem( getCaption(), NULL, NULL );
+	DefaultMenuItem* thisPtr = (DefaultMenuItem*) this;
+
+	DefaultMenuItem* result = new DefaultMenuItem( thisPtr->getCaption(), NULL, NULL );
+	
+
 
 	result->MenuItemClicked = MenuItemClicked;
 	result->MenuItemUpdate = MenuItemUpdate;
-	result->setTag( getTag() );
+	result->setTag( thisPtr->getTag() );
 	if ( NULL != getAction() ) {
-		getAction()->addTarget( result );
+		thisPtr->getAction()->addTarget( result );
 	}
 
-	result->setSeparator( isSeparator() );
+	result->setSeparator( thisPtr->isSeparator() );
 
-	AcceleratorKey* accel = getAccelerator();
+	AcceleratorKey* accel = thisPtr->getAccelerator();
 	if ( NULL != accel ) {		
 		if ( accel->getEventHandler() == 
 				getCallback( "DefaultMenuItem::onAccelerator" ) ) {
@@ -763,7 +767,7 @@ MenuItem* DefaultMenuItem::findChildNamed( const String& name, const bool& exact
 	return result;
 }
 
-uint32 DefaultMenuItem::getChildIndex( MenuItem* child ) const 
+uint32 DefaultMenuItem::getChildIndex( MenuItem* child ) 
 {
 	uint32 result = 0;
 

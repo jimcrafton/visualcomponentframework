@@ -160,6 +160,11 @@ public:
 	is called, followed by the ModelChanged delegate.
 	*/
 	void insert( const uint32 & index, const VariantData& item );
+	void insertString( const uint32 & index, const String& item ) {
+		VariantData v;
+		v.setFromString(item);
+		insert(index,v);
+	}
 
 	/**
 	Adds an item to the end of the collection.

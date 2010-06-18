@@ -134,7 +134,7 @@ public:
 
 	//add targets by index, basically here for 
 	//support for modify targets via the VFF format
-	UIComponent* getTarget( const uint32& index );
+	UIComponent* getTarget( const uint32& index ) const ;
 
 	void setTarget( const uint32& index, UIComponent* target );
 

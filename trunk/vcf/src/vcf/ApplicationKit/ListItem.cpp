@@ -48,7 +48,7 @@ ListSubItem::ListSubItem( ListItem* ownerItem, const String& caption, void* data
 
 
 
-String ListItem::getCaption() const
+String ListItem::getCaption()
 {
 	//control's getUseLocaleStrings() takes precedence over ours
 	Control* control = getControl();

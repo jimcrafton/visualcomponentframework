@@ -107,7 +107,7 @@ public:
 
 	virtual void clearChildren() = 0;
 
-	virtual bool isChecked() const = 0;
+	virtual bool isChecked() = 0;
 
 	virtual void setChecked( const bool& checked ) = 0;
 
@@ -155,7 +155,7 @@ public:
 
 	virtual MenuItem* getChildAt( const uint32& index ) = 0;
 
-	virtual bool isEnabled() const = 0;
+	virtual bool isEnabled() = 0;
 
 	virtual void setEnabled( const bool& enabled ) = 0;
 
@@ -163,17 +163,17 @@ public:
 
 	virtual void setVisible( const bool& visible ) = 0;
 
-	virtual bool getRadioItem() const = 0;
+	virtual bool getRadioItem()  = 0;
 
 	virtual void setRadioItem( const bool& value ) = 0;
 
 	virtual void setCaption( const String& caption ) = 0;
 
-	virtual String getCaption() const = 0;
+	virtual String getCaption() = 0;
 
 	virtual MenuItemPeer* getPeer() const = 0;
 
-	virtual bool isSeparator() const = 0;
+	virtual bool isSeparator()  = 0;
 
 	virtual void setSeparator( const bool& separator ) = 0;
 
@@ -204,9 +204,9 @@ public:
 	/**
 	Returns the accelerator for the menu item.
 	*/
-	virtual AcceleratorKey* getAccelerator() const = 0;
+	virtual AcceleratorKey* getAccelerator()  = 0;
 
-	virtual uint32 getChildIndex( MenuItem* child ) const = 0;	
+	virtual uint32 getChildIndex( MenuItem* child ) = 0;	
 };
 
 };

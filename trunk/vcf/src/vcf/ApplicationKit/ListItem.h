@@ -118,7 +118,7 @@ public:
 	}
 
 
-	String getCaption() const ;
+	String getCaption() ;
 
 	void setCaption( const String& caption );
 

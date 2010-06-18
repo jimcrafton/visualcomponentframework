@@ -93,7 +93,7 @@ public:
 		}
 	}
 
-	uint32 getNumberOfColumns() const {
+	uint32 getNumberOfColumns() {
 		return columns_.size();
 	}
 
@@ -108,7 +108,7 @@ public:
 		columns_[index] = width;
 	}
 
-	double getColumnWidth( const uint32& index ) const {
+	double getColumnWidth( const uint32& index )  {
 		return columns_[index];
 	}
 	
@@ -132,7 +132,7 @@ public:
 		columnTweens_[index] = width;
 	}
 
-	double getColumnTweenWidth( const uint32& index ) const {
+	double getColumnTweenWidth( const uint32& index )  {
 		return columnTweens_[index];
 	}
 
@@ -145,7 +145,7 @@ public:
 		columnTweens_.erase( columnTweens_.begin() + index );
 	}
 	
-	uint32 getColumnTweenCount() const {
+	uint32 getColumnTweenCount()  {
 		return columnTweens_.size();
 	}
 
