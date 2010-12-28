@@ -180,7 +180,7 @@ String System::findResourceDirectory( const String& fileName, Locale* locale )
 			cachedResourceDirMap[fileName] = val;
 		}
 
-		StringUtils::trace( Format("findResourceDirectory: %s for filename: %s\n") % result % fileName );
+//		StringUtils::trace( Format("findResourceDirectory: %s for filename: %s\n") % result % fileName );
 	}
 
 	return result;

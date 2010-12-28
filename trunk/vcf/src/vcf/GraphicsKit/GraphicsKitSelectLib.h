@@ -74,16 +74,30 @@ defined to use the DLL or static libraries.
 
 	//link to libAgg automatically here
 	#if !defined(VCF_DISABLE_PRAGMA_LINKING)
-	#	ifdef _DEBUG
-	#		pragma comment(lib, "libAGG_"_LIB_CPLVERNUM"_sd.lib")
-	#		pragma comment(lib, "LibJPEG_"_LIB_CPLVERNUM"_sd.lib")
-	#		pragma comment(lib, "ZLib_"_LIB_CPLVERNUM"_sd.lib")
-	#		pragma comment(lib, "LibPNG_"_LIB_CPLVERNUM"_sd.lib")
+	#	ifdef VCF_STATIC_CRT
+	#		ifdef _DEBUG
+	#			pragma comment(lib, "libAGG_"_LIB_CPLVERNUM"_scrtd.lib")
+	#			pragma comment(lib, "LibJPEG_"_LIB_CPLVERNUM"_scrtd.lib")
+	#			pragma comment(lib, "ZLib_"_LIB_CPLVERNUM"_scrtd.lib")
+	#			pragma comment(lib, "LibPNG_"_LIB_CPLVERNUM"_scrtd.lib")
+	#		else
+	#			pragma comment(lib, "libAGG_"_LIB_CPLVERNUM"_scrt.lib")
+	#			pragma comment(lib, "LibJPEG_"_LIB_CPLVERNUM"_scrt.lib")
+	#			pragma comment(lib, "ZLib_"_LIB_CPLVERNUM"_scrt.lib")
+	#			pragma comment(lib, "LibPNG_"_LIB_CPLVERNUM"_scrt.lib")
+	#		endif
 	#	else
-	#		pragma comment(lib, "libAGG_"_LIB_CPLVERNUM"_s.lib")
-	#		pragma comment(lib, "LibJPEG_"_LIB_CPLVERNUM"_s.lib")
-	#		pragma comment(lib, "ZLib_"_LIB_CPLVERNUM"_s.lib")
-	#		pragma comment(lib, "LibPNG_"_LIB_CPLVERNUM"_s.lib")
+	#		ifdef _DEBUG
+	#			pragma comment(lib, "libAGG_"_LIB_CPLVERNUM"_sd.lib")
+	#			pragma comment(lib, "LibJPEG_"_LIB_CPLVERNUM"_sd.lib")
+	#			pragma comment(lib, "ZLib_"_LIB_CPLVERNUM"_sd.lib")
+	#			pragma comment(lib, "LibPNG_"_LIB_CPLVERNUM"_sd.lib")
+	#		else
+	#			pragma comment(lib, "libAGG_"_LIB_CPLVERNUM"_s.lib")
+	#			pragma comment(lib, "LibJPEG_"_LIB_CPLVERNUM"_s.lib")
+	#			pragma comment(lib, "ZLib_"_LIB_CPLVERNUM"_s.lib")
+	#			pragma comment(lib, "LibPNG_"_LIB_CPLVERNUM"_s.lib")
+	#		endif
 	#	endif
 	#endif
 
@@ -97,11 +111,19 @@ defined to use the DLL or static libraries.
 	#	endif
 	#elif defined USE_GRAPHICSKIT_LIB
 	//	using statically linked library
-	#	ifdef _DEBUG
-	#		pragma comment(lib, "GraphicsKit_"_LIB_CPLVERNUM"_sd.lib")
+	#	ifdef VCF_STATIC_CRT
+	#		ifdef _DEBUG
+	#			pragma comment(lib, "GraphicsKit_"_LIB_CPLVERNUM"_scrtd.lib")
+	#		else
+	#			pragma comment(lib, "GraphicsKit_"_LIB_CPLVERNUM"_scrt.lib")
+	#		endif
 	#	else
-	#		pragma comment(lib, "GraphicsKit_"_LIB_CPLVERNUM"_s.lib")
-	#	endif
+	#		ifdef _DEBUG
+	#			pragma comment(lib, "GraphicsKit_"_LIB_CPLVERNUM"_sd.lib")
+	#		else
+	#			pragma comment(lib, "GraphicsKit_"_LIB_CPLVERNUM"_s.lib")
+	#		endif
+	#	endif	
 	#else
 	//	creating the static or dynamic link library
 	#endif // GRAPHICSKIT_LIB

@@ -148,6 +148,90 @@ public:
 
 
 
+
+class APPLICATIONKIT_API FindInfo {
+public:
+	FindInfo() : atEnd(false), position(0),
+				caseSensitive(false), 
+				matchWordOnly(false),
+				searchAllOpenDocs(false)
+				{
+	}
+
+	//static uint32 findString( const FindInfo& findInfo, const String& inText );
+
+public:
+	bool atEnd;
+	uint32 position;
+	bool caseSensitive;
+	bool matchWordOnly;
+	bool searchAllOpenDocs;
+	String searchString;
+	std::vector<String> searchStrings;
+};
+
+
+/**
+*@class FindInfo
+*
+*
+*/
+class APPLICATIONKIT_API FindInFilesInfo : public FindInfo {
+public:
+	
+	FindInFilesInfo():searchInSubDirectories(true) {}
+
+	bool searchInSubDirectories;
+	String fileTypes;
+	std::vector<String> fileTypesListing;
+
+	String startDirectory;
+	std::vector<String> startDirectories;
+};
+
+
+
+/**
+*@class FindInfo
+*
+*
+*/
+class APPLICATIONKIT_API ReplaceInfo : public FindInfo {
+public:
+	ReplaceInfo() {
+		
+	}
+	
+	String replaceString;
+	std::vector<String> replaceStrings;
+};
+
+
+class TextModel;
+
+
+/**
+*@class FindInfo
+*
+*
+*/
+class APPLICATIONKIT_API FoundEntry {
+public:
+	FoundEntry() : position(0), line(0), column(0),model(NULL){
+
+	}
+
+	uint32 position;
+	uint32 line;
+	uint32 column;
+	TextModel* model;
+	String fileName;	
+};
+
+
+
+
+
 /**
 TextModelEventHandler
 handles the following:

@@ -21,7 +21,7 @@ where you installed the VCF.
 
 
 #if defined(VCF_CYGWIN) || defined(VCF_MINGW)
-
+/*
 //add some stupid defines here since they seem to be missing from the mingw Win32 API headers
 #if (_WIN32_IE >= 0x0400)
 
@@ -95,6 +95,8 @@ typedef struct tagNMLVGETINFOTIPW
 #if (_WIN32_IE >= 0x0300)
 #define LVN_MARQUEEBEGIN        (LVN_FIRST-56)
 #endif
+*/
+
 
 #if (_WIN32_IE >= 0x0300)
 //==================== CUSTOM DRAW ==========================================
@@ -935,6 +937,8 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 
 					if ( displayInfo->item.mask & LVIF_TEXT ) {
 						
+						//StringUtils::trace( String("LVIF_TEXT index: ") + displayInfo->item.iItem + ", subi: " + displayInfo->item.iSubItem + "\n" );
+
 						String caption;
 						
 						if ( displayInfo->item.iSubItem > 0 ) {						
@@ -1089,6 +1093,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 			ListModel* model = listviewControl_->getListModel();
 			wndProcResult = CDRF_DODEFAULT;
 			result = true;			
+
 
 			if ( NULL != model ) {
 				/**

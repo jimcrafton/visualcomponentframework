@@ -81,11 +81,19 @@ defined to use the DLL or static libraries.
 	#	endif
 	#elif defined USE_FOUNDATIONKIT_LIB	
 	//	using statically linked library
-	#	ifdef _DEBUG
-	#		pragma comment(lib, "FoundationKit_"_LIB_CPLVERNUM"_sd.lib")
+	#	ifdef VCF_STATIC_CRT
+	#		ifdef _DEBUG
+	#			pragma comment(lib, "FoundationKit_"_LIB_CPLVERNUM"_scrtd.lib")
+	#		else
+	#			pragma comment(lib, "FoundationKit_"_LIB_CPLVERNUM"_scrt.lib")
+	#		endif
 	#	else
-	#		pragma comment(lib, "FoundationKit_"_LIB_CPLVERNUM"_s.lib")
-	#	endif
+	#		ifdef _DEBUG
+	#			pragma comment(lib, "FoundationKit_"_LIB_CPLVERNUM"_sd.lib")
+	#		else
+	#			pragma comment(lib, "FoundationKit_"_LIB_CPLVERNUM"_s.lib")
+	#		endif
+	#	endif	
 	#else
 	//	creating the static or dynamic link library
 	#endif // FOUNDATIONKIT_LIB

@@ -135,6 +135,20 @@ public:
 		}
 	}
 
+	void bringToFront( Control* control ) {
+		if ( !pages_.empty() ) {
+
+			std::deque<Control*>::iterator it = pages_.begin();
+			while ( it != pages_.end() ) {
+				if ( *it != control ) {
+					(*it)->setVisible( false );
+				}
+				it ++;
+			}
+
+			control->setVisible( true );
+		}
+	}
 protected:
 	std::deque<Control*> pages_;
 };
