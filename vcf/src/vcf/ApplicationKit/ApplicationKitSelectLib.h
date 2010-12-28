@@ -74,12 +74,20 @@ defined to use the DLL or static libraries.
 	#		pragma comment(lib, "ApplicationKit_"_LIB_CPLVERNUM".lib")
 	#	endif
 	#elif defined USE_APPLICATIONKIT_LIB
-	//	using statically linked library
-	#	ifdef _DEBUG
-	#		pragma comment(lib, "ApplicationKit_"_LIB_CPLVERNUM"_sd.lib")
+//	using statically linked library	
+	#	ifdef	VCF_STATIC_CRT
+	#		ifdef _DEBUG
+	#			pragma comment(lib, "ApplicationKit_"_LIB_CPLVERNUM"_scrtd.lib")
+	#		else
+	#			pragma comment(lib, "ApplicationKit_"_LIB_CPLVERNUM"_scrt.lib")
+	#		endif
 	#	else
-	#		pragma comment(lib, "ApplicationKit_"_LIB_CPLVERNUM"_s.lib")
-	#	endif
+	#		ifdef _DEBUG
+	#			pragma comment(lib, "ApplicationKit_"_LIB_CPLVERNUM"_sd.lib")
+	#		else
+	#			pragma comment(lib, "ApplicationKit_"_LIB_CPLVERNUM"_s.lib")
+	#		endif
+	#	endif	
 	#else
 	//	creating the static or dynamic link library
 	#endif // APPLICATIONKIT_LIB

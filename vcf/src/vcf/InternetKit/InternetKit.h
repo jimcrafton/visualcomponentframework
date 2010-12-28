@@ -61,12 +61,23 @@ Handle the extension based on the compiler
 		#endif
 	#elif defined USE_INTERNETKIT_LIB
 		// using statically linked library
-		#ifdef _DEBUG
-			#pragma comment(lib, "InternetKit_"_LIB_CPLVERNUM"_sd.lib")
-		#else
-			#pragma comment(lib, "InternetKit_"_LIB_CPLVERNUM"_s.lib")
-		#endif
+	#	ifdef	VCF_STATIC_CRT
+	#		ifdef _DEBUG
+	#			pragma comment(lib, "InternetKit_"_LIB_CPLVERNUM"_scrtd.lib")
+	#		else
+	#			pragma comment(lib, "InternetKit_"_LIB_CPLVERNUM"_scrt.lib")
+	#		endif
+	#	else
+	#		ifdef _DEBUG
+	#			pragma comment(lib, "InternetKit_"_LIB_CPLVERNUM"_sd.lib")
+	#		else
+	#			pragma comment(lib, "InternetKit_"_LIB_CPLVERNUM"_s.lib")
+	#		endif
+	#	endif
 	#endif
+
+	
+
 
 	//make sure to link to the urlmon lib
 	#pragma comment(lib, "urlmon.lib")

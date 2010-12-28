@@ -41,7 +41,7 @@ void Win32DropTargetPeer::registerTarget( Control* control )
 				HRESULT result = RegisterDragDrop( hwnd, comDropTarget_ );
 				switch ( result ){
 					case S_OK :{
-						StringUtils::trace("RegisterDragDrop returned S_OK\n");
+					//	StringUtils::trace("RegisterDragDrop returned S_OK\n");
 					}
 					break;
 
@@ -56,7 +56,7 @@ void Win32DropTargetPeer::registerTarget( Control* control )
 					break;
 
 					default :{
-						StringUtils::trace("RegisterDragDrop returned some other error\n");
+						StringUtils::trace(Format("RegisterDragDrop returned some other error: 0x%0x8\n") % result);
 					}
 					break;
 				}

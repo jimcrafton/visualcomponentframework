@@ -1153,11 +1153,14 @@ void VFFInputStream::readComponentInstance( Component* component )
 {
 	componentInputLevel_ = -1;
 	if ( NULL == topLevelComponent_ ) {
-		topLevelComponent_ = component;	
+		topLevelComponent_ = component;			
 
-		component->preLoading();
-		component->loading();
+		
 	}
+
+	component->preLoading();
+		component->loading();
+	
 
 	readObject( component, 0 );	
 

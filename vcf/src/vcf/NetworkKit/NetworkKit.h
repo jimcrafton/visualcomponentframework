@@ -49,10 +49,18 @@ Handle the extension based on the compiler
 
 #ifdef _DEBUG
 	#define NETWORKKIT_LIBDLL	"NetworkKit_"_LIB_CPLVERNUM"_d.lib"
-	#define NETWORKKIT_LIBS	"NetworkKit_"_LIB_CPLVERNUM"_sd.lib"
+	#ifdef	VCF_STATIC_CRT
+		#define NETWORKKIT_LIBS	"NetworkKit_"_LIB_CPLVERNUM"_scrtd.lib"
+	#else
+		#define NETWORKKIT_LIBS	"NetworkKit_"_LIB_CPLVERNUM"_sd.lib"
+	#endif
 #else
 	#define NETWORKKIT_LIBDLL	"NetworkKit_"_LIB_CPLVERNUM".lib"
-	#define NETWORKKIT_LIBS	"NetworkKit_"_LIB_CPLVERNUM"_s.lib"
+	#ifdef	VCF_STATIC_CRT
+		#define NETWORKKIT_LIBS	"NetworkKit_"_LIB_CPLVERNUM"_scrt.lib"
+	#else
+		#define NETWORKKIT_LIBS	"NetworkKit_"_LIB_CPLVERNUM"_s.lib"
+	#endif
 #endif
 
 

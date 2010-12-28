@@ -61,11 +61,19 @@ Handle the extension based on the compiler
 		#endif
 	#elif defined USE_XMLKIT_LIB
 		// using statically linked library
-		#ifdef _DEBUG
-			#pragma comment(lib, "XMLKit_"_LIB_CPLVERNUM"_sd.lib")
-		#else
-			#pragma comment(lib, "XMLKit_"_LIB_CPLVERNUM"_s.lib")
-		#endif
+	#	ifdef	VCF_STATIC_CRT
+	#		ifdef _DEBUG
+	#			pragma comment(lib, "XMLKit_"_LIB_CPLVERNUM"_scrtd.lib")
+	#		else
+	#			pragma comment(lib, "XMLKit_"_LIB_CPLVERNUM"_scrt.lib")
+	#		endif
+	#	else
+	#		ifdef _DEBUG
+	#			pragma comment(lib, "XMLKit_"_LIB_CPLVERNUM"_sd.lib")
+	#		else
+	#			pragma comment(lib, "XMLKit_"_LIB_CPLVERNUM"_s.lib")
+	#		endif
+	#	endif	
 	#endif
 #endif //VCF_MSC
 

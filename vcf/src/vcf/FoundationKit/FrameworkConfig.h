@@ -86,6 +86,13 @@ Miscellaneous:
 
 	VCF_UNICODE - Unicode is default
 
+
+	VCF_STATIC_CRT - by default the VCF links to the CRT dynamically
+	for microsoft compilers this makes a difference, so if you'd like to
+	create libs that are statically linked to the CRT (i.e. all the
+	C/C++ run time libs are pulled into your final exe, no dependencies
+	at all) then you need to define this. It's the equivalent of having 
+	/MT or /MTd defined as opposed to /MD or /MDd
 */
 
 

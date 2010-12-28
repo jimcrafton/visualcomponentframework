@@ -364,6 +364,7 @@ public:
 	*/
 	static void internal_setActiveFrame( Frame* activeFrame );
 
+	
 	/**
 	*/
 	static Dialog* createDialog( Class* dialogClazz, ResourceBundle* resBundle=NULL );
@@ -399,6 +400,8 @@ protected:
 
 };
 
+
+ 
 }
 
 
