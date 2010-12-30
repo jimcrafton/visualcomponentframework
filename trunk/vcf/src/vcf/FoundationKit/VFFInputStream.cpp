@@ -636,23 +636,29 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 			VCFChar newToken = parser_->nextToken();
 
 			Property* prop = clazz->getProperty( currentSymbol );
-			VariantData* value = prop->get();
-			if ( value->type == pdObject ) {
-				Object* object = *value;
-				if ( NULL != object ) {
-					clazz = object->getClass();
+			if ( NULL != prop ) {
+				VariantData* value = prop->get();
+				if ( value->type == pdObject ) {
+					Object* object = *value;
+					if ( NULL != object ) {
+						clazz = object->getClass();
 
-					if ( NULL != clazz ) {
-						processAsignmentTokens( newToken, objPropName, clazz );
+						if ( NULL != clazz ) {
+							processAsignmentTokens( newToken, objPropName, clazz );
+						}
+						else {
+							StringUtils::trace( Format("Warning: no Class found for property %s.")
+													% currentSymbol.ansi_c_str() );
+						}
 					}
-					else {
-						StringUtils::trace( Format("Warning: no Class found for property %s.")
-												% currentSymbol.ansi_c_str() );
-					}
+				}
+				else {
+					processAsignmentTokens( newToken, objPropName, clazz );
 				}
 			}
 			else {
-				processAsignmentTokens( newToken, objPropName, clazz );
+				StringUtils::trace( Format("Warning: no property named %s.")
+													% currentSymbol.ansi_c_str() );
 			}
 		}
 		break;

@@ -147,10 +147,16 @@ protected:
 */
 class APPLICATIONKIT_API SeparatorMenuItem : public DefaultMenuItem {
 public:
+
 	SeparatorMenuItem( MenuItem* parent, Menu* menuOwner=NULL ) :
 		DefaultMenuItem( "", parent, menuOwner) {
 		setSeparator( true );
 	}
+
+
+	SeparatorMenuItem() : DefaultMenuItem() {
+		setSeparator( true );
+	} 
 };
 
 

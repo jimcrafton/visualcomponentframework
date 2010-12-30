@@ -17,7 +17,6 @@ This was created to improved compile times
 #include "vcf/ApplicationKit/TitledBorder.h"
 #include "vcf/ApplicationKit/MessageDialog.h"
 #include "vcf/ApplicationKit/DefaultMenuItem.h"
-#include "vcf/ApplicationKit/DefaultMenuItem.h"
 #include "vcf/ApplicationKit/SystemTray.h"
 #include "vcf/ApplicationKit/ColumnLayoutContainer.h"
 #include "vcf/ApplicationKit/HorizontalLayoutContainer.h"
@@ -657,6 +656,7 @@ _class_rtti_end_
 
 _class_rtti_(ComboBoxControl, "VCF::CustomControl", COMBOBOXCONTROL_CLASSID )
 _delegate_(ItemDelegate, SelectionChanged )
+_property_object_( ListModel, "listModel", getListModel, setListModel, "" )
 _class_rtti_end_
 
 
@@ -689,6 +689,10 @@ _class_rtti_(DefaultMenuItem, "VCF::MenuItem", DEFAULTMENUITEM_CLASSID)
 _delegate_( MenuItemDelegate, MenuItemClicked )
 _delegate_( MenuItemDelegate, MenuItemUpdate )
 _class_rtti_end_
+
+_class_rtti_(SeparatorMenuItem, "VCF::DefaultMenuItem", "SeparatorMenuItem")
+_class_rtti_end_
+
 
 
 _class_rtti_(ColumnModel, "VCF::SimpleListModel", COLUMNMODEL_CLASSID)
