@@ -130,6 +130,7 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( CustomControl );
 		REGISTER_CLASSINFO_EXTERNAL( ControlContainer );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultMenuItem );
+		REGISTER_CLASSINFO_EXTERNAL( SeparatorMenuItem );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultListModel );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultTextModel );
 		REGISTER_CLASSINFO_EXTERNAL( DefaultTreeModel );

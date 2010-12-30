@@ -39,7 +39,7 @@ public:
 		maximizeLastRow_(false),
 		equalizeHeights_(false),
 		averageHeights_(false),
-		keepControlsWidth_(false) {
+		keepControlsWidth_(false){
 
 		setBorderWidth( UIToolkit::getUIMetricValue( UIMetricsManager::mtContainerBorderDelta ) );
 
@@ -123,7 +123,7 @@ public:
 
 
 	void setColumnTweenWidth( const uint32& index, const double& width ) {
-		size_t missing = (index+1) - columnTweens_.size();
+		int missing = (index+1) - columnTweens_.size();
 				
 		if ( missing > 0 ) {
 			columnTweens_.resize( missing + columnTweens_.size() );
@@ -355,8 +355,7 @@ public:
 
 			++ it;
 		}
-	}
-
+	}	
 
 	bool getMaximizeLastRow() {
 		return maximizeLastRow_;

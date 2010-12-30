@@ -960,7 +960,7 @@ void UIToolkit::internal_registerAccelerator( AcceleratorKey* accelerator )
 	std::pair<uint32,AcceleratorKey*> item(key,accelerator);
 	
 	if ( accelerator->getOwner() == NULL ) {
-		accelerator->free();
+		accelerator->addRef();
 	}
 
 	acceleratorMap_.insert( item );
