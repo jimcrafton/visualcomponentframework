@@ -301,7 +301,7 @@ _class_rtti_end_
 
 
 
-_class_rtti_(FlowLayoutContainter, "VCF::StandardContainer", "FlowLayoutContainter")
+_class_rtti_(FlowLayoutContainer, "VCF::StandardContainer", "FlowLayoutContainer")
 _property_( double, "childSpacer", getChildSpacer, setChildSpacer, "" );
 _property_( bool, "allowContentsToWrap", allowContentsToWrap, setAllowContentsToWrap, "" );
 _property_enum_labeled_( FlowDirection, "direction", getFlowDirection, setFlowDirection,
@@ -1019,10 +1019,13 @@ _delegate_(MouseDelegate, ColumnItemClicked );
 _delegate_(ItemDelegate, ColumnWidthChanged );
 _class_rtti_end_
 
-/*
-_class_rtti_(UIApplication, "UIApplication", "Application", UIAPPLICATION_CLASSID)
-_class_rtti_end_(UIApplication)
-*/
+
+_class_abstract_rtti_(AbstractApplication, "VCF::UIComponent", "VCF::AbstractApplication")
+_class_rtti_end_
+
+_class_abstract_rtti_(Application, "VCF::AbstractApplication", "VCF::Application")
+_class_rtti_end_
+
 
 
 _class_rtti_(Window, "VCF::Frame", WINDOW_CLASSID )

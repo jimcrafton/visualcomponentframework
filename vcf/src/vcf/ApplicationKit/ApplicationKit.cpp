@@ -13,7 +13,7 @@ where you installed the VCF.
 #include "vcf/ApplicationKit/DefaultPropertyEditors.h"
 #include "vcf/ApplicationKit/SimpleListModel.h"
 #include "vcf/ApplicationKit/InputValidation.h"
-#include "vcf/ApplicationKit/FlowLayoutContainter.h"
+#include "vcf/ApplicationKit/FlowLayoutContainer.h"
 
 #include "vcf/FoundationKit/RTTIMacros.h"
 
@@ -60,6 +60,9 @@ void ApplicationKit::init( int argc, char** argv )
 		GraphicsKit::init( argc, argv );
 		
 		REGISTER_CLASSINFO_EXTERNAL( UIComponent );
+
+		REGISTER_CLASSINFO_EXTERNAL( AbstractApplication );
+		REGISTER_CLASSINFO_EXTERNAL( Application );
 
 		REGISTER_CLASSINFO_EXTERNAL( AbstractPropertyEditor );
 		REGISTER_CLASSINFO_EXTERNAL( ImagePropertyEditor );
@@ -124,7 +127,7 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( PagedContainer );
 		
 		REGISTER_CLASSINFO_EXTERNAL( HorizontalLayoutContainer );
-		REGISTER_CLASSINFO_EXTERNAL( FlowLayoutContainter );
+		REGISTER_CLASSINFO_EXTERNAL( FlowLayoutContainer );
 
 		REGISTER_CLASSINFO_EXTERNAL( Control );
 		REGISTER_CLASSINFO_EXTERNAL( CustomControl );

@@ -466,6 +466,12 @@ bool Win32DropDownPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM
 		}
 		break;
 
+		case WM_DESTROY :  {
+			detachFromHwnd( hwnd_ );
+			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+		}
+		break;
+
 		default : {
 			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 		}

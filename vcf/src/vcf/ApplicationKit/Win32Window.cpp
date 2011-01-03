@@ -62,7 +62,9 @@ void Win32Window::create( Control* owningControl )
 		parent = (HWND)owner_->getPeer()->getHandleID();
 	}
 
-	HICON icon = NULL;
+	
+
+	
 
 	if ( System::isUnicodeEnabled() ) {
 		hwnd_ = ::CreateWindowExW( params.second,
@@ -75,8 +77,6 @@ void Win32Window::create( Control* owningControl )
 									 0,
 									 parent,
 									 NULL, ::GetModuleHandleW(NULL), NULL );
-
-		icon = LoadIconW( Win32ToolKit::getInstanceHandle(), L"DefaultVCFIcon" );
 	}
 	else {
 		hwnd_ = ::CreateWindowExA( params.second,
@@ -89,10 +89,17 @@ void Win32Window::create( Control* owningControl )
 									 0,
 									 parent,
 									 NULL, ::GetModuleHandleA(NULL), NULL );
-
-		icon = LoadIconA( Win32ToolKit::getInstanceHandle(), "DefaultVCFIcon" );
-		//Do we need to destroy the icon????
+		
 	}
+
+
+	//owningControl->ComponentCreated += 
+
+
+	
+	
+	
+	
 
 
 
@@ -101,9 +108,7 @@ void Win32Window::create( Control* owningControl )
 
 		registerForFontChanges();
 
-		if ( NULL != icon ) {		
-			SendMessage( hwnd_, WM_SETICON, ICON_BIG, (LPARAM) icon );
-		}
+		
 
 	}
 	else {
@@ -344,6 +349,24 @@ bool Win32Window::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPara
 
 		case VCF_CONTROL_CREATE: {
 			result = AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
+
+			HICON icon = NULL;
+			String iconName = peerControl_->getClassName();
+			icon = LoadIconA( Win32ToolKit::getInstanceHandle(), iconName.ansi_c_str() );
+			if ( NULL == icon && NULL != Application::getRunningInstance() ) {
+				iconName = Application::getRunningInstance()->getName();
+				icon = LoadIconA( Win32ToolKit::getInstanceHandle(), iconName.ansi_c_str() );
+			}
+
+			if ( NULL == icon ) {
+				icon = LoadIconA( Win32ToolKit::getInstanceHandle(), "DefaultVCFIcon" );
+				//Do we need to destroy the icon????
+			}
+
+			if ( NULL != icon ) {		
+				SendMessage( hwnd_, WM_SETICON, ICON_BIG, (LPARAM) icon );
+			}
+
 
 			if ( activatesPending_ ) {
 				activatesPending_ = false;

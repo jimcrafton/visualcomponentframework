@@ -30,10 +30,15 @@ DropDownControl::DropDownControl():
 	peer_ = dynamic_cast<ControlPeer*>( dropDownPeer_ );
 	
 	peer_->create(this);
-	
-	setViewModel( new DefaultListModel() );
+	Model* m = new DefaultListModel();
+	addComponent(m);
+	setViewModel( m );
 }
 
+DropDownControl::~DropDownControl()
+{
+
+}
 void DropDownControl::paint( GraphicsContext* context ) 
 {
 	Rect innerBounds = getClientBounds( false );	

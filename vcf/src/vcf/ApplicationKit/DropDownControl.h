@@ -35,6 +35,8 @@ class APPLICATIONKIT_API DropDownControl : public ListControl {
 public:
 	DropDownControl();
 
+	virtual ~DropDownControl();
+
 	virtual void paint( GraphicsContext* context );
 
 	void setEditText( const String& text );

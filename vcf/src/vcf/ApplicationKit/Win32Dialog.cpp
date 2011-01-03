@@ -60,8 +60,6 @@ void Win32Dialog::create( Control* owningControl )
 
 	String caption = dialogComponent_->getCaption();
 
-	HICON icon = NULL;
-
 	if ( System::isUnicodeEnabled() ) {
 		hwnd_ = ::CreateWindowExW( params.second,
 		                             className.c_str(),
@@ -76,7 +74,7 @@ void Win32Dialog::create( Control* owningControl )
 									 ::GetModuleHandleW(NULL),
 									 NULL );
 
-		icon = LoadIconW( Win32ToolKit::getInstanceHandle(), L"DefaultVCFIcon" );
+		
 	}
 	else {
 		hwnd_ = ::CreateWindowExA( params.second,
@@ -92,7 +90,7 @@ void Win32Dialog::create( Control* owningControl )
 									 ::GetModuleHandleA(NULL),
 									 NULL );
 
-		icon = LoadIconA( Win32ToolKit::getInstanceHandle(), "DefaultVCFIcon" );
+		
 	}
 
 
