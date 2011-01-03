@@ -648,6 +648,8 @@ public:
 	*/
 	static void initComponent( Component* instance, Class* clazz, Class* rootClazz, ResourceBundle* resBundle=NULL );
 
+	static void initComponent( Component* instance, Class* clazz, ResourceBundle* resBundle=NULL );
+
 	static Component* createComponentFromResources( Class* clazz, Class* rootClazz, ResourceBundle* resBundle=NULL );
 
 protected:
