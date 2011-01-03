@@ -226,14 +226,15 @@ Resource* Win32ResourceBundle::getResource( const String& resourceName )
 			if ( NULL != dataHandle ){
 				void* data = ::LockResource( dataHandle );
 				int size = ::SizeofResource( resInst, resHandle );
-				return new Resource( data, size, resourceName );
+				result = new Resource( data, size, resourceName );
 			}
 		}
 		else {
 			//throw exception- resource not found !!!!
 		}
 	}
-	else {
+
+	if ( NULL == result ) {
 		if ( System::isUnicodeEnabled() ) {
 			VCFChar fileName[MAX_PATH];
 			memset( fileName, 0, MAX_PATH*sizeof(VCFChar) );
@@ -248,30 +249,31 @@ Resource* Win32ResourceBundle::getResource( const String& resourceName )
 			
 			exeName = fileName;
 		}
-	}
+		
 
-	#else
-	//how to do this in WinCE???
-	#endif
+		#else
+		//how to do this in WinCE???
+		#endif
 
-	//if we got this far then look for files!
+		//if we got this far then look for files!
 
-	String localeName = System::getCurrentThreadLocale()->getName();
+		String localeName = System::getCurrentThreadLocale()->getName();
 
-	
-
-
-	String fileName = System::findResourceDirectoryForExecutable(exeName) +	resourceName;
-
-	if ( File::exists( fileName ) ) {
-		FileInputStream fs(fileName);
-		uint32 size = fs.getSize();
-		char* buf = new char[size];
-		fs.read( (unsigned char*)buf, size );
+		
 
 
-		result = new Resource( buf, size, resourceName );
-		delete [] buf;
+		String fileName = System::findResourceDirectoryForExecutable(exeName) +	resourceName;
+
+		if ( File::exists( fileName ) ) {
+			FileInputStream fs(fileName);
+			uint32 size = fs.getSize();
+			char* buf = new char[size];
+			fs.read( (unsigned char*)buf, size );
+
+
+			result = new Resource( buf, size, resourceName );
+			delete [] buf;
+		}
 	}
 
 	return result;

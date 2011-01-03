@@ -681,6 +681,15 @@ public:
 	}
 
 
+	VariantData& operator[](const String& key) { 
+		return  data_[key];
+	}
+
+	VariantData operator[](const String& key) const {  
+		return  data_[key];
+	}
+
+
 	virtual bool isEmpty() {
 		return data_.empty();
 	}

@@ -270,6 +270,9 @@ void Frame::internal_setActiveFrame( Frame* activeFrame )
 void Frame::afterCreate( ComponentEvent* event )
 {
 	Control::afterCreate( event );	
+	//Image* icon = NULL;
+	
+	
 }
 
 bool Frame::allowClose()

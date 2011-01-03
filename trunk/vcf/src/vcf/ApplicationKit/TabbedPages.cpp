@@ -271,32 +271,33 @@ void TabbedPages::modelChanged( Model* oldModel, Model* newModel )
 		tm->TabPageSelected.remove( (EventHandler*)ev );
 	}
 
-	
+	if ( NULL != newModel ) {
 
-	tm = dynamic_cast<TabModel*>( newModel );
+		tm = dynamic_cast<TabModel*>( newModel );
 
-	VCF_ASSERT( tm != NULL ) ;
+		VCF_ASSERT( tm != NULL ) ;
 
-	if ( NULL != tm ) {
-		CallBack* ev = getCallback( "TabbedPages::onTabPageAdded" );
-		if ( NULL == ev ) {
-			ev = new ClassProcedure1<ListModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageAdded, "TabbedPages::onTabPageAdded" );
+		if ( NULL != tm ) {
+			CallBack* ev = getCallback( "TabbedPages::onTabPageAdded" );
+			if ( NULL == ev ) {
+				ev = new ClassProcedure1<ListModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageAdded, "TabbedPages::onTabPageAdded" );
+			}
+			tm->ItemAdded.add( (EventHandler*)ev );
+
+			ev = getCallback( "TabbedPages::onTabPageRemoved" );
+			if ( NULL == ev ) {
+				ev = new ClassProcedure1<ListModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageRemoved, "TabbedPages::onTabPageRemoved" );
+			}
+			tm->ItemRemoved.add( (EventHandler*)ev );
+
+
+			ev = getCallback( "TabbedPages::onTabPageSelected" );
+			if ( NULL == ev ) {
+				ev = new ClassProcedure1<TabModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageSelected, "TabbedPages::onTabPageSelected" );
+			}
+			tm->TabPageSelected.add( (EventHandler*)ev );		
 		}
-		tm->ItemAdded.add( (EventHandler*)ev );
-
-		ev = getCallback( "TabbedPages::onTabPageRemoved" );
-		if ( NULL == ev ) {
-			ev = new ClassProcedure1<ListModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageRemoved, "TabbedPages::onTabPageRemoved" );
-		}
-		tm->ItemRemoved.add( (EventHandler*)ev );
-
-
-		ev = getCallback( "TabbedPages::onTabPageSelected" );
-		if ( NULL == ev ) {
-			ev = new ClassProcedure1<TabModelEvent*,TabbedPages>( this, &TabbedPages::onTabPageSelected, "TabbedPages::onTabPageSelected" );
-		}
-		tm->TabPageSelected.add( (EventHandler*)ev );		
-	}	
+	}
 }
 
 void TabbedPages::setTabModel( TabModel* model )

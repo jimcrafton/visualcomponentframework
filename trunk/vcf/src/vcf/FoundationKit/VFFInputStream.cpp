@@ -713,7 +713,7 @@ void VFFInputStream::readNewComponentInstance( VCF::Component* component )
 		component->loading();
 	}
 
-	readObject( component, VFFInputStream::ufCreateChildren );// | VFFInputStream::ufCreateChildrenIfNoInstance );	
+	readObject( component, VFFInputStream::ufCreateChildren | VFFInputStream::ufCreateChildrenIfNoInstance );	
 	
 	componentInputLevel_ = -1;	
 
@@ -753,7 +753,11 @@ void VFFInputStream::assignDeferredProperties( Component* component )
 					componentName = propName.substr(0,pos);
 					propName = propName.erase( 0, pos+1 );
 
-					if ( component->bindVariable( &foundComponent, componentName ) ) {
+					if ( !component->bindVariable( &foundComponent, componentName ) ) {
+						VFFInputStream::rootComponent_->bindVariable( &foundComponent, componentName );
+					}
+
+					if ( NULL != foundComponent ) {
 						Class* valClass = foundComponent->getClass();						
 
 						VariantData* propVal = NULL;
@@ -1088,6 +1092,8 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 
 				Component* newComponent = NULL;
 				Component* component = NULL;
+				bool addComponent = true;
+
 				int readFlags = 0;
 
 				if ( flags & VFFInputStream::ufCreateChildren &&
@@ -1099,7 +1105,21 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 						//readNewComponent();
 				}
 				else if ( flags & VFFInputStream::ufCreateChildrenIfNoInstance ) {
-					newComponent = createNewComponent(componentInstance,VFFInputStream::ufCreateChildrenIfNoInstance);
+
+					parser_->savePosition();
+
+					parser_->nextToken();
+					String searchName = parser_->tokenString();
+					parser_->restorePosition();
+
+					newComponent = result->findComponent( searchName );
+
+					if ( NULL == newComponent ) {
+						newComponent = createNewComponent(componentInstance,VFFInputStream::ufCreateComponent);
+					}
+					else {
+						addComponent = false;
+					}
 					readFlags = flags;
 					//newComponent = readObject( componentInstance, flags );
 				}
@@ -1126,8 +1146,10 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 								field->set( &vd );
 							}
 						}
-						
-						result->addNewComponent( newComponent );
+
+						if ( addComponent ) {
+							result->addNewComponent( newComponent );
+						}
 						component = newComponent;
 					}
 				}

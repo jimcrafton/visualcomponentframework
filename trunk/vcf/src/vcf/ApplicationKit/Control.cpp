@@ -126,6 +126,17 @@ void Control::destroy()
 		Control::currentFocusedControl = NULL;
 	}
 
+	Model* m = getViewModel();
+	if ( NULL != m ) {
+		if ( NULL != view_ ) {
+			m->removeView( view_ );
+		}
+		else {
+			m->removeView( this );
+		}
+	}
+
+
 	if ( NULL != view_ ) {
 		HeapObject* obj = dynamic_cast<HeapObject*>( view_ );
 		if ( NULL != obj ) {
@@ -135,6 +146,10 @@ void Control::destroy()
 			delete view_;
 		}
 	}
+
+
+	
+
 	view_ = NULL;
 
 	
