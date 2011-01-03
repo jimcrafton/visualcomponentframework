@@ -1,6 +1,6 @@
 #ifndef _VCF_FLOWLAYOUTCONTAINTER_H__
 #define _VCF_FLOWLAYOUTCONTAINTER_H__
-//FlowLayoutContainter.h
+//FlowLayoutContainer.h
 
 /*
 Copyright 2000-3004 The VCF Project.
@@ -49,10 +49,10 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 
 
 
-	class APPLICATIONKIT_API FlowLayoutContainter : public StandardContainer {
+	class APPLICATIONKIT_API FlowLayoutContainer : public StandardContainer {
 	public:
 
-		FlowLayoutContainter():allowContentsToWrap_(true),direction_(fdHorizontal),childSpacer_(0),horzAlign_(hfLeftAlign),vertAlign_(vfTopAlign) {
+		FlowLayoutContainer():allowContentsToWrap_(true),direction_(fdHorizontal),childSpacer_(0),horzAlign_(hfLeftAlign),vertAlign_(vfTopAlign) {
 			childSpacer_ = UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing );
 		}
 
