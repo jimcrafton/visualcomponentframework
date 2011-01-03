@@ -533,6 +533,16 @@ void Component::initComponent( Component* instance, Class* clazz, Class* rootCla
 
 	Component::initComponent( instance, clazz->getSuperClass(), rootClazz, resBundle );
 
+	Component::initComponent( instance, clazz, resBundle );
+}
+
+
+void Component::initComponent( Component* instance, Class* clazz, ResourceBundle* resBundle )
+{
+	if ( (clazz->getID() == COMPONENT_CLASSID) ) {
+		return;
+	}
+
 	String resourceName;
 	ResourceBundle* bundle = resBundle;
 	if ( NULL == bundle ) {
