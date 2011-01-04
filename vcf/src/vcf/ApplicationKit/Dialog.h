@@ -258,13 +258,21 @@ protected:
 	Control* previousFocusedControl_;
 	UIToolkit::ModalReturnType returnValue_;
 	ModalState modal_;
+	bool modelValidationFailed_;
 
 	void onDialogClose( Event* event );
+	void onBeforeClose( Event* event );
 	void onPostClose( Event* e );
 	
 	void showWithModalState( ModalState state );
 
 	virtual ~Dialog();
+
+	void onDialogModelValidationFailed( ValidationErrorEvent* );
+
+	void validateChildValuesForModel( Model* m, Control* parent );
+
+	void initChildValuesForModel( Model* m, Control* parent );
 };
 
 };

@@ -310,12 +310,15 @@ public:
 		while ( it != controls_.end() ) {
 
 			Control* control = *it;
+			
 
 
 			if ( control->isIgnoredForLayout() ) {
 				it ++;
 				continue;
 			}
+
+			cell.right_ = cell.left_ + columns_[col];
 
 			if ( !keepControlsWidth_ &&  ( col == (colCount-1) ) ) {
 

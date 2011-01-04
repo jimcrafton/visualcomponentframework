@@ -524,6 +524,10 @@ void Component::setUseLocaleStrings( const bool& val )
 	}
 }
 
+void Component::initFromResource()
+{
+	Component::initComponent(this);
+}
 
 void Component::initComponent( Component* instance, Class* clazz, Class* rootClazz, ResourceBundle* resBundle )
 {
@@ -536,6 +540,10 @@ void Component::initComponent( Component* instance, Class* clazz, Class* rootCla
 	Component::initComponent( instance, clazz, resBundle );
 }
 
+void Component::initComponent( Component* instance, ResourceBundle* resBundle )
+{
+	Component::initComponent( instance, instance->getClass(), resBundle );
+}
 
 void Component::initComponent( Component* instance, Class* clazz, ResourceBundle* resBundle )
 {

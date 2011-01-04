@@ -635,6 +635,48 @@ DateTime& DateTime::operator =( const time_t& rhs )
 	return *this;
 }
 
+void DateTime::setCTimeStr( const String& value, bool localTime )
+{
+	time_t t = 0;
+	if ( !value.empty() ) {
+		sscanf( value.ansi_c_str(), "%x", &t );
+	}
+
+	setCTime( t, localTime );
+}
+
+void DateTime::setCTime( time_t value )
+{
+	setCTime( value, true );
+}
+
+void DateTime::setCTime( time_t value, bool localTime )
+{
+	if ( 0 == value ) {	
+		set( 1970, 1, 1 );
+	}
+	else {
+		tm gm;
+
+		if ( localTime ) {
+			tm* res = localtime( &value );
+			if ( res ) {
+				gm = *res; 
+				set( gm.tm_year + 1900, gm.tm_mon+1, gm.tm_mday, gm.tm_hour, gm.tm_min, gm.tm_sec );
+			}
+			else {
+				StringUtils::trace( Format("WARNING: localtime() returned NULL!!! for value: %u\n") % value );
+			}
+		}
+		else {
+			DateTime unixCtime( 1970, 1, 1 ) ;
+			uint64 tmp = (unsigned int)value;
+			tmp *= 1000;
+			time_ = unixCtime.time_ + tmp;
+		}		
+	}
+}
+
 time_t DateTime::getCTime() const
 {
 	time_t result = 0;
@@ -829,6 +871,131 @@ void DateTime::saveToStream( OutputStream* stream, const MIMEType& type )
 	stream->write( hi );
 	stream->write( lo );
 }
+
+
+
+
+bool DateTime::isDST()
+{
+	return DateTime::isDST( DateTime::now() );
+}
+
+bool DateTime::isDST( const DateTime& localDateTime )
+{
+	bool result = false;
+
+	#if defined(WIN32)
+	TIME_ZONE_INFORMATION tz = {0};
+	GetTimeZoneInformation( &tz );
+	
+
+	DateTime stdDate;
+	DateTime dstDate;
+
+	if ( tz.StandardDate.wMonth != 0 && tz.DaylightDate.wMonth != 0 ) {
+		if ( tz.StandardDate.wYear == 0 ) { //day in month
+			stdDate = localDateTime;
+			stdDate.setDate( stdDate.getYear(), tz.StandardDate.wMonth, 1 );
+
+			
+			while ( (int)stdDate.getWeekDay() != tz.StandardDate.wDayOfWeek ) {
+				stdDate.incrDay();
+			}
+
+			int d = 1;
+			
+			unsigned int mon = stdDate.getMonth();
+			while ( (stdDate.getMonth() == mon) && (d < tz.StandardDate.wDay) ) {
+				stdDate.incrDay(7);//increment a week forward
+				d++;
+			}
+		}
+		else { //absolute
+			stdDate.set( tz.StandardDate.wYear, tz.StandardDate.wMonth, tz.StandardDate.wDay,
+							tz.StandardDate.wHour, tz.StandardDate.wMinute, tz.StandardDate.wSecond,
+							tz.StandardDate.wMilliseconds );
+
+		}
+
+		if ( tz.DaylightDate.wYear == 0 ) { //day in month
+			dstDate = localDateTime;
+			dstDate.setDate( dstDate.getYear(), tz.DaylightDate.wMonth, 1 );
+
+			
+			while ( (int)dstDate.getWeekDay() != tz.DaylightDate.wDayOfWeek ) {
+				dstDate.incrDay();
+			}
+
+			int d = 1;
+			
+			unsigned int mon = dstDate.getMonth();
+			while ( (dstDate.getMonth() == mon) && (d < tz.DaylightDate.wDay) ) {
+				dstDate.incrDay(7);//increment a week forward
+				d++;
+			}
+		}
+		else { //absolute
+			dstDate.set( tz.DaylightDate.wYear, tz.DaylightDate.wMonth, tz.DaylightDate.wDay,
+							tz.DaylightDate.wHour, tz.DaylightDate.wMinute, tz.DaylightDate.wSecond,
+							tz.DaylightDate.wMilliseconds );
+
+		}
+
+		if ( (localDateTime >= dstDate) && (localDateTime < stdDate) ) {
+			result = true;
+		}
+		
+	}
+#endif
+
+	return result;
+}
+
+
+
+bool DateTime::isNull() const 
+{
+	return time_ == 0;
+}
+
+void DateTime::setNull()
+{
+	time_ = 0;
+}
+
+bool DateTime::empty() const
+{
+	return isNull();
+}
+
+bool DateTime::isValidCTime() const
+{
+	return !isNull() && getCTime() != 0;
+}
+
+
+#ifdef WIN32
+
+#include "vcf/FoundationKit/Win32_DTUtils.h"
+
+DateTime& DateTime::operator =( const DATE& rhs )
+{
+	DateTimeFromOleDate( rhs, *this );
+
+	return *this;
+}
+
+DATE DateTime::getOleDate() const 
+{
+	DATE result = 0;
+
+	OleDateFromDateTime( *this, result );
+
+	return result;
+}
+
+#endif //#ifdef WIN32
+
 
 
 

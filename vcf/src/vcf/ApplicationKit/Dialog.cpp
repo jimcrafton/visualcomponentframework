@@ -21,6 +21,8 @@ Dialog::Dialog( Control* owner )
 
 	modal_ = Dialog::msNonModal;
 
+	modelValidationFailed_ = false;
+
 	previousFocusedControl_ = Control::currentFocusedControl;
 
 	returnValue_ = UIToolkit::mrNone;
@@ -49,6 +51,10 @@ Dialog::Dialog( Control* owner )
 	//add a close handler to get notified of the closing window
 	FrameClose += new ClassProcedure1<Event*,Dialog>( this, &Dialog::onDialogClose, "Dialog::onDialogClose" );
 
+	FrameClosing += new ClassProcedure1<Event*,Dialog>( this, &Dialog::onBeforeClose, "Dialog::onBeforeClose" );
+
+	addCallback( new ClassProcedure1<ValidationErrorEvent*,Dialog>(this,&Dialog::onDialogModelValidationFailed), "Dialog::onDialogModelValidationFailed" );
+
 
 	StandardContainer* container = (StandardContainer*)this->getContainer();
 	container->setBorderWidth( UIToolkit::getUIMetricValue( UIMetricsManager::mtWindowBorderDelta ) );
@@ -58,6 +64,73 @@ Dialog::Dialog( Control* owner )
 Dialog::~Dialog()
 {
 
+}
+
+void Dialog::initChildValuesForModel( Model* m, Control* parent )
+{
+	Container* container = parent->getContainer();
+	if ( NULL != container ) {
+		
+		Enumerator<Control*>* childControls = container->getChildren();
+		while ( childControls->hasMoreElements() ) {
+			Control* child = childControls->nextElement();
+			String key = child->getModelKey();
+			if ( !key.empty() && NULL != child->getModel() ) {
+				child->getModel()->setValue( m->getValue(child->getModelKey()) );				
+			}
+			initChildValuesForModel( m, child );
+		}
+	}
+}
+
+void Dialog::validateChildValuesForModel( Model* m, Control* parent )
+{
+	Container* container = parent->getContainer();
+	if ( NULL != container && !modelValidationFailed_ ) {
+		
+		Enumerator<Control*>* childControls = container->getChildren();
+		while ( childControls->hasMoreElements() ) {
+			Control* child = childControls->nextElement();
+			String key = child->getModelKey();
+			if ( !key.empty() && NULL != child->getModel() ) {
+				m->setValue( child->getModel()->getValue(), child->getModelKey() );
+
+				if ( modelValidationFailed_ ) {
+					return;//don't try any more...
+				}
+			}
+			validateChildValuesForModel( m, child );
+		}
+	}
+}
+
+void Dialog::onBeforeClose( Event* event )
+{
+	modelValidationFailed_ = false;
+
+	//validate model?
+	if ( NULL != getViewModel() && returnValue_ == UIToolkit::mrOK || returnValue_ == UIToolkit::mrYes
+		|| returnValue_ == UIToolkit::mrTrue || returnValue_ == UIToolkit::mrFalse ) {
+
+		Model* model = getViewModel();
+		if ( NULL != model ) {
+
+			model->ModelValidationFailed += getCallback( "Dialog::onDialogModelValidationFailed" );
+				
+
+			validateChildValuesForModel( model, this );
+
+			FrameEvent* fe = (FrameEvent*)event;
+			fe->setOkToClose( !modelValidationFailed_ );
+
+			model->ModelValidationFailed -= getCallback( "Dialog::onDialogModelValidationFailed" );
+		}
+	}
+}
+
+void Dialog::onDialogModelValidationFailed( ValidationErrorEvent* err )
+{
+	modelValidationFailed_ = true;
 }
 
 void Dialog::onDialogClose( Event* event )
@@ -254,6 +327,12 @@ void Dialog::showWithModalState( ModalState state )
 		setBounds( &adjustedBounds );
 	}
 	
+	Model* model = getViewModel();
+	if ( NULL != model ) {
+		initChildValuesForModel( model, this );
+	}
+
+
 	//force a resize here because the actual width/height may not change and therefore
 	//we won't get a size event to be fired.
 	resizeChildren(NULL);
