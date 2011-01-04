@@ -415,6 +415,12 @@ public:
 	bool operator!= ( const DateTime& rhs ) const ;
 
 
+	bool DateTime::isNull() const ;
+	void DateTime::setNull();
+	bool DateTime::empty() const;
+	bool DateTime::isValidCTime() const;
+
+
 	/*
 	Gets the day time value.
 	@return DayTime either AM or PM
@@ -445,6 +451,9 @@ public:
 	bool isLeapYear() const ;
 
 	time_t getCTime() const ;
+	void setCTime( time_t value, bool localTime );
+	void setCTime( time_t value );
+	void setCTimeStr( const String& value, bool localTime );
 
 	uint32 getYear() const;
 	uint32 getMonth() const;
@@ -494,6 +503,9 @@ public:
 
 	static bool isLeapYear( uint32 year );
 
+
+	static bool isDST();
+	static bool isDST( const DateTime& localDateTime );
 
 	/**
 	increments the year of this date object.
@@ -685,6 +697,15 @@ public:
 		DateTime dt_;
 	};
 	#endif //VCF__BCC
+
+
+
+	
+#ifdef WIN32
+	DateTime& operator =( const DATE& rhs );
+	DATE getOleDate() const ;
+#endif
+
 
 
 	friend class DateTimeSpan;

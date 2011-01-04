@@ -606,6 +606,7 @@ public:
 	virtual void storeSettings( const bool& recursive );
 
 
+	void initFromResource();
 
 	/**
 	registers a component in the system component map. The map is organized into
@@ -649,6 +650,8 @@ public:
 	static void initComponent( Component* instance, Class* clazz, Class* rootClazz, ResourceBundle* resBundle=NULL );
 
 	static void initComponent( Component* instance, Class* clazz, ResourceBundle* resBundle=NULL );
+
+	static void initComponent( Component* instance, ResourceBundle* resBundle=NULL );
 
 	static Component* createComponentFromResources( Class* clazz, Class* rootClazz, ResourceBundle* resBundle=NULL );
 
