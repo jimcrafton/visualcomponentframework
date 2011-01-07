@@ -626,6 +626,7 @@ bool DateTime::operator!= ( const DateTime& rhs ) const
 	return time_ != rhs.time_;
 }
 
+/*
 DateTime& DateTime::operator =( const time_t& rhs )
 {
 	tm gm = *vcflocaltime( &rhs );
@@ -634,6 +635,7 @@ DateTime& DateTime::operator =( const time_t& rhs )
 
 	return *this;
 }
+*/
 
 void DateTime::setCTimeStr( const String& value, bool localTime )
 {
@@ -659,7 +661,7 @@ void DateTime::setCTime( time_t value, bool localTime )
 		tm gm;
 
 		if ( localTime ) {
-			tm* res = localtime( &value );
+			tm* res = vcflocaltime( &value );
 			if ( res ) {
 				gm = *res; 
 				set( gm.tm_year + 1900, gm.tm_mon+1, gm.tm_mday, gm.tm_hour, gm.tm_min, gm.tm_sec );
@@ -978,11 +980,9 @@ bool DateTime::isValidCTime() const
 
 #include "vcf/FoundationKit/Win32_DTUtils.h"
 
-DateTime& DateTime::operator =( const DATE& rhs )
+void DateTime::setOleDate( const DATE& rhs )
 {
 	DateTimeFromOleDate( rhs, *this );
-
-	return *this;
 }
 
 DATE DateTime::getOleDate() const 
