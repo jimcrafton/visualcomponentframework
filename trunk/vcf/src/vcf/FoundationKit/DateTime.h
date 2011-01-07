@@ -377,19 +377,6 @@ public:
 	}
 
 	/**
-	Allows for assignment of C time values to this
-	date time object. For example:
-	\code
-	time_t ctime = 0;
-	time( &amp;ctime );
-
-	DateTime dt;
-	dt = ctime;
-	\endcode
-	*/
-	DateTime& operator =( const time_t& rhs );
-
-	/**
 	Allows you to add a time span to the value of this date object
 	and return the new date object
 	*/
@@ -451,6 +438,26 @@ public:
 	bool isLeapYear() const ;
 
 	time_t getCTime() const ;
+
+	/**
+	Allows for assignment of C time values to this
+	date time object. For example:
+	\code
+	time_t ctime = 0;
+	time( &amp;ctime );
+
+	DateTime dt;
+	dt.setCTime(ctime);
+	\endcode
+	or specify local or GMT
+	\code
+	time_t ctime = 0;
+	time( &amp;ctime );
+
+	DateTime dt;
+	dt.setCTime(ctime,true);
+	\endcode
+	*/
 	void setCTime( time_t value, bool localTime );
 	void setCTime( time_t value );
 	void setCTimeStr( const String& value, bool localTime );
@@ -702,7 +709,7 @@ public:
 
 	
 #ifdef WIN32
-	DateTime& operator =( const DATE& rhs );
+	void setOleDate( const DATE& rhs );
 	DATE getOleDate() const ;
 #endif
 

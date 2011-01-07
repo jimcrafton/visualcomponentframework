@@ -223,6 +223,8 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL(CurrencyValidator);
 		
 
+		REGISTER_CLASSINFO_EXTERNAL(DateTimePickerControl);
+
 
 
 		PropertyEditorManager::initPropertyEditorManager();

@@ -24,6 +24,7 @@ This was created to improved compile times
 #include "vcf/ApplicationKit/TreeListModel.h"
 #include "vcf/ApplicationKit/AdapterModels.h"
 #include "vcf/ApplicationKit/PagedContainer.h"
+#include "vcf/ApplicationKit/DateTimePickerControl.h"
 
 
 namespace VCF {
@@ -1213,6 +1214,15 @@ _class_rtti_(StringModel, "VCF::Model", "StringModel")	 //skipping the TypeModel
 _class_rtti_end_
 
 _class_rtti_(StringListModel, "VCF::ListModel", "StringListModel")	 //skipping the TypeModel base class - something to note here...
+_class_rtti_end_
+
+
+
+_class_rtti_(DateTimePickerControl,"VCF::Control","DateTimePickerControl" )
+_property_( DateTime, "currentTime", getCurrentDateTime, setCurrentDateTime, "" );
+_property_( String, "format", getFormat, setFormat, "" );
+_property_( bool, "allowNullDates", allowsNullDates, setAllowsNullDates, "" );
+_property_( bool, "upDownControlsVisible", upDownControlsVisible, setUpDownControlsVisible, "" );
 _class_rtti_end_
 
 
