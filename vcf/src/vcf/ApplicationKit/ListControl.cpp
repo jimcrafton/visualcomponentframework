@@ -214,8 +214,10 @@ void ListControl::handleEvent( Event* event )
 			Array<ListItem*>::iterator it = items_.begin();
 			while ( it != items_.end() ) {
 				ListItem* item = *it;
-				removeComponent( item );
-				item->free();
+				if ( NULL != item ) {
+					removeComponent( item );
+					item->free();
+				}
 				++it;
 			}
 

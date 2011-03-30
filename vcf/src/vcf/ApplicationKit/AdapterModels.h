@@ -326,6 +326,16 @@ public:
 		return enumData_->getEnumerator();
 	}
 
+	virtual bool verifyRange( const uint32& start, const uint32& end ) {
+		bool result = false;
+
+		if ( end < data_.size() ) {
+			result = true;
+		}
+
+		return result;
+	}
+
 	virtual bool getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items ) {
 		items.resize( (end - start) + 1 );
 		for (uint32 i=start;i<=end;i++ ) {
@@ -696,6 +706,10 @@ public:
 	}
 
 	virtual bool getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items ) {
+		return false;
+	}
+
+	virtual bool verifyRange( const uint32& start, const uint32& end ) {
 		return false;
 	}
 

@@ -157,6 +157,17 @@ bool SimpleListModel::getItems( std::vector<VariantData>& items )
 	return !items.empty();
 }
 
+bool SimpleListModel::verifyRange( const uint32& start, const uint32& end )
+{
+	bool result = false;
+
+	if ( end < data_.size() ) {
+		result = true;
+	}
+
+	return result;
+}
+
 bool SimpleListModel::getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items )
 {
 	VCF_ASSERT( end - start <= data_.size() );

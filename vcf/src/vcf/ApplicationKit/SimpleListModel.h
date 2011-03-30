@@ -43,6 +43,7 @@ public:
 	virtual uint32 getIndexOf( const VariantData& item );
 	virtual bool getItems( std::vector<VariantData>& items );
 	virtual Enumerator<VariantData>* getItems();
+	virtual bool verifyRange( const uint32& start, const uint32& end );
 	virtual bool getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items );
 	virtual uint32 getCount();
 
