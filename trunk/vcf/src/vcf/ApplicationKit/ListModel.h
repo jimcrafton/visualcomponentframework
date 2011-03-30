@@ -204,6 +204,17 @@ public:
 	virtual bool getItems( std::vector<VariantData>& items ) = 0;
 	virtual Enumerator<VariantData>* getItems() = 0;
 
+	/**
+	verifies that the model does indeed have items within this range from
+	start to end, where start and end represent 0 based indices into the 
+	list model. This can be used in some implementations to "cache" the 
+	data. The ListViewControl's peer under Win32 calls this when it receives 
+	an LVN_ODCACHEHINT message, and can be used in the case of very large
+	data sets to "prep" the data for later display. 
+	@return bool returns true if the model's data supports this, otherwise returns false.
+	*/
+	virtual bool verifyRange( const uint32& start, const uint32& end ) = 0;
+
 	virtual bool getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items ) = 0;	
 
 	/**

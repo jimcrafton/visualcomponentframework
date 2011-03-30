@@ -1014,7 +1014,13 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 		break;
 
 		case LVN_ODCACHEHINT:{
+			NMLVCACHEHINT* cacheHintPtr = (NMLVCACHEHINT *)lParam;
+			StringUtils::trace( String("LVN_ODCACHEHINT from: ") + cacheHintPtr->iFrom + " to: " + cacheHintPtr->iTo + "\n" );
 
+			ListModel* lm = listviewControl_->getListModel();
+			if ( NULL != lm ) {
+				lm->verifyRange( cacheHintPtr->iFrom, cacheHintPtr->iTo );
+			}
 		}
 		break;
 
