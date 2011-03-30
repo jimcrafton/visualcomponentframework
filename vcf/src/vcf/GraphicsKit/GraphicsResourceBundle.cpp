@@ -44,15 +44,31 @@ Image* GraphicsResourceBundle::getImage( const String& resourceName )
 	Image* result = graphicsResPeer_->getImage( resourceName );
 
 	if ( NULL == result ) {
+
+		//try and see if the data is present as regular generic resource data
+
+		Resource* data = this->getResource( resourceName );
+		if ( NULL != data )	{
+
+			ImageLoader* imageLoader = GraphicsToolkit::getImageLoaderForFileName( resourceName );
+			if ( NULL != imageLoader ){
+
+				result = imageLoader->loadImageFromBytes( (const unsigned char*)data->getData(), data->getDataSize() );
+			}
+
+			delete data;
+		}
+	}
+
+
+	if ( NULL == result ) { //wow, still no luck, try and see if we can match a file name to the resource!
 		String fileName = getResourcesDirectory() + resourceName;
 
 		if ( !File::exists( fileName ) ) {
 			throw RuntimeException( String("File \"") + fileName + "\" doesn't exist!" );	
 		}
 
-		result = GraphicsToolkit::createImage( fileName );
-
-		
+		result = GraphicsToolkit::createImage( fileName );		
 	}
 
 	return result;

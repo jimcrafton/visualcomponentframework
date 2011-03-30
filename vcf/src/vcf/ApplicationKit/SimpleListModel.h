@@ -46,7 +46,7 @@ public:
 	virtual bool getRange( const uint32& start, const uint32& end, std::vector<VariantData>& items );
 	virtual uint32 getCount();
 
-	
+	virtual void copy( Object* source );
 protected:
 	Array<VariantData> data_;
 	virtual bool doInsert( const uint32 & index, const VariantData& item );	

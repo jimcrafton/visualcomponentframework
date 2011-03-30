@@ -697,6 +697,10 @@ public:
 		return deleteVariantObjects_;
 	}
 
+	void setShouldDeleteVarObjects( const bool& val ) {
+		deleteVariantObjects_ = val;
+	}
+
 	uint32 getUpdateFlags() {
 		return updateFlags_;
 	}
@@ -749,6 +753,8 @@ protected:
 			delete obj;
 		}
 	}
+
+	virtual void destroy();
 };
 
 };

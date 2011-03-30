@@ -35,7 +35,7 @@ namespace VCF {
 
 class APPLICATIONKIT_API ObjectModel : public Model {
 public:
-	ObjectModel():source_(NULL),useFields_(false){}
+	ObjectModel():source_(NULL),useFields_(false),dictionarySrc_(NULL){}
 
 	virtual bool isEmpty() {
 		
@@ -48,6 +48,8 @@ public:
 
 	void setSource( Object* val ) {
 		source_ = val;
+
+		dictionarySrc_ = dynamic_cast<Dictionary*>(val);		
 
 		ModelEvent e(this,MODEL_CHANGED);
 		changed(&e);
@@ -100,6 +102,26 @@ public:
 					}
 				}
 			}
+			else if ( NULL != dictionarySrc_ ) {
+				Dictionary::Enumerator* enumerator = dictionarySrc_->getEnumerator();
+				while ( enumerator->hasMoreElements() ) {
+					Dictionary::pair p = enumerator->nextElement();
+					
+					ValidationResult vr = Model::validate( p.first, p.second );
+						
+					if ( !vr ) {
+						result.addFailedRules( vr.getFailedRules() );
+						
+						if ( !result.error.empty() ) {
+							result.error += "\n";
+						}
+						result.error += vr.error;
+						result.key = vr.key;
+						result.value = vr.value;
+					}
+					result.valid &= vr.valid;
+				}
+			}
 		}
 
 		return result;
@@ -142,6 +164,19 @@ public:
 					}
 				}
 			}
+			else if ( NULL != dictionarySrc_ ) {
+				String propertyName = key;
+				ValidationResult v = Model::validate( key, value );
+				if ( v || (updateFlags_ & muAllowsInvalidData) ) {
+					try {
+						(*dictionarySrc_)[ key ] = v.value;
+						changedKeyValue( key, v.value );
+					}
+					catch (BasicException& e) {
+						StringUtils::trace( Format("Unable to set property {%s} to value {%s}\n\tException: %s\n") % key.toString() % value.toString() % e.getMessage() );
+					}
+				}
+			}
 		}
 	}
 
@@ -167,6 +202,10 @@ public:
 					}	
 				}
 			}
+			else if ( NULL != dictionarySrc_ ) {
+				String propertyName = key;
+				return dictionarySrc_->get(propertyName); 
+			}
 		}
 
 		return VariantData::null();
@@ -175,6 +214,7 @@ public:
 
 protected:
 	Object* source_;
+	Dictionary* dictionarySrc_;
 	bool useFields_;
 };
 
@@ -393,17 +433,29 @@ protected:
 class APPLICATIONKIT_API ObjectListModel : public SimpleListModel {
 public:
 
-	
+	ObjectListModel() : SimpleListModel(), 
+						objectsAsDictionaries_(false){};
+
+	virtual ~ObjectListModel(){};
+
+
 	virtual String getAsString( const uint32& index )	{
 		VCF_ASSERT( index < data_.size() );
 		
 		Object* o = data_[ index ];
 				
-		if ( initProperties(o) ) {				
-			Property* prop = properties_[(uint32)-1];
-			if ( NULL != prop ) {
-				VariantData v = *prop->get( o );
-				return v.toString();
+		if ( initProperties(o) ) {
+			if ( objectsAsDictionaries_ ) {
+				Dictionary* dict = (Dictionary*)o;
+				Dictionary::pair p = dict->first();
+				return p.second.toString();
+			}
+			else {
+				Property* prop = properties_[(uint32)-1];
+				if ( NULL != prop ) {
+					VariantData v = *prop->get( o );
+					return v.toString();
+				}
 			}
 		}
 
@@ -413,11 +465,25 @@ public:
 	virtual VariantData getSubItem( const uint32& index, const uint32& subItemIndex ) {		
 		Object* o = data_[ index ];
 				
-		if ( initProperties(o) ) {				
-			Property* prop = properties_[subItemIndex];
-			if ( NULL != prop ) {
-				VariantData v = *prop->get( o );
-				return v;
+		if ( initProperties(o) ) {		
+			if ( objectsAsDictionaries_ ) {
+				Dictionary* dict = (Dictionary*)o;
+				Dictionary::Enumerator* enumerator = dict->getEnumerator();
+				uint32 i = -1;
+				while ( enumerator->hasMoreElements() ) {
+					Dictionary::pair p = enumerator->nextElement();
+					if ( subItemIndex == i ) {
+						return p.second;
+					}
+					i++;
+				}
+			}
+			else {
+				Property* prop = properties_[subItemIndex];
+				if ( NULL != prop ) {
+					VariantData v = *prop->get( o );
+					return v;
+				}
 			}
 		}
 		
@@ -425,6 +491,13 @@ public:
 	}
 
 	virtual uint32 getSubItemsCount( const uint32& index ) {
+		if ( objectsAsDictionaries_ ) {
+			Object* o = data_[ index ];
+			Dictionary* dict = (Dictionary*)o;
+
+			return dict->size() - 1;
+		}
+
 		return properties_.size()-1;
 	}
 
@@ -432,13 +505,28 @@ public:
 		
 		Object* o = data_[ index ];
 		if ( initProperties(o) ) {
-			std::map<uint32,Property*>::iterator it = properties_.begin();
-			++it;
-			while ( it != properties_.end() ) {				
-				Property* prop = it->second;
-				VariantData v = *prop->get( o );
-				items.push_back( v );
+			if ( objectsAsDictionaries_ ) {
+				Dictionary* dict = (Dictionary*)o;
+				Dictionary::Enumerator* enumerator = dict->getEnumerator();
+				uint32 i = -1;
+				while ( enumerator->hasMoreElements() ) {
+					Dictionary::pair p = enumerator->nextElement();
+					if ( i >= 0 ) {
+						items.push_back( p.second );
+					}
+					i++;
+				}
+
+			}
+			else {
+				std::map<uint32,Property*>::iterator it = properties_.begin();
 				++it;
+				while ( it != properties_.end() ) {				
+					Property* prop = it->second;
+					VariantData v = *prop->get( o );
+					items.push_back( v );
+					++it;
+				}
 			}
 		}
 
@@ -465,9 +553,12 @@ public:
 protected:
 	std::map<uint32,Property*> properties_;
 	std::vector<String> ignorePropNames_;
+	bool objectsAsDictionaries_;	
 
 	bool initProperties(Object* o) {
 		if ( NULL != o ) {
+			objectsAsDictionaries_ = false;
+
 			Class* clazz = o->getClass();
 			if ( NULL != clazz ) {
 				if ( properties_.empty() ) {
@@ -485,9 +576,14 @@ protected:
 					}
 				}				
 			}
+			else if ( dynamic_cast<Dictionary*>(o) ) {
+				//Dictionary is a special case here
+				properties_.clear();
+				objectsAsDictionaries_ = true;				
+			}
 		}
 
-		return !properties_.empty();
+		return !properties_.empty() || objectsAsDictionaries_;
 	}
 
 	virtual bool doInsertSubItem( const uint32& index, const uint32 & subItemIndex, const VariantData& value ) {
@@ -680,6 +776,12 @@ public:
 		data_ = dict;
 	}
 
+	virtual ~DictionaryModel() {
+		if ( shouldDeleteVarObjects() ) {
+			data_.setOwnsObjectValues(true);
+		}
+	}
+
 
 	VariantData& operator[](const String& key) { 
 		return  data_[key];
@@ -706,6 +808,9 @@ public:
 	}
 
 
+	Dictionary* getDictionary(){
+		return &data_;
+	}
 protected:
 	Dictionary data_;
 };
@@ -808,6 +913,75 @@ protected:
 	}
 };
 
+
+
+
+
+
+class APPLICATIONKIT_API DictionaryColumnModel : public ColumnModel {
+public:
+	DictionaryColumnModel():source_(NULL), listModel_(NULL){
+		addCallback( new ClassProcedure1<Event*,DictionaryColumnModel>(this, &DictionaryColumnModel::onListModelChanged), "DictionaryColumnModel::onListModelChanged" );
+	}
+
+	Dictionary* getSource() {
+		return source_;
+	}
+
+	void setSource( Dictionary* val ) {
+		if ( source_ != val ) {
+			source_ = val;
+			
+			empty();
+
+			if ( NULL != source_ ) {
+				Dictionary::Enumerator* props = source_->getEnumerator();
+				while ( props->hasMoreElements() ) {
+					DictionaryEnumerator::PairType prop = props->nextElement();
+					add( prop.first );						
+				}
+			}
+		}
+	}
+
+	ListModel* getListModel() {
+		return listModel_;
+	}
+
+	void setListModel( ListModel* val ) {
+		if ( listModel_ != val ) {
+			listModel_ = val;
+
+			if ( NULL != listModel_ ) {
+				listModel_->ModelChanged += getCallback( "DictionaryColumnModel::onListModelChanged" );
+
+				if ( !listModel_->isEmpty() ) {
+					VariantData v = listModel_->get(0);
+					if ( v.type == pdObject ) {
+						Object* o = v;
+						setSource( (Dictionary*)o );
+					}
+				}
+			}
+			else {
+				empty();
+			}
+		}
+	}	
+protected:
+	Dictionary* source_;
+	ListModel* listModel_;
+
+	void onListModelChanged( Event* e ) {		
+		if ( !listModel_->isEmpty() ) {
+			VariantData v = listModel_->get(0);
+			if ( v.type == pdObject ) {
+				Object* o = v;
+				setSource( (Dictionary*)o );
+			}
+		}
+	}
+};
 
 
 

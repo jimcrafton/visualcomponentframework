@@ -319,6 +319,12 @@ ListItem* ListControl::getItem( const uint32& index )
 			item->setIndex( index );
 			inCallbackChange_ = false;
 		}
+		else {
+			//do this in case it was added manually, and the model was 
+			//then changed later, which would mean the index stored by the item 
+			//would be incorrect
+			result->setIndex( index );
+		}
 	}
 
 	return result;

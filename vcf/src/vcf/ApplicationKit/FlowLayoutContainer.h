@@ -194,28 +194,40 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 				++it;
 			}
 
+			childRect = clientBounds;
 			if ( fdHorizontal == direction_ ) {
+				switch ( vertAlign_ ) {
+					case vfTopAlign : {
+						//nothing to do here
+					}
+					break;
+
+					case vfCenterAlign : {
+						childRect.top_ = (clientBounds.getHeight()/2.0) - (maxChildHeight/2.0);
+					}
+					break;
+
+					case vfBottomAlign : {
+						childRect.top_ = childRect.bottom_ - 1;
+					}
+					break;
+				}
+
+				childRect.bottom_ = childRect.top_ + maxChildHeight;
+
 				switch ( horzAlign_ ) {
 					case hfLeftAlign : {
-						childRect = clientBounds;			
-						childRect.bottom_ = childRect.top_ + maxChildHeight;
 						childRect.right_ = childRect.left_ + 1;
-
 					}
 					break;
 
-					case hfCenterAlign : {
-						childRect = clientBounds;
-						childRect.bottom_ = childRect.top_ + maxChildHeight;
+					case hfCenterAlign : {						
 						childRect.left_ = (clientBounds.getWidth()/2.0) - (hoffsets[0]/2.0);
 						childRect.right_ = childRect.left_ + 1;
-
 					}
 					break;
 
-					case hfRightAlign : {
-						childRect = clientBounds;
-						childRect.bottom_ = childRect.top_ + maxChildHeight;
+					case hfRightAlign : {						
 						childRect.left_ = childRect.right_ - 1;
 					}
 					break;
@@ -223,28 +235,42 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 				
 			}
 			else {
+
+				childRect = clientBounds;
+
+				switch ( horzAlign_ ) {
+					case hfLeftAlign : {
+						//nothing to do here
+					}
+					break;
+
+					case hfCenterAlign : {
+						childRect.left_ = (clientBounds.getWidth()/2.0) - (maxChildWidth/2.0);
+					}
+					break;
+
+					case hfRightAlign : {
+						childRect.left_ = childRect.right_ - 1;
+					}
+					break;
+				}
+
+
+				childRect.right_ = childRect.left_ + maxChildWidth;
+
 				switch ( vertAlign_ ) {
 					case vfTopAlign : {
-						childRect = clientBounds;			
-						childRect.right_ = childRect.left_ + maxChildWidth;
 						childRect.bottom_ = childRect.top_ + 1;
-
 					}
 					break;
 
-					case vfCenterAlign : {
-						childRect = clientBounds;
-						childRect.right_ = childRect.left_ + maxChildWidth;
-
+					case vfCenterAlign : {						
 						childRect.top_ = (clientBounds.getHeight()/2.0) - (voffsets[0]/2.0);
 						childRect.bottom_ = childRect.top_ + 1;
-
 					}
 					break;
 
-					case vfBottomAlign : {
-						childRect = clientBounds;
-						childRect.right_ = childRect.left_ + maxChildWidth;
+					case vfBottomAlign : {						
 						childRect.top_ = childRect.bottom_ - 1;
 					}
 					break;

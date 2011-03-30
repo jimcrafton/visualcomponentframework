@@ -84,6 +84,9 @@ void ListViewControl::setColumnModel( ColumnModel* val )
 {
 	columnModel_ = val;
 
+	ControlEvent event( this, Control::CONTROL_MODELCHANGED );
+	event.oldModel = columnModel_;
+	ControlModelChanged(&event);
 }
 
 

@@ -1195,6 +1195,10 @@ _class_rtti_(ObjectColumnModel, "VCF::ColumnModel", "ObjectColumnModel")
 	_property_( String, "ignorePropertyNames", getIgnorePropertyNames, setIgnorePropertyNames, "" );
 _class_rtti_end_
 
+_class_rtti_(DictionaryColumnModel, "VCF::ColumnModel", "DictionaryColumnModel")	
+	_property_object_( ListModel, "listModel", getListModel, setListModel, "" )
+_class_rtti_end_
+
 
 
 _class_rtti_(ValueModel, "VCF::Model", "ValueModel")	

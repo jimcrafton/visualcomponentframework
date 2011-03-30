@@ -28,6 +28,19 @@ Model::~Model()
 
 }
 
+void Model::destroy()
+{
+	std::vector<View*> tmp = views_;
+	std::vector<View*>::iterator it = tmp.begin();
+	while ( it != tmp.end() ) {
+		View* view = *it;
+		view->setViewModel( NULL );
+		it++;
+	}
+	views_.clear();
+	Component::destroy();
+}
+
 void Model::addView( View* view )
 {	
 	std::vector<View*>::iterator found = std::find( views_.begin(), views_.end(), view );

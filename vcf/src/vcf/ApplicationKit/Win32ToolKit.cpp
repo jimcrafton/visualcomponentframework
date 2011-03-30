@@ -3093,7 +3093,11 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 			if ( VCF_POST_EVENT == message ) {
 				Win32PostEventRecord* postedRecord = (Win32PostEventRecord*)lParam;
 
-				postedRecord->handler_->invoke( postedRecord->event_ );
+				VCF_ASSERT( NULL != postedRecord->handler_ );
+
+				if ( NULL != postedRecord->handler_ ) { 
+					postedRecord->handler_->invoke( postedRecord->event_ );
+				}
 				delete postedRecord;
 			}
 			else {
@@ -4200,7 +4204,17 @@ UIToolkit::ModalReturnType Win32ToolKit::internal_runModalEventLoopFor( Control*
 		} //outer for loop
 
 	}
+	catch (VCF::FoundationKit::Assertion& e) {
+		String errString = "Assertion Exception caught.\n\"";
+		errString += e.what();
+		StringUtils::trace( "!!! Framework Exception: !!!\n\t" + errString + "\n" );		
+		Application::showErrorMessage( errString, "Framework Assertion Exception"  );
+
+		//display error ?
+		result = mrFalse;
+	}
 	catch (...) {
+		
 		//display error ?
 		result = mrFalse;
 	}

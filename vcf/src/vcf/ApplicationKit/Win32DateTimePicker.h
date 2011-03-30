@@ -26,6 +26,10 @@ public:
 
 	virtual bool upDownControlsVisible();
 	virtual void setUpDownControlsVisible( const bool& val );
+
+protected:
+	void onControlModelChanged( Event* );
+	bool internalChange_;
 };
 
 };

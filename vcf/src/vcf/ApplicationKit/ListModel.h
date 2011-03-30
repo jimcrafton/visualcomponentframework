@@ -166,6 +166,8 @@ public:
 		insert(index,v);
 	}
 
+	void insertRange( const uint32 & index, const std::vector<VariantData>& items );
+
 	/**
 	Adds an item to the end of the collection.
 	@see insert

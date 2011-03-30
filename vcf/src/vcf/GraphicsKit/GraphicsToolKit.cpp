@@ -402,6 +402,12 @@ ImageLoader* GraphicsToolkit::internal_getImageLoaderForFileName( const String& 
 	FilePath fp = fileName;
 	String ext = fp.getExtension();
 
+	if ( !ext.empty() ) {
+		if ( ext[0] == '.' ) {
+			ext = ext.erase(0,1);
+		}
+	}
+
 	ext = StringUtils::lowerCase( ext );
 	std::map<String,String>::iterator it = contentTypes_.find( ext );
 	if ( it != contentTypes_.end() ){
