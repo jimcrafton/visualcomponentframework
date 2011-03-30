@@ -496,7 +496,9 @@ void getVersionInfoW( VersionMap& map, const String& fileName )
 					//printf("  %-18S: %.*S\n", strElement->szKey, strElement->wValueLength, strValue); // print <sKey> : <sValue>
 
 					entry.first = strElement->szKey;
-					entry.second.assign( strValue, strElement->wValueLength );
+					if ( strElement->wValueLength > 0 ) {
+						entry.second.assign( strValue, strElement->wValueLength-1 );
+					}
 					map.insert( entry );
 				}
 			}
@@ -597,7 +599,9 @@ void getVersionInfoA( VersionMap& map, const String& fileName )
 					char* strValue = (char*) VS_ROUNDPOS(&strElement->szKey[strlen(strElement->szKey)+1], strElement, 4);
 
 					entry.first = strElement->szKey;
-					entry.second.assign( strValue, strElement->wValueLength );
+					if ( strElement->wValueLength > 0 ) {
+						entry.second.assign( strValue, strElement->wValueLength-1 );
+					}
 					map.insert( entry );
 				}
 			}

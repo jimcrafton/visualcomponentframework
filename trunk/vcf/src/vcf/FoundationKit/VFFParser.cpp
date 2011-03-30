@@ -99,7 +99,7 @@ void VFFParser::checkToken( const VCFChar& T )
 			break;
 
 			default: {
-				error( Format("Char Expected, instead: %c") % T );
+				error( Format("Char Expected, instead: %c[0x%X]") % T % T );
 			}
 			break;
 		}
@@ -141,7 +141,7 @@ void VFFParser::error( const String& Ident )
 
 void VFFParser::errorStr( const String& Message)
 {
-	throw RuntimeException( MAKE_ERROR_MSG_2(Format("Parse Error, message: %s") % Message ) );
+	throw RuntimeException( MAKE_ERROR_MSG_2(Format("Parse Error, message: %s, line: %d") % Message % current_.sourceLine ) );
 }
 
 VCFChar VFFParser::nextToken()

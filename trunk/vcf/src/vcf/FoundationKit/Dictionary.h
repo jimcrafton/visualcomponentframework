@@ -204,6 +204,9 @@ public:
 	*/
     bool empty() const;
 
+	pair first() const;
+	pair last() const;
+
 
 	/**
 	Returns a VariantData \em reference to the specified key
