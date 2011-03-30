@@ -7,6 +7,24 @@
 
 using namespace VCF;
 
+void ListModel::insertRange( const uint32 & index, const std::vector<VariantData>& items )
+{
+	std::vector<VariantData>::const_iterator it = items.begin();
+	ListModelEvent event( this, lmeItemAdded );
+
+	uint32 idx = index;
+	while ( it != items.end() ) {
+		if ( !doInsert( idx, *it ) ) {
+			return;
+		}
+		idx++;
+
+		++it;
+	}
+
+	event.setType( lmeItemAdded );
+	ModelChanged( &event );
+}
 
 void ListModel::insert( const uint32 & index, const VariantData& item )
 {

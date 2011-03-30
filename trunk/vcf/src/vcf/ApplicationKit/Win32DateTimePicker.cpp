@@ -7,7 +7,8 @@
 
 using namespace VCF;
 
-Win32DateTimePicker::Win32DateTimePicker()
+Win32DateTimePicker::Win32DateTimePicker():
+	internalChange_(false)
 {
 
 }
@@ -52,13 +53,29 @@ void Win32DateTimePicker::create( Control* owningControl )
 		Win32Object::registerWin32Object( this );
 
 		subclassWindow();
-		registerForFontChanges();			
+		registerForFontChanges();	
+
+		peerControl_->ControlModelChanged +=
+			new ClassProcedure1<Event*,Win32DateTimePicker>( this, &Win32DateTimePicker::onControlModelChanged, "Win32DateTimePicker::onControlModelChanged" );
+
+
 	}
 	else {
 		//throw exception
 	}
 
 	setCreated( true );
+}
+
+void Win32DateTimePicker::onControlModelChanged( Event* )
+{
+	Model* m = peerControl_->getModel();
+	if ( NULL != m ) {
+		internalChange_ = true;
+		VariantData v = m->getValue( peerControl_->getModelKey() );
+		setCurrentDateTime( v );
+		internalChange_ = false;
+	}
 }
 
 Win32Object::CreateParams Win32DateTimePicker::createParams()
@@ -81,10 +98,11 @@ bool Win32DateTimePicker::handleEventMessages( UINT message, WPARAM wParam, LPAR
 		case DTN_DATETIMECHANGE:{
             LPNMDATETIMECHANGE lpChange = (LPNMDATETIMECHANGE)lParam;
             
-			DateTimePickerControl* dtp = (DateTimePickerControl*)peerControl_;
+			
+				DateTimePickerControl* dtp = (DateTimePickerControl*)peerControl_;
 
-			DateTime dt;
-			//if ( lpChange->dwFlags & GDT_VALID ) {
+				DateTime dt;
+				//if ( lpChange->dwFlags & GDT_VALID ) {
 				dt.set( lpChange->st.wYear, 
 					lpChange->st.wMonth, 
 					lpChange->st.wDay, 
@@ -92,17 +110,18 @@ bool Win32DateTimePicker::handleEventMessages( UINT message, WPARAM wParam, LPAR
 					lpChange->st.wMinute, 
 					lpChange->st.wSecond, 
 					lpChange->st.wMilliseconds );				
-			//}
+				//}
 
-			VariantData v = dt;
+				VariantData v = dt;
 
-			Model* model = dtp->getModel();
-			if ( NULL != model ) {
-				model->setValue( v, dtp->getModelKey() );
-			}
+				Model* model = dtp->getModel();
+				if ( NULL != model ) {
+					model->setValue( v, dtp->getModelKey() );
+				}
 
-			Event e(peerControl_);
-			dtp->DateChanged( &e, dt );
+				Event e(peerControl_);
+				dtp->DateChanged( &e, dt );
+			
         }
 
 
@@ -128,8 +147,7 @@ bool Win32DateTimePicker::handleEventMessages( UINT message, WPARAM wParam, LPAR
 			HBRUSH bkBrush = CreateSolidBrush( backColor );
 			FillRect( memDC, &r, bkBrush );
 			DeleteObject( bkBrush );
-
-
+			
 
 			::SetViewportOrgEx( memDC, -r.left, -r.top, NULL );
 

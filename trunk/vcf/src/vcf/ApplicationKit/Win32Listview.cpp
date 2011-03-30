@@ -1067,6 +1067,27 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 					}
 				}
 			}
+			else {
+				if ( (lvNotificationHdr->uChanged & LVIF_STATE) != 0 ) {
+					if ( (lvNotificationHdr->uNewState & LVIS_SELECTED) == 0 ){
+						internalMessage_ = true;
+
+						POINT tmpPt = {0,0};
+						GetCursorPos( &tmpPt );
+						::ScreenToClient( hwnd_, &tmpPt );
+						ItemEvent event( listviewControl_, ItemEvent::Selected );
+						Point pt( tmpPt.x, tmpPt.y );
+						event.point = pt;
+						event.index = lvNotificationHdr->iItem;
+						event.itemSelected = false;
+
+						listviewControl_->handleEvent( &event );
+
+
+						internalMessage_ = false;
+					}
+				}				
+			}
 
 		}
 		break;
@@ -1272,6 +1293,13 @@ void Win32Listview::selectItem(const uint32& index)
 		}
 
 		internalMessage_ = false;
+	}
+	else {
+		LV_ITEMW lvItem;
+		memset(&lvItem,0,sizeof(lvItem));
+		lvItem.stateMask = LVIS_SELECTED;
+		lvItem.state = 0;
+		SendMessage( hwnd_, LVM_SETITEMSTATE, index, (LPARAM)&lvItem );
 	}
 }
 
@@ -2257,7 +2285,8 @@ void Win32Listview::onCtrlModelChanged( Event* e )
 		HWND header = ListView_GetHeader(hwnd_);
 		int cc = Header_GetItemCount(header);		
 
-		for (int i=0;i<cc;i++ ) {
+		for (int i=cc-1;i>=0;i-- ) {
+			//can't delete column 0
 			SendMessage( hwnd_, LVM_DELETECOLUMN, i, 0 );
 			//Weird - don't use the code below! It causes 
 			//the items in the column to have 0 width! Despite 
@@ -2267,6 +2296,7 @@ void Win32Listview::onCtrlModelChanged( Event* e )
 
 		cc = Header_GetItemCount(header);
 
+		
 
 		//build up colums
 		if ( !cm->isEmpty() ) {
@@ -2274,8 +2304,28 @@ void Win32Listview::onCtrlModelChanged( Event* e )
 			ListModelEvent lme(cm);
 
 			for (uint32 i=0;i<count;i++ ) {
-				lme.index = i;
-				onColumnModelAdded(&lme);
+
+				if ( cc == 1 && i == 0 ) {
+					if ( NULL != header ) {
+						double width = 100;
+						HDITEMW headerItem;
+						memset( &headerItem, 0, sizeof(headerItem) );
+						headerItem.mask = HDI_LPARAM | HDI_TEXT | HDI_IMAGE | HDI_WIDTH | HDI_FORMAT;				
+
+						headerItem.lParam = (LPARAM)lme.index;
+						headerItem.iImage = I_IMAGECALLBACK;
+						headerItem.pszText = LPSTR_TEXTCALLBACKW;	
+						headerItem.cxy = width;
+						headerItem.fmt = HDF_LEFT | HDF_STRING;	
+
+						int err = SendMessage( header, HDM_SETITEMW, (WPARAM)lme.index, (LPARAM)&headerItem );
+					}
+
+				}
+				else {
+					lme.index = i;
+					onColumnModelAdded(&lme);
+				}
 			}
 		}
 	}
@@ -2365,6 +2415,7 @@ void Win32Listview::onColumnModelRemoved( Event* e )
 void Win32Listview::onColumnModelChanged( Event* e )
 {
 	HWND header = ListView_GetHeader(hwnd_);
+
 	if ( NULL != header ) {
 		InvalidateRect( header, NULL, TRUE );
 	}

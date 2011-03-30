@@ -36,6 +36,17 @@ SimpleListModel::~SimpleListModel()
 	data_.clear();
 }
 
+void SimpleListModel::copy( Object* source )
+{
+	ListModel* lm = dynamic_cast<ListModel*>( source );
+	if ( NULL != lm ) {
+		empty();
+		for (uint32 i=0;i<lm->getCount();i++ ) {
+			add( lm->get(i) );
+		}
+	}
+}
+
 void SimpleListModel::empty()
 {
 	ListModelEvent itemEvent( this, lmeItemRemoved );
@@ -97,6 +108,10 @@ bool SimpleListModel::doRemove( const uint32 & index )
 
 VariantData SimpleListModel::get( const uint32& index )
 {
+	if ( ListModel::InvalidIndex == index ) {
+		return VariantData::null();
+	}
+
 	VCF_ASSERT( index < data_.size() );
 
 	return data_[index];

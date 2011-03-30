@@ -209,30 +209,7 @@ void TabbedPages::paint( GraphicsContext* context )
 			currentLeft += width;
 			++it;
 		}
-/*
-		//if ( oldClipRect.isEmpty() ) {
-			//oldClipRect.setRect( 0, 0, getWidth(), getHeight() );
-		//}
 
-		//context->setClippingRect( &oldClipRect );
-
-		if ( NULL != selectedPage ) {
-
-			Control* component = selectedPage->getTabSheet();
-
-			if ( NULL != component ){
-				Rect tmp( tabAreaBounds_ );//*(component->getBounds()) );
-				tmp.inflate( 2,2 );
-				activePageBorder_.paint( &tmp, context );
-			}
-
-			//fill with blank space first
-			selectedRect.inflate( 2, 2, 2, 1 );
-			context->rectangle( &selectedRect );
-			context->fillPath();
-			selectedPage->paint( context, &selectedRect );
-		}
-		*/
 		if ( NULL != selectedPage ) {
 			selectedRect.inflate( 0, 2, 2, 1 );
 			selectedPage->paint( context, &selectedRect );
@@ -431,19 +408,21 @@ void TabbedPages::onTabPageSelected( TabModelEvent* event )
 	Enumerator<Control*>* children = getChildren();
 	while ( true == children->hasMoreElements() ){
 		Control* comp = children->nextElement();
-		if ( comp != page->getTabSheet() ){
-			if ( comp->getVisible() ) {
+		//if ( comp != page->getTabSheet() ){
+			//if ( comp->getVisible() ) {
 				comp->setVisible( false );
-			}
-		}
+			//}
+		//}
 	}
-	page->getTabSheet()->setVisible( true );
+	selectedPage_->getTabSheet()->setVisible( true );
 
-	Container* container = page->getTabSheet()->getContainer();
+	resizeChildren(NULL);
+
+	Container* container = selectedPage_->getTabSheet()->getContainer();
 	if ( NULL != container ) {
 		container->resizeChildren(NULL);		
-		page->getTabSheet()->setFocused();
-	}
+		selectedPage_->getTabSheet()->setFocused();
+	}	
 
 	repaint();
 }
@@ -546,7 +525,6 @@ void TabbedPages::mouseDown( MouseEvent* event )
 
 	if ( NULL != tabPage ) {
 		setSelectedPage( tabPage );
-		resizeChildren(NULL);
 	}
 
 	
@@ -697,7 +675,6 @@ void TabbedPages::setTabPage( const uint32& index, TabPage* page )
 
 		tabPages_[index] = page;
 		tm->setSelectedPage( index );
-		repaint();
 	}
 }
 
