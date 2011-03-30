@@ -741,7 +741,7 @@ void Component::getAppNameAndKey( String& appName, String& key )
 	FilePath programName = cmdLine.getArgument(0);
 
 	appName = programName.getBaseName();
-
+	String companyName;
 	key = "Software\\";
 
 	ResourceBundle* bundle = System::getResourceBundle();
@@ -755,7 +755,7 @@ void Component::getAppNameAndKey( String& appName, String& key )
 
 			s = info->getCompany();
 			if ( !s.empty() ) {
-				key += s + "\\";
+				companyName = s;
 			}
 
 			delete info;
@@ -766,6 +766,10 @@ void Component::getAppNameAndKey( String& appName, String& key )
 	//need a way to generate platform
 	//neutral reg keys!!!!!
 	//These are window specific for now!
+	key = String("Software\\");	
+	if ( !companyName.empty() ) {
+		key += companyName + "\\";
+	}
 	key += appName + "\\";
 }
 

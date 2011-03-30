@@ -56,6 +56,29 @@ bool Dictionary::empty() const
 	return data_.empty();
 }
 
+Dictionary::pair Dictionary::first() const
+{
+	Dictionary::pair emptyResult;
+
+	if ( !data_.empty() ) {
+		std::map<String,VariantData>::const_iterator it = data_.begin();
+		return *it;
+	}
+
+	return emptyResult;
+}
+
+Dictionary::pair Dictionary::last() const
+{
+	Dictionary::pair result;
+
+	if ( !data_.empty() ) {
+		std::map<String,VariantData>::const_reverse_iterator it = data_.rbegin();
+		return *it;
+	}
+
+	return result;
+}
 
 
 void Dictionary::clear()
