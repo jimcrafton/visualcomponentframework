@@ -52,7 +52,7 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 	class APPLICATIONKIT_API FlowLayoutContainer : public StandardContainer {
 	public:
 
-		FlowLayoutContainer():allowContentsToWrap_(true),direction_(fdHorizontal),childSpacer_(0),horzAlign_(hfLeftAlign),vertAlign_(vfTopAlign) {
+		FlowLayoutContainer():allowContentsToWrap_(true),keepChildDimensions_(false),direction_(fdHorizontal),childSpacer_(0),horzAlign_(hfLeftAlign),vertAlign_(vfTopAlign) {
 			childSpacer_ = UIToolkit::getUIMetricValue( UIMetricsManager::mtControlHorizontalSpacing );
 		}
 
@@ -63,6 +63,17 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 		void setAllowContentsToWrap( const bool& val ) {
 			if ( val != allowContentsToWrap_ ) {
 				allowContentsToWrap_ = val;
+				resizeChildren(NULL);
+			}
+		}
+
+		bool getKeepChildDimensions() {
+			return keepChildDimensions_;
+		}
+
+		void setKeepChildDimensions( const bool& val ) {
+			if ( val != keepChildDimensions_ ) {
+				keepChildDimensions_ = val;
 				resizeChildren(NULL);
 			}
 		}
@@ -203,7 +214,7 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 					break;
 
 					case vfCenterAlign : {
-						childRect.top_ = (clientBounds.getHeight()/2.0) - (maxChildHeight/2.0);
+						childRect.top_ = clientBounds.top_ + (clientBounds.getHeight()/2.0) - (maxChildHeight/2.0);
 					}
 					break;
 
@@ -213,7 +224,7 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 					break;
 				}
 
-				childRect.bottom_ = childRect.top_ + maxChildHeight;
+				childRect.bottom_ = childRect.top_ + maxChildHeight;				
 
 				switch ( horzAlign_ ) {
 					case hfLeftAlign : {
@@ -222,7 +233,7 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 					break;
 
 					case hfCenterAlign : {						
-						childRect.left_ = (clientBounds.getWidth()/2.0) - (hoffsets[0]/2.0);
+						childRect.left_ = clientBounds.left_ + (clientBounds.getWidth()/2.0) - (hoffsets[0]/2.0);
 						childRect.right_ = childRect.left_ + 1;
 					}
 					break;
@@ -245,7 +256,7 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 					break;
 
 					case hfCenterAlign : {
-						childRect.left_ = (clientBounds.getWidth()/2.0) - (maxChildWidth/2.0);
+						childRect.left_ = clientBounds.left_  + (clientBounds.getWidth()/2.0) - (maxChildWidth/2.0);
 					}
 					break;
 
@@ -255,8 +266,9 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 					break;
 				}
 
-
 				childRect.right_ = childRect.left_ + maxChildWidth;
+
+				
 
 				switch ( vertAlign_ ) {
 					case vfTopAlign : {
@@ -265,7 +277,7 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 					break;
 
 					case vfCenterAlign : {						
-						childRect.top_ = (clientBounds.getHeight()/2.0) - (voffsets[0]/2.0);
+						childRect.top_ = clientBounds.top_ + (clientBounds.getHeight()/2.0) - (voffsets[0]/2.0);
 						childRect.bottom_ = childRect.top_ + 1;
 					}
 					break;
@@ -282,6 +294,7 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 			while ( it != controls_.end() ) {
 				Control* child = *it;
 				Rect r = child->getBounds();
+				Rect adjChildRect = childRect;
 
 				if ( allowContentsToWrap_ && (it != controls_.begin()) ) {
 					if ( fdHorizontal == direction_ ) {
@@ -317,6 +330,12 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 							}
 							break;
 						}
+
+						adjChildRect = childRect;
+
+						if ( keepChildDimensions_ ) {
+							adjChildRect.bottom_ = adjChildRect.top_ + r.getHeight();
+						}
 					}
 					else {
 						switch ( vertAlign_ ) {
@@ -351,6 +370,11 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 							}
 							break;
 						}
+
+						adjChildRect = childRect;
+						if ( keepChildDimensions_ ) {
+							adjChildRect.right_ = adjChildRect.left_ + r.getWidth();
+						}
 					}
 				}
 				else {
@@ -366,6 +390,11 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 							}
 							break;
 						}
+
+						adjChildRect = childRect;
+						if ( keepChildDimensions_ ) {
+							adjChildRect.bottom_ = adjChildRect.top_ + r.getHeight();
+						}
 					}
 					else {
 						switch ( vertAlign_ ) {
@@ -379,11 +408,38 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 							}
 							break;
 						}
+
+						adjChildRect = childRect;
+
+						switch ( horzAlign_ ) {
+							case hfLeftAlign : {
+								if ( keepChildDimensions_ ) {
+									adjChildRect.right_ = childRect.left_ + r.getWidth();
+								}								
+							}
+							break;
+
+							case hfCenterAlign : {
+								if ( keepChildDimensions_ ) {
+									adjChildRect.left_ = (clientBounds.left_ + 
+										(clientBounds.getWidth()/2.0)) - (r.getWidth()/2.0);
+									adjChildRect.right_ = adjChildRect.left_ + r.getWidth();								
+								}
+							}
+							break;
+
+							case hfRightAlign : {
+								if ( keepChildDimensions_ ) {
+									adjChildRect.left_ = childRect.right_ - r.getWidth();
+								}
+							}
+							break;
+						}
 					}
 				}
 
 
-				child->setBounds( &childRect );
+				child->setBounds( &adjChildRect );
 								
 				
 				if ( fdHorizontal == direction_ ) {					
@@ -428,6 +484,7 @@ static String VerticalFlowAlignmentNames[] = { "vfTopAlign",
 		}
 	protected:
 		bool allowContentsToWrap_;
+		bool keepChildDimensions_;
 		FlowDirection direction_;
 		double childSpacer_;
 		HorizontalFlowAlignment horzAlign_;

@@ -81,6 +81,7 @@ public:
 
 	void setLeftBorderWidth( const double& leftBorderWidth );
 
+	double getBorderWidth();
 	void setBorderWidth ( const double& borderWidth );
 
 	void calcAlignmentList( const AlignmentType& alignment, std::vector< Control* >& alignmentList );

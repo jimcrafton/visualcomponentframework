@@ -134,7 +134,7 @@ public:
 	/**
 	Sets whether or not the window is maximized.
 	*/
-	void setMaximized( const bool maximized );
+	void setMaximized( const bool& maximized );
 
 	/**
 	returns whether or not teh window is minimized

@@ -606,7 +606,26 @@ public:
 	virtual void storeSettings( const bool& recursive );
 
 
+	/**
+	Loads up the component based on data in a resource. The resource will be a named VFF file
+	that has the same name as the class plus the extension ".vff". So if your class is named
+	"MyFooBarControl", then, in order for this to work, you need to have a resource named 
+	"MyFooBarControl.vff" in your app. This is intended to be put in the constructor of your
+	class. It's safe to use in derived classes. This means that you may have a control/component
+	called "ComponentA", and another called "ComponentB" which derives from "ComponentA". You can 
+	have separate .vff files for both ComponentA and ComponentB, and if you put the call to 
+	initFromResource() in both of their constructors you will be able to load the data from 
+	both. Data loaded from ComponentA's ComponentA.vff \em is available for reference by 
+	ComponentB's vff file.
+	@see Resource
+	@see ResourceBundle
+	*/
 	void initFromResource();
+
+	/**
+	Loads up data from a fragment of vff. The component is assumed to have been created. 
+	*/
+	void initFromFragment( const String& vffString );
 
 	/**
 	registers a component in the system component map. The map is organized into
@@ -655,6 +674,7 @@ public:
 
 	static Component* createComponentFromResources( Class* clazz, Class* rootClazz, ResourceBundle* resBundle=NULL );
 
+	static String generateComponentName(Component* instance);
 protected:
 	Component* owner_;
 	uint32 componentState_;

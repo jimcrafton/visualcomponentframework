@@ -903,6 +903,12 @@ void Win32FilePeer::remove()
 	}
 
 	String filename = getName();
+
+	if ( filename.empty() ) {
+		throw RuntimeException( MAKE_ERROR_MSG_2("Invalid file name - file name is empty.") );
+	}
+
+
 	if ( filename[filename.size()-1] == '\\' ) {
 		BOOL res = FALSE;
 #ifdef VCF_WIN32CE

@@ -46,7 +46,7 @@ public:
 
 	virtual bool isMaximized();
 
-	virtual void setMaximized( const bool maximised );
+	virtual void setMaximized( const bool& maximised );
 
 	virtual bool isMinimized();
 

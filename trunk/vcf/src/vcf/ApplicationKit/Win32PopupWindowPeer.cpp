@@ -298,7 +298,7 @@ bool Win32PopupWindowPeer::isMaximized()
 	return false;
 }
 
-void Win32PopupWindowPeer::setMaximized( const bool maximised )
+void Win32PopupWindowPeer::setMaximized( const bool& maximised )
 {
 	//no-op
 }

@@ -11,11 +11,11 @@ where you installed the VCF.
 #include "vcf/FoundationKit/VFFInputStream.h"
 #include "vcf/FoundationKit/Dictionary.h"
 #include "vcf/FoundationKit/VFFParser.h"
+#include "vcf/FoundationKit/UnitTransformer.h"
 
 using namespace VCF;
 
 Component* VFFInputStream::rootComponent_ = NULL;
-UnitTransformer* VFFInputStream::transformer = NULL;
 
 VariantData getKeyFromIndex( const String& index, int token ) ;
 
@@ -130,9 +130,22 @@ void VFFInputStream::readDelegate( Component* component, VCF::Class* clazz )
 			parser_->nextToken();
 			String objPropName = parser_->tokenString();
 			
-
+			VariantData* value = NULL;
+			
 			Property* prop = clazz->getProperty( currentSymbol );
-			VariantData* value = prop->get();
+			if( NULL != prop ) {
+				value = prop->get();
+			}
+			else {
+				Field* field = clazz->getField( currentSymbol );
+				if ( NULL != field ) {
+					value = field->get();
+				}
+			}
+			if ( NULL == value ) {
+				throw RuntimeException( MAKE_ERROR_MSG_2( String("No field or property exists with the name '") + currentSymbol +  "'.") );
+			}
+
 			if ( value->type == pdObject ) {
 				Object* object = *value;
 				if ( NULL != object ) {
@@ -627,17 +640,27 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 		break;
 
 		case '.' : {
-			//we are at the property name so currentSymbol
-			//will be the name of the proeprty we are examining
+			//we are at the property/field name so currentSymbol
+			//will be the name of the proeprty or field we are examining
 			//calling nextToken will take us to the
 			parser_->nextToken();
 
+			VariantData* value = NULL;
 			String objPropName = parser_->tokenString();
 			VCFChar newToken = parser_->nextToken();
 
-			Property* prop = clazz->getProperty( currentSymbol );
+			Property* prop = clazz->getProperty( currentSymbol );			
 			if ( NULL != prop ) {
-				VariantData* value = prop->get();
+				value = prop->get();
+			}
+			else {
+				Field* field = clazz->getField( currentSymbol );
+				if ( NULL != field ) {
+					value = field->get();
+				}
+			}
+
+			if ( NULL != value ) {
 				if ( value->type == pdObject ) {
 					Object* object = *value;
 					if ( NULL != object ) {
@@ -1451,8 +1474,10 @@ void VFFInputStream::internal_clearComponentConstants()
 
 String VFFInputStream::transform( const String& originalValue )
 {
-	if ( NULL != VFFInputStream::transformer ) {
-		return VFFInputStream::transformer->transform( originalValue );
+
+	UnitTransformer* xfrmr = UnitTransformer::getCurrentTransformer();
+	if ( NULL != xfrmr ) {
+		return xfrmr->transform( originalValue );
 	}
 
 	return originalValue;

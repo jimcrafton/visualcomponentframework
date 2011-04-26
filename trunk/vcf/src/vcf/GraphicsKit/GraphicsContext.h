@@ -160,13 +160,13 @@ public:
 	*/
 	enum TextDrawingOptions{
 		tdoNone=0,
-		tdoWordWrap=1,
-		tdoLeftAlign=2,
-		tdoCenterHorzAlign=4,
-		tdoRightAlign=8,
-		tdoBottomAlign=16,
-		tdoCenterVertAlign=32,
-		tdoTopAlign=64
+		tdoWordWrap=0x0001,
+		tdoLeftAlign=0x0002,
+		tdoCenterHorzAlign=0x0004,
+		tdoRightAlign=0x0008,
+		tdoBottomAlign=0x0010,
+		tdoCenterVertAlign=0x0020,
+		tdoTopAlign=0x0040,
 	};
 
 	enum EdgeType{

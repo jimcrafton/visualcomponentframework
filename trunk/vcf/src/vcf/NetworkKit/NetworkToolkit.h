@@ -50,6 +50,7 @@ namespace VCF {
 		static IPAddressPeer* createIPAddressPeer();
 		
 
+		static String getErrorString( int errCode );
 		static int getLastError();
 	protected:
 

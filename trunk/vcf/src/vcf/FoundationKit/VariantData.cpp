@@ -8,6 +8,8 @@ where you installed the VCF.
 
 
 #include "vcf/FoundationKit/FoundationKit.h"
+#include "vcf/FoundationKit/UnitTransformer.h"
+
 using namespace VCF;
 
 
@@ -218,27 +220,27 @@ void VariantData::setFromString( const String& value )
 
 	switch( type ){
 		case pdInt:{
-			IntVal = StringUtils::fromStringAsInt( value );
+			IntVal = StringUtils::fromStringAsInt( UnitTransformer::xfrmString(value) );
 		}
 		break;
 
 		case pdLong:{
-			LongVal = StringUtils::fromStringAsLong( value );
+			LongVal = StringUtils::fromStringAsLong( UnitTransformer::xfrmString(value) );
 		}
 		break;
 
 		case pdShort:{
-			ShortVal = StringUtils::fromStringAsShort( value );
+			ShortVal = StringUtils::fromStringAsShort( UnitTransformer::xfrmString(value) );
 		}
 		break;
 
 		case pdUShort:{
-			UShortVal = (ushort) StringUtils::fromStringAsShort( value );
+			UShortVal = (ushort) StringUtils::fromStringAsShort( UnitTransformer::xfrmString(value) );
 		}
 		break;
 
 		case pdUInt:{
-			UIntVal = StringUtils::fromStringAsUInt( value );
+			UIntVal = StringUtils::fromStringAsUInt( UnitTransformer::xfrmString(value) );
 		}
 		break;
 
@@ -248,12 +250,12 @@ void VariantData::setFromString( const String& value )
 		break;
 
 		case pdULong:{
-			ULongVal = StringUtils::fromStringAsULong( value );
+			ULongVal = StringUtils::fromStringAsULong( UnitTransformer::xfrmString(value) );
 		}
 		break;
 
 		case pdFloat:{
-			FloatVal = StringUtils::fromStringAsFloat( value );
+			FloatVal = StringUtils::fromStringAsFloat( UnitTransformer::xfrmString(value) );
 		}
 		break;
 
@@ -263,7 +265,7 @@ void VariantData::setFromString( const String& value )
 		break;
 
 		case pdDouble:{
-			DblVal = StringUtils::fromStringAsDouble( value );
+			DblVal = StringUtils::fromStringAsDouble( UnitTransformer::xfrmString(value) );
 		}
 		break;
 
@@ -273,12 +275,12 @@ void VariantData::setFromString( const String& value )
 		break;
 
 		case pdInt64:{
-			Int64Val = StringUtils::fromStringAsInt64( value );
+			Int64Val = StringUtils::fromStringAsInt64( UnitTransformer::xfrmString(value) );
 		}
 		break;
 
 		case pdUInt64:{
-			UInt64Val = StringUtils::fromStringAsUInt64( value );
+			UInt64Val = StringUtils::fromStringAsUInt64( UnitTransformer::xfrmString(value) );
 		}
 		break;
 
@@ -602,7 +604,7 @@ double VariantData::convertToDbl() const  {
 
 		case pdString:{
 			if ( NULL != StringVal ) {
-				result = StringUtils::fromStringAsDouble(*StringVal);
+				result = StringUtils::fromStringAsDouble( UnitTransformer::xfrmString(*StringVal) );
 			}
 		}
 		break;
@@ -694,7 +696,7 @@ int VariantData::convertToInt() const
 
 		case pdString:{
 			if ( NULL != StringVal ) {
-				result = StringUtils::fromStringAsInt(*StringVal);
+				result = StringUtils::fromStringAsInt( UnitTransformer::xfrmString(*StringVal) );
 			}
 		}
 		break;
@@ -786,7 +788,7 @@ long VariantData::convertToLong() const
 
 		case pdString:{
 			if ( NULL != StringVal ) {
-				result = StringUtils::fromStringAsLong(*StringVal);
+				result = StringUtils::fromStringAsLong( UnitTransformer::xfrmString(*StringVal) );
 			}
 		}
 		break;
@@ -878,7 +880,7 @@ short VariantData::convertToShort() const
 
 		case pdString:{
 			if ( NULL != StringVal ) {
-				result = StringUtils::fromStringAsShort(*StringVal);
+				result = StringUtils::fromStringAsShort( UnitTransformer::xfrmString(*StringVal) );
 			}
 		}
 		break;
@@ -970,7 +972,7 @@ VCF::ushort VariantData::convertToUShort() const
 
 		case pdString:{
 			if ( NULL != StringVal ) {
-				result = (ushort) StringUtils::fromStringAsShort(*StringVal);
+				result = (ushort) StringUtils::fromStringAsShort( UnitTransformer::xfrmString(*StringVal) );
 			}
 		}
 		break;
@@ -1062,7 +1064,7 @@ unsigned int VariantData::convertToUInt() const
 
 		case pdString:{
 			if ( NULL != StringVal ) {
-				result = StringUtils::fromStringAsUInt(*StringVal);
+				result = StringUtils::fromStringAsUInt( UnitTransformer::xfrmString(*StringVal) );
 			}
 		}
 		break;
@@ -1154,7 +1156,7 @@ unsigned long VariantData::convertToULong() const
 
 		case pdString:{
 			if ( NULL != StringVal ) {
-				result = StringUtils::fromStringAsULong(*StringVal);
+				result = StringUtils::fromStringAsULong( UnitTransformer::xfrmString(*StringVal) );
 			}
 		}
 		break;
@@ -1246,7 +1248,7 @@ float VariantData::convertToFloat() const
 
 		case pdString:{
 			if ( NULL != StringVal ) {
-				result = StringUtils::fromStringAsFloat(*StringVal);
+				result = StringUtils::fromStringAsFloat( UnitTransformer::xfrmString(*StringVal) );
 			}
 		}
 		break;
@@ -1522,7 +1524,7 @@ int64 VariantData::convertToInt64() const
 
 		case pdString:{
 			if ( NULL != StringVal ) {
-				result = StringUtils::fromStringAsInt64(*StringVal);
+				result = StringUtils::fromStringAsInt64( UnitTransformer::xfrmString(*StringVal) );
 			}
 		}
 		break;
@@ -1614,7 +1616,7 @@ uint64 VariantData::convertToUInt64() const
 
 		case pdString:{
 			if ( NULL != StringVal ) {
-				result = StringUtils::fromStringAsUInt64(*StringVal);
+				result = StringUtils::fromStringAsUInt64( UnitTransformer::xfrmString(*StringVal) );
 			}
 		}
 		break;

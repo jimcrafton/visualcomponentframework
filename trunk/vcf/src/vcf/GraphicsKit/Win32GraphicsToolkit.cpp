@@ -25,7 +25,7 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/Win32VisualStylesWrapper.h"
 #endif
 
-#include "vcf/FoundationKit/VFFInputStream.h"
+#include "vcf/FoundationKit/UnitTransformer.h"
 
 
 //init singleton
@@ -1251,47 +1251,64 @@ public:
 
 class Win32UnitTransformer : public UnitTransformer {
 public:
-	virtual String transform( const String& s ) {
+	virtual String transform( const String& s ) {		
+		
+		if ( s.empty() ) {
+			return s;
+		}
 
-		const VCFChar* P = s.c_str();
+		String s2 = s;
+		VCFChar first = s2[0];
+		VCFChar last = s2[s2.length()-1];
+
+		if ( (first == ' ' || first == '\t' || first == '\r' || first == '\n') ||
+			(last == ' ' || last == '\t' || last == '\r' || last == '\n') ){
+
+
+			StringUtils::trimWhiteSpaces(s2);
+		}
+
+		const VCFChar* P = s2.c_str();
 		const VCFChar* start = P;
 
 		String val,unit;
 
-		while ( P-start < s.length() ) {
+		while ( P-start < s2.length() ) {
 			if ( *P == '$' ) {
 				P++;
-				while ( ((*P >= '0') && (*P <= '9')) || ((*P >= 'A') && (*P <= 'F')) || ((*P >= 'a') && (*P <= 'f')) && (P-start < s.length()) ) {
+				while ( ((*P >= '0') && (*P <= '9')) || ((*P >= 'A') && (*P <= 'F')) || 
+					((*P >= 'a') && (*P <= 'f')) && (P-start < s2.length()) ) {
 					P++;
 				}
 
-				if ( P-start >= s.length() ) {
-					return s;
+				if ( P-start >= s2.length() ) {
+					return s2;
 				}
 
 				val.assign( start, ( P - start ) );
 				
-				unit.assign( P, s.length() - val.length() );
+				unit.assign( P, s2.length() - val.length() );
 
 				break;
 			}
 			else if ( (*P == '-') ||  ((*P >= '0') && (*P <= '9')) ) {
 				P++;
-				while ( ((*P >= '0') && (*P <= '9')) && (P-start < s.length()) ) {
+				while ( ((*P >= '0') && (*P <= '9')) && (P-start < s2.length()) ) {
 					P++;
 				}
 
-				while ( ((*P >= '0') && (*P <= '9')) || (*P == '.') || (*P == 'e') || (*P == '+') || (*P == '-') && (P-start < s.length()) ) {
+				while ( ((*P >= '0') && (*P <= '9')) || (*P == '.') || (*P == 'e') || (*P == '+') 
+						|| (*P == '-') && (P-start < s2.length()) ) {
 					P++;
 				}
 
-				if ( P-start >= s.length() ) {
-					return s;
+				if ( P-start >= s2.length() ) {
+					return s2;
 				}
 
 				val.assign( start, ( P - start ) );
 
-				unit.assign( P, s.length() - val.length() );
+				unit.assign( P, s2.length() - val.length() );
 
 				break;
 			}
@@ -1299,28 +1316,30 @@ public:
 		}
 		
 
-		unit = StringUtils::lowerCase(unit);
+		if ( !unit.empty() ) {
+			unit = StringUtils::lowerCase(unit);
 
-		if (unit != "px" ) {
-			HDC dc = GetDC( ::GetDesktopWindow() );
-			
-			double dpi = (double)GetDeviceCaps( dc, LOGPIXELSY);
-			
-			ReleaseDC(::GetDesktopWindow(),dc);
-			
-			double v = StringUtils::fromStringAsDouble(val);
-			
-			if (unit == "in" ) {
-				val = StringUtils::toString( v * dpi );
-			}
-			else if (unit == "pt" ) {
-				val = StringUtils::toString( (v / 72.0) * dpi );
-			}
-			else if (unit == "em" ) {
-				
-			}
-			else if (unit == "cm" ) {
-				val = StringUtils::toString( (v / 2.54 ) * dpi );
+			if (unit != "px" ) {
+				HDC dc = GetDC( ::GetDesktopWindow() );
+
+				double dpi = (double)GetDeviceCaps( dc, LOGPIXELSY);
+
+				ReleaseDC(::GetDesktopWindow(),dc);
+
+				double v = StringUtils::fromStringAsDouble(val);
+
+				if (unit == "in" ) {
+					val = StringUtils::toString( v * dpi );
+				}
+				else if (unit == "pt" ) {
+					val = StringUtils::toString( (v / 72.0) * dpi );
+				}
+				else if (unit == "em" ) {
+
+				}
+				else if (unit == "cm" ) {
+					val = StringUtils::toString( (v / 2.54 ) * dpi );
+				}
 			}
 		}
 
@@ -1345,7 +1364,7 @@ Win32GraphicsToolkit::Win32GraphicsToolkit():
 
 	initSystemFont();	
 
-	VFFInputStream::setTransformer( &win32Tfrm );
+	UnitTransformer::setCurrentTransformer( &win32Tfrm );
 
 	metricsMgr_ = new Win32UIMetricsManager();
 }

@@ -302,6 +302,7 @@ void Win32UIShell::performFileOp( int operationType, const std::vector<String>& 
 
 void Win32UIShell::launch( const String& fileName, const String& parameters )
 {
+	::CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 	if ( System::isUnicodeEnabled() ) {
 		SHELLEXECUTEINFOW info = {0};
 		info.cbSize = sizeof(info);
@@ -310,6 +311,8 @@ void Win32UIShell::launch( const String& fileName, const String& parameters )
 		info.lpVerb = L"Open";
 		info.lpFile = fileName.c_str();
 		info.lpParameters = parameters.c_str();
+
+		info.nShow = SW_SHOW;
 
 		if ( !ShellExecuteExW( &info ) ) {
 			//int err = GetLastError();
@@ -323,11 +326,15 @@ void Win32UIShell::launch( const String& fileName, const String& parameters )
 		info.lpVerb = "Open";
 		info.lpFile = fileName.ansi_c_str();
 		info.lpParameters = parameters.ansi_c_str();
+		info.nShow = SW_SHOW;
+
 
 		if ( !ShellExecuteExA( &info ) ) {
 			//int err = GetLastError();
 		}
 	}
+
+	::CoUninitialize();
 }
 
 void Win32UIShell::openTrash()

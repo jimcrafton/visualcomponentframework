@@ -521,6 +521,34 @@ void Control::setBounds( Rect* rect, const bool& anchorDeltasNeedUpdating )
 	}
 }
 
+void Control::updateScrollable()
+{		
+	Container* container = getContainer();
+	Scrollable* scrollable = getScrollable();
+	if ( (NULL != container) && (NULL != scrollable) ) {
+		Rect r;// = getBounds();
+
+		Enumerator<Control*>* children = container->getChildren();
+		while ( children->hasMoreElements() ) {
+			Control* c = children->nextElement();
+			Rect rc = c->getBounds();
+			r.left_ = minVal( rc.left_, r.left_ );
+			r.right_ = maxVal( rc.right_, r.right_ );
+			r.top_ = minVal( rc.top_, r.top_ );
+			r.bottom_ = maxVal( rc.bottom_, r.bottom_ );
+		}
+		
+
+		if ( scrollable->getVirtualViewHeight() != r.bottom_ ) {
+			scrollable->setVirtualViewHeight( r.bottom_ );
+		}
+
+		if ( scrollable->getVirtualViewWidth() != r.right_ ) {
+			scrollable->setVirtualViewWidth( r.right_ );
+		}
+	}	
+}
+
 void Control::setAlignment( const AlignmentType& alignment )
 {
 	aligment_ = alignment;
@@ -1022,7 +1050,8 @@ void Control::removeFromParent( const bool& freeInstance )
 		Container* container = parent->getContainer();
 		VCF_ASSERT( NULL != container );
 
-		container->remove( this );		
+		container->remove( this );	
+		parent->updateScrollable();
 	}
 
 	removeFromOwner( freeInstance );
@@ -1426,6 +1455,9 @@ void Control::setCursorID( const int32& cursorID )
 {
 	cursorID_ = cursorID;
 	cursor_ = CursorManager::getCursorManager()->getCursor( cursorID_ );
+	if ( NULL != peer_ ) {
+		peer_->setCursor( cursor_ );
+	}
 }
 
 void Control::setAnchor( const uint32& anchor )

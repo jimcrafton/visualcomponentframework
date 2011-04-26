@@ -79,7 +79,6 @@ void StandardContainer::resizeChildren( Control* control )
 	if ( (true == needAnchorWork) || (true == needAlignWork) ) {
 		controlContainer_->getPeer()->endSetBounds();
 	}
-
 }
 
 void StandardContainer::alignFixed( Control* initialControl, const bool& controlJustAdded, const AlignmentType& alignment, Rect* rect )
@@ -534,6 +533,24 @@ void StandardContainer::setLeftBorderWidth( const double& leftBorderWidth )
 	if ( NULL != controlContainer_ ) {
 		resizeChildren(NULL);
 	}
+}
+
+double StandardContainer::getBorderWidth()
+{
+	double result = -1;
+
+	result = (bottomBorderHeight_ +
+						rightBorderWidth_ +
+						topBorderHeight_ +
+						leftBorderWidth_ ) / 4.0;
+
+	if ( (result != bottomBorderHeight_) ||
+			(result != rightBorderWidth_) ||
+			(result != topBorderHeight_) || (result != leftBorderWidth_) ) {
+		result = -1;
+	}
+
+	return result;
 }
 
 void StandardContainer::setBorderWidth ( const double& borderWidth )

@@ -210,6 +210,22 @@ void ListControl::handleEvent( Event* event )
 		}
 		break;
 
+		case lmeCurrentIndexChanged : {
+			ListModel* lm = getListModel();
+			if ( NULL != lm ) {
+				
+				if ( ListModel::InvalidIndex != lm->getCurrentIndex() ) {
+					listPeer_->selectItem( lm->getCurrentIndex() );
+				}
+				else {
+					listPeer_->selectItem( ListModel::InvalidIndex );
+				}
+
+				lm->updateAllViews();
+			}
+		}
+		break;
+
 		case lmeContentsDeleted: {
 			Array<ListItem*>::iterator it = items_.begin();
 			while ( it != items_.end() ) {

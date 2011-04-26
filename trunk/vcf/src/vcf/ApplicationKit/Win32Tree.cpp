@@ -2403,7 +2403,7 @@ double Win32Tree::getColumnWidth( const uint32& index )
 
 TextAlignmentType Win32Tree::getColumnTextAlignment( const uint32& index )
 {
-	TextAlignmentType result;
+	TextAlignmentType result = taTextLeft;
 
 	if ( NULL != headerWnd_ ) {
 		HDITEMW item = {0};
