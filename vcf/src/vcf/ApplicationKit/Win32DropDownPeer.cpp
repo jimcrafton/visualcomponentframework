@@ -403,24 +403,28 @@ bool Win32DropDownPeer::handleEventMessages( UINT message, WPARAM wParam, LPARAM
 				r.bottom_ = drawItemStruct->rcItem.bottom;
 
 				Color* color = peerControl_->getColor();
+
 				Color* defaultBackClr = color;
 				
-				gc.setCurrentFont( peerControl_->getFont() );
+				Font f = *peerControl_->getFont();
 				
 				if ( NULL != item ) {
 					if ( !item->isFontDefault() ) {
-						gc.setCurrentFont( item->getFont() );
+						f = *item->getFont();
 					}
 				}
 				
 				if ( drawItemStruct->itemState & ODS_SELECTED ) {
 					defaultBackClr = GraphicsToolkit::getSystemColor( SYSCOLOR_SELECTION );
+					f.setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_SELECTION_TEXT ) );
 				}
 
 				if ( drawItemStruct->itemState & ODS_DEFAULT ) {
 					defaultBackClr = GraphicsToolkit::getSystemColor( SYSCOLOR_SELECTION );
+					f.setColor( GraphicsToolkit::getSystemColor( SYSCOLOR_SELECTION_TEXT ) );
 				}
 
+				gc.setCurrentFont( &f );
 				
 				gc.setColor( defaultBackClr );
 				gc.rectangle( &r );

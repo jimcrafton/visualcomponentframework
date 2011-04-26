@@ -7,6 +7,18 @@
 
 using namespace VCF;
 
+
+void ListModel::setCurrentIndex( const uint32& val ) 
+{
+	if ( val != currentIndex_ ) {
+		ListModelEvent event( this, lmeCurrentIndexChanged );
+		currentIndex_ = val;		
+
+		event.index = currentIndex_;
+		ModelChanged( &event );
+	}
+}
+
 void ListModel::insertRange( const uint32 & index, const std::vector<VariantData>& items )
 {
 	std::vector<VariantData>::const_iterator it = items.begin();

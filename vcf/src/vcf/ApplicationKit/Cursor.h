@@ -63,6 +63,17 @@ protected:
 };
 
 
+
+class APPLICATIONKIT_API WaitCursor {
+public:
+	WaitCursor( Control* control );
+	~WaitCursor();
+
+protected:
+	Control* currentControl_;
+	int32 prevCursorID_;
+};
+
 }; //end of namespace VCF
 
 

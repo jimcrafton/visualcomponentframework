@@ -18,15 +18,7 @@ namespace VCF {
 
 class InputStream;
 class VFFParser;
-
-
-class FOUNDATIONKIT_API UnitTransformer {
-public:
-	UnitTransformer(){}
-	virtual ~UnitTransformer(){}
-
-	virtual String transform( const String& originalValue ) = 0;
-};
+class UnitTransformer;
 
 
 
@@ -138,10 +130,6 @@ public:
 	static void setRootComponent( Component* component ) {
 		VFFInputStream::rootComponent_ = component;
 	}
-
-	static void setTransformer( UnitTransformer* val ) {
-		VFFInputStream::transformer = val;
-	}
 protected:
 
 	class DeferredPropertySetter {
@@ -214,7 +202,6 @@ protected:
 	bool deleteStream_;
 	
 	static Component* rootComponent_;
-	static UnitTransformer* transformer;
 
 	void componentLoaded( Component* component );
 };

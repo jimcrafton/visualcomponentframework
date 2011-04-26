@@ -1470,6 +1470,11 @@ public:
 	void adjustViewableBoundsAndOriginForScrollable( GraphicsContext* context, Rect& viewBounds, Point& origin );
 
 	/**
+	Updates the control's scrollable instance's virtual width and height if neccessary
+	*/
+	void updateScrollable();
+
+	/**
 	*returns a string that is used for context sensitive help
 	*for the control.
 	*/

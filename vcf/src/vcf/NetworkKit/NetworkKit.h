@@ -116,6 +116,9 @@ Handle the extension based on the compiler
 #endif //DATABASEKIT_DLL
 
 
+#include <winsock2.h>
+#pragma comment( lib, "ws2_32" )
+
 
 #include "vcf/FoundationKit/FoundationKit.h"
 
@@ -187,7 +190,6 @@ namespace VCF {
 
 #include "vcf/NetworkKit/NetworkExceptions.h"
 
-#include <winsock2.h>
-#pragma comment( lib, "ws2_32" )
+
 
 #endif //_VCF_NETWORKKIT_H__

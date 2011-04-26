@@ -246,7 +246,7 @@ bool Window::isMaximized()
 	return windowPeer_->isMaximized();
 }
 
-void Window::setMaximized( const bool maximized )
+void Window::setMaximized( const bool& maximized )
 {
 	windowPeer_->setMaximized( maximized );
 }

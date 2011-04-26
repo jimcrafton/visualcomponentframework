@@ -2683,7 +2683,7 @@ public:
 
 		field_ = (TypePtr)(((char*)source) + fieldOffset_);
 
-		val_ = *field_;
+		val_ = (Object*)*field_;
 
 		return &val_;
 	}

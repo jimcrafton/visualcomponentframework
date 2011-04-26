@@ -164,26 +164,20 @@ public:
 	*/
 	VariantData( const String& val ) {
 		StringVal = NULL;
-		checkStringVal();
-
-		*StringVal = val;
 		type = pdString;
+		setFromString( val );
 	};
 
 	VariantData( const char* val ) {
 		StringVal = NULL;
-		checkStringVal();
-
-		*StringVal = val;
 		type = pdString;
+		setFromString( val );
 	};
 
 	VariantData( const WideChar* val ) {
 		StringVal = NULL;
-		checkStringVal();
-
-		*StringVal = val;
 		type = pdString;
+		setFromString( val );
 	};
 
 	/**

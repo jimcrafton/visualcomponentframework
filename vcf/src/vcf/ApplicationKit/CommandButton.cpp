@@ -125,6 +125,10 @@ void CommandButton::click()
 {
 	ButtonEvent event( this, 0 );
 	Action* action = getAction();
+
+	VCF::ButtonCommandType command = getCommandType();
+	Control* parent = getParent();
+
 	if ( NULL != action ) {
 		action->perform( &event );
 	}
@@ -132,9 +136,8 @@ void CommandButton::click()
 		ButtonClicked( &event );
 	}
 
-	if ( BC_NONE != getCommandType() ) {
-		//try and find hte parent that is a Dialog
-		Control* parent = getParent();
+	if ( BC_NONE != command ) {
+		//try and find hte parent that is a Dialog		
 		Frame* frame = dynamic_cast<Frame*>( parent );
 		while ( (NULL == frame) && (parent != NULL) ) {
 			parent = parent->getParent();
@@ -144,7 +147,7 @@ void CommandButton::click()
 		if ( NULL != frame ) {
 			Dialog* dialog = dynamic_cast<Dialog*>( frame );
 			if ( NULL != dialog ) {
-				switch ( getCommandType() ){
+				switch ( command ){
 					case BC_OK : {
 						dialog->setModalReturnValue( UIToolkit::mrOK );
 					}

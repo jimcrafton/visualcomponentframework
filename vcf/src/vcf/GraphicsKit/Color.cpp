@@ -730,6 +730,27 @@ Color Color::getColorContrast( const Color& color, double deltaL/*=0.3*/ )
 // Color implementation
 
 Color::Color( const String& colorName ) {
+
+	if ( colorName.length() == 6 ) {
+		bool ishex = false;
+		for (uint32 i=0;i<colorName.length();i++ ) {
+			ishex = false;
+			if ( (tolower(colorName[i]) >= 'a' && tolower(colorName[i]) <= 'f') ||
+				(colorName[i] >= '0' && colorName[i] <= '9') ) {
+				ishex = true;
+			}			
+		}
+
+		if ( ishex ) {
+			 uint8 r,g,b;
+			 r = StringUtils::fromStringAsHexNumber(colorName.substr(0,2));
+			 g = StringUtils::fromStringAsHexNumber(colorName.substr(2,2));
+			 b = StringUtils::fromStringAsHexNumber(colorName.substr(4,2));
+			 setRGB8(r,g,b);
+			 return;
+		}
+	}
+
 	( *this ) = (* GraphicsToolkit::getColorFromColormap( colorName ) );
 }
 

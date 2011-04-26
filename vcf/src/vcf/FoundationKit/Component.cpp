@@ -524,6 +524,101 @@ void Component::setUseLocaleStrings( const bool& val )
 	}
 }
 
+String Component::generateComponentName(Component* instance)
+{
+	VCF_ASSERT( NULL != instance );
+
+	String result = instance->getName();
+	if ( result.empty() ) {
+
+		result = instance->getClassName();
+
+		if ( result.empty() ) {
+			result = Format( "instance_0x%p" ) % instance;
+		}
+		else {
+			String tmp = result;
+			size_t idx = tmp.find_last_of( "::" );
+			if ( idx != String::npos ) {
+				tmp = tmp.substr( idx +1, tmp.length()-(idx+1) );
+			}
+
+			result = tmp;
+
+			result.erase(0,1);
+
+			result = StringUtils::lowerCase(tmp.substr(0,1)) + result;
+		}
+
+
+		Component* root = instance->getOwner();
+		if ( NULL != root ) {
+			while ( root != NULL ) {
+				if ( root->getOwner() != NULL ) {
+					root = root->getOwner();
+				}
+				else {
+					break;
+				}
+			}
+
+			bool done = false;
+			int count = 0;
+			String tmp = result;
+			while ( !done ) {
+				if ( root->findComponent( result, true ) != NULL ) {
+					count ++;
+					result = tmp + Format("%d") % count;					
+				}
+				else {
+					done = true;
+				}
+			}
+		}
+	}
+
+
+
+	
+
+	return result;
+}
+
+void Component::initFromFragment( const String& vffString )
+{
+	Class* clazz = getClass(); //note that if we have no Class instance for this component,
+	//then the RTTI look up won't work and we won't be able to process the vff fragment. 
+	//if that's the case then we simply ignore it and do nothing.
+	if ( clazz != NULL ) {
+		if ( !vffString.empty() ) {
+
+			//check for object block
+
+			String vffContent = vffString;
+			StringUtils::trimWhiteSpaces( vffContent );
+			if ( vffContent.length() > 6 ) {
+				if ( StringUtils::lowerCase(vffContent.substr(0,6)) != "object" ) {
+					String name = getName();
+					if ( name.empty() ) {
+						name = Component::generateComponentName(this);
+					}
+
+					vffContent = String("object ") + name + " : " + clazz->getClassName() + " \r\n" +
+									vffContent + "\r\n end";
+
+				}
+			}
+
+			BasicInputStream bis( vffContent );
+			VFFInputStream vis( &bis );
+			vis.readComponentInstance( this );
+		}
+	}
+	else {
+		StringUtils::trace( "No Class found for this component!\n" );
+	}
+}
+
 void Component::initFromResource()
 {
 	Component::initComponent(this);

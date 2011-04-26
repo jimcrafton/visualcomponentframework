@@ -776,6 +776,21 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 
 				listviewControl_->handleEvent( &event );
 			}
+			else {
+				POINT pt = {0,0};
+				::GetCursorPos( &pt );
+				::ScreenToClient( hwnd_, &pt );
+
+				MouseEvent event( NULL, ListViewControl::COLUMN_MOUSE_EVENT_CLICK,
+									Win32UIUtils::translateButtonMask( MK_LBUTTON ),
+									Win32UIUtils::translateKeyMask( 0 ),
+									&Point(pt.x, pt.y) );
+
+				event.setUserData( (void*)nmlistView->iSubItem );
+
+				listviewControl_->handleEvent( &event );
+				
+			}
 			result = true;
 		}
 		break;

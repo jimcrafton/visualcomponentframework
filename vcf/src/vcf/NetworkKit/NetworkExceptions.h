@@ -79,7 +79,7 @@ namespace VCF  {
 		int errorCode() const {
 			return errorCode_;
 		}
-	protected:
+	
 		int errorCode_;
 	};
 

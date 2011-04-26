@@ -29,6 +29,7 @@ namespace VCF  {
 		lmeSubItemAdded,
 		lmeSubItemRemoved,
 		lmeSubItemChanged,
+		lmeCurrentIndexChanged,
 	};
 
 /**
@@ -337,9 +338,7 @@ public:
 		return (currentIndex_ != InvalidIndex) && currentIndex_ < getCount();
 	}
 
-	void setCurrentIndex( const uint32& val ) {
-		currentIndex_ = val;
-	}
+	void setCurrentIndex( const uint32& val );
 
 protected:
 	virtual bool doInsert( const uint32 & index, const VariantData& item ){

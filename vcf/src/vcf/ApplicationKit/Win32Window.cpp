@@ -182,6 +182,38 @@ void  Win32Window::setClientBounds( Rect* bounds )
 
 void Win32Window::setBounds( VCF::Rect* rect )
 {
+
+	RECT rr = {0};
+	rr.left = rect->left_;
+	rr.right = rect->right_;
+	rr.top = rect->top_;
+	rr.bottom = rect->bottom_;
+
+	RECT r2 = {0};
+	::GetWindowRect( hwnd_, &r2 );
+
+	RECT workRect;
+	SystemParametersInfo( SPI_GETWORKAREA, 0, &workRect, 0 );
+
+
+	if (rr.left >= 0x80000000 ) {
+		rect->left_ = workRect.left;//r2.left;
+	}
+
+	if (rr.top >= 0x80000000 ) {
+		rect->top_ = workRect.top;
+	}
+
+	if (rr.bottom >= 0x80000000 ) {
+		rect->bottom_ = workRect.bottom;
+	}
+
+	if (rr.right >= 0x80000000 ) {
+		rect->right_ = workRect.right;
+	}
+
+
+
 	AbstractWin32Component::setBounds( rect );
 }
 
@@ -785,7 +817,7 @@ bool Win32Window::isMaximized()
 	return result;
 }
 
-void Win32Window::setMaximized( const bool maximised )
+void Win32Window::setMaximized( const bool& maximised )
 {
 	WINDOWPLACEMENT wndPlacement;
 	memset( &wndPlacement, 0, sizeof(WINDOWPLACEMENT) );

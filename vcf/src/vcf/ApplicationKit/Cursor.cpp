@@ -68,7 +68,7 @@ int32 Cursor::getCursorID()
 
 void Cursor::setCursorFromID( const int32& cursorID )
 {
-
+	peer_->setCursorID(cursorID);
 }
 
 CursorPeer* Cursor::getPeer()
@@ -115,6 +115,26 @@ String Cursor::getCursorConstants( const String& name )
 	}
 
 	return constants[name];
+}
+
+WaitCursor::WaitCursor( Control* control ):
+	currentControl_(control),
+	prevCursorID_(-1)
+{
+	if ( NULL == currentControl_ ) {
+		currentControl_ = Application::getRunningInstance()->getMainWindow();
+	}
+
+	prevCursorID_ = currentControl_->getCursorID();
+
+	currentControl_->setCursorID( Cursor::SCT_WAIT );
+}
+
+WaitCursor::~WaitCursor()
+{
+	if ( NULL != currentControl_ ) {
+		currentControl_->setCursorID( prevCursorID_ );
+	}
 }
 
 /**

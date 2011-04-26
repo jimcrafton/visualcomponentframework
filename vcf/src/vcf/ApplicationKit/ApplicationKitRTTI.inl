@@ -298,6 +298,7 @@ _property_( double, "bottomBorderHeight", getBottomBorderHeight, setBottomBorder
 _property_( double, "topBorderHeight", getTopBorderHeight, setTopBorderHeight, "" );
 _property_( double, "rightBorderWidth", getRightBorderWidth, setRightBorderWidth, "" );
 _property_( double, "leftBorderWidth", getLeftBorderWidth, setLeftBorderWidth, "" );
+_property_( double, "borderWidth", getBorderWidth, setBorderWidth, "" );
 _class_rtti_end_
 
 
@@ -305,6 +306,8 @@ _class_rtti_end_
 _class_rtti_(FlowLayoutContainer, "VCF::StandardContainer", "FlowLayoutContainer")
 _property_( double, "childSpacer", getChildSpacer, setChildSpacer, "" );
 _property_( bool, "allowContentsToWrap", allowContentsToWrap, setAllowContentsToWrap, "" );
+_property_( bool, "keepChildDimensions", getKeepChildDimensions, setKeepChildDimensions, "" );
+
 _property_enum_labeled_( FlowDirection, "direction", getFlowDirection, setFlowDirection,
 					   fdVertical, fdHorizontal, 2, FlowDirectionNames, "");
 
@@ -1031,6 +1034,8 @@ _class_rtti_end_
 
 _class_rtti_(Window, "VCF::Frame", WINDOW_CLASSID )
 _property_object_( MenuBar, "menuBar", getMenuBar, setMenuBar, "" );
+_property_( bool, "maximized", isMaximized, setMaximized, "" );
+_property_( bool, "minimized", isMinimized, setMinimized, "" );
 _delegate_(WindowDelegate, WindowRestore )
 _delegate_(WindowDelegate, WindowMaximize )
 _delegate_(WindowDelegate, WindowMinimize )
