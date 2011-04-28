@@ -200,6 +200,10 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\IniFini.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\UnitTransformer.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Source Files"
@@ -237,11 +241,23 @@
 				RelativePath="..\..\..\src\vcf\FoundationKit\FoundationKitRTTI.inl"
 				>
 			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\UnitTransformer.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Peers"
 			Filter="*.h;*.cpp"
 			>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32_DTutils.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32_DTutils.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32Condition.cpp"
 				>

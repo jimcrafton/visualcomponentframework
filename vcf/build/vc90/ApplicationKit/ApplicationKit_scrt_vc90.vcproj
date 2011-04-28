@@ -59,6 +59,7 @@
 				ProgramDataBaseFileName="..\..\..\Lib\ApplicationKit_vc90_scrt.pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -228,6 +229,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\CustomControl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\DateTimePickerControl.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\DateTimePickerControl.h"
 				>
 			</File>
 			<File
@@ -1479,6 +1488,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DateTimePicker.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32DateTimePicker.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\src\vcf\ApplicationKit\Win32Dialog.cpp"
 				>
 			</File>
@@ -1687,23 +1704,27 @@
 			Name="Res"
 			>
 			<File
-				RelativePath="..\..\resources\win32\ApplicationKit.rc"
+				RelativePath="..\..\..\src\vcf\ApplicationKit\ApplicationKit.rc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\resources\win32\inform.bmp"
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Resources\inform.bmp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\resources\win32\question.bmp"
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Resources\question.bmp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\resources\win32\stop.bmp"
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Resources\stop.bmp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\resources\win32\vcf.ico"
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Resources\vcf.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\ApplicationKit\Resources\warning.bmp"
 				>
 			</File>
 		</Filter>

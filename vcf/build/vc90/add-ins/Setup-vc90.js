@@ -39,14 +39,14 @@ function main()
 		return;
 	}
 
-	var strVC7Key = "HKLM\\Software\\Microsoft\\VisualStudio\\8.0\\Setup\\VC\\ProductDir";
+	var strVC7Key = "HKLM\\Software\\Microsoft\\VisualStudio\\9.0\\Setup\\VC\\ProductDir";
 	try
 	{
 		strValue = WSShell.RegRead(strVC7Key);
 	}
 	catch(e)
 	{
-		WScript.Echo("ERROR: Cannot find where Visual Studio 8.0 is installed.");
+		WScript.Echo("ERROR: Cannot find where Visual Studio 2008 is installed.");
 		return;
 	}
 
@@ -141,14 +141,14 @@ function main()
 		return;
 	}
 
-	var strVC7Key = "HKLM\\Software\\Microsoft\\VisualStudio\\8.0\\Setup\\VC\\ProductDir";
+	var strVC7Key = "HKLM\\Software\\Microsoft\\VisualStudio\\9.0\\Setup\\VC\\ProductDir";
 	try
 	{
 		strValue = WSShell.RegRead(strVC7Key);
 	}
 	catch(e)
 	{
-		WScript.Echo("ERROR: Cannot find where Visual Studio 8.0 is installed.");
+		WScript.Echo("ERROR: Cannot find where Visual Studio 2008 is installed.");
 		return;
 	}
 
@@ -244,14 +244,14 @@ function main()
 		return;
 	}
 
-	var strVC7Key = "HKLM\\Software\\Microsoft\\VisualStudio\\8.0\\Setup\\VC\\ProductDir";
+	var strVC7Key = "HKLM\\Software\\Microsoft\\VisualStudio\\9.0\\Setup\\VC\\ProductDir";
 	try
 	{
 		strValue = WSShell.RegRead(strVC7Key);
 	}
 	catch(e)
 	{
-		WScript.Echo("ERROR: Cannot find where Visual Studio 8.0 is installed.");
+		WScript.Echo("ERROR: Cannot find where Visual Studio 9.0 is installed.");
 		return;
 	}
 
@@ -346,14 +346,14 @@ function main()
 		return;
 	}
 
-	var strVC7Key = "HKLM\\Software\\Microsoft\\VisualStudio\\8.0\\Setup\\VC\\ProductDir";
+	var strVC7Key = "HKLM\\Software\\Microsoft\\VisualStudio\\9.0\\Setup\\VC\\ProductDir";
 	try
 	{
 		strValue = WSShell.RegRead(strVC7Key);
 	}
 	catch(e)
 	{
-		WScript.Echo("ERROR: Cannot find where Visual Studio 8.0 is installed.");
+		WScript.Echo("ERROR: Cannot find where Visual Studio 2008 is installed.");
 		return;
 	}
 
@@ -448,14 +448,14 @@ function main()
 		return;
 	}
 
-	var strVC7Key = "HKLM\\Software\\Microsoft\\VisualStudio\\8.0\\Setup\\VC\\ProductDir";
+	var strVC7Key = "HKLM\\Software\\Microsoft\\VisualStudio\\9.0\\Setup\\VC\\ProductDir";
 	try
 	{
 		strValue = WSShell.RegRead(strVC7Key);
 	}
 	catch(e)
 	{
-		WScript.Echo("ERROR: Cannot find where Visual Studio 8.0 is installed.");
+		WScript.Echo("ERROR: Cannot find where Visual Studio 9.0 is installed.");
 		return;
 	}
 

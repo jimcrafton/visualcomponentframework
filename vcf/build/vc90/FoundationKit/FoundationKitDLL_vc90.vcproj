@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="FoundationKitDLL"
 	ProjectGUID="{BF4D068A-13C1-4AB3-B969-1391B1436E76}"
+	RootNamespace="FoundationKitDLL"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -161,6 +162,7 @@
 				ProgramDataBaseFileName=".\ReleaseDLL/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
+				DebugInformationFormat="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -179,7 +181,10 @@
 				OutputFile="..\..\..\bin\FoundationKit_vc90.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
+				GenerateDebugInformation="false"
 				ProgramDatabaseFile=".\..\..\..\lib/FoundationKit_vc90.pdb"
+				GenerateMapFile="false"
+				MapExports="false"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 				ImportLibrary=".\..\..\..\lib/FoundationKit_vc90.lib"
