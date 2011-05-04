@@ -361,12 +361,17 @@ void AbstractWin32Component::prepForDoubleBufferPaint( HDC wmPaintDC, const Rect
 				!paintRect.isEmpty() ) {
 
 
-		if ( NULL != memCtx_ ) {
-			delete memCtx_;
+		if ( NULL != memCtx_ ) { 
+			if ( memCtx_->getViewableBounds().getHeight() != paintRect.getHeight() || 
+					memCtx_->getViewableBounds().getWidth() != paintRect.getWidth() ) {
+				delete memCtx_;
+				memCtx_ = new GraphicsContext( paintRect.getWidth(), paintRect.getHeight() );			
+			}
 		}
-		memCtx_ = new GraphicsContext( paintRect.getWidth(), paintRect.getHeight() );
-
-		memCtx_->setViewableBounds( paintRect );
+		else if ( NULL == memCtx_ ) {
+			memCtx_ = new GraphicsContext( paintRect.getWidth(), paintRect.getHeight() );
+		}
+		
 
 		if ( peerControl_->isUsingRenderBuffer() ) {
 			memCtx_->setAntiAliasingOn( true );

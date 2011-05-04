@@ -295,6 +295,11 @@ UIToolkit::ModalReturnType Dialog::showModal(bool autoDestroy)
 		result = getModalReturnValue();
 	}
 
+	if ( NULL != owningControl ) {
+
+		owningControl->setEnabled( true );
+	}
+
 	if ( prevFocusedControl != NULL ) {
 		prevFocusedControl->setFocused();
 	}
