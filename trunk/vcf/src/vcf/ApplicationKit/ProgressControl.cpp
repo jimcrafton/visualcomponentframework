@@ -61,7 +61,10 @@ void ProgressControl::setMaxValue( const double& val )
 
 void ProgressControl::setPosition( const double& val )
 {
-	position_ = minVal<>( maxVal_, maxVal<>( minVal_, val ) );
+	double minv = minVal( minVal_, maxVal_ );
+	double maxv = maxVal( minVal_, maxVal_ );
+
+	position_ = minVal<>( maxv, maxVal<>( minv, val ) );
 	repaint();
 }
 
