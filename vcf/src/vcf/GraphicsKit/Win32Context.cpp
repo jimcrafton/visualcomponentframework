@@ -4057,6 +4057,12 @@ void Win32Context::drawThemeProgress( Rect* rect, ProgressState& state )
 		VCF::Font btnFont = *context_->getCurrentFont();
 		HFONT font = NULL;
 
+		bool flipped = state.min_ > state.max_;
+
+
+		double s = minVal<>( state.min_, state.max_ );
+		double e = maxVal<>( state.min_, state.max_ );
+
 		::SetTextColor( dc_, btnFont.getColor()->getColorRef32() );
 
 		if ( state.isVertical() ) {
@@ -4112,9 +4118,16 @@ void Win32Context::drawThemeProgress( Rect* rect, ProgressState& state )
 			progressContent.left += (progressContent.top - r.top);
 			progressContent.right -= (progressContent.top - r.top);
 
-			progressContent.right = progressContent.left +
-				((state.position_)/(state.max_-state.min_) * (progressContent.right-progressContent.left));
+			tmp.inflate( -2, -2 );
 
+
+			if ( flipped ) {
+				progressContent.left = progressContent.right - ((state.position_/(e-s)) * tmp.getWidth());
+			}
+			else {
+				progressContent.right = progressContent.left + ((state.position_/(e-s)) * tmp.getWidth());
+			}
+			
 			Win32VisualStylesWrapper::DrawThemeBackground(theme, dc_, PP_CHUNK, 0, &progressContent, 0);
 
 			textRect.left += 1;
@@ -4158,6 +4171,8 @@ void Win32Context::drawThemeProgress( Rect* rect, ProgressState& state )
 
 		Rect progressRect = tmp;
 
+		bool flipped = state.min_ > state.max_;
+
 		double s = minVal<>( state.min_, state.max_ );
 		double e = maxVal<>( state.min_, state.max_ );
 
@@ -4165,7 +4180,12 @@ void Win32Context::drawThemeProgress( Rect* rect, ProgressState& state )
 			progressRect.top_ = progressRect.bottom_ - ((state.position_/fabs(e-s)) * tmp.getHeight());
 		}
 		else {
-			progressRect.right_ = progressRect.left_ + ((state.position_/(e-s)) * tmp.getWidth());
+			if ( flipped ) {
+				progressRect.left_ = progressRect.right_ - ((state.position_/(e-s)) * tmp.getWidth());
+			}
+			else {
+				progressRect.right_ = progressRect.left_ + ((state.position_/(e-s)) * tmp.getWidth());
+			}
 		}
 
 		Color* progressBarColor = GraphicsToolkit::getSystemColor( SYSCOLOR_SELECTION );
