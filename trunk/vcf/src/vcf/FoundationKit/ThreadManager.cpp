@@ -96,6 +96,13 @@ void ThreadManager::removeThread( Thread* thread )
 	ThreadManager::threadManagerInstance->internal_removeThread( thread );
 }
 
+bool ThreadManager::isCurrentThreadMainThread()
+{
+	Thread* mainThread = Thread::getMainThread();
+	Thread* current = ThreadManager::getCurrentThread();
+	return mainThread == current ? true : false;
+}
+
 void ThreadManager::internal_addThread( Thread* thread )
 {
 	Lock l(mtx_);

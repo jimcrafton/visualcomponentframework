@@ -17,7 +17,7 @@ where you installed the VCF.
 
 namespace VCF  {
 
-
+	class TimerEvent;
 
 
 	enum ListModelEvents {
@@ -401,6 +401,15 @@ protected:
 
 	uint32 currentIndex_;
 
+	class AsyncInsertEvent : public Event {
+	public:
+		AsyncInsertEvent(): Event(NULL),index(0){}
+		uint32 index;
+		std::vector<VariantData> items;
+	};
+
+	void asyncInsertRange( AsyncInsertEvent* e );
+	void asyncChange( TimerEvent* e );
 };
 
 

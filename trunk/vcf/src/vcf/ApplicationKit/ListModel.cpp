@@ -3,7 +3,8 @@
 
 #include "vcf/ApplicationKit/ApplicationKit.h"
 #include "vcf/ApplicationKit/ListModel.h"
-
+#include "vcf/FoundationKit/ThreadManager.h"
+#include "vcf/ApplicationKit/TimerEvent.h"
 
 using namespace VCF;
 
@@ -19,10 +20,26 @@ void ListModel::setCurrentIndex( const uint32& val )
 	}
 }
 
+void ListModel::asyncInsertRange( ListModel::AsyncInsertEvent* e )
+{
+	insertRange( e->index, e->items );
+}
+
+void ListModel::asyncChange( TimerEvent* e )
+{
+	TimerComponent* tc = (TimerComponent*)e->getSource();
+	tc->setActivated(false);
+
+	ListModelEvent event( this, lmeItemAdded );
+	ModelChanged( &event );	
+	
+	StringUtils::trace( Format("ListModel::asyncChange called with %u items\n") % getCount() );
+}
+
 void ListModel::insertRange( const uint32 & index, const std::vector<VariantData>& items )
 {
 	std::vector<VariantData>::const_iterator it = items.begin();
-	ListModelEvent event( this, lmeItemAdded );
+	
 
 	uint32 idx = index;
 	while ( it != items.end() ) {
@@ -34,8 +51,24 @@ void ListModel::insertRange( const uint32 & index, const std::vector<VariantData
 		++it;
 	}
 
-	event.setType( lmeItemAdded );
-	ModelChanged( &event );
+	if ( !ThreadManager::isCurrentThreadMainThread() ) {
+		TimerComponent* tc = (TimerComponent*)this->findComponent( "modTimer" );
+		if ( NULL == tc ) {
+			tc = new TimerComponent("modTimer", this);
+			tc->setTimeoutInterval( 500 );
+			tc->TimerPulse += 
+				new ClassProcedure1<TimerEvent*,ListModel>(this,&ListModel::asyncChange);
+
+		}
+		tc->setActivated(false); //turn off prev 
+
+		tc->setActivated(true);
+		
+	}
+	else {
+		ListModelEvent event( this, lmeItemAdded );
+		ModelChanged( &event );
+	}
 }
 
 void ListModel::insert( const uint32 & index, const VariantData& item )

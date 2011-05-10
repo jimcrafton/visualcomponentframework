@@ -1147,19 +1147,22 @@ bool Control::areParentsEnabled()
 }
 
 void Control::setEnabled( const bool& enabled )
-{
-	if ( enabled ) {
-		controlState_  |= Control::csEnabled;
-	}
-	else {
-		controlState_  &= ~Control::csEnabled;
-	}
+{	
+	if ( isEnabled() != enabled ) {
 
-	if ( ! isDesigning() ) {
-		peer_->setEnabled( enabled );
-	}
+		if ( enabled ) {
+			controlState_  |= Control::csEnabled;
+		}
+		else {
+			controlState_  &= ~Control::csEnabled;
+		}
 
-	repaint();
+		if ( ! isDesigning() ) {
+			peer_->setEnabled( enabled );
+		}
+
+		repaint();
+	}
 }
 
 void Control::mouseEnter( MouseEvent* event )

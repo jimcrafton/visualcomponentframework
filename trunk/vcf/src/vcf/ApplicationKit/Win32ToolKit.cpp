@@ -3578,6 +3578,11 @@ void Win32ToolKit::internal_postEvent( EventHandler* eventHandler, Event* event,
 		StringUtils::trace( Format("!!!!!!! WARNING ::PostMessage Failed (GetLastError(): %d !!!!!!\n") %
 									err );
 
+		
+		delete event;
+		if ( deleteHandler ) {
+			eventHandler->free();
+		}
 	}
 }
 
