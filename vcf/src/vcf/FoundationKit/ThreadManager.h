@@ -84,6 +84,8 @@ public:
 	/**
 	*/
 	static void removeThread( Thread* thread );
+
+	static bool isCurrentThreadMainThread();
 protected:
 	static ThreadManager* threadManagerInstance;
 

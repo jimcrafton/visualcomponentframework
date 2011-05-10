@@ -1000,7 +1000,13 @@ void Win32LocalePeer::setToCurrentThread()
 	lcid_ = GetThreadLocale();
 
 #ifndef VCF_WIN32CE
-	crtLocaleStr_ = setlocale( LC_ALL, NULL );
+	char* tmp = setlocale( LC_ALL, NULL );
+	if ( NULL != tmp ) {
+		crtLocaleStr_ = tmp;
+	}
+	else {
+		crtLocaleStr_.clear();
+	}
 #endif
 }
 
