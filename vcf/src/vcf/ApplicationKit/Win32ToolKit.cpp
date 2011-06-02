@@ -2507,7 +2507,13 @@ public:
 
 		ctx->setCurrentFont( getFont() );
 
-		int32 drawingOptions = GraphicsContext::tdoCenterHorzAlign | GraphicsContext::tdoCenterVertAlign;
+		int32 drawingOptions = GraphicsContext::tdoCenterHorzAlign;
+		if ( String::npos == getCaption().find_first_of( "\r\n" ) ) {
+			drawingOptions |= GraphicsContext::tdoCenterVertAlign;
+		}
+		else {
+			drawingOptions |= GraphicsContext::tdoWordWrap;
+		}
 
 		ctx->textBoundedBy( &r, getCaption(), drawingOptions );
 	}
@@ -2659,7 +2665,7 @@ public:
 				toolTip_->setHeight( tooltipEvent.tooltipSize.height_ );
 			}
 			else {
-				toolTip_->setHeight( toolTip_->getFont()->getTextHeight( "EM" ) + 5 );
+				toolTip_->setHeight( toolTip_->getFont()->getTextHeight( tooltip ) + 5 );
 			}
 
 			if ( tooltipEvent.tooltipSize.width_ > 0.0 ) {

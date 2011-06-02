@@ -2358,8 +2358,11 @@ void Win32Listview::onListModelChanged( Event* e )
 	ListModel* lm = (ListModel*)e->getSource();
 
 	int count = ListView_GetItemCount( hwnd_ );
+	
+
 	if ( count != lm->getCount() ) {
 		ListView_SetItemCountEx( hwnd_, lm->getCount(), LVSICF_NOINVALIDATEALL );
+
 	}
 
 	InvalidateRect( hwnd_, NULL, TRUE );
