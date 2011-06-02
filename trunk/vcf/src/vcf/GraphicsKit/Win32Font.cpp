@@ -998,16 +998,58 @@ Size Win32Font::getTextSize( const String& text )
 
 		SIZE textSize = {0,0};
 		
-		if ( String::npos != text.find( "\t" ) ) {
+
+		if ( String::npos != text.find_first_of( "t\r\n" ) ) {
+			UINT format = DT_CALCRECT | DT_LEFT;
+			if ( String::npos != text.find( "\t" ) ) {
+				format |= DT_EXPANDTABS;
+			}
+
+			format |= DT_SINGLELINE;
+			bool hasCRLF = false;
+			if ( String::npos != text.find_first_of( "\r\n" ) ) {
+				format |= DT_EXTERNALLEADING ;
+			}
+
 			RECT r = {0,0,0,0};
 			
 			if ( System::isUnicodeEnabled() ) {
-				DrawTextW( dc, text.c_str(), text.size(), &r, DT_CALCRECT | DT_EXPANDTABS | DT_SINGLELINE | DT_LEFT );
+
+				if ( format & DT_EXTERNALLEADING ) {
+					const VCFChar* P = text.c_str();
+					const VCFChar* B = text.c_str();
+					const VCFChar* start = P;
+					RECT tmpR = {0,0,0,0};
+					while ( (P-B) < text.length() ) {
+						if ( *P == '\r' || *P == '\n' ) {
+							if ( *P == '\r' && *(P+1) == '\n' ) {
+								P++;
+							}
+
+							tmpR.left = tmpR.right = tmpR.top = tmpR.bottom = 0;
+							int h = DrawTextW( dc, start, P-start, &tmpR, format  );
+							r.right = maxVal(tmpR.right,r.right);
+							r.bottom += h;
+							start = P+1;
+						}
+						P++;
+					}
+
+					if ( start < P ) {
+						tmpR.left = tmpR.right = tmpR.top = tmpR.bottom = 0;
+						int h = DrawTextW( dc, start, P-start, &tmpR, format  );
+						r.right = maxVal(tmpR.right,r.right);
+						r.bottom += h;
+					}
+				}
+				else {
+					DrawTextW( dc, text.c_str(), text.length(), &r, format  );
+				}
 			}
 			else {
 				AnsiString tmpText = text;
 				
-				DrawTextA( dc, tmpText.c_str(), tmpText.size(), &r, DT_CALCRECT | DT_EXPANDTABS | DT_SINGLELINE | DT_LEFT );
+				DrawTextA( dc, tmpText.c_str(), tmpText.size(), &r, format );
 			}
 			
 			result.width_ = r.right - r.left;

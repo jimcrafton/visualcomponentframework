@@ -738,7 +738,10 @@ Color::Color( const String& colorName ) {
 			if ( (tolower(colorName[i]) >= 'a' && tolower(colorName[i]) <= 'f') ||
 				(colorName[i] >= '0' && colorName[i] <= '9') ) {
 				ishex = true;
-			}			
+			}
+			if ( !ishex ) {
+				break;// all 6 need to be hex like, otherwise we bail
+			}
 		}
 
 		if ( ishex ) {
