@@ -136,13 +136,6 @@ where you installed the VCF.
 namespace VCF  {
 
 
-
-
-
-
-
-
-
 	class SCINTILLAKIT_API ScintillaKit {
 	public:
 		static void init( int argc, char** argv );
@@ -150,90 +143,6 @@ namespace VCF  {
 	};
 
 
-
-
-
-
-
-
-class SCINTILLAKIT_API FindInfo {
-public:
-	FindInfo() : atEnd_(false), position_(0),
-				caseSensitive_(false), 
-				matchWordOnly_(false),
-				searchAllOpenDocs_(false)
-				{
-	}
-
-	static ulong findString( const FindInfo& findInfo, const String& inText );
-
-public:
-	bool atEnd_;
-	ulong position_;
-	bool caseSensitive_;
-	bool matchWordOnly_;
-	bool searchAllOpenDocs_;
-	String searchString_;
-	std::vector<String> searchStrings_;
-};
-
-
-/**
-*@class FindInfo
-*
-*
-*/
-class SCINTILLAKIT_API FindInFilesInfo : public FindInfo {
-public:
-	
-	FindInFilesInfo():searchInSubDirectories_(true) {}
-
-	bool searchInSubDirectories_;
-	String fileTypes_;
-	std::vector<String> fileTypesListing_;
-
-	String startDirectory_;
-	std::vector<String> startDirectories_;
-};
-
-
-
-/**
-*@class FindInfo
-*
-*
-*/
-class SCINTILLAKIT_API ReplaceInfo : public FindInfo {
-public:
-	ReplaceInfo() {
-		
-	}
-	
-	String replaceString_;
-	std::vector<String> replaceStrings_;
-};
-
-
-class SciTextModel;
-
-
-/**
-*@class FindInfo
-*
-*
-*/
-class SCINTILLAKIT_API FoundEntry {
-public:
-	FoundEntry() : position_(0), line_(0), column_(0),document_(NULL){
-
-	}
-
-	ulong position_;
-	ulong line_;
-	ulong column_;
-	SciTextModel* document_;
-	String fileName_;	
-};
 
 class ScintillaPeer;
 
