@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/InetKit</set>
 
     <exe id="InetKit" template="vcf_exe_gui" cond="OPTION_INTERNETKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/InetKit.cpp</sources>
         <vcf-use-InternetKit/>

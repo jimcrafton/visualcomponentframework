@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/Toolbars</set>
 
     <exe id="Toolbars" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/Toolbars.cpp</sources>
         <win32-res>$(CWD)/tb.rc</win32-res>

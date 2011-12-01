@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/QTPlayer</set>
 
     <exe id="QTPlayer" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <headers>
             $(CWD)/MainWindow.h

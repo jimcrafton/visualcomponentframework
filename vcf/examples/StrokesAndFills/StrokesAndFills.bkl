@@ -7,6 +7,7 @@
 
     <exe id="StrokesAndFills" template="vcf_exe_gui"
             cond="OPTION_APPLICATIONKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/StrokesAndFills.cpp</sources>
         <vcf-use-ApplicationKit/>

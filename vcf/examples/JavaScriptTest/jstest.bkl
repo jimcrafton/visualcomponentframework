@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/JavaScriptTest</set>
 
     <exe id="jstest" template="vcf_exe_console" cond="OPTION_JAVASCRIPTKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/jstest.cpp</sources>
         <vcf-use-JavaScriptKit/>

@@ -7,6 +7,7 @@
 
     <exe id="Win32Integration" template="vcf_exe" cond="PLATFORM_WIN32=='1' and OPTION_APPLICATIONKIT=='1'">
         <app-type>gui</app-type>
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <headers>
             $(CWD)/resource.h

@@ -7,6 +7,7 @@
 
     <exe id="DiggApp" template="vcf_exe_gui"
             cond="OPTION_APPLICATIONKIT=='1' and OPTION_INTERNETKIT=='1' and OPTION_XMLKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/DiggApp.cpp</sources>
         <vcf-use-ApplicationKit/>

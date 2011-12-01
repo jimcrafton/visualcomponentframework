@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/RegExTest</set>
 
     <exe id="RegExTest" template="vcf_exe_console" cond="OPTION_REGEXKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/RegExTest.cpp</sources>
         <vcf-use-RegExKit/>

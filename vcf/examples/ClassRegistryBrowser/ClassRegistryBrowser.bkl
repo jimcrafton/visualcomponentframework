@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/ClassRegistryBrowser</set>
 
     <exe id="ClassRegistryBrowser" template="vcf_exe_gui" cond="OPTION_HTMLKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/ClassRegistryBrowser.cpp</sources>
         <win32-res>$(CWD)/ClassRegistryBrowser.rc</win32-res>

@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/AdvancedUI</set>
 
     <exe id="AdvancedUI" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/AdvancedUI.cpp</sources>
         <vcf-use-ApplicationKit/>

@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/Dialogs</set>
 
     <exe id="Dialogs" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/Dialogs.cpp</sources>
         <vcf-use-ApplicationKit/>

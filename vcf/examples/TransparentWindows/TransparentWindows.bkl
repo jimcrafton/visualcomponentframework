@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/TransparentWindows</set>
 
     <exe id="TransparentWindows" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/TransparentWindows.cpp</sources>
         <vcf-use-ApplicationKit/>

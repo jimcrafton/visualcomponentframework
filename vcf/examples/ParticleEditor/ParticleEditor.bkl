@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/ParticleEditor</set>
 
     <exe id="ParticleEditor" template="vcf_exe_gui" cond="OPTION_OPENGLKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <include>$(CWD)</include>
         <headers>

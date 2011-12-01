@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/Processes</set>
 
     <exe id="Processes" template="vcf_exe_console" cond="OPTION_FOUNDATIONKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/Processes.cpp</sources>
         <vcf-use-FoundationKit/>

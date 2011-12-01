@@ -7,6 +7,7 @@
 
     <exe id="Chatterbox" template="vcf_exe_gui"
             cond="OPTION_HTMLKIT=='1' and OPTION_NETWORKKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/Chatterbox.cpp</sources>
         <vcf-use-HTMLKit/>

@@ -6,7 +6,8 @@
     <set var="CWD">$(VCF_DIR)/examples/Cards</set>
 
     <exe id="Cards" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
-        <dirname>.</dirname>
+        <exename>$(id)</exename>
+        <dirname>$(CWD)</dirname>
         <headers>
             $(CWD)/Cardclass.h
             $(CWD)/CardContainer.h

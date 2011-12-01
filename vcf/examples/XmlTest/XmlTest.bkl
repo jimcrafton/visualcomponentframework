@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/XmlTest</set>
 
     <exe id="XmlTest" template="vcf_exe_console" cond="OPTION_INTERNETKIT=='1' and OPTION_XMLKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/XmlTest.cpp</sources>
         <vcf-use-InternetKit/>
