@@ -434,6 +434,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\ThreadManager.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\UnitTransformer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\VCFMath.cpp
 # End Source File
 # Begin Source File
@@ -539,6 +543,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Win32Thread.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\Win32ThreadManagerPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32_DTutils.cpp
 # End Source File
 # Begin Source File
 
@@ -1034,6 +1042,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\TypeCastException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\FoundationKit\UnitTransformer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\FoundationKit\VCFChar.h
 # End Source File
 # Begin Source File
@@ -1159,6 +1171,10 @@ SOURCE=..\..\..\src\vcf\FoundationKit\Win32Thread.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\FoundationKit\Win32ThreadManagerPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\FoundationKit\Win32_DTutils.h
 # End Source File
 # Begin Source File
 
