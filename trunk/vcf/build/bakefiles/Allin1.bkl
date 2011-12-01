@@ -256,17 +256,15 @@
         <define>JAVASCRIPTKIT_EXPORTS</define>
         <define>IMAGEKIT_DLL</define>
         <define>IMAGEKIT_EXPORTS</define>
-        <!--
         <define>SCINTILLAKIT_DLL</define>
         <define>SCINTILLAKIT_EXPORTS</define>
+
         <res-include>../../src/thirdparty/common/scintilla/win32</res-include>
         <win32-res>../src/thirdparty/common/scintilla/win32/ScintRes.rc</win32-res>
-        -->
-
         <res-include>../../src/vcf/ImageKit</res-include>
         <win32-res>../src/vcf/ImageKit/ImageKit.rc</win32-res>
-        <res-include>../../build/resources/win32</res-include>
-        <win32-res>../build/resources/win32/ApplicationKit.rc</win32-res>
+        <res-include>../../src/vcf/ApplicationKit</res-include>
+        <win32-res>../src/vcf/ApplicationKit/ApplicationKit.rc</win32-res>
     </dll>
 
     <set var="MSVC6PRJ_MERGED_TARGETS" append="1" cond="OPTION_ALLIN1=='1'">

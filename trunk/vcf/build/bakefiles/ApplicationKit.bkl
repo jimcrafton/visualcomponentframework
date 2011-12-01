@@ -25,8 +25,8 @@
         <define>APPLICATIONKIT_DLL</define>
         <define>APPLICATIONKIT_EXPORTS</define>
 
-        <res-include>../../build/resources/win32</res-include>
-        <win32-res>../build/resources/win32/ApplicationKit.rc</win32-res>
+        <res-include>../../src/vcf/ApplicationKit</res-include>
+        <win32-res>../src/vcf/ApplicationKit/ApplicationKit.rc</win32-res>
         
         <depends>GraphicsKit_dll</depends>
     </dll>

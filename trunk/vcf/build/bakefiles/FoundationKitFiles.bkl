@@ -124,6 +124,7 @@
         vcf/FoundationKit/ThreadManagerPeer.h
         vcf/FoundationKit/ThreadPeer.h
         vcf/FoundationKit/TypeCastException.h
+        vcf/FoundationKit/UnitTransformer.h
         vcf/FoundationKit/VariantData.h
         vcf/FoundationKit/VariantDataStream.h
         vcf/FoundationKit/VCFChar.h
@@ -190,6 +191,7 @@
         vcf/FoundationKit/TextOutputStream.cpp
         vcf/FoundationKit/Thread.cpp
         vcf/FoundationKit/ThreadManager.cpp
+        vcf/FoundationKit/UnitTransformer.cpp
         vcf/FoundationKit/VariantData.cpp
         vcf/FoundationKit/VCFMath.cpp
         vcf/FoundationKit/VCFProcess.cpp
@@ -202,6 +204,7 @@
     </set>
 
     <set var="FOUNDATIONKIT_WIN_HDR" hints="files">
+        vcf/FoundationKit/Win32_DTutils.h
         vcf/FoundationKit/Win32Condition.h
         vcf/FoundationKit/Win32FilePeer.h
         vcf/FoundationKit/Win32FileStream.h
@@ -224,6 +227,7 @@
     </set>
 
     <set var="FOUNDATIONKIT_WIN_SRC" hints="files">
+        vcf/FoundationKit/Win32_DTutils.cpp
         vcf/FoundationKit/Win32Condition.cpp
         vcf/FoundationKit/Win32FilePeer.cpp
         vcf/FoundationKit/Win32FileStream.cpp

@@ -72,6 +72,7 @@
         vcf/ApplicationKit/DataObject.h
         vcf/ApplicationKit/DataObjectPeer.h
         vcf/ApplicationKit/DataTypeNotSupportedException.h
+        vcf/ApplicationKit/DateTimePickerControl.h
         vcf/ApplicationKit/DefaultListModel.h
         vcf/ApplicationKit/DefaultMenuItem.h
         vcf/ApplicationKit/DefaultPropertyEditors.h
@@ -95,7 +96,7 @@
         vcf/ApplicationKit/DropTarget.h
         vcf/ApplicationKit/DropTargetPeer.h
         vcf/ApplicationKit/EtchedBorder.h
-        vcf/ApplicationKit/FlowLayoutContainter.h
+        vcf/ApplicationKit/FlowLayoutContainer.h
         vcf/ApplicationKit/FocusEvent.h
         vcf/ApplicationKit/Frame.h
         vcf/ApplicationKit/FrameEvent.h
@@ -239,6 +240,7 @@
         vcf/ApplicationKit/CursorManager.cpp
         vcf/ApplicationKit/CustomControl.cpp
         vcf/ApplicationKit/DataObject.cpp
+        vcf/ApplicationKit/DateTimePickerControl.cpp
         vcf/ApplicationKit/DefaultListModel.cpp
         vcf/ApplicationKit/DefaultMenuItem.cpp
         vcf/ApplicationKit/DefaultPropertyEditors.cpp
@@ -325,6 +327,7 @@
         vcf/ApplicationKit/Win32COMUtils.h
         vcf/ApplicationKit/Win32ControlContext.h
         vcf/ApplicationKit/Win32CursorPeer.h
+        vcf/ApplicationKit/Win32DateTimePicker.h
         vcf/ApplicationKit/Win32Dialog.h
         vcf/ApplicationKit/Win32DragDropPeer.h
         vcf/ApplicationKit/Win32DropDownPeer.h
@@ -367,6 +370,7 @@
         vcf/ApplicationKit/Win32COMUtils.cpp
         vcf/ApplicationKit/Win32ControlContext.cpp
         vcf/ApplicationKit/Win32CursorPeer.cpp
+        vcf/ApplicationKit/Win32DateTimePicker.cpp
         vcf/ApplicationKit/Win32Dialog.cpp
         vcf/ApplicationKit/Win32DragDropPeer.cpp
         vcf/ApplicationKit/Win32DropDownPeer.cpp
