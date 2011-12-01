@@ -402,10 +402,10 @@ public:
 	bool operator!= ( const DateTime& rhs ) const ;
 
 
-	bool DateTime::isNull() const ;
-	void DateTime::setNull();
-	bool DateTime::empty() const;
-	bool DateTime::isValidCTime() const;
+	bool isNull() const ;
+	void setNull();
+	bool empty() const;
+	bool isValidCTime() const;
 
 
 	/*
