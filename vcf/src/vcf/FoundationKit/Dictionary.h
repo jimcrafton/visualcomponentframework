@@ -172,7 +172,7 @@ public:
     typedef uint32 size_type;
 
 
-	typedef Enumerator<pair> Enumerator;
+	typedef VCF::Enumerator<pair> Enumerator;
 
 
 

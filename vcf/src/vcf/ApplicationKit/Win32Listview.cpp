@@ -1013,10 +1013,12 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 		}
 		break;
 
+/*
 		case LVN_HOTTRACK:{
 
 		}
 		break;
+*/
 
 		case LVN_ITEMACTIVATE:{
 
