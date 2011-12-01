@@ -51,8 +51,8 @@ RSC=rc.exe
 # ADD CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\win32" /I "..\..\..\src\thirdparty\common\ZLib" /I "..\..\..\src\thirdparty\common\LibPNG" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\agg\include" /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\..\bin\ApplicationKit_vc6_d.pdb /Yu"vcf\ApplicationKit\ApplicationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6_d\ApplicationKit_vc6_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\build\resources\win32
-# ADD RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\build\resources\win32
+# ADD BASE RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\src\vcf\ApplicationKit
+# ADD RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\src\vcf\ApplicationKit
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -76,8 +76,8 @@ LINK32=link.exe
 # ADD CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\win32" /I "..\..\..\src\thirdparty\common\ZLib" /I "..\..\..\src\thirdparty\common\LibPNG" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\agg\include" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\ApplicationKit_vc6.pdb /Yu"vcf\ApplicationKit\ApplicationKit.h" /Fp"..\..\..\lib\msvc6prj_vc6\ApplicationKit_vc6.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\build\resources\win32
-# ADD RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\build\resources\win32
+# ADD BASE RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\src\vcf\ApplicationKit
+# ADD RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\src\vcf\ApplicationKit
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -147,8 +147,8 @@ LIB32=link.exe -lib
 # ADD CPP /nologo /FD /MDd /I "..\..\..\src\thirdparty\win32" /I "..\..\..\src\thirdparty\common\ZLib" /I "..\..\..\src\thirdparty\common\LibPNG" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\agg\include" /Od /Gm /GR /EHsc /W1 /I "..\..\..\src" /Zi /Fd..\..\..\lib\..\bin\ApplicationKit_d.pdb /Yu"vcf\ApplicationKit\ApplicationKit.h" /Fp"..\..\..\lib\msvc6prj_d\ApplicationKit_d.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "_DEBUG" /D "_DEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\build\resources\win32
-# ADD RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\build\resources\win32
+# ADD BASE RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\src\vcf\ApplicationKit
+# ADD RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "_DEBUG" /d "_DEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\src\vcf\ApplicationKit
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -172,8 +172,8 @@ LINK32=link.exe
 # ADD CPP /nologo /FD /MD /I "..\..\..\src\thirdparty\win32" /I "..\..\..\src\thirdparty\common\ZLib" /I "..\..\..\src\thirdparty\common\LibPNG" /I "..\..\..\src\thirdparty\common\LibJPEG" /I "..\..\..\src\thirdparty\common\agg\include" /O2 /GR /EHsc /W1 /I "..\..\..\src" /Fd..\..\..\lib\..\bin\ApplicationKit.pdb /Yu"vcf\ApplicationKit\ApplicationKit.h" /Fp"..\..\..\lib\msvc6prj\ApplicationKit.pch" /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /c
 # ADD BASE MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /mktyplib203 /win32
 # ADD MTL /nologo /D "WIN32" /D "_USRDLL" /D "DLL_EXPORTS" /D "FOUNDATIONKIT_DLL" /D "GRAPHICSKIT_DLL" /D "NDEBUG" /D "_WIN32" /D "WIN32" /D "_USRDLL" /D "VCF_DISABLE_PRAGMA_LINKING" /D "APPLICATIONKIT_DLL" /D "APPLICATIONKIT_EXPORTS" /mktyplib203 /win32
-# ADD BASE RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\build\resources\win32
-# ADD RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\build\resources\win32
+# ADD BASE RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\src\vcf\ApplicationKit
+# ADD RSC /l 0x409 /i "..\..\..\src\thirdparty\win32" /i "..\..\..\src\thirdparty\common\ZLib" /i "..\..\..\src\thirdparty\common\LibPNG" /i "..\..\..\src\thirdparty\common\LibJPEG" /i "..\..\..\src\thirdparty\common\agg\include" /d "FOUNDATIONKIT_DLL" /d "GRAPHICSKIT_DLL" /d "NDEBUG" /d "_WIN32" /d "WIN32" /d "_USRDLL" /d "VCF_DISABLE_PRAGMA_LINKING" /i "..\..\..\src" /d "APPLICATIONKIT_DLL" /d "APPLICATIONKIT_EXPORTS" /i ..\..\src\vcf\ApplicationKit
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -290,7 +290,7 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\ApplicationKit.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\..\build\resources\win32\ApplicationKit.rc
+SOURCE=..\..\..\src\..\src\vcf\ApplicationKit\ApplicationKit.rc
 
 !IF  "$(CFG)" == "ApplicationKit - Win32 vc6 DLL Debug"
 
@@ -426,6 +426,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\CustomControl.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\DataObject.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\DateTimePickerControl.cpp
 # End Source File
 # Begin Source File
 
@@ -734,6 +738,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Win32ControlContext.cpp
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32CursorPeer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32DateTimePicker.cpp
 # End Source File
 # Begin Source File
 
@@ -1129,6 +1137,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\DataTypeNotSupportedException.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\ApplicationKit\DateTimePickerControl.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\ApplicationKit\DefaultListModel.h
 # End Source File
 # Begin Source File
@@ -1225,7 +1237,7 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\EtchedBorder.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\src\vcf\ApplicationKit\FlowLayoutContainter.h
+SOURCE=..\..\..\src\vcf\ApplicationKit\FlowLayoutContainer.h
 # End Source File
 # Begin Source File
 
@@ -1678,6 +1690,10 @@ SOURCE=..\..\..\src\vcf\ApplicationKit\Win32ControlContext.h
 # Begin Source File
 
 SOURCE=..\..\..\src\vcf\ApplicationKit\Win32CursorPeer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\src\vcf\ApplicationKit\Win32DateTimePicker.h
 # End Source File
 # Begin Source File
 
