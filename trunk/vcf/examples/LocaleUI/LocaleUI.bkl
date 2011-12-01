@@ -6,8 +6,8 @@
     <set var="CWD">$(VCF_DIR)/examples/LocaleUI</set>
 
     <exe id="LocaleUI" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
-        <exename>LocaleUI</exename>
         <sources>$(CWD)/LocaleUI.cpp</sources>
         <vcf-use-ApplicationKit/>
     </exe>

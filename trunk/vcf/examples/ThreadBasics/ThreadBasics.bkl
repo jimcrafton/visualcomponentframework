@@ -7,6 +7,7 @@
 
     <exe id="ThreadBasics" template="vcf_exe_console"
             cond="OPTION_FOUNDATIONKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/ThreadBasics.cpp</sources>
         <vcf-use-FoundationKit/>

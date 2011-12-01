@@ -8,12 +8,14 @@
     <dll id="SimpleDLL" template="dll"
             cond="FORMAT!='borland' and OPTION_FOUNDATIONKIT=='1'">
         <set var="DLLEXT">.so</set>
+        <dllname>$(id)</dllname>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/SimpleDLL.cpp</sources>
     </dll>
 
     <exe id="SharedLibraries" template="vcf_exe_console"
             cond="FORMAT!='borland' and OPTION_FOUNDATIONKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/SharedLibraries.cpp</sources>
         <vcf-use-FoundationKit/>

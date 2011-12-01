@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)\examples\Help</set>
 
     <exe id="Help" template="vcf_exe_gui" cond="PLATFORM_WIN32=='1' and OPTION_APPLICATIONKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)\Help.cpp</sources>
         <vcf-use-ApplicationKit/>

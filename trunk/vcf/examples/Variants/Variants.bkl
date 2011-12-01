@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/Variants</set>
 
     <exe id="Variants" template="vcf_exe_console" cond="OPTION_FOUNDATIONKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/Variants.cpp</sources>
         <vcf-use-FoundationKit/>

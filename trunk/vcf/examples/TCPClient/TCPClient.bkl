@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/TCPClient</set>
 
     <exe id="TCPClient" template="vcf_exe_console" cond="OPTION_NETWORKKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/TCPClient.cpp</sources>
         <vcf-use-NetworkKit/>

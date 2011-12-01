@@ -7,6 +7,7 @@
 
     <exe id="Trees2" template="vcf_exe_gui"
             cond="OPTION_APPLICATIONKIT=='1' and OPTION_XMLKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/Trees2.cpp</sources>
         <vcf-use-ApplicationKit/>

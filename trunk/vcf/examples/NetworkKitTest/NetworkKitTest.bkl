@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/NetworkKitTest</set>
 
     <exe id="NetworkKitTest" template="vcf_exe_console" cond="OPTION_NETWORKKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/NetworkKitTest.cpp</sources>
         <vcf-use-NetworkKit/>

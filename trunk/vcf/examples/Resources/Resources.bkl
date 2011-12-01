@@ -6,8 +6,8 @@
     <set var="CWD">$(VCF_DIR)/examples/Resources</set>
 
     <exe id="Resources" template="vcf_exe_console" cond="OPTION_FOUNDATIONKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
-        <exename>Resources</exename>
         <sources>$(CWD)/Resources.cpp</sources>
         <win32-res>$(CWD)/Resources.rc</win32-res>
         <vcf-use-FoundationKit/>

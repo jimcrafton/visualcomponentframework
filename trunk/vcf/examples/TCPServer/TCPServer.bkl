@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/TCPServer</set>
 
     <exe id="TCPServer" template="vcf_exe_console" cond="OPTION_NETWORKKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/TCPServer.cpp</sources>
         <vcf-use-NetworkKit/>

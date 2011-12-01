@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/MVC/Scribble3</set>
 
     <exe id="Scribble3" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <headers>
             $(CWD)/ScribbleModel.h

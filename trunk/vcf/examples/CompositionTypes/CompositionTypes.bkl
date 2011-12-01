@@ -6,6 +6,7 @@
     <set var="CWD">$(VCF_DIR)/examples/CompositionTypes</set>
 
     <exe id="CompositionTypes" template="vcf_exe_gui" cond="OPTION_APPLICATIONKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/CompositionTypes.cpp</sources>
         <win32-res>$(CWD)/CompositionTypes.rc</win32-res>

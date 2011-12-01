@@ -7,6 +7,7 @@
 
     <exe id="RegExGUI" template="vcf_exe_gui"
             cond="OPTION_APPLICATIONKIT=='1' and OPTION_REGEXKIT=='1'">
+        <exename>$(id)</exename>
         <dirname>$(CWD)</dirname>
         <sources>$(CWD)/RegExGUI.cpp</sources>
         <vcf-use-ApplicationKit/>
