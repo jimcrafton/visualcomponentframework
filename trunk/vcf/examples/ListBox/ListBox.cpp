@@ -297,6 +297,9 @@ void ListBoxWindow::onbtnSingleClicked( ButtonEvent*  ){
 	ListBoxControl* LBC = (ListBoxControl*)this->findComponent( "listBoxSingle" );
 	TextControl* txtCtrl = (TextControl*)this->findComponent( "textCtrlSingle" );
 	LBC->deselectAllItems();	
+
+	LBC->getListModel()->empty();
+
 	getListBoxInfo(LBC, txtCtrl);
 }
 

@@ -95,6 +95,10 @@ SOURCE=..\..\..\src\vcf\OpenGLKit\OpenGLControl.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\src\vcf\OpenGLKit\OpenGLKit.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp
 # End Source File
 # Begin Source File

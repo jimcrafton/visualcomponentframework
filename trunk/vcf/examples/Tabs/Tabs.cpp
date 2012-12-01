@@ -55,6 +55,8 @@ public:
 
 		TabbedPages* pages = (TabbedPages*) getMainWindow()->findComponent( "tabs" );
 
+		TabPage* p = pages->getSelectedPage();
+
 		TabPage* page = pages->tabPageHitTest( *e->getPoint() );
 		if ( NULL != page && page->getIndex() == 4 ) {
 			Dialog::showMessage( "MyTabPage instance Clicked!" );
@@ -75,9 +77,10 @@ public:
 
 		TabbedPages* pages = (TabbedPages*) mainWindow->findComponent( "tabs" );
 
-		pages->setTabPage( 4, new MyTabPage() );
+		TabPage* page = new MyTabPage();
 
-		
+		pages->setTabPage( 4, page );
+
 		return result;
 	}
 

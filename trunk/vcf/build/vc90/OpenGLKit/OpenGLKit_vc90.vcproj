@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="OpenGLKit"
 	ProjectGUID="{89ECAAC4-C0B9-4484-9CC1-9F4258FB2F69}"
+	RootNamespace="OpenGLKit"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -202,6 +203,10 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLKit.cpp"
+				>
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\OpenGLKit\OpenGLToolkit.cpp"
