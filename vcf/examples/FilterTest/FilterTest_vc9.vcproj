@@ -3,7 +3,8 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="FilterTest"
-	ProjectGUID="{A5A74F3A-24EC-4900-990D-72D88C5E7E32}"
+	ProjectGUID="{9BB0F250-CC9C-4A74-96B7-4D2F7D75C5C9}"
+	RootNamespace="FilterTest"
 	TargetFrameworkVersion="0"
 	>
 	<Platforms>

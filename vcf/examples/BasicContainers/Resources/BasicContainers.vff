@@ -4,6 +4,8 @@ object BasicContainers : VCF::Window
 	width = 500
 	height = 500
 
+	caption = 'Basic Containers Test'
+
 	object stdContainer1 : VCF::StandardContainer
 	end
 

@@ -103,23 +103,27 @@ public:
 
 	}
 
-	void onClassSelected( Event* e ) {
+	void onClassSelected( Event* e ) {		
+
 		ListModel* lm = classList->getListModel();
 		String className = lm->get( classList->getSelectedItem() );
 
-		refreshClassData( ClassRegistry::getClass( className ) );
+		Class* clazz = ClassRegistry::getClass( className );
+		if ( NULL != clazz ) {
+			refreshClassData( clazz );
 
 
-		String ns = "";
-		
-		size_t pos = className.find( "VCF::" );
+			String ns = "";
 
-		String classBaseName = className;
-		if ( pos != String::npos ) {
-			classBaseName = className.substr( pos + 5, className.length() - (pos+5) );
+			size_t pos = className.find( "VCF::" );
+
+			String classBaseName = className;
+			if ( pos != String::npos ) {
+				classBaseName = className.substr( pos + 5, className.length() - (pos+5) );
+			}
+
+			classDocBrowser->setCurrentURL( classDocsRootURL + "classVCF_1_1" + classBaseName + ".html" );
 		}
-
-		classDocBrowser->setCurrentURL( classDocsRootURL + "classVCF_1_1" + classBaseName + ".html" );
 	}
 
 	void refreshClassData( Class* clazz ) {

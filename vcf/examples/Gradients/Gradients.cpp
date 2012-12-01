@@ -44,7 +44,7 @@ void doLogoDropShadow( GraphicsContext* ctx, Rect logoRect )
 {
 	BezierCurve curve;
 	ShadowFill logoDropShad;		
-	logoDropShad.setAlpha( 1 );
+	logoDropShad.setAlpha( 0.7 );
 	logoDropShad.setRadius(4);
 	logoDropShad.setColor( Color("white") );
 	
@@ -276,7 +276,7 @@ public:
 		shadow.setRadius( 16 );
 
 		curve.clear();
-/*
+
 		Rect rect(mousePt.x_ - 100,mousePt.y_ - 50,mousePt.x_ + 100,mousePt.y_ + 50);
 		curve.rectangle( rect );
 		ctx->draw( &curve );
@@ -286,7 +286,7 @@ public:
 		//ctx->setColor( &Color("blue") );
 		//ctx->rectangle( &rect );
 		//ctx->fillPath();
-*/
+
 		ctx->setCurrentFill( NULL );
 		ctx->setCompositingMode( GraphicsContext::cmSource );
 	
@@ -421,14 +421,12 @@ public:
 
 	}
 
-/*
+
 	virtual void mouseMove( MouseEvent* e ) {
 		Window::mouseMove(e);
 		if ( e->hasLeftButton() ) {
 			mousePt = *e->getPoint();
-			Rect rect(mousePt.x_ - 100,mousePt.y_ - 50,mousePt.x_ + 100,mousePt.y_ + 50);
-			rect.inflate(10,10);
-			repaint(&rect);
+			repaint();
 		}
 	}
 
@@ -436,9 +434,7 @@ public:
 		Window::mouseDown(e);
 		if ( e->hasLeftButton() ) {
 			mousePt = *e->getPoint();
-			Rect rect(mousePt.x_ - 100,mousePt.y_ - 50,mousePt.x_ + 100,mousePt.y_ + 50);
-			rect.inflate(10,10);
-			repaint(&rect);
+			repaint();
 		}
 	}
 
@@ -446,14 +442,12 @@ public:
 		Window::mouseUp(e);
 		if ( e->hasLeftButton() ) {
 			mousePt = *e->getPoint();
-			Rect rect(mousePt.x_ - 100,mousePt.y_ - 50,mousePt.x_ + 100,mousePt.y_ + 50);
-			rect.inflate(10,10);
-			repaint(&rect);
+			repaint();
 		}
 	}
 
 	Point mousePt;
-	*/
+	
 };
 
 

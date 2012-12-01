@@ -56,7 +56,7 @@ object ColCvtWindow  : VCF::Window
 		end
 	end
 
-	object lbl4 : VCF::Label		
+	object lbl44 : VCF::Label		
 		caption = 'Blue:'
 	end
 

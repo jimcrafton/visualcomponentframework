@@ -771,6 +771,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "FilterTest"=.\FilterTest\FilterTest.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "FoundationKit"=..\build\vc60\FoundationKit\FoundationKit.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1006,6 +1018,30 @@ Package=<4>
 ###############################################################################
 
 Project: "ImageBasics"=.\ImageBasics\ImageBasics.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ImageKit"=..\build\vc60\ImageKit\ImageKit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ImageKitDLL"=..\build\vc60\ImageKit\ImageKitDLL.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1263,6 +1299,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "MeshColors"=.\3D\MeshColors\MeshColors.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "MinMax"=.\MinMax\MinMax.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1335,6 +1383,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "OBJReader"=.\3d\OBJReader\OBJReader.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "OpenGLKit"=..\build\vc60\OpenGLKit\OpenGLKit.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1373,12 +1433,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name ApplicationKit
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name OpenGLKit
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -1593,6 +1647,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "ScintillaKitDll"=..\build\vc60\ScintillaKit\ScintillaKitDll.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "ScreenDPI"=.\ScreenDPI\ScreenDPI.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1670,18 +1736,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ApplicationKitDLL
     End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "ScrollBugs"=..\..\..\..\junk\ScrollBugs\ScrollBugs.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
 }}}
 
 ###############################################################################

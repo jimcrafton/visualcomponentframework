@@ -259,7 +259,7 @@ object Scribble10Window  : VCF::Window
 			caption = 'Paste Selection from Clipboard'
 		end
 
-		object sep1 : VCF::ToolbarItem
+		object sep1a : VCF::ToolbarItem
 			separator = true
 		end
 
@@ -273,7 +273,7 @@ object Scribble10Window  : VCF::Window
 			caption = 'Redo last action'
 		end
 
-		object sep1 : VCF::ToolbarItem
+		object sep1b : VCF::ToolbarItem
 			separator = true
 		end
 
@@ -287,7 +287,7 @@ object Scribble10Window  : VCF::Window
 			caption = 'Delete Shape'
 		end
 
-		object sep1 : VCF::ToolbarItem
+		object sep1c : VCF::ToolbarItem
 			separator = true
 		end
 

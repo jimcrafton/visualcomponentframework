@@ -65,12 +65,20 @@ Handle the extension based on the compiler
 			#pragma comment(lib, "ImageKit_"_LIB_CPLVERNUM".lib")
 		#endif
 	#elif defined USE_IMAGEKIT_LIB
-		// using statically linked library
-		#ifdef _DEBUG
-			#pragma comment(lib, "ImageKit_"_LIB_CPLVERNUM"_sd.lib")			
-		#else
-			#pragma comment(lib, "ImageKit_"_LIB_CPLVERNUM"_s.lib")
-		#endif
+		//	using statically linked library	
+	#	ifdef	VCF_STATIC_CRT
+	#		ifdef _DEBUG
+	#			pragma comment(lib, "ImageKit_"_LIB_CPLVERNUM"_scrtd.lib")
+	#		else
+	#			pragma comment(lib, "ImageKit_"_LIB_CPLVERNUM"_scrt.lib")
+	#		endif
+	#	else
+	#		ifdef _DEBUG
+	#			pragma comment(lib, "ImageKit_"_LIB_CPLVERNUM"_sd.lib")
+	#		else
+	#			pragma comment(lib, "ImageKit_"_LIB_CPLVERNUM"_s.lib")
+	#		endif
+	#	endif	
 	#endif	
 
 

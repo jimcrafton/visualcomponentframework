@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="FoundationKit"
 	ProjectGUID="{B699126F-83EB-4859-AEB1-AB7D304D9259}"
+	RootNamespace="FoundationKit"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -241,6 +242,10 @@
 			Name="Peers"
 			Filter="*.h;*.cpp"
 			>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\Win32_DTutils.cpp"
+				>
+			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\Win32Condition.cpp"
 				>
@@ -1475,6 +1480,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\src\vcf\FoundationKit\TextCodec.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\UnitTransformer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\vcf\FoundationKit\UnitTransformer.h"
 				>
 			</File>
 			<File

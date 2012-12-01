@@ -225,7 +225,7 @@ object Scribble7Window  : VCF::Window
 			end
 		end
 
-		object help : VCF::DefaultMenuItem
+		object view : VCF::DefaultMenuItem
 			caption = '&View'
 			object viewListing : VCF::DefaultMenuItem
 				caption = 'Shape &Listing'
