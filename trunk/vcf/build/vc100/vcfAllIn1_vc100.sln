@@ -1,0 +1,55 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AllIn1", ".\AllIn1\AllIn1_vc100.vcproj", "{499594c2-7468-4696-ba67-e09fdd194d2b}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AllIn1DLL", ".\AllIn1\AllIn1DLL_vc100.vcproj", "{93943ede-a510-43e5-97fb-aa269e4f0c0b}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibJPEG", "..\..\src\thirdparty\common\LibJPEG\LibJPEG_vc100.vcproj", "{3d654766-acc3-424e-b92c-75dcd6554532}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibPNG", "..\..\src\thirdparty\common\LibPNG\LibPNG_vc100.vcproj", "{f155a370-5964-4f4a-a17d-01a4035e2ca7}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZLib", "..\..\src\thirdparty\common\ZLib\ZLib_vc100.vcproj", "{94556f59-ad3a-46eb-87c3-0c6d62089798}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libAGG", ".\GraphicsKit\libAGG_vc100.vcproj", "{9c900d7c-dde4-4e0f-b5de-a326c39607dc}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vcfAll", ".\AllIn1\vcfAll_vc100.vcproj", "{c59f9186-362c-4020-afec-f9f42bdd3723}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{499594c2-7468-4696-ba67-e09fdd194d2b}.Debug.ActiveCfg = Debug|Win32
+		{499594c2-7468-4696-ba67-e09fdd194d2b}.Release.ActiveCfg = Release|Win32
+		{93943ede-a510-43e5-97fb-aa269e4f0c0b}.Debug.ActiveCfg = Debug|Win32
+		{93943ede-a510-43e5-97fb-aa269e4f0c0b}.Release.ActiveCfg = Release|Win32
+		{3d654766-acc3-424e-b92c-75dcd6554532}.Debug.ActiveCfg = Debug|Win32
+		{3d654766-acc3-424e-b92c-75dcd6554532}.Release.ActiveCfg = Release|Win32
+		{f155a370-5964-4f4a-a17d-01a4035e2ca7}.Debug.ActiveCfg = Debug|Win32
+		{f155a370-5964-4f4a-a17d-01a4035e2ca7}.Release.ActiveCfg = Release|Win32
+		{94556f59-ad3a-46eb-87c3-0c6d62089798}.Debug.ActiveCfg = Debug|Win32
+		{94556f59-ad3a-46eb-87c3-0c6d62089798}.Release.ActiveCfg = Release|Win32
+		{9c900d7c-dde4-4e0f-b5de-a326c39607dc}.Debug.ActiveCfg = Debug|Win32
+		{9c900d7c-dde4-4e0f-b5de-a326c39607dc}.Release.ActiveCfg = Release|Win32
+		{c59f9186-362c-4020-afec-f9f42bdd3723}.Debug.ActiveCfg = Debug|Win32
+		{c59f9186-362c-4020-afec-f9f42bdd3723}.Release.ActiveCfg = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

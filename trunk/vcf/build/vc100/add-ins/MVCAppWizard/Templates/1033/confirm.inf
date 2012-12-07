@@ -1,0 +1,40 @@
+The VCF MVC Application Wizard has created the following files for you:
+
+	$$Root$$.cpp
+	$$Root$$.xml
+	$$Root$$Document.cpp
+	$$Root$$Document.h
+	$$Root$$View.cpp
+	$$Root$$View.h
+	$$Root$$Window.cpp
+	$$Root$$Window.h
+	$$root$$.dsp
+	$$root$$.dsw
+
+	$$Root$$.cpp - this is you main program which initializes your app and 
+	registers your applications class information for RTTI usage.
+
+	$$Root$$.xml - this stores the document information for your application
+	as well as the associated view and/or window classes associated 
+	with the document.
+	
+	$$Root$$Document.h
+	$$Root$$Document.cpp - these are declaration and implementation files 
+	for your application's Document based class.
+
+	$$Root$$View.h
+	$$Root$$View.cpp - these are the declaration and implementation files 
+	for your application's View implementation associated 
+	with the application's Document class.
+	
+	$$Root$$Window.h
+	$$Root$$Window.cpp  - these are the declaration and implementation files 
+	for your application's Window implementation associated 
+	with the application's Document class.	
+	
+
+	$$root$$.dsp has the correct settings for linking to the VCF FoundationKit,
+	GraphicsKit, and ApplicationKit libraries.
+
+	
+

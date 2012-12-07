@@ -1,0 +1,1317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>AllIn1</ProjectName>
+    <ProjectGuid>{86FF6E70-FB3C-4202-9AF1-68ACADE0AE6F}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\..\..\lib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\ReleaseS\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\..\..\..\lib\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\DebugS\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VCF_vc100_sd</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VCF_vc100_s</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Zm200  %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MinSpace</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>$(VCF_ROOT)/src;$(VCF_ROOT)/src/thirdparty/win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;VCF_ALLIN1_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>vcf/ApplicationKit/ApplicationKit.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\ReleaseS/AllIn1_vc100.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\ReleaseS/</AssemblerListingLocation>
+      <ObjectFileName>.\ReleaseS/</ObjectFileName>
+      <ProgramDataBaseFileName>.\ReleaseS/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>..\..\..\lib\VCF_vc100_s.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\..\..\..\lib/AllIn1_vc100.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/Zm200  %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(VCF_ROOT)/src;$(VCF_ROOT)/src/thirdparty/win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;VCF_ALLIN1_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>vcf/ApplicationKit/ApplicationKit.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\DebugS/AllIn1_vc100.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\DebugS/</AssemblerListingLocation>
+      <ObjectFileName>.\DebugS/</ObjectFileName>
+      <ProgramDataBaseFileName>..\..\..\lib\VCF_vc100_sd.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>..\..\..\lib\VCF_vc100_sd.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\..\..\..\lib/AllIn1_vc100.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\AtomicCount.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\BadComponentStateException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Base64Codec.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\BasicException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\BasicFileError.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\BasicInputStream.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\BasicOutputStream.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\CantCreateObjectException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Class.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ClassInfo.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ClassNotFound.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ClassRegistry.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\CommandLine.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\CommonDefines.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Component.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ComponentEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ComponentInfo.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Condition.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ConditionPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\DateTime.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Delegates.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Dictionary.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Directory.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Enum.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Enumerator.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ErrorLog.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ErrorStrings.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Event.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Field.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\File.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\FileIOError.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\FileNotFound.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\FilePath.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\FilePeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\FileStream.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\FileStreamPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Format.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\FoundationKit.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\FoundationKitPrivate.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\FoundationKitSelectLib.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\FrameworkConfig.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\IniFini.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Interface.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\InterfaceClass.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\InvalidImplementer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\InvalidPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\InvalidPointerException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\InvalidStateException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Library.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\LibraryPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\LocalePeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Locales.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Lock.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\MemStreamUtils.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\MessageLoader.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Method.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\MIMEType.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Mutex.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\MutexPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\NoFreeMemException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\NoImplementerFoundException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\NoPeerFoundException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\NoSuchElementException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\NotImplementedException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\NoToolKitFoundException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Object.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\OSHandlePeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\OutOfBoundsException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\OutputReadyEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\PackageInfo.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Persistable.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ProcessException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ProcessIORedirectionPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ProcessPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ProgramInfo.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Property.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\PropertyChangeEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\PropertyChangeException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\PropertyListing.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\References.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Registry.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\RegistryPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Resource.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ResourceBundle.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ResourceBundlePeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ResourceException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\RTTIMacros.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\RunLoop.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\RunLoopFwd.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\RunLoopPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\RunLoopSource.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\RunLoopSourcePeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\RunLoopTimer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\RunLoopTimerPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Runnable.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\RuntimeException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Semaphore.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\SemaphorePeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\SmartPtr.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Stream.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\StringsMessageLoader.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\StringTokenizer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\StringUtils.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\SynchObject.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\System.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\SystemPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\SystemToolkit.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\TextCodec.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\TextInputStream.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\TextOutputStream.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Thread.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ThreadedFunctions.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ThreadEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ThreadException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ThreadKit.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ThreadManager.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ThreadManagerPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ThreadPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\ThreadPool.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\TypeCastException.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\VariantData.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\VariantDataStream.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\VCFChar.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\VCFMath.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\VCFProcess.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\VCFRTTIImpl.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\VCFString.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\VFFInputStream.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\VFFOutputStream.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\VFFParser.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Waitable.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\WarningsOffVc.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32Condition.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32FilePeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32FileStream.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32LibraryPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32LocalePeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32Mutex.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32Peer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32ProcessIORedirector.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32ProcessPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32Registry.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32ResourceBundle.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32RunLoopPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32SemaphorePeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32SystemPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32SystemToolkit.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32Thread.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\Win32ThreadManagerPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\XMLDictInputStream.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\XMLDictOutputStream.h" />
+    <ClInclude Include="..\..\..\src\vcf\FoundationKit\XMLParser.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\AbstractImage.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\AggCommon.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\BasicFill.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\BasicRectangle.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\BasicStroke.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\BezierCurve.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Circle.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Color.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Composition.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\ContextPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\DrawUIState.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Ellipse.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Fill.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Filter.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Font.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\FontPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\GradientFills.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\GraphicsContext.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\GraphicsKit.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\GraphicsKitPrivate.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\GraphicsKitSelectLib.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\GraphicsResourceBundle.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\GraphicsResourceBundlePeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\GraphicsToolKit.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Image.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\ImageEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\ImageLoader.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\ImageLoaderException.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\InvalidImage.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\JPEGLoader.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Matrix2D.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\NoGraphicsToolkitFoundException.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Path.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\PixelFormats.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Pixels.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\PNGLoader.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Point.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Printable.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\PrintContext.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\PrintEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\PrintSession.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\PrintSessionPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Rect.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\ShadowFill.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Size.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Stroke.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Win32Context.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Win32Font.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Win32FontManager.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Win32GraphicsResourceBundle.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Win32GraphicsToolkit.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Win32Image.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Win32PrintSession.h" />
+    <ClInclude Include="..\..\..\src\vcf\GraphicsKit\Win32VisualStylesWrapper.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\AbstractApplication.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\AbstractCommand.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\AbstractComponentEditor.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\AbstractContainer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\AbstractPropertyEditor.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\AbstractScrollable.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\AbstractView.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\AbstractWin32Component.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\AcceleratorKey.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Action.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ActionEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\AppKitPeerConfig.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Application.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ApplicationException.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ApplicationKit.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ApplicationKitPrivate.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ApplicationKitSelectLib.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ApplicationPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ApplicationResourceBundle.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\BadImageBitsException.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\BadModelStateException.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Basic3DBorder.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\BasicTableItemEditor.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Border.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Button.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ButtonEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ButtonPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\CheckBoxControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Clipboard.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ClipboardEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ClipboardPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ColorEtchedBorder.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ColumnItem.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ColumnItemEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ColumnLayoutContainer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ColumnModel.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ComboBoxControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Command.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\CommandButton.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\CommandGroup.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\CommonColorDialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\CommonDialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\CommonDialogPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\CommonFileBrowseDialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\CommonFileDialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\CommonFileOpenDialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\CommonFileSaveDialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\CommonFontDialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ComponentEditor.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ComponentEditorManager.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Container.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Containers.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Control.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ControlContainer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ControlGraphicsContext.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ControlPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ControlsKit.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Cursor.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\CursorManager.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\CursorPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\CustomControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DataObject.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DataObjectPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DataTypeNotSupportedException.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DefaultListModel.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DefaultMenuItem.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DefaultPropertyEditors.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DefaultTableCellItem.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DefaultTableModel.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DefaultTabPage.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DefaultTextModel.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DefaultTreeModel.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Dialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DialogPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DocManagerPolicy.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Document.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DocumentBasedApplication.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DocumentManager.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DragDropPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DragScrollEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DragSource.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DropDownControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DropDownPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DropTarget.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\DropTargetPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\EnumObject.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\EtchedBorder.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\FocusEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Frame.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\FrameEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\HeaderControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\HelpEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\HorizontalLayoutContainer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ImageControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ImageList.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ImageListEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\InputValidation.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Item.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ItemEditorEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ItemEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\KeyboardEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Label.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\LibraryApplication.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Light3DBorder.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\LightweightComponent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ListBoxControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ListControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ListItem.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ListModel.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ListPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ListViewControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ListviewPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Menu.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\MenuBar.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\MenuBarPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\MenuItem.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\MenuItemEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\MenuItemPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\MenuManager.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\MenuManagerPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\MessageDialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Model.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ModelViewKit.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\MouseEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\MultilineTextControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Panel.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\PopupMenu.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\PopupMenuPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\PopupWindow.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\PopupWindowPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ProgressControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\PropertyEditor.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\PropertyEditorManager.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\PushButton.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\RadioButtonControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Scrollable.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ScrollbarManager.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ScrollbarPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ScrollEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ScrollPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\SelectionListener.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\SimpleListModel.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\SliderControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Splitter.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\StatusBar.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\SystemTray.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\SystemTrayPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TabbedPages.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TableCellItem.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TableControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TableItemEditor.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TableModel.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TabModel.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TabPage.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TextControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TextModel.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TextPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ThemeBorder.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TimerComponent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TimerEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TitledBorder.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ToggledButton.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Toolbar.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ToolbarDock.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ToolbarPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\ToolTipEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TransparentWindow.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TransparentWindowPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TreeControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TreeItem.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TreeListControl.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TreeListModel.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TreeModel.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\TreePeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\UIApplication.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\UIComponent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\UIPolicyManager.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\UIShell.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\UIShellPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\UIToolkit.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\UndoRedoEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\UndoRedoStack.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\VCFCOM.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\View.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\WhatsThisHelpEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32Application.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32AppResourceBundle.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32Button.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32Clipboard.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32ColorDialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32COMDataObject.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32COMException.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32Component.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32COMUtils.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32ControlContext.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32CursorPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32Dialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32DragDropPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32DropDownPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32Edit.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32FileOpenDialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32FileSaveDialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32FolderBrowseDialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32FontDialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32HResult.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32ListBox.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32Listview.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32MenuBar.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32MenuItem.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32MenuManagerPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32Object.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32PopupMenu.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32PopupWindowPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32PrintDialog.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32ScrollPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32SystemTrayPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32TextPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32Toolbar.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32ToolKit.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32TransparentWindowPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32Tree.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32UIShell.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Win32Window.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Window.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\WindowEvent.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\WindowPeer.h" />
+    <ClInclude Include="..\..\..\src\vcf\ApplicationKit\Wizard.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Base64Codec.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\BasicException.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\BasicInputStream.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\BasicOutputStream.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Class.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\ClassRegistry.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\CommandLine.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Component.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\ComponentInfo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Condition.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\DateTime.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Delegates.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Dictionary.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Directory.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\ErrorLog.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\File.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\FilePath.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\FileStream.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\FoundationKit.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\IniFini.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\InterfaceClass.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Library.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Locales.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\MessageLoader.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\MIMEType.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Mutex.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Object.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\PackageInfo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\ProcessWithRedirectedIO.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Registry.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Resource.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\ResourceBundle.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\RunLoop.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\RunLoopSource.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\RunLoopSourcePeer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\RunLoopTimer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Semaphore.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Stream.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\StringsMessageLoader.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\StringUtils.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\System.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\SystemToolkit.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\TextCodec.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\TextInputStream.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\TextOutputStream.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Thread.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\ThreadManager.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\VariantData.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\VCFMath.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\VCFProcess.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\VCFString.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\VCFTime.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\VFFInputStream.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\VFFOutputStream.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\VFFParser.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32Condition.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32FilePeer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32FileStream.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32LibraryPeer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32LocalePeer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32Mutex.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32Peer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32ProcessIORedirector.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32ProcessPeer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32Registry.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32ResourceBundle.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32RunLoopPeer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32RunLoopSourcePeer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32RunLoopTimerPeer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32SemaphorePeer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32SystemPeer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32SystemToolkit.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32Thread.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\Win32ThreadManagerPeer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\FoundationKit\XMLParser.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\AbstractImage.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\BasicFill.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\BasicStroke.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\BezierCurve.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\Color.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\Font.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\GraphicsContext.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\GraphicsKit.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\GraphicsResourceBundle.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\GraphicsToolKit.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\GrayScaleImage.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\JPEGLoader.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\Matrix2D.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\PNGLoader.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\Point.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\PrintSession.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\Rect.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\Win32Context.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\Win32Font.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\Win32FontManager.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\Win32GraphicsResourceBundle.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\Win32GraphicsToolkit.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\Win32Image.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\GraphicsKit\Win32PrintSession.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\AbstractApplication.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\AbstractCommand.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\AbstractComponentEditor.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\AbstractContainer.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\AbstractScrollable.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\AbstractView.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\AbstractWin32Component.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\AcceleratorKey.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Action.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Application.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ApplicationKit.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ApplicationResourceBundle.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Basic3DBorder.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\BasicTableItemEditor.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\CheckBoxControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Clipboard.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ColorEtchedBorder.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ColumnItem.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ComboBoxControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\CommandButton.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\CommandGroup.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\CommonColorDialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\CommonFileBrowseDialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\CommonFileDialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\CommonFileOpenDialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\CommonFileSaveDialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\CommonFontDialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\CommonPrintDialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ComponentEditorManager.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Containers.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Control.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ControlContainer.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ControlGraphicsContext.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Cursor.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\CursorManager.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\CustomControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\DataObject.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\DefaultListModel.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\DefaultMenuItem.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\DefaultPropertyEditors.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\DefaultTableCellItem.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\DefaultTableModel.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\DefaultTabPage.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\DefaultTextModel.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\DefaultTreeModel.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Dialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Document.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\DocumentManager.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\DragSource.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\DropDownControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\DropTarget.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\EtchedBorder.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Frame.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\HeaderControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ImageControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ImageList.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\InputValidation.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Label.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\LibraryApplication.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Light3DBorder.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\LightweightComponent.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ListBoxControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ListControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ListItem.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ListModel.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ListViewControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Menu.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\MenuBar.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\MenuManager.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\MessageDialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Model.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\MultilineTextControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Panel.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\PopupMenu.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\PopupWindow.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ProgressControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\PropertyEditorManager.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\PushButton.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\RadioButtonControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ScrollbarManager.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\SimpleListModel.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\SliderControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Splitter.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\StatusBar.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\SystemTray.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\TabbedPages.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\TableControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\TabModel.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\TextControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\TimerComponent.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\TitledBorder.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ToggledButton.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Toolbar.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\ToolbarDock.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\TransparentWindow.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\TreeControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\TreeItem.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\TreeListControl.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\TreeListModel.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\TreeModel.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\UIComponent.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\UIShell.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\UIToolkit.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\UndoRedoStack.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32Application.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32AppResourceBundle.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32Button.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32Clipboard.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32ColorDialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32COMDataObject.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32Component.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32COMUtils.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32ControlContext.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32CursorPeer.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32Dialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32DragDropPeer.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32DropDownPeer.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32DropTargetPeer.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32Edit.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32FileOpenDialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32FileSaveDialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32FolderBrowseDialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32FontDialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32Listview.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32MenuBar.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32MenuItem.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32MenuManagerPeer.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32Object.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32PopupMenu.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32PopupWindowPeer.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32PrintDialog.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32ScrollPeer.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32SystemTrayPeer.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32TextPeer.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32Toolbar.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32ToolKit.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32TransparentWindowPeer.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32Tree.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32UIShell.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Win32Window.cpp" />
+    <ClCompile Include="..\..\..\src\vcf\ApplicationKit\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\resources\win32\ApplicationKit.rc">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\..\resources\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\resources\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\resources\win32\inform.bmp" />
+    <None Include="..\..\resources\win32\question.bmp" />
+    <None Include="..\..\resources\win32\stop.bmp" />
+    <None Include="..\..\resources\win32\vcf.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
