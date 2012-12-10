@@ -120,7 +120,7 @@ int main() {
 }
 \endcode
 */
-class FOUNDATIONKIT_API Thread : public Object, public Runnable, public Waitable {
+class FOUNDATIONKIT_API Thread : public HeapObject, public Runnable, public Waitable {
 public:
 	Thread();
 
