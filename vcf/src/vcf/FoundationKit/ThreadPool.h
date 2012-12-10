@@ -466,7 +466,8 @@ inline void ThreadPool::stop()
 		Thread* th = threads_[k];
 		th->stop();
 
-		delete th;
+		th->release();
+		//delete th;
 
 		threads_[k] = NULL;
 	}
