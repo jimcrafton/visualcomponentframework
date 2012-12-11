@@ -91,6 +91,7 @@ public:
 		waitForWorkDone_(&waitForWorkDoneMtx_),
 		stopped_(true){
 
+		
 		threads_.resize(poolSize);
 
 		initPool();		
@@ -195,7 +196,10 @@ public:
 		}
 
 		//wake up one thread, one thread only Vasily...
-		workAvailable_.signal(); 
+		{
+			Lock l2(cdtnMtx_);
+			workAvailable_.signal(); 
+		}
 	}
 
 	/**
@@ -247,6 +251,7 @@ public:
 			}
 
 			if ( work_.empty() ) {
+				Lock l2(waitForWorkDoneMtx_);
 				waitForWorkDone_.broadcast();
 			}
 
@@ -258,7 +263,10 @@ public:
 		/**
 		Wait for some work item to arrive!
 		*/
-		workAvailable_.wait();
+		{
+			Lock l2(cdtnMtx_);
+			workAvailable_.wait();
+		}
 
 		{
 			/**
@@ -281,6 +289,7 @@ public:
 			}
 
 			if ( work_.empty() ) {
+				Lock l2(waitForWorkDoneMtx_);
 				waitForWorkDone_.broadcast();
 			}
 		}
@@ -455,7 +464,10 @@ inline void ThreadPool::stop()
 		}
 	}
 
-	workAvailable_.broadcast();
+	{
+		Lock l2(cdtnMtx_);
+		workAvailable_.broadcast();
+	}
 
 	for (uint32 j=0;j<threads_.size();j++ ) {
 		threads_[j]->cantContinue();
@@ -472,7 +484,10 @@ inline void ThreadPool::stop()
 		threads_[k] = NULL;
 	}
 	
-	waitForWorkDone_.broadcast();
+	{
+		Lock l2(waitForWorkDoneMtx_);
+		waitForWorkDone_.broadcast();
+	}
 }
 
 inline void ThreadPool::wait() 
@@ -491,7 +506,10 @@ inline void ThreadPool::wait()
 		}
 	}
 
-	waitForWorkDone_.wait();
+	{
+		Lock l2(waitForWorkDoneMtx_);
+		waitForWorkDone_.wait();
+	}
 }
 
 
@@ -511,7 +529,10 @@ inline void ThreadPool::wait( uint32 timeoutInMilliseconds )
 		}
 	}
 
-	waitForWorkDone_.wait(timeoutInMilliseconds);
+	{
+		Lock l2(waitForWorkDoneMtx_);
+		waitForWorkDone_.wait(timeoutInMilliseconds);
+	}
 }
 
 }; //namespace VCF
