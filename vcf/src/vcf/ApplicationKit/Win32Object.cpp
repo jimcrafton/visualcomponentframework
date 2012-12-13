@@ -245,21 +245,38 @@ LRESULT Win32Object::defaultWndProcedure( UINT message, WPARAM wParam, LPARAM lP
 {
 	LRESULT result = 0;
 	
-	if ( System::isUnicodeEnabled() ) {
-		if ( NULL != defaultWndProc_ ){
-			result = CallWindowProcW( defaultWndProc_, hwnd_, message, wParam, lParam );
-		}
-		else {
-			result = DefWindowProcW( hwnd_, message, wParam, lParam );
+	bool doDefHandler = true;
+
+	Control* c = getPeerControl();
+	if ( c->canHandleNativeEvent() ) {
+		Win32MSG msg(hwnd_,message,wParam,lParam);
+		NativeEvent e(c);
+		e.nativeOSEventData = &msg;
+		c->handleNativeEvent( &e );
+		doDefHandler = e.passOnToDefaulthandler;
+		if ( !doDefHandler ) {
+			result = msg.lresult;
 		}
 	}
+
+	if ( System::isUnicodeEnabled() ) {
+		if (  doDefHandler ) {
+			if ( NULL != defaultWndProc_ ){
+				result = CallWindowProcW( defaultWndProc_, hwnd_, message, wParam, lParam );
+			}
+			else {
+				result = DefWindowProcW( hwnd_, message, wParam, lParam );
+			}
+		}		
+	}
 	else{
-		
-		if ( NULL != defaultWndProc_ ){
-			result = CallWindowProcA( defaultWndProc_, hwnd_, message, wParam, lParam );
-		}
-		else {
-			result = DefWindowProcA( hwnd_, message, wParam, lParam );
+		if (  doDefHandler ) {
+			if ( NULL != defaultWndProc_ ){
+				result = CallWindowProcA( defaultWndProc_, hwnd_, message, wParam, lParam );
+			}
+			else {
+				result = DefWindowProcA( hwnd_, message, wParam, lParam );
+			}
 		}
 	}
 	

@@ -212,7 +212,12 @@ Setup compiler names, and some compiler-specific warnings
 		#pragma pointers_to_members( full_generality, virtual_inheritance )
 	#endif
 
-	#if (_MSC_VER >= 1500)
+	#if (_MSC_VER >= 1600)
+		#define VCF_VC100
+		#undef VCF_COMPILER_NAME
+		#define VCF_COMPILER_NAME	"VC100"
+		#define _WIN32_WINNT 0x0600 
+	#elif (_MSC_VER >= 1500)
 		#define VCF_VC90
 		#undef VCF_COMPILER_NAME
 		#define VCF_COMPILER_NAME	"VC90"

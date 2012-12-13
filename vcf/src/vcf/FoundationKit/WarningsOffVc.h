@@ -47,8 +47,8 @@ where you installed the VCF.
 
 
 
-#if defined(VCF_VC80) || defined(VCF_VC90)
-	#pragma message ( "VC8 or VC9 compiler detected - deprecation warnings turned off for now." )
+#if defined(VCF_VC80) || defined(VCF_VC90)  || defined(VCF_VC100)
+	#pragma message ( "VC8, VC9 or VC100 compiler detected - deprecation warnings turned off for now." )
 	#pragma warning (disable : 4996)
     #ifndef _CRT_SECURE_NO_DEPRECATE
 	    #define _CRT_SECURE_NO_DEPRECATE 1
