@@ -372,6 +372,7 @@ void AbstractWin32Component::prepForDoubleBufferPaint( HDC wmPaintDC, const Rect
 			memCtx_ = new GraphicsContext( paintRect.getWidth(), paintRect.getHeight() );
 		}
 		
+		memCtx_->internal_setViewableBounds(paintRect);
 
 		if ( peerControl_->isUsingRenderBuffer() ) {
 			memCtx_->setAntiAliasingOn( true );

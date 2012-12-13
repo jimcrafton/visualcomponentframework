@@ -351,6 +351,8 @@ public:
 
 	void setViewableBounds( const Rect& bounds );
 
+	void internal_setViewableBounds( const Rect& bounds );
+
 	/**
 	This deletes the drawing area, and frees any resources
 	associated with it.

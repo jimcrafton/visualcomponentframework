@@ -2360,6 +2360,11 @@ void GraphicsContext::setAntiAliasingOn( bool antiAliasingOn )
 	}
 }
 
+void GraphicsContext::internal_setViewableBounds( const Rect& bounds )
+{
+	viewableBounds_ = bounds;
+}
+
 void GraphicsContext::setViewableBounds( const Rect& bounds ) 
 {
 	bool update = false;
