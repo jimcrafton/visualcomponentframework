@@ -775,6 +775,7 @@ void Win32Context::drawImage( const double& x, const double& y, Rect* imageBound
 				::RealizePalette( dc_ );
 			}
 
+			
 			BITMAPINFO bmpInfo;
 			memset( &bmpInfo, 0, sizeof(BITMAPINFO) );
 			//memset( &bmpInfo.bmiHeader, 0, sizeof (BITMAPINFOHEADER) );
