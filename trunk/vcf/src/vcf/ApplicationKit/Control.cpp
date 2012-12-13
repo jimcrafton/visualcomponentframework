@@ -665,6 +665,40 @@ void Control::handleEventAndForwardToChildren( Event* event )
 
 }
 
+void Control::setAllowsNativeEventHandling( const bool& allowNativeEventHandling )
+{
+	if ( allowNativeEventHandling ) {
+		controlState_  |= Control::csAllowNativeEventHandling;
+	}
+	else {
+		controlState_  &= ~Control::csAllowNativeEventHandling;
+	}
+}
+
+bool Control::canHandleNativeEvent()
+{
+	if ( !allowsNativeEventHandling() ) {
+		return false;
+	}
+
+	if ( !isCreated() ) {
+		return false;
+	}
+
+	if ( NativeEventRaised.empty() ) {
+		return false;
+	}
+
+	return true;
+}
+
+void Control::handleNativeEvent( NativeEvent* event )
+{
+	if ( canHandleNativeEvent() ) {
+		NativeEventRaised(event);
+	}	
+}
+
 void Control::handleEvent( Event* event )
 {
 	UIComponent::handleEvent( event );

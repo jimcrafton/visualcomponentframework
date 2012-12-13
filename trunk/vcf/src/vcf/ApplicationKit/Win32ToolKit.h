@@ -89,13 +89,13 @@ struct APPLICATIONKIT_API FilterCBData {
 
 class Win32MSG {
 public:
-	Win32MSG( const MSG& msg, Control* control=NULL ) :msg_(msg), control_(control) {
+	Win32MSG( const MSG& msg, Control* control=NULL ) :msg_(msg), control_(control),lresult(0) {
 
 	}
 
 
 	Win32MSG( HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam, Control* control=NULL):
-		control_(control) {
+		control_(control),lresult(0) {
 
 		memset( &msg_, 0, sizeof(MSG) );
 
@@ -105,17 +105,20 @@ public:
 		msg_.lParam = lParam;
 	}
 
-	Win32MSG( const Win32MSG& msg ):msg_(msg.msg_), control_(msg.control_) {
+	Win32MSG( const Win32MSG& msg ):msg_(msg.msg_), control_(msg.control_),lresult(0) {
 
 	}
 
 	Win32MSG& operator=( const Win32MSG& msg ) {
 		msg_ = msg.msg_;
 		control_ = msg.control_;
+		lresult = msg.lresult;
 		return *this;
 	}
 
 	MSG msg_;
+	LRESULT lresult;
+
 	Control* control_;
 };
 

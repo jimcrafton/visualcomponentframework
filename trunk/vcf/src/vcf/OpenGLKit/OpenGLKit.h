@@ -22,7 +22,9 @@ Handle the extension based on the compiler
 # elif defined(__ICL)
 #   define _LIB_CPLVERNUM "icl6"
 # else
-#   if (_MSC_VER >= 1500)
+#   if (_MSC_VER >= 1600)
+#     define _LIB_CPLVERNUM "vc100"
+#   elif (_MSC_VER >= 1500)
 #     define _LIB_CPLVERNUM "vc90"
 #   elif (_MSC_VER >= 1400)
 #     define _LIB_CPLVERNUM "vc80"
