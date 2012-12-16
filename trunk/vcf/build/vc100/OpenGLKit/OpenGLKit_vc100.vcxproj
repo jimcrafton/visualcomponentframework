@@ -101,10 +101,10 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <PrecompiledHeaderOutputFile>.\ReleaseS/OpenGLKit_vc100.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\ReleaseS/</AssemblerListingLocation>
-      <ObjectFileName>.\ReleaseS/</ObjectFileName>
-      <ProgramDataBaseFileName>.\ReleaseS/</ProgramDataBaseFileName>
+      <PrecompiledHeaderOutputFile>$(IntDir)OpenGLKit_vc100.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -114,12 +114,13 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Lib>
-      <OutputFile>..\..\..\lib\OpenGLKit_vc100_s.lib</OutputFile>
+      <OutputFile>$(OutDir)/$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>..\..\..\lib\OpenGLKit_vc100_s.bsc</OutputFile>
+      <OutputFile>
+      </OutputFile>
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -163,10 +164,10 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <PrecompiledHeaderOutputFile>.\DebugS/OpenGLKit_vc100.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\DebugS/</AssemblerListingLocation>
-      <ObjectFileName>.\DebugS/</ObjectFileName>
-      <ProgramDataBaseFileName>..\..\..\lib\OpenGLKit_vc100_sd.pdb</ProgramDataBaseFileName>
+      <PrecompiledHeaderOutputFile>$(IntDir)OpenGLKit_vc100.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -177,12 +178,13 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Lib>
-      <OutputFile>..\..\..\lib\OpenGLKit_vc100_sd.lib</OutputFile>
+      <OutputFile>$(OutDir)/$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>..\..\..\lib\OpenGLKit_vc100_sd.bsc</OutputFile>
+      <OutputFile>
+      </OutputFile>
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
