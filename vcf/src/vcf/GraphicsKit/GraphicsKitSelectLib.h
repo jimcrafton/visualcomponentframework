@@ -41,11 +41,11 @@ where you installed the VCF.
 #   define _LIB_CPLVERNUM "icl6"
 # else
 #   if (_MSC_VER >= 1600)
-#     define _LIB_CPLVERNUM "vc100" _LIB_CPLVCWINCE
+#     define _LIB_CPLVERNUM "vc100"OS_PLATFORM
 #   elif (_MSC_VER >= 1500)
-#     define _LIB_CPLVERNUM "vc90" _LIB_CPLVCWINCE
+#     define _LIB_CPLVERNUM "vc90"OS_PLATFORM
 #   elif (_MSC_VER >= 1400)
-#     define _LIB_CPLVERNUM "vc80" _LIB_CPLVCWINCE
+#     define _LIB_CPLVERNUM "vc80"OS_PLATFORM
 #   elif (_MSC_VER >= 1310)
 #     define _LIB_CPLVERNUM "vc71"
 #   elif (_MSC_VER >= 1300)

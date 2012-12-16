@@ -51,8 +51,8 @@ public:
 protected:
 	String title_;
 	Control* owner_;
-	Win32PrintInfo printInfo_;
-	static UINT CALLBACK PrintHookProc( HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM lParam );
+	Win32PrintInfo printInfo_;	
+	static UINT_PTR CALLBACK PrintHookProc( HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM lParam );
 
 };
 

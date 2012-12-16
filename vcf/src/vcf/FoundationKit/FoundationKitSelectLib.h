@@ -31,15 +31,16 @@ where you installed the VCF.
 #endif
 
 
+
 # if defined(__INTEL_COMPILER)
 #   define _LIB_CPLVERNUM "icl7"
 # elif defined(__ICL)
 #   define _LIB_CPLVERNUM "icl6"
 # else
 #   if (_MSC_VER >= 1600)
-#     define _LIB_CPLVERNUM "vc100"	
+#     define _LIB_CPLVERNUM "vc100"OS_PLATFORM	
 #   elif (_MSC_VER >= 1500)
-#     define _LIB_CPLVERNUM "vc90"
+#     define _LIB_CPLVERNUM "vc90"OS_PLATFORM	
 #   elif (_MSC_VER >= 1400)
 		#ifdef VCF_WIN32CE
 			#define _LIB_CPLVERNUM "vc80ce"
@@ -63,6 +64,8 @@ where you installed the VCF.
 #   define _LIB_CPLVERNUM "bcc"
 #   endif
 # endif
+
+
 
 
 /**
