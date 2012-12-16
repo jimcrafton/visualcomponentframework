@@ -102,7 +102,7 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>vcf/GraphicsKit/GraphicsKit.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>.\ReleaseS/GraphicsKit_vc100.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)GraphicsKit_vc100.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\ReleaseS/</AssemblerListingLocation>
       <ObjectFileName>.\ReleaseS/</ObjectFileName>
       <ProgramDataBaseFileName>.\ReleaseS/</ProgramDataBaseFileName>
@@ -168,7 +168,7 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>vcf/GraphicsKit/GraphicsKit.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>.\DebugS/GraphicsKit_vc100.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)GraphicsKit_vc100.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\DebugS/</AssemblerListingLocation>
       <ObjectFileName>.\DebugS/</ObjectFileName>
       <ProgramDataBaseFileName>..\..\..\lib\GraphicsKit_vc100_sd.pdb</ProgramDataBaseFileName>
