@@ -125,6 +125,7 @@ Setup VCF_ operating system
 	#ifndef WIN64
 		#define WIN64
 	#endif
+
 #endif
 
 #if defined(VCF_WIN32) || defined(VCF_WIN64)
@@ -382,6 +383,17 @@ Setup VCF_ miscellaneous macros
 	#else
 		#define _W64
 	#endif
+#endif
+
+
+//use to indicatea 64 or 32 bit platform, for 32 bit
+//it's blank, only fill for 64 bit or otherwise.s
+#if defined(VCF_WIN64)
+	#define OS_PLATFORM	"_x64"
+#elif defined (VCF_WIN32CE)
+	#define OS_PLATFORM	"_ce"
+#else
+	#define OS_PLATFORM	""
 #endif
 
 

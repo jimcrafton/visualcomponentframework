@@ -23,9 +23,9 @@ Handle the extension based on the compiler
 #   define _LIB_CPLVERNUM "icl6"
 # else
 #   if (_MSC_VER >= 1600)
-#     define _LIB_CPLVERNUM "vc100"
+#     define _LIB_CPLVERNUM "vc100"OS_PLATFORM
 #   elif (_MSC_VER >= 1500)
-#     define _LIB_CPLVERNUM "vc90"
+#     define _LIB_CPLVERNUM "vc90"OS_PLATFORM
 #   elif (_MSC_VER >= 1400)
 #     define _LIB_CPLVERNUM "vc80"
 #   elif (_MSC_VER >= 1310)

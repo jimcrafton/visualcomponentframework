@@ -40,8 +40,9 @@ Win32Application::~Win32Application()
 
 BOOL CALLBACK SearchForAppWindows(HWND hWnd, LPARAM lParam)
 {
-	DWORD result;
+	DWORD_PTR result;
 
+	//PDWORD_PTR res = &result;
 	Win32ToolKit* toolkit = (Win32ToolKit*)UIToolkit::internal_getDefaultUIToolkit();
 	HWND toolkitWnd = toolkit->getDummyParent();
 

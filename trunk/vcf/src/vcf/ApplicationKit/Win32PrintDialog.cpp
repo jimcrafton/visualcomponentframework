@@ -25,7 +25,9 @@ Win32PrintDialog::~Win32PrintDialog()
 
 }
 
-UINT CALLBACK Win32PrintDialog::PrintHookProc( HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM lParam )
+
+
+UINT_PTR CALLBACK Win32PrintDialog::PrintHookProc( HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM lParam )
 {
 	switch ( uiMsg ) {
 		case WM_INITDIALOG : {
