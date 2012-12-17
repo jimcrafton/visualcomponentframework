@@ -89,14 +89,18 @@ defined to use the DLL or static libraries.
 	#	ifdef VCF_STATIC_CRT
 	#		ifdef _DEBUG
 	#			pragma comment(lib, "FoundationKit_"_LIB_CPLVERNUM"_scrtd.lib")
+	#			pragma comment(lib, "ZLib_"_LIB_CPLVERNUM"_scrtd.lib")
 	#		else
 	#			pragma comment(lib, "FoundationKit_"_LIB_CPLVERNUM"_scrt.lib")
+	#			pragma comment(lib, "ZLib_"_LIB_CPLVERNUM"_scrt.lib")
 	#		endif
 	#	else
 	#		ifdef _DEBUG
 	#			pragma comment(lib, "FoundationKit_"_LIB_CPLVERNUM"_sd.lib")
+	#			pragma comment(lib, "ZLib_"_LIB_CPLVERNUM"_sd.lib")
 	#		else
 	#			pragma comment(lib, "FoundationKit_"_LIB_CPLVERNUM"_s.lib")
+	#			pragma comment(lib, "ZLib_"_LIB_CPLVERNUM"_s.lib")
 	#		endif
 	#	endif	
 	#else
