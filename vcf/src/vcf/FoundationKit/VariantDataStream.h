@@ -80,6 +80,11 @@ public:
 			inStream_->read( val );
 			*data = val;
 		}
+		else if ( type == "+i" ) {
+			uint32 val = 0;
+			inStream_->read( val );
+			*data = val;
+		}
 		else if ( type == "l" ) {
 			long val = 0;
 			inStream_->read( val );
