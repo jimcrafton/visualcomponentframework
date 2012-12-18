@@ -34,11 +34,21 @@ namespace VCF {
 		virtual uint64 read( unsigned char* bytesToRead, uint64 sizeOfBytes );
 
 		virtual bool isEOS();
-		
+		void setZipeBufferSize( const uint32& val ) {
+			zipBufferSize_ = val;
+		}
+
+		uint32 getZipeBufferSize() {
+			return zipBufferSize_;
+		}
+
+	protected:
+		uint32 zipBufferSize_;
+
 		InputStream* inputStream_;
 		z_stream zstream_;
 		CharMemStream<> uncompressedData_;
-		unsigned char zipTmpData_[256];
+		unsigned char* zipTmpData_;
 		uint64 seekPos_;
 
 	};

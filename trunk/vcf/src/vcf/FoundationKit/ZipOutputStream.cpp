@@ -19,7 +19,8 @@ using namespace VCF;
 
 
 ZipOutputStream::ZipOutputStream():
-	outStream_(NULL)
+	outStream_(NULL),
+		zipBufferSize_(ZipOutputStream::DataSize)
 {
 
 }
@@ -67,13 +68,13 @@ uint64 ZipOutputStream::write( const unsigned char* bytesToRead, uint64 sizeOfBy
 {	
 	uint64 result = 0;
 
-	const int minZipSize = DataSize;
+	
 	const unsigned char* start = bytesToRead;
-	uLongf bytesCompressed = compressBound( minZipSize );
+	uLongf bytesCompressed = compressBound( zipBufferSize_ );
 	std::vector<unsigned char> zipBytes;
 	zipBytes.resize(bytesCompressed,0);
 
-	int srcLen = minZipSize;
+	int srcLen = zipBufferSize_;
 	if ( sizeOfBytes < srcLen ) {
 		srcLen = sizeOfBytes;
 	}
@@ -93,7 +94,7 @@ uint64 ZipOutputStream::write( const unsigned char* bytesToRead, uint64 sizeOfBy
 		}
 
 		start += srcLen;
-		srcLen = minVal<int>( minZipSize, (sizeOfBytes - (start - bytesToRead)) );
+		srcLen = minVal<int>( zipBufferSize_, (sizeOfBytes - (start - bytesToRead)) );
 	}
 
 	return result;

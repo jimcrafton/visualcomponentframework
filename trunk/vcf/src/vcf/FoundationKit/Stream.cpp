@@ -226,7 +226,7 @@ void InputStream::read( String& val )
 
 	if ( !BOM16Str ) {
 		val = tmpStr;
-		seek( val.size() + 1, stSeekFromStart );	
+		seek( tmpStr.size() + 1 + seekPos, stSeekFromStart );	
 	}
 	else {
 		//the +1 is to take the null char (0) into account
@@ -461,7 +461,8 @@ void OutputStream::write( const double& val )
 
 void OutputStream::write( const String& val )
 {
-	write( (const unsigned char*)val.ansi_c_str(), val.size() );
+	AnsiString tmpStr = val;
+	write( (const unsigned char*)tmpStr.c_str(), tmpStr.size() );
 	/**
 	JC
 	WARNING - we are treating writes to the stream as if it were Ascii - this

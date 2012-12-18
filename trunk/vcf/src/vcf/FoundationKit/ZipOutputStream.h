@@ -41,6 +41,17 @@ namespace VCF {
 		
 		CharMemStream<DataSize> compressedData_;
 		OutputStream* outStream_;
+
+		void setZipeBufferSize( const uint32& val ) {
+			zipBufferSize_ = val;
+		}
+
+		uint32 getZipeBufferSize() {
+			return zipBufferSize_;
+		}
+
+	protected:
+		uint32 zipBufferSize_;
 	};
 
 

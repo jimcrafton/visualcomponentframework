@@ -18,7 +18,9 @@ using namespace VCF;
 
 ZipInputStream::ZipInputStream( InputStream* inStream ):
 	inputStream_(inStream),
-	seekPos_(0)
+	seekPos_(0),
+	zipBufferSize_(256),
+	zipTmpData_(NULL)
 {
 	memset(&zstream_,0,sizeof(zstream_));
 	if ( Z_OK != inflateInit( &zstream_ ) ) {
@@ -29,6 +31,9 @@ ZipInputStream::ZipInputStream( InputStream* inStream ):
 ZipInputStream::~ZipInputStream()
 {
 	inflateEnd( &zstream_ );
+	if ( NULL != zipTmpData_ ) {
+		delete [] zipTmpData_;
+	}
 }
 
 void ZipInputStream::seek(const uint64& offset, const SeekType& offsetFrom)
@@ -67,13 +72,20 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 	}
 	else {
 
+		unsigned char* tmpBuf = new unsigned char[zipBufferSize_];
+		memset(tmpBuf,0,zipBufferSize_);
+
+
+		if ( NULL == zipTmpData_ ) {
+			zipTmpData_ = new unsigned char[zipBufferSize_];
+			memset(zipTmpData_,0,zipBufferSize_);
+		}
 
 		int res = 0;
 		while ( result < sizeOfBytes ) {
-			unsigned char tmpBuf[256];
-			memset(tmpBuf,0,sizeof(tmpBuf));
 			
-			uint64 readIn = inputStream_->read( &zipTmpData_[0], sizeof(zipTmpData_) );
+			
+			uint64 readIn = inputStream_->read( &zipTmpData_[0], zipBufferSize_ );
 
 			if ( readIn == 0 ) {
 				break;
@@ -83,7 +95,7 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 
 
 			do {
-				zstream_.avail_out = sizeof(tmpBuf);
+				zstream_.avail_out = zipBufferSize_;
 				zstream_.next_out = tmpBuf;
 
 				res = inflate( &zstream_, 0 );
@@ -105,9 +117,9 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 					}
 
 					case Z_STREAM_END : {
-						result += sizeof(tmpBuf) - zstream_.avail_out;
+						result += zipBufferSize_ - zstream_.avail_out;
 
-						uint64 have = sizeof(tmpBuf) - zstream_.avail_out;
+						uint64 have = zipBufferSize_ - zstream_.avail_out;
 						uncompressedData_.write( &tmpBuf[0], have );
 
 						inflateEnd( &zstream_ );
@@ -117,7 +129,7 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 					break;
 
 					default : { 
-						uint64 have = sizeof(tmpBuf) - zstream_.avail_out;
+						uint64 have = zipBufferSize_ - zstream_.avail_out;
 						uncompressedData_.write( &tmpBuf[0], have );
 						result +=  have;
 					} 
@@ -126,6 +138,8 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 				
 			} while ( zstream_.avail_out == 0 );
 		}
+
+		delete []tmpBuf;
 
 		inflateEnd( &zstream_ );
 
