@@ -37,7 +37,7 @@ namespace VCF {
 
 		virtual uint64 getCurrentSeekPos();
 
-		virtual uint64 write( const unsigned char* bytesToRead, uint64 sizeOfBytes );
+		virtual uint64 write( const unsigned char* bytesToWrite, uint64 sizeOfBytes );
 		
 		CharMemStream<DataSize> compressedData_;
 		OutputStream* outStream_;

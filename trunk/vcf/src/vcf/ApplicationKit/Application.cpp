@@ -193,6 +193,10 @@ void Application::internal_main()
 				}
 			}
 
+			
+			runningInstance->Terminating(); //notify other that we're going to terminate
+
+
 			terminateLoadedLibraryApplications();
 
 			/**
@@ -200,6 +204,8 @@ void Application::internal_main()
 			This requires that people correctly call the application super class's terminateRunningApplication()
 			inside of their overide of it.
 			*/
+			
+
 			runningInstance->terminateRunningApplication();
 
 			mainWindow = runningInstance->mainWindow_;

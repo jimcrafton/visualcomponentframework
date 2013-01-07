@@ -67,6 +67,13 @@ namespace agg
         void attach_alpha_mask(const amask_type& mask) { m_mask = &mask; }
 
         //--------------------------------------------------------------------
+        template<class PixFmt2>
+        bool attach_pixfmt(PixFmt2& pixf, int x1, int y1, int x2, int y2)
+        {
+            return m_pixf->attach(pixf, x1, y1, x2, y2);
+        }
+
+        //--------------------------------------------------------------------
         unsigned width()  const { return m_pixf->width();  }
         unsigned height() const { return m_pixf->height(); }
 
@@ -172,6 +179,13 @@ namespace agg
             m_pixf->blend_color_hspan(x, y, len, colors, &m_span[0], cover_full);
         }
 
+        //--------------------------------------------------------------------
+        void copy_color_vspan(int x, int y, unsigned len, const color_type* colors)
+        {
+            realloc_span(len);
+            m_mask->fill_vspan(x, y, &m_span[0], len);
+            m_pixf->blend_color_vspan(x, y, len, colors, &m_span[0], cover_full);
+        }
 
         //--------------------------------------------------------------------
         void blend_color_hspan(int x, int y,

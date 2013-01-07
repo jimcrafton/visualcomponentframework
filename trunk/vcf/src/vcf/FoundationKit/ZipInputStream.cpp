@@ -61,7 +61,7 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 {
 	uint64 result = 0;
 
-	if ( sizeOfBytes < uncompressedData_.getSeekPos() + seekPos_ ) {
+	if ( sizeOfBytes + seekPos_ <= uncompressedData_.getSeekPos() ) {
 		uint64 oldSeek = uncompressedData_.getSeekPos();
 		uncompressedData_.setSeekPos( seekPos_ );
 
@@ -71,7 +71,7 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 		uncompressedData_.setSeekPos( oldSeek );
 	}
 	else {
-
+		
 		unsigned char* tmpBuf = new unsigned char[zipBufferSize_];
 		memset(tmpBuf,0,zipBufferSize_);
 
@@ -80,6 +80,8 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 			zipTmpData_ = new unsigned char[zipBufferSize_];
 			memset(zipTmpData_,0,zipBufferSize_);
 		}
+		
+		inflateInit( &zstream_ ) ;
 
 		int res = 0;
 		while ( result < sizeOfBytes ) {
@@ -99,7 +101,7 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 				zstream_.next_out = tmpBuf;
 
 				res = inflate( &zstream_, 0 );
-
+				
 
 
 				VCF_ASSERT(res != Z_STREAM_ERROR);
@@ -117,10 +119,11 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 					}
 
 					case Z_STREAM_END : {
-						result += zipBufferSize_ - zstream_.avail_out;
+						
 
 						uint64 have = zipBufferSize_ - zstream_.avail_out;
 						uncompressedData_.write( &tmpBuf[0], have );
+						result +=  have;
 
 						inflateEnd( &zstream_ );
 						res = inflateInit( &zstream_ ) ;
@@ -139,18 +142,15 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 			} while ( zstream_.avail_out == 0 );
 		}
 
+
+		inputStream_->seek( zstream_.total_in, stSeekBackwards );
+
+
 		delete []tmpBuf;
 
 		inflateEnd( &zstream_ );
 
-		uint64 oldSeek = uncompressedData_.getSeekPos();
-		uncompressedData_.setSeekPos( seekPos_ );
-
-		result = uncompressedData_.read( bytesToRead, sizeOfBytes );
-		seekPos_ += result;
-
-		uncompressedData_.setSeekPos( oldSeek );
-		
+		result = read( bytesToRead, sizeOfBytes );		
 	}
 
 
