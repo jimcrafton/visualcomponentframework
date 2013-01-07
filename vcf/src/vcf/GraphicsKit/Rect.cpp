@@ -238,7 +238,10 @@ Rect VCF::Rect::makeUnion( const Rect* rect )
 {
 	Rect result;
 
-	throw NotImplementedException();
+	result.left_ = minVal( rect->left_, left_ );
+	result.top_ = minVal( rect->top_, top_ );
+	result.right_ = maxVal( rect->right_, right_ );
+	result.bottom_ = maxVal( rect->bottom_, bottom_ );
 
 	return result;
 }

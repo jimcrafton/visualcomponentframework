@@ -229,7 +229,7 @@ namespace agg
     {
         poly_subpixel_shift = 8,                      //----poly_subpixel_shift
         poly_subpixel_scale = 1<<poly_subpixel_shift, //----poly_subpixel_scale 
-        poly_subpixel_mask  = poly_subpixel_scale-1,  //----poly_subpixel_mask 
+        poly_subpixel_mask  = poly_subpixel_scale-1   //----poly_subpixel_mask 
     };
 
     //----------------------------------------------------------filling_rule_e
@@ -257,15 +257,18 @@ namespace agg
     //----------------------------------------------------------------rect_base
     template<class T> struct rect_base
     {
+        typedef T            value_type;
         typedef rect_base<T> self_type;
-        T x1;
-        T y1;
-        T x2;
-        T y2;
+        T x1, y1, x2, y2;
 
         rect_base() {}
         rect_base(T x1_, T y1_, T x2_, T y2_) :
             x1(x1_), y1(y1_), x2(x2_), y2(y2_) {}
+
+        void init(T x1_, T y1_, T x2_, T y2_) 
+        {
+            x1 = x1_; y1 = y1_; x2 = x2_; y2 = y2_; 
+        }
 
         const self_type& normalize()
         {
@@ -287,6 +290,17 @@ namespace agg
         bool is_valid() const
         {
             return x1 <= x2 && y1 <= y2;
+        }
+
+        bool hit_test(T x, T y) const
+        {
+            return (x >= x1 && x <= x2 && y >= y1 && y <= y2);
+        }
+        
+        bool overlaps(const self_type& r) const
+        {
+            return !(r.x1 > x2 || r.x2 < x1
+                  || r.y1 > y2 || r.y2 < y1);
         }
     };
 
@@ -490,6 +504,30 @@ namespace agg
     typedef vertex_base<float>  vertex_f; //-----vertex_f
     typedef vertex_base<double> vertex_d; //-----vertex_d
 
+    //----------------------------------------------------------------row_info
+    template<class T> struct row_info
+    {
+        int x1, x2;
+        T* ptr;
+        row_info() {}
+        row_info(int x1_, int x2_, T* ptr_) : x1(x1_), x2(x2_), ptr(ptr_) {}
+    };
+
+    //----------------------------------------------------------const_row_info
+    template<class T> struct const_row_info
+    {
+        int x1, x2;
+        const T* ptr;
+        const_row_info() {}
+        const_row_info(int x1_, int x2_, const T* ptr_) : 
+            x1(x1_), x2(x2_), ptr(ptr_) {}
+    };
+
+    //------------------------------------------------------------is_equal_eps
+    template<class T> inline bool is_equal_eps(T v1, T v2, T epsilon)
+    {
+        return fabs(v1 - v2) <= double(epsilon);
+    }
 }
 
 

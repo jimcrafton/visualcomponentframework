@@ -52,9 +52,13 @@ there should only be one instance that is created on the stack.
  */
 
 typedef Delegate1<Event*> OSEventReceivedDelegate;
+typedef Delegate0 TerminatingDelegate;
 
 class APPLICATIONKIT_API Application : public AbstractApplication {
 public:
+
+	DELEGATE(TerminatingDelegate,Terminating)
+
 	/**
 	Every derived class \b must at least take argc, and argv
 	arguments to it's constructor. These in turn get passed to

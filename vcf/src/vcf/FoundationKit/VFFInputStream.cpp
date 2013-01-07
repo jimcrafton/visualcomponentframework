@@ -517,21 +517,23 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 
 						bool deferredProp = false;
 
-						if ( /*(pdObject == prop->getType()) &&*/ ('@' == value[0]) ) {
-							//OK our value is actually a component name so we are
-							//going to store it in a list for later, because we may not
-							//have an existing instance of the component yet. To store
-							//this successfully we need the name of the property to set,
-							//the actualy object instance that we are going to set the
-							//property on, and the name of the component to try and retreive
-							//once we get to that point.
+						if ( !value.empty() ) {
+							if ( /*(pdObject == prop->getType()) &&*/ ('@' == value[0]) ) {
+								//OK our value is actually a component name so we are
+								//going to store it in a list for later, because we may not
+								//have an existing instance of the component yet. To store
+								//this successfully we need the name of the property to set,
+								//the actualy object instance that we are going to set the
+								//property on, and the name of the component to try and retreive
+								//once we get to that point.
 							
-							value = value.erase( 0, 1 );
-							if ( !value.empty() ) {
-								deferredProp = true;
-							}
-							else {
-								value = value.insert( 0, L"@" );
+								value = value.erase( 0, 1 );
+								if ( !value.empty() ) {
+									deferredProp = true;
+								}
+								else {
+									value = value.insert( 0, L"@" );
+								}
 							}
 						}
 

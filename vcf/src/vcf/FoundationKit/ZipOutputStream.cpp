@@ -64,13 +64,13 @@ uint64 ZipOutputStream::getCurrentSeekPos()
 }
 
 
-uint64 ZipOutputStream::write( const unsigned char* bytesToRead, uint64 sizeOfBytes )
+uint64 ZipOutputStream::write( const unsigned char* bytesToWrite, uint64 sizeOfBytes )
 {	
 	uint64 result = 0;
 
 	
-	const unsigned char* start = bytesToRead;
-	uLongf bytesCompressed = compressBound( zipBufferSize_ );
+	const unsigned char* start = bytesToWrite;
+	uLongf bytesCompressed = zipBufferSize_ * 2;//compressBound( zipBufferSize_ );
 	std::vector<unsigned char> zipBytes;
 	zipBytes.resize(bytesCompressed,0);
 
@@ -79,7 +79,7 @@ uint64 ZipOutputStream::write( const unsigned char* bytesToRead, uint64 sizeOfBy
 		srcLen = sizeOfBytes;
 	}
 
-	while ( (start - bytesToRead) < sizeOfBytes ) {
+	while ( (start - bytesToWrite) < sizeOfBytes ) {
 		bytesCompressed = zipBytes.size();
 		
 
@@ -94,7 +94,7 @@ uint64 ZipOutputStream::write( const unsigned char* bytesToRead, uint64 sizeOfBy
 		}
 
 		start += srcLen;
-		srcLen = minVal<int>( zipBufferSize_, (sizeOfBytes - (start - bytesToRead)) );
+		srcLen = minVal<int>( zipBufferSize_, (sizeOfBytes - (start - bytesToWrite)) );
 	}
 
 	return result;

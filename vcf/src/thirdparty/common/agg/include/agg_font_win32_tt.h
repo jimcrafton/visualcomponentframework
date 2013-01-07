@@ -111,25 +111,6 @@ namespace agg
         bool            add_kerning(unsigned first, unsigned second,
                                     double* x, double* y);
 
-
-	
-		//JC's custom stuff...
-
-		HFONT current_font() const {
-			return m_cur_font;
-		}
-		
-		HDC dc() const {
-			return m_dc;
-		}
-
-		void get_scale_values( double* sx, double* sy ) const {
-			double m[6];
-
-			m_affine.store_to(m);
-			*sx = m[0];
-			*sy = m[3];
-		}
     private:
         font_engine_win32_tt_base(const font_engine_win32_tt_base&);
         const font_engine_win32_tt_base& operator = (const font_engine_win32_tt_base&);
