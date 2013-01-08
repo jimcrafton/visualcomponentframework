@@ -1383,11 +1383,23 @@ void Control::afterCreate( ComponentEvent* event )
 
 void Control::repaint( Rect* repaintRect )
 {	
+	Scrollable* scrollable = getScrollable();
+	if ( NULL != scrollable && NULL != repaintRect ) {
+		repaintRect->offset( -scrollable->getHorizontalPosition(),
+			-scrollable->getVerticalPosition() );
+	}
+
 	peer_->repaint( repaintRect, false );
 }
 
 void Control::repaintNow( Rect* repaintRect )
 {
+	Scrollable* scrollable = getScrollable();
+	if ( NULL != scrollable && NULL != repaintRect ) {
+		repaintRect->offset( -scrollable->getHorizontalPosition(),
+			-scrollable->getVerticalPosition() );
+	}
+
 	peer_->repaint( repaintRect, true );
 }
 
