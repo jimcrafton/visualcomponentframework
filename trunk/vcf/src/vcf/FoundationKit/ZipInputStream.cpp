@@ -84,6 +84,7 @@ uint64 ZipInputStream::read( unsigned char* bytesToRead, uint64 sizeOfBytes )
 		inflateInit( &zstream_ ) ;
 
 		int res = 0;
+
 		while ( result < sizeOfBytes ) {
 			
 			
