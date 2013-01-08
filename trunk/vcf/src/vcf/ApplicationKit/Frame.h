@@ -208,7 +208,7 @@ public:
 	virtual void  setClientBounds( Rect* bounds ) = 0;
 
 	virtual void paint( GraphicsContext * context );
-
+	
 	/**
 	Shows the frame.
 	Generally the same as calling Control::setVisible(true)

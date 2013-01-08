@@ -767,6 +767,9 @@ public:
 	*/
 	virtual Rect getClientBounds( const bool& includeBorder = true ) ;/**throw( InvalidPeer ); -JEC - FIXME later*/
 
+	double getClientWidth();
+	double getClientHeight();
+
 	/**
 	Returns the left position in parent coordinates
 	*/

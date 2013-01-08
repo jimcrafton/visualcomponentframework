@@ -321,7 +321,19 @@ Rect Control::getBounds()
 }
 
 
+double Control::getClientWidth()
+{
+	Rect r = getClientBounds(false);
 
+	return r.getWidth();
+}
+
+double Control::getClientHeight()
+{
+	Rect r = getClientBounds(false);
+
+	return r.getHeight();
+}
 
 Rect Control::getClientBounds( const bool& includeBorder ) 
 {	

@@ -450,8 +450,13 @@ _property_( double, "minWidth", getMinWidth, setMinWidth, "" );
 _property_( double, "maxHeight", getMaxHeight, setMaxHeight, "" );
 _property_( double, "maxWidth", getMaxWidth, setMaxWidth, "" );
 
-_property_( double, "bottom", getBottom, setBottom, "" );
-_property_( double, "bottom", getBottom, setBottom, "" );
+_property_ro_( double, "clientWidth", getClientWidth, "" );
+_property_ro_( double, "clientHeight", getClientHeight, "" );
+
+_property_( bool, "ignoreForParentScrolling", ignoreForParentScrolling, setIgnoreForParentScrolling, "" );
+
+
+
 
 _property_object_( Border, "border", getBorder, setBorder, "" );
 _property_object_( Color, "color", getColor, setColor, "" );
