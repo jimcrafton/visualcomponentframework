@@ -306,6 +306,9 @@ ListItem* ListViewControl::insertItem( const uint32& index, const String& captio
 	lm->insert( index, caption );
 
 	result = getItem(index);
+	if ( NULL != result ) {
+		result->setImageIndex( imageIndex );
+	}
 
 	return result;
 }
