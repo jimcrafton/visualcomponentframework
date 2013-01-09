@@ -1158,6 +1158,10 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 
 						// Request prepaint notifications for each item.
 						ListItem* item = listviewControl_->getItem( listViewCustomDraw->nmcd.dwItemSpec );
+						
+						listViewCustomDraw->clrTextBk = (COLORREF) listviewControl_->getColor()->getColorRef32();
+						//listViewCustomDraw->clrFace = (COLORREF) listviewControl_->getColor()->getColorRef32();
+
 						if ( NULL != item ) {
 							if ( !item->isFontDefault() ) {
 								
@@ -2089,8 +2093,18 @@ void Win32Listview::setLargeImageList( ImageList* imageList )
 			transparentColor = ::GetPixel( win32Img->getDC(), 0, 0 );
 		}
 
+		Image* img = GraphicsToolkit::createImage( imageList->getImageCount() * 
+													imageList->getImageWidth(),
+													imageList->getImageHeight() );
 
-		HBITMAP hbmImage = win32Img->getBitmap();
+		{
+			ImageContext imgCtx = img;
+
+			imgCtx->drawImage(0, 0, imageList->getMasterImage() );
+		}
+
+
+		HBITMAP hbmImage = ((Win32Image*)img)->getBitmap();
 
 		HBITMAP hCopyImg = (HBITMAP)CopyImage( hbmImage, IMAGE_BITMAP, 0, 0, NULL );
 
@@ -2102,6 +2116,8 @@ void Win32Listview::setLargeImageList( ImageList* imageList )
 		if ( err < 0 ) {
 			//error condition !
 		}
+
+		delete img;
 
 		::DeleteObject( hCopyImg );
 		sz = win32Img->getWidth() * win32Img->getHeight();

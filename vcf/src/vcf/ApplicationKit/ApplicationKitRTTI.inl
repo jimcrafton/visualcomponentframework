@@ -797,7 +797,7 @@ _class_rtti_end_
 _class_abstract_rtti_(ListControl, "VCF::Control", LISTCONTROL_CLASSID )
 _property_object_( ImageList, "smallImageList", getSmallImageList, setSmallImageList, "" );
 _property_object_( ImageList, "largeImageList", getLargeImageList, setLargeImageList, "" );
-_property_object_( ImageList, "statImageList", getStateImageList, setStateImageList, "" );
+_property_object_( ImageList, "stateImageList", getStateImageList, setStateImageList, "" );
 
 _property_object_( ListModel, "listModel", getListModel, setListModel, "" );
 
