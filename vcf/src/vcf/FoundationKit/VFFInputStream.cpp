@@ -1100,7 +1100,7 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 		try {
 			if ( parser_->tokenSymbolIs( "delegates" ) ) {
 				//check for delegates
-				readDelegates( componentInstance, clazz );
+				readDelegates( componentInstance, componentInstance->getClass() );// clazz );
 			}
 			else if ( !parser_->tokenSymbolIs( "object" ) ) {
 				// do object
