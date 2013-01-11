@@ -58,6 +58,12 @@ public:
 
 	virtual void setEnableAutoResize( const bool& val );
 	virtual bool isAutoResizeEnabled();
+
+	virtual void setVertical( const bool& val ); 
+	virtual bool isVertical();
+
+	virtual void setWrapButtons( const bool& val ); 
+	virtual bool isWrapButtons();
 protected:
 	void onModelChanged( ModelEvent* e );
 	//WNDPROC oldToolbarWndProc_;

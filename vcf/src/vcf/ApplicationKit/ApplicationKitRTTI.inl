@@ -862,6 +862,8 @@ _class_rtti_(PushButton, "VCF::CustomControl", PUSHBUTTON_CLASSID)
 _property_object_( ImageList, "imageList", getImageList, setImageList, "" );
 _property_( String, "caption", getCaption, setCaption, "" );
 _property_( bool, "showCaption", getShowCaption, setShowCaption, "" );
+_property_( int32, "imageIndex", getImageIndex, setImageIndex, "" );
+
 _class_rtti_end_
 
 
@@ -986,6 +988,8 @@ _class_rtti_(Toolbar, "VCF::Control", TOOLBAR_CLASSID);
 _property_( bool, "showButtonCaptions",getShowButtonCaptions, setShowButtonCaptions, "" );
 _property_( bool, "horizontalCaptions",getButtonCaptionsHorizontal, setButtonCaptionsHorizontal, "" );
 _property_( bool, "autoResizeEnabled",isAutoResizeEnabled, setEnableAutoResize, "" );
+_property_( bool, "vertical",isVertical, setVertical, "" );
+_property_( bool, "wrapButtons",isWrapButtons, setWrapButtons, "" );
 _property_object_( ImageList, "imageList", getImageList, setImageList, "" );
 
 _class_rtti_end_

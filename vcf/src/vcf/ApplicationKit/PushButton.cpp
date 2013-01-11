@@ -734,6 +734,16 @@ void PushButton::setBtnImageIndex( const int32& btnImageIndex, ImageState imgSta
 	}
 }
 
+int32 PushButton::getImageIndex()
+{
+	return getBtnImageIndex( bisNormal );
+}
+
+void PushButton::setImageIndex( const int32& val )
+{
+	setBtnImageIndex( val );
+}
+
 void PushButton::setBtnImageIndex( ImageList* imageList, const int32& btnImageIndex, const CaptionAlignment& captionAlignment, const double& separationImageCaption ) {
 	setImageList( imageList );
 	setBtnImageIndex( btnImageIndex, bisNormal );
