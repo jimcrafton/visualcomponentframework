@@ -32,11 +32,13 @@ Win32Toolbar::~Win32Toolbar()
 Win32Object::CreateParams Win32Toolbar::createParams()
 {
 	Win32Object::CreateParams result;
-	result.first = WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | TBSTYLE_TOOLTIPS | TBSTYLE_FLAT | CCS_NODIVIDER;// | CCS_NORESIZE;;
+	result.first = WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | 
+					TBSTYLE_TOOLTIPS | TBSTYLE_FLAT | CCS_NODIVIDER;// | CCS_NORESIZE;;
 	result.second = 0;
 
 	return result;
 }
+
 
 
 void Win32Toolbar::create( Control* control )
@@ -111,6 +113,68 @@ void Win32Toolbar::create( Control* control )
 		new ClassProcedure1<ModelEvent*,Win32Toolbar>( this, &Win32Toolbar::onModelChanged, "Win32Toolbar::onModelChanged" );
 
 }
+
+#define TBSTYLE_EX_VERTICAL 0x00000004
+
+void Win32Toolbar::setVertical( const bool& val )
+{
+
+	//per http://blogs.msdn.com/b/oldnewthing/archive/2007/03/28/1969030.aspx
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
+
+	if( val ) {
+		style |= CCS_VERT;
+	}
+	else {
+		style &= ~CCS_VERT;		
+	}
+	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
+/*
+	style = SendMessage(hwnd_, TB_GETEXTENDEDSTYLE, 0, 0 );
+
+	
+
+	if( val ) {
+		style |= TBSTYLE_EX_VERTICAL;		
+	}
+	else {
+		style &= ~TBSTYLE_EX_VERTICAL;
+	}
+
+	SendMessage(hwnd_, TB_SETEXTENDEDSTYLE, 0, (LPARAM)style );
+	*/
+
+	::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
+	::UpdateWindow( hwnd_ );
+}
+
+bool Win32Toolbar::isVertical()
+{
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
+	return (style & CCS_VERT) ? true : false;
+}
+
+void Win32Toolbar::setWrapButtons( const bool& val )
+{
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
+
+	if( val ) {
+		style |= TBSTYLE_WRAPABLE;		
+	}
+	else {
+		style &= ~TBSTYLE_WRAPABLE;
+	}
+	::SetWindowLongPtr( hwnd_, GWL_STYLE, style );
+	::SetWindowPos( hwnd_, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE );
+	::UpdateWindow( hwnd_ );
+}
+
+bool Win32Toolbar::isWrapButtons()
+{
+	LONG_PTR style = ::GetWindowLongPtr( hwnd_, GWL_STYLE );
+	return (style & TBSTYLE_WRAPABLE) ? true : false;
+}
+
 
 void Win32Toolbar::setEnableAutoResize( const bool& val )
 {
@@ -929,7 +993,7 @@ void Win32Toolbar::insertToolbarButton( const uint32& index, ToolbarItem* item, 
 		}
 
 		btn.fsState = TBSTATE_ENABLED;
-		btn.fsStyle = TBSTYLE_BUTTON /*| TBSTYLE_AUTOSIZE */;
+		btn.fsStyle = TBSTYLE_BUTTON | TBSTATE_WRAP /*| TBSTYLE_AUTOSIZE */;
 		btn.idCommand = index;
 
 		if ( !SendMessage( hwnd_, TB_INSERTBUTTONW, (WPARAM) index, (LPARAM)&btn ) ) {
@@ -942,7 +1006,7 @@ void Win32Toolbar::insertToolbarButton( const uint32& index, ToolbarItem* item, 
 		info.cbSize = sizeof(info);
 
 
-		if ( !SendMessage( hwnd_, TB_GETBUTTONINFOW, 0, (LPARAM)&info ) ) {
+		if ( SendMessage( hwnd_, TB_GETBUTTONINFOW, 0, (LPARAM)&info ) == -1 ) {
 			int err = GetLastError();
 		}
 

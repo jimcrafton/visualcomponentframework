@@ -571,6 +571,25 @@ bool Toolbar::isAutoResizeEnabled()
 	return toolbarPeer_->isAutoResizeEnabled();
 }
 
+void Toolbar::setVertical( const bool& val )
+{
+	toolbarPeer_->setVertical( val );
+}
+
+bool Toolbar::isVertical()
+{
+	return toolbarPeer_->isVertical();
+}
+
+void Toolbar::setWrapButtons( const bool& val )
+{
+	toolbarPeer_->setWrapButtons( val );
+}
+
+bool Toolbar::isWrapButtons()
+{
+	return toolbarPeer_->isWrapButtons();
+}	
 
 
 

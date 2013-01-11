@@ -196,6 +196,8 @@ public:
 	*/
 	void setBtnImageIndex( ImageList* imageList, const int32& btnImageIndex, const CaptionAlignment& captionAlignment=bcaRight, const double& separationImageCaption=5.0 );
 
+	int32 getImageIndex();
+	void setImageIndex( const int32& val );
 	/**
 	Tells if the button's caption needs to be aligned on the left, right,
 	top or bottom,or it should be centered.

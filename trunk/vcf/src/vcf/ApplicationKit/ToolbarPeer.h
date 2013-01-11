@@ -32,6 +32,12 @@ public:
 	virtual void setEnableAutoResize( const bool& val ) = 0;
 	virtual bool isAutoResizeEnabled() = 0;
 
+	virtual void setVertical( const bool& val ) = 0; 
+	virtual bool isVertical() = 0;
+
+	virtual void setWrapButtons( const bool& val ) = 0; 
+	virtual bool isWrapButtons() = 0;
+
 };
 
 

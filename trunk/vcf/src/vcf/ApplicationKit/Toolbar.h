@@ -337,7 +337,13 @@ public:
 	void setEnableAutoResize( const bool& val );
 	bool isAutoResizeEnabled();
 
-	virtual void handleEvent( Event* event );
+	void setVertical( const bool& val ); 
+	bool isVertical();
+
+	void setWrapButtons( const bool& val ); 
+	bool isWrapButtons();
+
+	void handleEvent( Event* event );
 
 	virtual void paint( GraphicsContext* context );
 protected:
