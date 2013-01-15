@@ -15,7 +15,8 @@ using namespace VCF;
 Font::Font():
 	peer_(NULL),
 	locale_(NULL),
-	context_(NULL)
+	context_(NULL),
+	useSymbolCharset_(false)
 {
 	peer_ = GraphicsToolkit::createFontPeer( "" );
 	if ( NULL == peer_ ){
@@ -28,7 +29,8 @@ Font::Font():
 Font::Font( const String& fontName ):
 	peer_(NULL),
 	locale_(NULL),
-	context_(NULL)
+	context_(NULL),
+	useSymbolCharset_(false)
 {
 	peer_ = GraphicsToolkit::createFontPeer( fontName );
 	if ( NULL == peer_ ){
@@ -41,7 +43,8 @@ Font::Font( const String& fontName ):
 Font::Font( const String& fontName, const double& pointSize ):
 	peer_(NULL),
 	locale_(NULL),
-	context_(NULL)
+	context_(NULL),
+	useSymbolCharset_(false)
 {
 
 	peer_ = GraphicsToolkit::createFontPeer( fontName, pointSize );
@@ -56,7 +59,8 @@ Font::Font( const Font& font ):
     Object( font ),
 	peer_(NULL),
 	locale_(NULL),
-	context_(NULL)
+	context_(NULL),
+	useSymbolCharset_(false)
 {
 	peer_ = GraphicsToolkit::createFontPeer( font.getName() );
 	if ( NULL == peer_ ){
@@ -76,11 +80,14 @@ Font::~Font()
 
 Font& Font::operator= (const Font& rhs )
 {
+	useSymbolCharset_  = rhs.useSymbolCharset_;
+
 	setAttributes( rhs.getPointSize(), rhs.getBold(), rhs.getItalic(), rhs.getUnderlined(),
 					rhs.getStrikeOut(), &rhs.color_, rhs.getName() );
 
 	locale_ = rhs.locale_;
 	context_ = rhs.context_;
+	
 	return *this;
 }
 
@@ -192,6 +199,18 @@ void Font::setName( const String& name )
 {
 	peer_->setName( name );
 	changed( Font::fcFontName );
+}
+
+bool Font::usesSymbolCharset()
+{
+	return useSymbolCharset_;
+}
+
+void Font::setUsesSymbolCharset(const bool& val)
+{
+	useSymbolCharset_ = val;
+	peer_->updateLocaleSettings();
+	changed( Font::fcFontCharSet );
 }
 
 void Font::copy( Object* source )

@@ -106,6 +106,12 @@ public:
 		*/
 		fcFontLocale,
 
+		/**
+		An event is fired of this type if the font's 
+		locale instance is changed.
+		*/
+		fcFontCharSet,
+
 		fcAll
 	};
 
@@ -257,12 +263,16 @@ public:
 
 	double getTextWidth( const String& text );
 	double getTextHeight( const String& text );
+
+	bool usesSymbolCharset();
+	void setUsesSymbolCharset(const bool& val);
 protected:
 
 	FontPeer* peer_;
 	Color color_;
 	Locale* locale_;
 	GraphicsContext* context_;
+	bool useSymbolCharset_;
 
 	void changed( int eventType );
 };
