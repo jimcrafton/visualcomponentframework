@@ -47,6 +47,8 @@ _property_( bool, "underlined", getUnderlined, setUnderlined, "Indicates whether
 _property_( bool, "strikeout", getStrikeOut, setStrikeOut, "Indicates whether or not the font is struckout or not." )
 _property_( double, "pointSize", getPointSize, setPointSize, "The font's Point size. Takes into consideration the current graphics devices DPI." )
 _property_object_( Color, "color", getColor, setColor, "The font's color." );
+_property_( bool, "usesSymbolCharset", usesSymbolCharset, setUsesSymbolCharset, "Indicates whether or not the font is a symbol font." )
+
 _class_rtti_end_
 
 

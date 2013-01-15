@@ -167,6 +167,10 @@ void Win32Font::init()
 			tmpLF.lfWeight = FW_NORMAL;
 			tmpLF.lfWidth = 0;//let font mapper choose closest match
 			fontHeight = tmpLF.lfHeight;
+
+			if ( font_->usesSymbolCharset() ) {
+				tmpLF.lfCharSet = SYMBOL_CHARSET;
+			}
 		}
 		else{
 			LOGFONTA& tmpLF = *((LOGFONTA*)logFont_);
@@ -182,6 +186,9 @@ void Win32Font::init()
 			tmpLF.lfUnderline = FALSE;
 			tmpLF.lfWeight = FW_NORMAL;
 			tmpLF.lfWidth = 0;//let font mapper choose closest match
+			if ( font_->usesSymbolCharset() ) {
+				tmpLF.lfCharSet = SYMBOL_CHARSET;
+			}
 			fontHeight = tmpLF.lfHeight;
 		}
 	}
@@ -877,6 +884,10 @@ void Win32Font::setAttributes( const double& pointSize, const bool& bold, const 
 			lfTmp.lfStrikeOut = FALSE;
 			lfTmp.lfUnderline = FALSE;
 			lfTmp.lfWeight = FW_NORMAL;
+			if ( font_->usesSymbolCharset() ) {
+				lfTmp.lfCharSet = SYMBOL_CHARSET;
+			}
+
 			memset( lfTmp.lfFaceName, 0, LF_FACESIZE*sizeof(WideChar) );
 			fontName_.copy( lfTmp.lfFaceName, minVal<int>( fontName_.size(), LF_FACESIZE) );
 
@@ -896,6 +907,11 @@ void Win32Font::setAttributes( const double& pointSize, const bool& bold, const 
 			lfTmp.lfUnderline = FALSE;
 			lfTmp.lfWeight = FW_NORMAL;
 			AnsiString tmpName = fontName_;
+			if ( font_->usesSymbolCharset() ) {
+				lfTmp.lfCharSet = SYMBOL_CHARSET;
+			}
+
+
 			memset( lfTmp.lfFaceName, 0, LF_FACESIZE*sizeof(char) );
 			tmpName.copy( lfTmp.lfFaceName, minVal<int>( tmpName.size(), LF_FACESIZE) );
 			testFnt = CreateFontIndirectA( &lfTmp );
@@ -937,6 +953,9 @@ void Win32Font::setAttributes( const double& pointSize, const bool& bold, const 
 		lfw.lfUnderline = underlined ? TRUE : FALSE;
 		lfw.lfEscapement = 0;
 		lfw.lfOrientation = 0;
+		if ( font_->usesSymbolCharset() ) {
+			lfw.lfCharSet = SYMBOL_CHARSET;
+		}
 
 		memset( lfw.lfFaceName, 0, LF_FACESIZE*sizeof(VCFChar) );
 		fontName_.copy( lfw.lfFaceName, minVal<int>( fontName_.size(), LF_FACESIZE) );
@@ -951,6 +970,9 @@ void Win32Font::setAttributes( const double& pointSize, const bool& bold, const 
 		lfa.lfUnderline = underlined ? TRUE : FALSE;
 		lfa.lfEscapement = 0;
 		lfa.lfOrientation = 0;
+		if ( font_->usesSymbolCharset() ) {
+			lfa.lfCharSet = SYMBOL_CHARSET;
+		}
 
 		AnsiString tmpName = fontName_;
 
@@ -1173,6 +1195,10 @@ void Win32Font::updateLocaleSettings()
 				}
 				break;
 			}
+		}
+
+		if ( font_->usesSymbolCharset() ) {
+			charSet = SYMBOL_CHARSET;
 		}
 
 		if ( System::isUnicodeEnabled() ) {
