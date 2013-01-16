@@ -25,6 +25,7 @@ This was created to improved compile times
 #include "vcf/ApplicationKit/AdapterModels.h"
 #include "vcf/ApplicationKit/PagedContainer.h"
 #include "vcf/ApplicationKit/DateTimePickerControl.h"
+#include "vcf/ApplicationKit/PopupWindow.h"
 
 
 namespace VCF {
@@ -1049,6 +1050,11 @@ _delegate_(WindowDelegate, WindowRestore )
 _delegate_(WindowDelegate, WindowMaximize )
 _delegate_(WindowDelegate, WindowMinimize )
 _class_rtti_end_
+
+_class_rtti_(PopupWindow, "VCF::Frame", "PopupWindow" )
+
+_class_rtti_end_
+
 
 
 

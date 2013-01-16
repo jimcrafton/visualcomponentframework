@@ -318,7 +318,8 @@ void AbstractContainer::paintChildren( GraphicsContext* context )
 	if ( NULL != heavyWeightParent ) {
 		
 	}
-	
+
+	Rect oldViewBounds = context->getViewableBounds();
 	while ( true == children->hasMoreElements() ){
 		Control* child = children->nextElement();
 		VCF_ASSERT( NULL != child );
@@ -354,6 +355,7 @@ void AbstractContainer::paintChildren( GraphicsContext* context )
 			context->setCurrentTransform( xfrm );
 									
 			controlContainer_->preChildPaint( context , child, &childClipRect );
+			context->setViewableBounds( childClipRect );
 			//context->setClippingRect( &childClipRect );
 
 			child->paintBorder( context );
@@ -366,6 +368,7 @@ void AbstractContainer::paintChildren( GraphicsContext* context )
 			context->setOrigin( oldOrigin.x_, oldOrigin.y_ );
 			
 			controlContainer_->postChildPaint( context , child, &oldClipRect );
+			context->setViewableBounds( oldViewBounds );
 			//context->setClippingRect( &oldClipRect );
 		}
 	}

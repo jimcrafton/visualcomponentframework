@@ -152,6 +152,8 @@ void ApplicationKit::init( int argc, char** argv )
 		REGISTER_CLASSINFO_EXTERNAL( MultilineTextControl );
 		REGISTER_CLASSINFO_EXTERNAL(TreeControl );		
 		REGISTER_CLASSINFO_EXTERNAL(Window );
+		REGISTER_CLASSINFO_EXTERNAL(PopupWindow );
+		
 		REGISTER_CLASSINFO_EXTERNAL( ToggledButton );
 		REGISTER_CLASSINFO_EXTERNAL( CheckBoxControl );
 		REGISTER_CLASSINFO_EXTERNAL( RadioButtonControl );

@@ -16,6 +16,30 @@ where you installed the VCF.
 using namespace VCF;
 
 
+PopupWindow::PopupWindow():
+	Frame(),
+	popupPeer_(NULL),
+	windowPeer_(NULL),
+	modal_(false),
+	owningWindow_(NULL)
+{
+	
+	owningWindow_ = dynamic_cast<Window*>( Frame::getActiveFrame() );
+	
+
+	popupPeer_ = UIToolkit::createPopupWindowPeer( this, owningWindow_ );
+
+	peer_ = dynamic_cast<ControlPeer*>(popupPeer_);
+
+	windowPeer_ = dynamic_cast<WindowPeer*>(popupPeer_);
+
+	peer_->create( this );
+	peer_->setControl( this );
+
+	//add a close handler to get notified of the closing window
+	FrameClose.add( new ClassProcedure1<FrameEvent*,PopupWindow>( this, &PopupWindow::onClose, "onClose" ) );
+}
+
 PopupWindow::PopupWindow( Window* owningWindow ):
 	Frame(),
 	popupPeer_(NULL),
@@ -23,6 +47,9 @@ PopupWindow::PopupWindow( Window* owningWindow ):
 	modal_(false),
 	owningWindow_(owningWindow)
 {
+	if ( NULL == owningWindow ) {
+		owningWindow_ = dynamic_cast<Window*>( Frame::getActiveFrame() );
+	}
 
 	popupPeer_ = UIToolkit::createPopupWindowPeer( this, owningWindow_ );
 

@@ -24,6 +24,8 @@ class APPLICATIONKIT_API PopupWindow : public Frame {
 public:
 	PopupWindow( Window* owningWindow );
 
+	PopupWindow();
+
 	virtual ~PopupWindow();
 
 	void showModal();

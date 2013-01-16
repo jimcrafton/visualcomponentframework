@@ -532,6 +532,7 @@ void GraphicsContext::drawPartialImage( const double& x, const double& y, Rect* 
 {
 	if ( !viewableBounds_.isEmpty() ) {
 		Rect r = *imageBounds;
+		r.offset( -r.left_, -r.top_ );
 		r.offset( x,y );
 		r = getCurrentTransform()->apply(&r);
 
