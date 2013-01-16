@@ -280,7 +280,7 @@ void Win32PopupWindowPeer::setClientBounds( Rect* bounds )
 
 void Win32PopupWindowPeer::close()
 {
-
+	closePopup();
 }
 
 void Win32PopupWindowPeer::setFrameStyle( const FrameStyleType& frameStyle )
@@ -392,6 +392,7 @@ bool Win32PopupWindowPeer::handleEventMessages( UINT message, WPARAM wParam, LPA
 		case WM_KEYDOWN:
 		case WM_SYSKEYDOWN:
 		case WM_MOUSEWHEEL: {
+			AbstractWin32Component::handleEventMessages( message, wParam, lParam, wndProcResult );
 			closePopup();
 		}
 		break;
