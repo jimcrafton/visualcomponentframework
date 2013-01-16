@@ -1488,12 +1488,17 @@ void GraphicsContext::execPathOperations()
 		agg::rasterizer_scanline_aa<> rasterizer;
 		PointOperation pt, p2, c1, c2;
 
+		Point org = getOrigin();
 
 		if ( viewableBounds_.isEmpty() && NULL != ctxImage_ ) {
 			rasterizer.clip_box( 0, 0,ctxImage_->getWidth(),ctxImage_->getHeight() );
 		}
 		else {
-			rasterizer.clip_box( 0, 0,viewableBounds_.getWidth(),viewableBounds_.getHeight() );
+			Rect r = viewableBounds_;
+			r.offset( org );
+			rasterizer.clip_box( r.left_, r.top_, 
+				r.right_, r.bottom_ );
+									//viewableBounds_.getWidth(),viewableBounds_.getHeight() );
 		}
 
 		while ( it != pathOperations_.end() ) {			
@@ -1657,7 +1662,7 @@ void GraphicsContext::execPathOperations()
 			mat*=agg::trans_affine_translation(0.5,0.5);
 		}
 
-		Point org = getOrigin();
+		
 		mat *= agg::trans_affine_translation( org.x_, org.y_  );
 		agg::conv_curve<agg::path_storage> smooth(path);
 

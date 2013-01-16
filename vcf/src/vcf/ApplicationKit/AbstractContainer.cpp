@@ -112,12 +112,27 @@ void AbstractContainer::onMouseEvent( MouseEvent* event )
 				throw RuntimeException (MAKE_ERROR_MSG_2(INVALID_POINTER_ERROR)) ;
 			}
 
+			if ( child->isEnabled() ) {		
 
-			childBounds = child->getBounds();
-			if ( Control::MOUSE_LEAVE == event->getType() ) {
-				if ( (false == childBounds.containsPt( &tmp )) && (child->isLightWeight() && child->getVisible()) ){
-					if ( (NULL != previousMouseEnteredChild) && (previousMouseEnteredChild == child) ) {
-						//if ( child->isLightWeight() ){
+				childBounds = child->getBounds();
+				if ( Control::MOUSE_LEAVE == event->getType() ) {
+					if ( (false == childBounds.containsPt( &tmp )) && (child->isLightWeight() && child->getVisible()) ){
+						if ( (NULL != previousMouseEnteredChild) && (previousMouseEnteredChild == child) ) {
+							//if ( child->isLightWeight() ){
+							child->translateToLocal( &tmp );
+							MouseEvent localEvent( child, event->getType(), event->getButtonMask(), event->getKeyMask(), &tmp );
+							child->handleEvent( &localEvent );
+
+							event->setConsumed(true);//localEvent.isConsumed());
+							break;
+						}
+					}
+				}
+				else if ( Control::MOUSE_ENTERED == event->getType() ) {
+					Rect tmpRect = child->getBounds();
+					tmpRect.inflate( 2, 2 );
+					if ( (tmpRect.containsPt( &tmp )) && (child->isLightWeight() && child->getVisible()) ){
+						Control::setPreviousMouseOverControl( child );
 						child->translateToLocal( &tmp );
 						MouseEvent localEvent( child, event->getType(), event->getButtonMask(), event->getKeyMask(), &tmp );
 						child->handleEvent( &localEvent );
@@ -126,56 +141,43 @@ void AbstractContainer::onMouseEvent( MouseEvent* event )
 						break;
 					}
 				}
-			}
-			else if ( Control::MOUSE_ENTERED == event->getType() ) {
-				Rect tmpRect = child->getBounds();
-				tmpRect.inflate( 2, 2 );
-				if ( (tmpRect.containsPt( &tmp )) && (child->isLightWeight() && child->getVisible()) ){
-					Control::setPreviousMouseOverControl( child );
-					child->translateToLocal( &tmp );
-					MouseEvent localEvent( child, event->getType(), event->getButtonMask(), event->getKeyMask(), &tmp );
-					child->handleEvent( &localEvent );
-
-					event->setConsumed(true);//localEvent.isConsumed());
-					break;
-				}
-			}
-			else {
-				if ( (true == childBounds.containsPt( &tmp )) && (child->isLightWeight() && child->getVisible()) ){
-					child->translateToLocal( &tmp );
-					if ( Control::MOUSE_MOVE == event->getType() ) {
-						if ( child != previousMouseEnteredChild ) {
-							if ( NULL != previousMouseEnteredChild ) {
-								Point tmp2 = *event->getPoint();
-								previousMouseEnteredChild->translateToLocal( &tmp2 );
-								MouseEvent localEvent( previousMouseEnteredChild, Control::MOUSE_LEAVE, event->getButtonMask(), event->getKeyMask(), &tmp2 );
-								previousMouseEnteredChild->handleEvent( &localEvent );
-							}
-							Control::setPreviousMouseOverControl( child );
-							previousMouseEnteredChild = Control::getPreviousMouseOverControl();
-							if ( NULL != previousMouseEnteredChild ) {
-								Point tmp2 = *event->getPoint();
-								child->translateToLocal( &tmp2 );
-								MouseEvent localEvent( child, Control::MOUSE_ENTERED, event->getButtonMask(), event->getKeyMask(), &tmp2 );
-								child->handleEvent( &localEvent );
+				else {
+					if ( (true == childBounds.containsPt( &tmp )) && (child->isLightWeight() && child->getVisible()) ){
+						child->translateToLocal( &tmp );
+						if ( Control::MOUSE_MOVE == event->getType() ) {
+							if ( child != previousMouseEnteredChild ) {
+								if ( NULL != previousMouseEnteredChild ) {
+									Point tmp2 = *event->getPoint();
+									previousMouseEnteredChild->translateToLocal( &tmp2 );
+									MouseEvent localEvent( previousMouseEnteredChild, Control::MOUSE_LEAVE, event->getButtonMask(), event->getKeyMask(), &tmp2 );
+									previousMouseEnteredChild->handleEvent( &localEvent );
+								}
+								Control::setPreviousMouseOverControl( child );
+								previousMouseEnteredChild = Control::getPreviousMouseOverControl();
+								if ( NULL != previousMouseEnteredChild ) {
+									Point tmp2 = *event->getPoint();
+									child->translateToLocal( &tmp2 );
+									MouseEvent localEvent( child, Control::MOUSE_ENTERED, event->getButtonMask(), event->getKeyMask(), &tmp2 );
+									child->handleEvent( &localEvent );
+								}
 							}
 						}
-					}
 
 
-					if ( event->getType() != Control::MOUSE_CLICK ) {
-						MouseEvent localEvent( child, event->getType(), event->getButtonMask(), event->getKeyMask(), &tmp );
-						child->handleEvent( &localEvent );
-						event->setConsumed(true);//localEvent.isConsumed());
+						if ( event->getType() != Control::MOUSE_CLICK ) {
+							MouseEvent localEvent( child, event->getType(), event->getButtonMask(), event->getKeyMask(), &tmp );
+							child->handleEvent( &localEvent );
+							event->setConsumed(true);//localEvent.isConsumed());
+						}
+						break;
 					}
-					break;
-				}
-				else if ( (Control::MOUSE_MOVE == event->getType()) && (child == previousMouseEnteredChild) ) {
-					Point tmp2 = *event->getPoint();
-					previousMouseEnteredChild->translateToLocal( &tmp2 );
-					MouseEvent localEvent( previousMouseEnteredChild, Control::MOUSE_LEAVE, event->getButtonMask(), event->getKeyMask(), &tmp2 );
-					previousMouseEnteredChild->handleEvent( &localEvent );
-					Control::setPreviousMouseOverControl( NULL );
+					else if ( (Control::MOUSE_MOVE == event->getType()) && (child == previousMouseEnteredChild) ) {
+						Point tmp2 = *event->getPoint();
+						previousMouseEnteredChild->translateToLocal( &tmp2 );
+						MouseEvent localEvent( previousMouseEnteredChild, Control::MOUSE_LEAVE, event->getButtonMask(), event->getKeyMask(), &tmp2 );
+						previousMouseEnteredChild->handleEvent( &localEvent );
+						Control::setPreviousMouseOverControl( NULL );
+					}
 				}
 			}
 
