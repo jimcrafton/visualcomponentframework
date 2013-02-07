@@ -984,6 +984,7 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 
 			if ( flags & VFFInputStream::ufCreateComponent ) {
 				result = (Component*)createClassInstance( className, classID, fallbackClassName );
+				result->initFromResource();
 				if ( NULL == topLevelComponent_ ) {
 					topLevelComponent_ = result;
 				}
@@ -1013,6 +1014,7 @@ VCF::Component* VFFInputStream::readObject( VCF::Component* componentInstance, i
 
 				if ( NULL == result ) {
 					result = (Component*)createClassInstance( className, classID, fallbackClassName );
+					result->initFromResource();
 					if ( NULL == topLevelComponent_ ) {
 						topLevelComponent_ = result;
 					}					
@@ -1297,7 +1299,10 @@ Component* VFFInputStream::createNewComponent(Component* componentInstance, int 
 			}
 			
 			if ( flags & VFFInputStream::ufCreateComponent ) {
+
+				
 				result = (Component*)createClassInstance( className, classID, fallbackClassName );
+				result->initFromResource();
 				
 				if ( NULL == topLevelComponent_ ) {
 					topLevelComponent_ = result;
@@ -1313,6 +1318,7 @@ Component* VFFInputStream::createNewComponent(Component* componentInstance, int 
 
 				if ( NULL == result ) {
 					result = (Component*)createClassInstance( className, classID, fallbackClassName );
+					result->initFromResource();
 					if ( NULL == topLevelComponent_ ) {
 						topLevelComponent_ = result;
 					}					
