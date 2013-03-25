@@ -22,12 +22,12 @@ namespace VCF {
 		UnitTransformer(){}
 		virtual ~UnitTransformer(){}
 
-		virtual String transform( const String& originalValue ) = 0;
+		virtual String transform( const String& originalValue, Object* context ) = 0;
 
 		static UnitTransformer* getCurrentTransformer();
 		static void setCurrentTransformer(UnitTransformer* val);
 
-		static String xfrmString( const String& value );
+		static String xfrmString( const String& value, Object* context );
 	private:
 		static UnitTransformer* currentTransformer_;
 	};

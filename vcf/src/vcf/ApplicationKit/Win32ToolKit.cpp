@@ -168,6 +168,35 @@ extern "C" BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPV
 using namespace VCFWin32;
 
 
+class Win32ContextUnitTransformer : public Win32UnitTransformer{
+public:	
+	virtual String transform( const String& s, const String& unit, Object* context );
+};
+
+
+String Win32ContextUnitTransformer::transform( const String& s, const String& unit, Object* context )
+{
+	String val = s;
+	if (unit == "em" ) {
+		double v = StringUtils::fromStringAsDouble(val);
+
+		if ( NULL != context ) {
+			Control* ctrl = dynamic_cast<Control*>(context);
+			if ( NULL != ctrl ) {
+				double sz = ctrl->getFont()->getPointSize();
+				val = Win32UnitTransformer::transform(StringUtils::toString( v * sz ), "pt", context );				 
+			}
+		}
+	}
+	else{
+		val = Win32UnitTransformer::transform(s, unit, context );
+	}
+
+	return val;
+}
+
+
+
 
 uint32 Win32UIUtils::translateKeyMask( UINT win32KeyMask )
 {
@@ -3198,6 +3227,9 @@ ATOM Win32ToolKit::RegisterWin32ToolKitClass(HINSTANCE hInstance)
 }
 
 
+static Win32ContextUnitTransformer win32Tfrm2;
+
+
 Win32ToolKit::Win32ToolKit():
 	UIToolkit(),
 	dummyParentWnd_(NULL),
@@ -3292,6 +3324,9 @@ Win32ToolKit::Win32ToolKit():
 	else {
 		StringUtils::trace( "Oops - looks like your system doesn't support HTML Help, as you don't have the hhctrl.ocx in your path." );
 	}
+
+	UnitTransformer::setCurrentTransformer( &win32Tfrm2 );
+	
 }
 
 

@@ -25,7 +25,7 @@ where you installed the VCF.
 #include "vcf/GraphicsKit/Win32VisualStylesWrapper.h"
 #endif
 
-#include "vcf/FoundationKit/UnitTransformer.h"
+
 
 
 //init singleton
@@ -1249,103 +1249,114 @@ public:
 
 
 
-class Win32UnitTransformer : public UnitTransformer {
-public:
-	virtual String transform( const String& s ) {		
-		
-		if ( s.empty() ) {
-			return s;
+String Win32UnitTransformer::transform( const String& s, const String& unit, Object* context )
+{
+	String val = s;
+	if (unit != "px" ) {
+		HDC dc = GetDC( ::GetDesktopWindow() );
+
+		double dpi = (double)GetDeviceCaps( dc, LOGPIXELSY);
+
+		ReleaseDC(::GetDesktopWindow(),dc);
+
+		double v = StringUtils::fromStringAsDouble(val);
+
+		if (unit == "in" ) {
+			val = StringUtils::toString( v * dpi );
 		}
-
-		String s2 = s;
-		VCFChar first = s2[0];
-		VCFChar last = s2[s2.length()-1];
-
-		if ( (first == ' ' || first == '\t' || first == '\r' || first == '\n') ||
-			(last == ' ' || last == '\t' || last == '\r' || last == '\n') ){
-
-
-			StringUtils::trimWhiteSpaces(s2);
+		else if (unit == "pt" ) {
+			val = StringUtils::toString( (v / 72.0) * dpi );
 		}
+		else if (unit == "em" ) {
 
-		const VCFChar* P = s2.c_str();
-		const VCFChar* start = P;
-
-		String val,unit;
-
-		while ( P-start < s2.length() ) {
-			if ( *P == '$' ) {
-				P++;
-				while ( ((*P >= '0') && (*P <= '9')) || ((*P >= 'A') && (*P <= 'F')) || 
-					((*P >= 'a') && (*P <= 'f')) && (P-start < s2.length()) ) {
-					P++;
-				}
-
-				if ( P-start >= s2.length() ) {
-					return s2;
-				}
-
-				val.assign( start, ( P - start ) );
-				
-				unit.assign( P, s2.length() - val.length() );
-
-				break;
-			}
-			else if ( (*P == '-') ||  ((*P >= '0') && (*P <= '9')) ) {
-				P++;
-				while ( ((*P >= '0') && (*P <= '9')) && (P-start < s2.length()) ) {
-					P++;
-				}
-
-				while ( ((*P >= '0') && (*P <= '9')) || (*P == '.') || (*P == 'e') || (*P == '+') 
-						|| (*P == '-') && (P-start < s2.length()) ) {
-					P++;
-				}
-
-				if ( P-start >= s2.length() ) {
-					return s2;
-				}
-
-				val.assign( start, ( P - start ) );
-
-				unit.assign( P, s2.length() - val.length() );
-
-				break;
-			}
-			P++;
 		}
-		
-
-		if ( !unit.empty() ) {
-			unit = StringUtils::lowerCase(unit);
-
-			if (unit != "px" ) {
-				HDC dc = GetDC( ::GetDesktopWindow() );
-
-				double dpi = (double)GetDeviceCaps( dc, LOGPIXELSY);
-
-				ReleaseDC(::GetDesktopWindow(),dc);
-
-				double v = StringUtils::fromStringAsDouble(val);
-
-				if (unit == "in" ) {
-					val = StringUtils::toString( v * dpi );
-				}
-				else if (unit == "pt" ) {
-					val = StringUtils::toString( (v / 72.0) * dpi );
-				}
-				else if (unit == "em" ) {
-
-				}
-				else if (unit == "cm" ) {
-					val = StringUtils::toString( (v / 2.54 ) * dpi );
-				}
-			}
+		else if (unit == "cm" ) {
+			val = StringUtils::toString( (v / 2.54 ) * dpi );
 		}
-
-		return val;
 	}
-};
+
+	return val;
+}
+
+String Win32UnitTransformer::transform( const String& s, Object* context ) 
+{
+	
+	if ( s.empty() ) {
+		return s;
+	}
+
+	
+
+	String s2 = s;
+	VCFChar first = s2[0];
+	VCFChar last = s2[s2.length()-1];
+
+	if ( (first == ' ' || first == '\t' || first == '\r' || first == '\n') ||
+		(last == ' ' || last == '\t' || last == '\r' || last == '\n') ){
+
+
+		StringUtils::trimWhiteSpaces(s2);
+	}
+
+	const VCFChar* P = s2.c_str();
+	const VCFChar* start = P;
+
+	String val,unit;
+
+	while ( P-start < s2.length() ) {
+		if ( *P == '$' ) {
+			P++;
+			while ( ((*P >= '0') && (*P <= '9')) || ((*P >= 'A') && (*P <= 'F')) || 
+				((*P >= 'a') && (*P <= 'f')) && (P-start < s2.length()) ) {
+				P++;
+			}
+
+			if ( P-start >= s2.length() ) {
+				return s2;
+			}
+
+			val.assign( start, ( P - start ) );
+			
+			unit.assign( P, s2.length() - val.length() );
+
+			break;
+		}
+		else if ( (*P == '-') ||  ((*P >= '0') && (*P <= '9')) ) {
+			P++;
+			while ( ((*P >= '0') && (*P <= '9')) && (P-start < s2.length()) ) {
+				P++;
+			}
+
+			while ( ((*P >= '0') && (*P <= '9')) || (*P == '.') || 
+					(*P == 'e' && ((P+1)-start < s2.length()) && (tolower(*(P+1)) != 'm')) || 
+					(*P == '+') || 
+					(*P == '-') && (P-start < s2.length()) ) {
+				P++;
+			}
+
+			if ( P-start >= s2.length() ) {
+				return s2;
+			}
+
+			val.assign( start, ( P - start ) );
+
+			unit.assign( P, s2.length() - val.length() );
+
+			break;
+		}
+		P++;
+	}
+	
+	
+	if ( !unit.empty() ) {
+		unit = StringUtils::lowerCase(unit);
+
+		val = transform( val, unit, context );
+	}
+
+	return val;
+}
+
 
 static Win32UnitTransformer win32Tfrm;
 

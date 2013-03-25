@@ -187,7 +187,7 @@ protected:
 
 	Component* createNewComponent( Component* componentInstance, int flags );
 
-	String transform( const String& originalValue );
+	String transform( const String& originalValue, Object* context );
 
 	std::vector<DeferredPropertySetter*> deferredProperties_;
 	std::vector<DeferredDelegateSetter*> deferredDelegates_;
