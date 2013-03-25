@@ -24,10 +24,10 @@ void UnitTransformer::setCurrentTransformer(UnitTransformer* val)
 	UnitTransformer::currentTransformer_ = val;
 }
 
-String UnitTransformer::xfrmString( const String& value )
+String UnitTransformer::xfrmString( const String& value, Object* context )
 {
 	if ( NULL != UnitTransformer::currentTransformer_ ) {
-		return UnitTransformer::currentTransformer_->transform(value);
+		return UnitTransformer::currentTransformer_->transform(value,context);
 	}
 
 	return value;

@@ -665,6 +665,7 @@ void Component::initComponent( Component* instance, Class* clazz, ResourceBundle
 
 	vffContents = bundle->getVFF(resourceName);
 
+
 	if ( !vffContents.empty() ) {
 		BasicInputStream bis( vffContents );
 		VFFInputStream vis( &bis );

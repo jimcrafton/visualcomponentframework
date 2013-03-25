@@ -298,7 +298,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 
 								if (valToken == VFFParser::TO_INTEGER ||
 									valToken == VFFParser::TO_FLOAT ) {
-									value = transform( value );
+									value = transform( value, prop->getSource() );
 								}
 
 								//note: need to be able to set value
@@ -547,7 +547,7 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 							}
 							if (assignmentToken == VFFParser::TO_INTEGER ||
 								assignmentToken == VFFParser::TO_FLOAT ) {
-								value = transform( value );
+								value = transform( value, prop->getSource() );
 							}
 
 							VariantData varVal;
@@ -1480,12 +1480,12 @@ void VFFInputStream::internal_clearComponentConstants()
 	componentConstants.clear();
 }
 
-String VFFInputStream::transform( const String& originalValue )
+String VFFInputStream::transform( const String& originalValue, Object* context )
 {
 
 	UnitTransformer* xfrmr = UnitTransformer::getCurrentTransformer();
 	if ( NULL != xfrmr ) {
-		return xfrmr->transform( originalValue );
+		return xfrmr->transform( originalValue, context );
 	}
 
 	return originalValue;

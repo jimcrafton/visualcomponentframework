@@ -13,6 +13,7 @@ where you installed the VCF.
 #   pragma once
 #endif
 
+#include "vcf/FoundationKit/UnitTransformer.h"
 
 namespace VCF  {
 
@@ -57,6 +58,12 @@ protected:
 private:
 };
 
+
+class Win32UnitTransformer : public UnitTransformer {
+public:
+	virtual String transform( const String& s, Object* context );
+	virtual String transform( const String& s, const String& unit, Object* context );
+};
 
 }; //end of namespace VCF
 
