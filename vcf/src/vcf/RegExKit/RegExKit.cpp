@@ -380,20 +380,25 @@ namespace Regex { //Borland compiler requires explicitly namespace declaration
 
 	Regex::Ascii::Ascii(const String &exp, const unsigned char* const first, 
 		const unsigned char* const last, const RegExKit::Syntax& syntax): 
-		Host(exp, first, last, syntax) {}
+		Host(exp, first, last, syntax) {
+			ansiExpression_ = this->expression_;
+		}
 
 	Regex::Ascii::Ascii(const String &exp, const String &source, 
 		const RegExKit::Syntax& syntax): Host(exp, syntax) {
-			setRangeAsString(source);
+			ansiExpression_ = this->expression_;
+
+			setRangeAsString(source);			
 	}
 
 	void Regex::Ascii::setRangeAsString(const String& newExpression) {
-		first_=(const unsigned char*)newExpression.ansi_c_str();
-		last_=(const unsigned char*)(newExpression.ansi_c_str()+newExpression.length());
+		ansiSrc_ = newExpression;
+		first_=(const unsigned char*)ansiSrc_.c_str();
+		last_=(const unsigned char*)(ansiSrc_.c_str()+ansiSrc_.length());
 	}
 
 	int Regex::Ascii::init() {
-        return onig_new(&reg_, (const unsigned char*)expression_.ansi_c_str(), (const unsigned char*)expression_.ansi_c_str() + expression_.length(),
+        return onig_new(&reg_, (const unsigned char*)ansiExpression_.c_str(), (const unsigned char*)ansiExpression_.c_str() + ansiExpression_.length(),
             ONIG_OPTION_DEFAULT, ONIG_ENCODING_ASCII, syntax_, &error_);
 	}
 

@@ -586,6 +586,9 @@ namespace Regex{
 				const unsigned char* const end) const {
 					return end-start;
 			}
+
+			AnsiString ansiExpression_;
+			AnsiString ansiSrc_;
 	};
 
 	/**
