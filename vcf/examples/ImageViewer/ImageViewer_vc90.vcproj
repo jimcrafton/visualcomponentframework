@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="ImageViewer"
 	ProjectGUID="{11FFB188-A832-4DE4-BC93-85DA81CD5625}"
+	RootNamespace="ImageViewer"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -49,7 +50,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_ROOT)/src"
-				PreprocessorDefinitions="WIN32;_DEBUG;USE_FOUNDATIONKIT_DLL;USE_GRAPHICSKIT_DLL;USE_APPLICATIONKIT_DLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;USE_APPLICATIONKIT_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"

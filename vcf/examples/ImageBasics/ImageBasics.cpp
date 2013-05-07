@@ -109,7 +109,7 @@ public:
 		logoImage->beginDrawing();
 		imgCtx = logoImage->getImageContext();
 
-		Rect src(0,0,100,50);
+		Rect src(20,25,120,75);
 		Rect dest(10, y, 10 + src.getWidth(), y + src.getHeight() );
 
 		ctx->copyContext( src, dest, imgCtx );

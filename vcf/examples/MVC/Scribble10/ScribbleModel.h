@@ -635,6 +635,11 @@ public:
 
 	virtual VariantData get( const uint32& index ) {
 
+		if ( ListModel::IndexNotFound == index ||
+			ListModel::InvalidIndex == index ) {
+			return NULL;
+		}
+
 		size_t missing = 0;
 		if ( (index+1) > data_.size() ) {
 			missing = (index+1) - data_.size();

@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="Conditions"
 	ProjectGUID="{E2560BB1-FE95-44C9-9032-480EA62B308F}"
+	RootNamespace="Conditions"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -49,7 +50,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(VCF_ROOT)/src"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;USE_FOUNDATIONKIT_DLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;USE_FOUNDATIONKIT_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
