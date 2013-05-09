@@ -75,12 +75,19 @@ public:
 	virtual double getPreferredHeight();
 
 	virtual double getPreferredWidth();
+
+	bool getAutoWidth() {
+		return autoWidth_;
+	}
+
+	void setAutoWidth(const bool& val );
 protected:
 	String caption_;
 	TextAlignmentType textAlignment_;
 	TextVerticalAlignment textVerticalAlignment_;
 	Control* focusControl_;
 	bool wordWrap_;
+	bool autoWidth_;
 };
 
 };
