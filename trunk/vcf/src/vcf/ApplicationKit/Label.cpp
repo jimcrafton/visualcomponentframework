@@ -17,7 +17,8 @@ where you installed the VCF.
 using namespace VCF;
 
 Label::Label():
-	CustomControl( false )
+	CustomControl( false ),
+		autoWidth_(true)
 {	
 	setTransparent( true );
 	textAlignment_ = taTextLeft;
@@ -105,6 +106,13 @@ void Label::setCaption( const String& caption )
 	}
 
 	caption_ = caption;
+
+
+	if ( autoWidth_ ) {
+		double w = this->getFont()->getTextWidth(caption_);
+		setWidth(w);
+	}
+
 	repaint();
 }
 
@@ -204,6 +212,13 @@ double Label::getPreferredHeight()
 	return UIToolkit::getUIMetricValue( UIMetricsManager::mtLabelHeight );
 }
 
+void Label::setAutoWidth(const bool& val )
+{
+	autoWidth_ = val;
+	if ( autoWidth_ ) {
+		setCaption(caption_);
+	}
+}
 
 /**
 $Id$

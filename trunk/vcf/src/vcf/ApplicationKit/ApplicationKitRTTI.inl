@@ -784,6 +784,9 @@ _property_object_( Control, "focusControl", getFocusControl, setFocusControl, ""
 
 _property_( bool, "wordWrap", getWordWrap, setWordWrap, "" );
 
+_property_( bool, "autoWidth", getAutoWidth, setAutoWidth, "" );
+
+
 _class_rtti_end_
 
 
