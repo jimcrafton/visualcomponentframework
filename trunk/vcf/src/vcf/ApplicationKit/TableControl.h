@@ -270,6 +270,8 @@ public:
 
 	TableModel* getTableModel();
 
+	void setTableModel( TableModel* val );
+
 	virtual void modelChanged( Model* oldModel, Model* newModel );
 
 	void setColumnCount( const uint32& colCount );

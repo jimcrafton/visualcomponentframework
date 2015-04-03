@@ -181,7 +181,7 @@ Component* Control::findComponent( const String& componentName, const bool& recu
 	Component* result = NULL;
 
 	Container* container = getContainer();
-	if ( NULL != container ) {
+	if ( NULL != container ) {		
 		result = container->findControl( componentName );
 	}
 
