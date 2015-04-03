@@ -70,7 +70,11 @@ public:
 	}
 
 	ColumnController* getController() {
-		return dynamic_cast<ColumnController*>( getControl() );
+		Control* ctrl = getControl();
+		if ( NULL == ctrl ) {
+			return NULL;
+		}
+		return dynamic_cast<ColumnController*>( ctrl );
 	}
 
 	/**

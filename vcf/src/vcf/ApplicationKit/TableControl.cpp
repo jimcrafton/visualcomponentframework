@@ -697,6 +697,10 @@ TableModel* TableControl::getTableModel()
 	return (TableModel*) getViewModel();
 }
 
+void TableControl::setTableModel( TableModel* val )
+{
+	setViewModel( val );
+}
 
 void TableControl::setColumnCount( const uint32& colCount )
 {

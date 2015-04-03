@@ -16,6 +16,9 @@ using namespace VCF;
 
 double ColumnItem::getWidth()
 {
+	if ( NULL == getController() ) {
+		return 0;
+	}
 	return getController()->getItemWidth( this );
 }
 
@@ -31,6 +34,9 @@ void ColumnItem::setCaptionAlignment( const TextAlignmentType& alignment )
 
 TextAlignmentType ColumnItem::getCaptionAlignment()
 {
+	if ( NULL == getController() ) {
+		return TextAlignmentType(0);
+	}
 	return getController()->getItemTextAlignment( this );
 }
 
@@ -40,6 +46,9 @@ String ColumnItem::getCaption()
 	//control's getUseLocaleStrings() takes precedence over ours
 	Control* control = getControl();
 	ListModel* lm = (ListModel*) getModel();
+	if ( NULL == lm ) {
+		return "";
+	}
 	if ( getUseLocaleStrings() && (NULL != control) && (control->getUseLocaleStrings()) ) {
 		return System::getCurrentThreadLocale()->translate( lm->getAsString( index_ ) );
 	}
