@@ -937,7 +937,7 @@ const String Color::getColorNameFromMap( const Color& color )
 	return GraphicsToolkit::getColorNameFromMap( color );
 }
 
-void Color::setFromString( const String& val )
+void Color::setFromString( const String& val, PropertyDescriptorType valueHint )
 {
 	if ( val.length() > 1 ) {
 		if ( val[0] == '#' ) {

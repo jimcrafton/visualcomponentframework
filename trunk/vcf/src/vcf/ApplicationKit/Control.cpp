@@ -127,6 +127,10 @@ void Control::destroy()
 	}
 
 	Model* m = getViewModel();
+	if ( NULL == m && NULL != view_ ) {
+		m = view_->getViewModel() ;
+	}
+
 	if ( NULL != m ) {
 		if ( NULL != view_ ) {
 			m->removeView( view_ );
@@ -137,7 +141,8 @@ void Control::destroy()
 	}
 
 
-	if ( NULL != view_ ) {
+	if ( NULL != view_ ) {	
+
 		HeapObject* obj = dynamic_cast<HeapObject*>( view_ );
 		if ( NULL != obj ) {
 			obj->release();
@@ -1219,7 +1224,8 @@ void Control::mouseEnter( MouseEvent* event )
 void Control::mouseDown( MouseEvent* event )
 {
 	if ( getAllowsMouseFocus() ) {
-		//setFocused();
+		//may or may not need to comment this out????
+		setFocused();
 	}
 }
 

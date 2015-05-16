@@ -498,6 +498,9 @@ namespace VCF {
 		}
 
 		uint32 width() {
+			if ( NULL == currentImage_ ) {
+				return 0;
+			}
 			if ( width_ != currentImage_->getWidth() ) {
 				throw PixelException( "You've modified an image's width, potentially while it's locked! Any pixel access may be bogus!" );
 			}
@@ -505,6 +508,9 @@ namespace VCF {
 		}
 
 		uint32 height() {
+			if ( NULL == currentImage_ ) {
+				return 0;
+			}
 			if ( height_ != currentImage_->getHeight() ) {
 				throw PixelException( "You've modified an image's width, potentially while it's locked! Any pixel access may be bogus!" );
 			}
@@ -539,16 +545,21 @@ namespace VCF {
 			width_ = currentImage_->getWidth();
 			height_ = currentImage_->getHeight();
 
-			buffer_ = currentImage_->getData();
-
-			if ( img->getType() == Image::itGrayscale ) {
-				stride_ = ((width_ * img->getChannelSize() + 31) & (~31)) / 8;
+			if (width_ == 0 || height_ == 0 ) {
+				unLockImageBuffer( currentImage_ );
+				stride_ = 0;
 			}
 			else {
-				stride_ = width_ * (Type::Traits::getTraitsImageType());
-			}
-			renderBuffer_.attach( (unsigned char*)buffer_, width_, height_,
-								width_ * (Type::Traits::getTraitsImageType()) );
+				buffer_ = currentImage_->getData();
+				if ( img->getType() == Image::itGrayscale ) {
+					stride_ = ((width_ * img->getChannelSize() + 31) & (~31)) / 8;
+				}
+				else {
+					stride_ = width_ * (Type::Traits::getTraitsImageType());
+				}
+				renderBuffer_.attach( (unsigned char*)buffer_, width_, height_,
+					width_ * (Type::Traits::getTraitsImageType()) );
+			}			
 		}
 
 		void lockImageBuffer( Image* img ) {

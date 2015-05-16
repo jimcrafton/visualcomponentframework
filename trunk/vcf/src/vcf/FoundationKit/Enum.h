@@ -80,7 +80,7 @@ public:
 	*is to assume the string represents an integer (i.e. "1" or "3")
 	*if this is not the case then the enum wil be set to 0 value
 	*/
-	virtual void setFromString( const String& textVal ){
+	virtual void setFromString( const String& textVal, PropertyDescriptorType valueHint ){
 		set( StringUtils::fromStringAsInt( textVal ) );
 	};
 };
@@ -116,7 +116,7 @@ public:
 
 	void set( const String& stringVal ) {
 		if ( NULL != enum_ ) {
-			enum_->setFromString( stringVal );
+			enum_->setFromString( stringVal,pdUndefined );
 			enumValue_ = enum_->get();
 		}
 		else {

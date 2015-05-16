@@ -295,7 +295,7 @@ public:
 		return *this;
 	};
 
-	virtual void setFromString( const String& textVal ){
+	virtual void setFromString( const String& textVal, PropertyDescriptorType valueHint ){
 		if ( true == namesAvailable_ ){
 			std::vector<String>::iterator it = enumNames_.begin();
 			int i = lower_;// 0;
@@ -312,11 +312,11 @@ public:
 				set( i );
 			}
 			else {
-				Enum::setFromString( textVal );
+				Enum::setFromString( textVal, valueHint );
 			}
 		}
 		else {
-			Enum::setFromString( textVal );
+			Enum::setFromString( textVal, valueHint );
 		}
 	};
 

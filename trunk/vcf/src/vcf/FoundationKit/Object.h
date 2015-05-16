@@ -39,7 +39,7 @@ public:
 	/**
 	provides a simple to initialize the object from a string.
 	*/
-	virtual void setFromString( const String& val ) {}
+	virtual void setFromString( const String& val, PropertyDescriptorType valueHint ) {}
 
     /**
     returns the class name of the object.

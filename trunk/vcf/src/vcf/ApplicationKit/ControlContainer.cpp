@@ -64,7 +64,7 @@ double ControlContainer::getTopBorderHeight()
 	if ( NULL != container ) {
 		StandardContainer* stdContainer = dynamic_cast<StandardContainer*>(container);
 		if ( NULL != stdContainer ) {
-			return stdContainer->getRightBorderWidth();
+			return stdContainer->getTopBorderHeight();
 		}
 	}
 

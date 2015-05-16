@@ -372,14 +372,16 @@ void Win32Image::beginDrawing()
 	ColorPixels pix(this);
 	size_t sz = pix.width() * pix.height();
 
-	SysPixelType* bits = pix;
+	if (sz > 0 ) {
+		SysPixelType* bits = pix;
 
-	tempAlphaChannel_ = new unsigned char[sz];	
+		tempAlphaChannel_ = new unsigned char[sz];	
 	
-	do {
-		sz --;
-		tempAlphaChannel_[sz] = bits[sz].a;
-	} while( sz > 0 );
+		do {
+			sz --;
+			tempAlphaChannel_[sz] = bits[sz].a;
+		} while( sz > 0 );
+	}
 }
 
 void Win32Image::finishedDrawing()
@@ -388,14 +390,18 @@ void Win32Image::finishedDrawing()
 		ColorPixels pix(this);
 		size_t sz = pix.width() * pix.height();
 		
-		SysPixelType* bits = pix;	
+		if (sz > 0 ) {
+			SysPixelType* bits = pix;	
 		
-		do {
-			sz --;
-			bits[sz].a = tempAlphaChannel_[sz];
-		} while( sz > 0 );
+			do {
+				sz --;
+				bits[sz].a = tempAlphaChannel_[sz];
+			} while( sz > 0 );			
 
-		delete [] tempAlphaChannel_;
+			if (tempAlphaChannel_) {
+				delete [] tempAlphaChannel_;
+			}	
+		}
 	}
 
 	tempAlphaChannel_ = NULL;

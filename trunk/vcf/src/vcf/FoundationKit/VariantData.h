@@ -787,8 +787,10 @@ public:
 	/**
 	Assigns the VariantData's data from a string. The conversion
 	process is dependent on the type of the VariantData.
+
+	valueHint - possible hint as to what the string represents
 	*/
-	void setFromString( const String& value );
+	void setFromString( const String& value, PropertyDescriptorType valueHint=pdUndefined );
 
 
 	bool isNumber() const {

@@ -637,7 +637,7 @@ void Component::initComponent( Component* instance, Class* clazz, Class* rootCla
 
 void Component::initComponent( Component* instance, ResourceBundle* resBundle )
 {
-	Component::initComponent( instance, instance->getClass(), resBundle );
+	Component::initComponent( instance, instance->getClass(), NULL, resBundle );
 }
 
 void Component::initComponent( Component* instance, Class* clazz, ResourceBundle* resBundle )
