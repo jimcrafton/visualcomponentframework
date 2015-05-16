@@ -99,29 +99,38 @@ MessageDialog::MessageDialog():
 
 	Image* image = const_cast<Image*>( UIToolkit::getStandardInformationImage() );
 
-	applicationIcon_ = GraphicsToolkit::createImage( image->getWidth(), image->getHeight() );
+	if (NULL != image) {
+		applicationIcon_ = GraphicsToolkit::createImage( image->getWidth(), image->getHeight() );
 
 
 
-	ColorPixels pix(applicationIcon_);	
-	SysPixelType* bits = pix;
+		ColorPixels pix(applicationIcon_);	
+		SysPixelType* bits = pix;
 
-	memcpy( applicationIcon_->getData(), image->getData(), 
-			image->getHeight() * image->getWidth() * image->getType() );
+		memcpy( applicationIcon_->getData(), image->getData(), 
+				image->getHeight() * image->getWidth() * image->getType() );
 
-	applicationIcon_->setTransparencyColor( &Color(0.0,1.0,0.0) );
-	applicationIcon_->setIsTransparent( true );
+		applicationIcon_->setTransparencyColor( &Color(0.0,1.0,0.0) );
+		applicationIcon_->setIsTransparent( true );
+	}
 
 	ImageControl* ic = new ImageControl();
 
-	x = imagePane_->getWidth() / 2.0 - applicationIcon_->getWidth() / 2.0;
-	y = imagePane_->getHeight() / 2.0 - applicationIcon_->getHeight() / 2.0;
-
-
-	ic->setBounds( x, y, applicationIcon_->getWidth(), applicationIcon_->getHeight() );
+	if ( NULL != applicationIcon_) {
+		x = imagePane_->getWidth() / 2.0 - applicationIcon_->getWidth() / 2.0;
+		y = imagePane_->getHeight() / 2.0 - applicationIcon_->getHeight() / 2.0;
+		ic->setBounds( x, y, applicationIcon_->getWidth(), applicationIcon_->getHeight() );
+	}
+	else {
+		x = imagePane_->getWidth() / 2.0 - 32 / 2.0;
+		y = imagePane_->getHeight() / 2.0 - 32 / 2.0;
+		ic->setBounds( x, y, 32, 32 );
+	}
 
 	imagePane_->add( ic, AlignClient );
-	ic->setImage( applicationIcon_ );
+	if ( NULL != applicationIcon_) {
+		ic->setImage( applicationIcon_ );
+	}
 	ic->setTransparent( true );
 }
 

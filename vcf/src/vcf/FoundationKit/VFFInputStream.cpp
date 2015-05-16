@@ -311,7 +311,26 @@ void VFFInputStream::processAsignmentTokens( const VCFChar& token, const String&
 								//neccessary.
 
 
-								varVal.setFromString( value );
+								if ( value != "null" && varVal.type == pdObject && varVal.ObjVal == NULL ) {
+									VariantData* v = prop->getAtKey(key);
+									if ( NULL != v ) {
+										varVal = *v;
+									}
+								}
+
+								if (valToken == VFFParser::TO_INTEGER) {
+									varVal.setFromString( value, pdInt );
+								}
+								else if (valToken == VFFParser::TO_FLOAT) {
+									varVal.setFromString( value, pdDouble );
+								}
+								else if (valToken == VFFParser::TO_STRING) {
+									varVal.setFromString( value, pdString );
+								}
+								else {
+									varVal.setFromString( value );
+								}
+
 
 								prop->setAtKey( key, &varVal );
 							}
@@ -777,6 +796,8 @@ void VFFInputStream::assignDeferredProperties( Component* component )
 					String componentName;
 					componentName = propName.substr(0,pos);
 					propName = propName.erase( 0, pos+1 );
+					VariantData propIndexer;
+					String index;
 
 					if ( !component->bindVariable( &foundComponent, componentName ) ) {
 						VFFInputStream::rootComponent_->bindVariable( &foundComponent, componentName );
@@ -786,13 +807,47 @@ void VFFInputStream::assignDeferredProperties( Component* component )
 						Class* valClass = foundComponent->getClass();						
 
 						VariantData* propVal = NULL;
+
 						do {							
+
+							pos = propName.find("[");
+							if ( pos != String::npos ) {
+
+								size_t pos2 = propName.find("]",pos);
+								if ( pos2 == String::npos ) {
+									StringUtils::trace("Invalid array indexer specified\n" );
+									break;
+								}
+
+								index = propName.substr(pos+1,pos2-(pos+1));
+								StringUtils::trimWhiteSpaces(index);
+								if ( !index.empty() ) {
+									if ( index[0] == '\'' && index[index.size()-1] == '\'' ) {
+										index = index.substr(1,index.size()-2);
+										propIndexer.setFromString(index,pdString);
+									}
+									else {
+										propIndexer.setFromString(index);
+									}
+								}
+								else {
+									propIndexer.setFromString(index);
+								}
+								propName.erase(pos,(pos2-pos)+1);
+							}
+
 							pos = propName.find(".");
 							
 
 							if ( pos != String::npos ) {
 								valProp = valClass->getProperty( propName.substr(0,pos) );
-								propVal = valProp->get();
+								if ( valProp->isCollection() ) {
+									propVal = valProp->getAtKey(propIndexer);
+								}
+								else {
+									propVal = valProp->get();
+								}
+								
 								if ( NULL == propVal ) {
 									throw RuntimeException( "Null property value" );
 								}
@@ -811,7 +866,12 @@ void VFFInputStream::assignDeferredProperties( Component* component )
 							}
 							else {
 								valProp = valClass->getProperty( propName );
-								propVal = valProp->get();
+								if ( valProp->isCollection() ) {
+									propVal = valProp->getAtKey(propIndexer);
+								}
+								else {
+									propVal = valProp->get();
+								}
 							}
 							
 							propName = propName.erase( 0, pos+1 );		

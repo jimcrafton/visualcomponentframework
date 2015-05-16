@@ -122,7 +122,7 @@ double SliderControl::getPreferredHeight()
 	}
 	else {
 		double h = UIToolkit::getUIMetricValue( UIMetricsManager::mtHorizontalProgressHeight );
-		return h * 2;
+		return h;
 	}
 
 	return 0.0;

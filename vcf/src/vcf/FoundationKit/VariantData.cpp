@@ -214,7 +214,7 @@ String VariantData::toString() const
 }
 
 
-void VariantData::setFromString( const String& value )
+void VariantData::setFromString( const String& value, PropertyDescriptorType valueHint )
 {
 	bool unicodeEnabled = System::isUnicodeEnabled();
 
@@ -312,7 +312,7 @@ void VariantData::setFromString( const String& value )
 					ObjVal = NULL;
 				}
 				else {
-					ObjVal->setFromString( value );
+					ObjVal->setFromString( value, valueHint );
 				}
 			}
 		}

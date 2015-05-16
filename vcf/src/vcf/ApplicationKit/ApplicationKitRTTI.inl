@@ -440,6 +440,10 @@ _property_( bool, "tabStop", getTabStop, setTabStop, "" );
 _property_( bool, "keepsTabKey",keepsTabKey, setKeepsTabKey, "" );
 _property_( bool, "keepsReturnCharacter",keepsReturnCharacter, setKeepsReturnChar, "" );
 _property_( bool, "keepsArrowKeys",keepsArrowKeys, setKeepsArrowKeys, "" );
+
+_property_( bool, "allowsFocus",getAllowsFocus, setAllowsFocus, "" );
+_property_( bool, "allowsMouseFocus",getAllowsMouseFocus, setAllowsMouseFocus, "" );
+
 _property_( int32, "tabOrder", getTabOrder, setTabOrder, "" );
 _property_( String, "whatsThisHelpString", getWhatsThisHelpString, setWhatsThisHelpString, "" );
 _property_( String, "toolTipText", getToolTipText, setToolTipText, "" );

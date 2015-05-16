@@ -4023,6 +4023,30 @@ void Win32Context::drawThemeSlider( Rect* rect, SliderState& state )
 
 				context_->strokePath();
 			}
+			else {
+				context_->setColor( face );
+				context_->rectangle( &thumbRect );
+				context_->fillPath();
+
+				context_->setColor( highlite );
+
+				context_->moveTo( x2, y1 );
+				context_->lineTo( x1, y1 );
+				context_->lineTo( x1, y2 );
+				context_->strokePath();
+
+				context_->setColor( black );
+				context_->moveTo( x1, y2 );
+				context_->lineTo( x2, y2 );
+				context_->lineTo( x2, y1-1 );
+				context_->strokePath();
+
+				context_->setColor( shadow );
+				context_->moveTo( x1+1, y2-1 );
+				context_->lineTo( x2-1, y2-1 );
+				context_->lineTo( x2-1, y1 );
+				context_->strokePath();
+			}
 		}
 	}
 	}

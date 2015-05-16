@@ -1976,16 +1976,16 @@ void GraphicsContext::cacheRenderAreaAlpha()
 {
 	if ( (NULL != renderArea_->renderBuffer) && (renderArea_->alphaState != rasDirty) 
 			&& (NULL == renderArea_->alphaVal) ) {
+
 		renderArea_->alphaVal = new uchar[ renderArea_->alphaSize ];
 
 
 		ColorPixels::Type* bits = (ColorPixels::Type*) renderArea_->renderBuffer->buf();
-
-		for (size_t i=0;i<renderArea_->alphaSize;i++ ) {
-			renderArea_->alphaVal[i] = bits[i].a;
+		if (bits) {
+			for (size_t i=0;i<renderArea_->alphaSize;i++ ) {
+				renderArea_->alphaVal[i] = bits[i].a;
+			}
 		}
-
-
 	}
 }
 

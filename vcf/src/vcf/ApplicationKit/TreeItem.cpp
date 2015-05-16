@@ -89,7 +89,7 @@ void TreeItem::expandAllChildren( const bool& isExpanded )
 		if ( !child->isLeaf() ) {
 			child->expandAllChildren( isExpanded );
 		}
-		child = getNextChildNodeItem();
+		child = child->getNextChildNodeItem();
 	}
 }
 
