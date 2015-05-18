@@ -807,9 +807,21 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::openFile()
 
 	if ( openDialog.execute() ) {
 
-		Document* doc = openFromFileName( openDialog.getFileName() );
+		Document* doc = NULL;
+		String errMsg;
+		try {
+			doc = openFromFileName( openDialog.getFileName() );
+		}		
+		catch(const BasicException& e) {
+			doc = NULL;
+			errMsg = e.getMessage();
+		}
+		catch(...) {
+			doc = NULL;
+			errMsg = "Unknown error occurred while attempting to open the document.";
+		}
 
-		openDialogFinished( &openDialog );
+		openDialogFinished( &openDialog, doc, errMsg );
 	}
 }
 
@@ -1079,6 +1091,7 @@ void DocumentManagerImpl<AppClass,DocInterfacePolicy>::attachUI( const DocumentI
 	window->ComponentCreated += newEv;
 
 	if ( NULL != document ) {
+		setCurrentDocument(document);
 		document->updateAllViews();
 	}
 }

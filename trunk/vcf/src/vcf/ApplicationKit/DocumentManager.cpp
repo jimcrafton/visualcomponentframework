@@ -823,7 +823,7 @@ Document* DocumentManager::openFromFileName( const String& fileName )
 			closeCurrentDocument();
 			doc = NULL;
 
-			throw RuntimeException( MAKE_ERROR_MSG_2("DocumentManager failed to open the file \" + fileName + \"" ) );
+			throw RuntimeException( MAKE_ERROR_MSG_2("DocumentManager failed to open the file \"" + fileName + "\"" ) );
 		}
 	}
 	else {
