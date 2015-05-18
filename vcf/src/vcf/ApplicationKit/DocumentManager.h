@@ -656,8 +656,10 @@ protected:
 	/** called to prepare a file open dialog */
 	virtual void prepareOpenDialog( CommonFileOpenDialog* openDialog );
 
-	/** called after the file open dialog has been closed by the user and confirmed Ok */
-	virtual void openDialogFinished( CommonFileOpenDialog* openDialog ){};
+	/** called after the file open dialog has been closed by the user and confirmed Ok,  
+	openedDoc represents the newly opend doc if successful, if NULL, then there was an 
+	error opening the document*/
+	virtual void openDialogFinished( CommonFileOpenDialog* openDialog, Document* openedDoc, const String& errString ){};
 
 	/** called to prepare a file save dialog */
 	virtual void prepareSaveDialog( CommonFileSaveDialog* saveDialog, Document* doc );
