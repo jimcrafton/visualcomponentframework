@@ -71,6 +71,9 @@ public:
 	virtual String getUserName();
 
 	virtual ProgramInfo* getProgramInfoFromFileName( const String& fileName );
+
+	virtual uint32 getCurrentThreadID();
+	virtual uint32 getProcessID();
 protected:
 };
 

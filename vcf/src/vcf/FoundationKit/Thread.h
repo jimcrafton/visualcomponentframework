@@ -211,6 +211,7 @@ public:
 	returns the process ID that this thread is part of
 	*/
 	uint32 getOwningProcessID();
+	
 
 	ThreadPeer* getPeer() {
 		return peer_;

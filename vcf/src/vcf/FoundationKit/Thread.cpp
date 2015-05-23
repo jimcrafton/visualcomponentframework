@@ -234,6 +234,7 @@ uint32 Thread::getOwningProcessID()
 	return peer_->getOwningProcessID();
 }
 
+
 bool Thread::isActive()
 {
 	return peer_->isActive();
