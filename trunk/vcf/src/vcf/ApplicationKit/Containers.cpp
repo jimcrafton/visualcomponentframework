@@ -44,6 +44,16 @@ void StandardContainer::resizeChildren( Control* control )
 	bounds.top_ += topBorderHeight_;
 	bounds.right_ -= rightBorderWidth_;
 	bounds.bottom_ -= bottomBorderHeight_;
+	Scrollable* scrollable = controlContainer_->getScrollable();
+	if ( NULL != scrollable ) {
+		if ( scrollable->isVerticalScrollbarVisible() ) {
+			bounds.right_ -= scrollable->getVerticalScrollbarWidth();
+		}
+
+		if ( scrollable->isHorizontalScrollbarVisible() ) {
+			bounds.bottom_ -= scrollable->getHorizontalScrollbarHeight();
+		}
+	}
 
 	bool controlJustAdded = false;
 	if ( NULL != control ) {

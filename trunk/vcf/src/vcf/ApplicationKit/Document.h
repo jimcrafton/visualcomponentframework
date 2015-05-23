@@ -335,8 +335,11 @@ protected:
 	/* the clipboard formats */
 	Array<MIMEType> clipFormats_;
 
-	void internalModelChanged(Event*) {
+	virtual void handleModelChanged(Event*) {}
+
+	void internalModelChanged(Event* e) {
 		setModified( true );
+		handleModelChanged(e);
 	}
 };
 

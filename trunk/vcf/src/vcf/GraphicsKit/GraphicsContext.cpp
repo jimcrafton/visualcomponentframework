@@ -12,7 +12,7 @@ where you installed the VCF.
 
 #include "thirdparty/common/agg/include/agg_ellipse.h"
 #include "thirdparty/common/agg/include/agg_arc.h"
-
+#include "thirdparty/common/agg/include/agg_rounded_rect.h"
 
 #include "thirdparty/common/agg/include/agg_renderer_scanline.h"
 #include "thirdparty/common/agg/include/agg_span_allocator.h"
@@ -1601,6 +1601,10 @@ void GraphicsContext::execPathOperations()
 					PointOperation& pt3 = *it;
 					++it;
 
+					agg::rounded_rect rr;
+					rr.rect(pt1.x, pt1.y, pt2.x, pt2.y );
+					rr.radius(pt3.x, pt3.y);
+					path.concat_path( rr );
 				}
 				break;
 

@@ -279,6 +279,10 @@ public:
 	*/
 	virtual bool getDiscreteHorzScroll();
 
+
+	Scrollable* getScrollable() {
+		return scrollable_;
+	}
 protected:
 	virtual ~ScrollbarManager();
 

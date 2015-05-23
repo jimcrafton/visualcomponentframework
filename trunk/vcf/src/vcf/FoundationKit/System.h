@@ -286,6 +286,8 @@ public:
 	*/
 	static void sleep( const uint32& milliseconds );
 
+
+
 	/**
 	sets the System's ErrorLog.
 	Note the Errolog is NOT owned by the System,
@@ -441,6 +443,10 @@ public:
 	systems that do not allow per thread locale settings (such as Mac OSX).
 	*/
 	static Locale* getCurrentThreadLocale();
+
+
+	static uint32 getCurrentThreadID();
+	static uint32 getProcessID();
 
 	/**
 	Is the system Unicode enabled, i.e. does it support the use of Unicode string in API calls. 

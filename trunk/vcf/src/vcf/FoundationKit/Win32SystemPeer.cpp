@@ -782,6 +782,17 @@ void Win32SystemPeer::setTimeZoneToLocal( const DateTime& currentDate, TimeZone&
 
 	tz.internal_set( tzi.Bias, s, dst );
 }
+
+uint32 Win32SystemPeer::getCurrentThreadID()
+{
+	return (uint32) GetCurrentThreadId();
+}
+
+uint32 Win32SystemPeer::getProcessID()
+{
+	return (uint32) GetCurrentProcessId();
+}
+
 /**
 $Id$
 */

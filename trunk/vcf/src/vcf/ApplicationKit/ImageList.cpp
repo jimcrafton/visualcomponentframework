@@ -278,11 +278,33 @@ void ImageList::draw( GraphicsContext* context, const uint32& index, Rect* bound
 
 void ImageList::copyImage( Image* imageToCopyTo, const uint32& index )
 {
-	int incr  = (imageHeight_ * imageWidth_ * sizeof(SysPixelType)) * index;
+	VCF_ASSERT( NULL != imageToCopyTo );
+	VCF_ASSERT( imageToCopyTo->getHeight() == imageHeight_ );
+	VCF_ASSERT( imageToCopyTo->getWidth() == imageWidth_ );
+
+	if ( imageToCopyTo->getHeight() != imageHeight_ ) {
+		throw RuntimeException("Copy Image doesn't match the current image list height");
+	}
+
+	if ( imageToCopyTo->getWidth() != imageWidth_ ) {
+		throw RuntimeException("Copy Image doesn't match the current image list height");
+	}
+
+	int incr  = (imageWidth_ * sizeof(SysPixelType)) * index;
+	int fullLineIncr = (imageWidth_ * sizeof(SysPixelType)) * totalImageCount_;
+
+	int imgLine  = (imageToCopyTo->getWidth() * sizeof(SysPixelType));
+
 	unsigned char* buf = (unsigned char*)masterImage_->getData();
 	buf += incr;
 	unsigned char* copyBuf = (unsigned char*)imageToCopyTo->getData();
-	memcpy( copyBuf, buf, (imageHeight_ * imageWidth_ * sizeof(SysPixelType)) );
+
+	uint32 y = 0;
+	for ( y=0;y<imageHeight_;y++) {
+		memcpy( buf, copyBuf, imgLine );
+		copyBuf += imgLine;
+		buf += fullLineIncr;
+	}
 }
 
 void ImageList::changed()

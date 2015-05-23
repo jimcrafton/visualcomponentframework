@@ -353,6 +353,16 @@ void System::setTimeZoneToLocal( const DateTime& currentDate, TimeZone& tz )
 }
 
 
+uint32 System::getCurrentThreadID()
+{
+	return System::getInstance()->systemPeer_->getCurrentThreadID();
+}
+
+uint32 System::getProcessID() 
+{
+	return System::getInstance()->systemPeer_->getProcessID();
+}
+
 void System::setCurrentThreadLocale( Locale* locale )
 {
 	Locale* current = System::getInstance()->locale_;
