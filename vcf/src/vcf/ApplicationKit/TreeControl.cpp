@@ -197,7 +197,7 @@ void TreeControl::setItemIndent( const double& indent )
 
 void TreeControl::onTreeItemPaint( ItemEvent* event )
 {
-	return ;
+	//return ;
 
 	TreeItem* item = (TreeItem*)event->getSource();
 	GraphicsContext* context = event->paintContext;
@@ -567,6 +567,7 @@ void TreeControl::itemSelected( TreeItem* item )
 	Point pt = UIShell::getUIShell()->getCurrentMousePosition();
 	this->translateFromScreenCoords( &pt );
 	event.point = pt;
+	event.itemSelected = item->isSelected();
 		
 	ItemSelected( &event );
 }

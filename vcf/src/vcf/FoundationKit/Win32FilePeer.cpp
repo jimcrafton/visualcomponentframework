@@ -836,8 +836,13 @@ void Win32FilePeer::open( const String& fileName, uint32 openFlags, File::ShareF
 		rwFlags |= GENERIC_READ;
 	}
 
-	if ( openFlags & File::ofWrite || openFlags & File::ofAppend ) {
+	if ( openFlags & File::ofWrite && !(openFlags & File::ofAppend) ) {
 		rwFlags |= GENERIC_WRITE;
+	}
+
+	if ( openFlags & File::ofAppend ) {		
+		rwFlags |= FILE_APPEND_DATA;
+		createFlags = OPEN_ALWAYS;
 	}
 
 	if ( shareFlags & File::shRead ) {

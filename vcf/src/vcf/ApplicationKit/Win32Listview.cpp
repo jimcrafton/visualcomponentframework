@@ -754,7 +754,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 		break;
 
 		case NM_DBLCLK : {
-			StringUtils::trace( "NM_DBLCLK\n" );
+			//StringUtils::trace( "NM_DBLCLK\n" );
 
 		}
 		break;
@@ -946,7 +946,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 					}
 
 					if ( displayInfo->item.mask & LVIF_STATE ) {
-						StringUtils::trace( "LVIF_STATE requested!" );
+						//StringUtils::trace( "LVIF_STATE requested!" );
 					}
 
 
@@ -1032,7 +1032,7 @@ bool Win32Listview::handleEventMessages( UINT message, WPARAM wParam, LPARAM lPa
 
 		case LVN_ODCACHEHINT:{
 			NMLVCACHEHINT* cacheHintPtr = (NMLVCACHEHINT *)lParam;
-			StringUtils::trace( String("LVN_ODCACHEHINT from: ") + cacheHintPtr->iFrom + " to: " + cacheHintPtr->iTo + "\n" );
+			//StringUtils::trace( String("LVN_ODCACHEHINT from: ") + cacheHintPtr->iFrom + " to: " + cacheHintPtr->iTo + "\n" );
 
 			ListModel* lm = listviewControl_->getListModel();
 			if ( NULL != lm ) {
@@ -2306,7 +2306,8 @@ void Win32Listview::onCtrlModelChanged( Event* e )
 
 		ListModel* lm = (ListModel*)model;		
 		ListView_SetItemCountEx( hwnd_, lm->getCount(), LVSICF_NOINVALIDATEALL );				
-		StringUtils::trace( Format("Win32Listview::onCtrlModelChanged(): Added %d items to hwnd: %p\n") % lm->getCount() % hwnd_ );
+		//StringUtils::trace( Format("Win32Listview::onCtrlModelChanged(): Added %d items to hwnd: %p\n") % lm->getCount() % hwnd_ );
+
 		InvalidateRect( hwnd_, NULL, TRUE );
 
 
