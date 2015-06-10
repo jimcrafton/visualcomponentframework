@@ -81,6 +81,14 @@ namespace agg
             m_affine = mtx;
         }
 
+		void get_scale_values( double* sx, double* sy ) const {
+			double m[6];
+
+			m_affine.store_to(m);
+			*sx = m[0];
+			*sy = m[3];
+		}
+
         // Accessors
         //--------------------------------------------------------------------
         unsigned    resolution()   const { return m_resolution; }
