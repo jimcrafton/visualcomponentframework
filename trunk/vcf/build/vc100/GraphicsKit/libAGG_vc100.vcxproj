@@ -373,6 +373,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\thirdparty\common\agg\src\agg_font_win32_tt.cpp" />
     <ClCompile Include="..\..\..\src\thirdparty\common\agg\src\agg_rounded_rect.cpp" />
     <ClCompile Include="..\..\..\src\thirdparty\common\agg\src\agg_sqrt_tables.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
