@@ -2709,6 +2709,156 @@ inline uint32 ColorSpace::changeHue( const uint32& color, const double& deltaH )
 }
 
 
+Color operator* (const Color& lhs, const Color& rhs ) 
+{
+	Color result;
+	result.setRGBA( lhs.getRed()*rhs.getRed(),
+					lhs.getGreen()*rhs.getGreen(),
+					lhs.getBlue()*rhs.getBlue(),
+					lhs.getAlpha()*rhs.getAlpha() );
+	
+
+	return result;
+}
+
+Color operator+ (const Color& lhs, const Color& rhs ) 
+{
+	Color result;
+	result.setRGBA( lhs.getRed()+rhs.getRed(),
+					lhs.getGreen()+rhs.getGreen(),
+					lhs.getBlue()+rhs.getBlue(),
+					lhs.getAlpha()+rhs.getAlpha() );
+	
+
+	return result;
+}
+
+Color operator- (const Color& lhs, const Color& rhs ) 
+{
+	Color result;
+	result.setRGBA( lhs.getRed()-rhs.getRed(),
+					lhs.getGreen()-rhs.getGreen(),
+					lhs.getBlue()-rhs.getBlue(),
+					lhs.getAlpha()-rhs.getAlpha() );
+	
+
+	return result;
+}
+
+Color operator/ (const Color& lhs, const Color& rhs ) 
+{
+	Color result;
+	result.setRGBA( lhs.getRed()/rhs.getRed(),
+					lhs.getGreen()/rhs.getGreen(),
+					lhs.getBlue()/rhs.getBlue(),
+					lhs.getAlpha()/rhs.getAlpha() );
+	
+
+	return result;
+}
+
+
+
+
+Color operator* (const Color& lhs, const double& rhs ) 
+{
+	Color result;
+	result.setRGBA( lhs.getRed()*rhs,
+					lhs.getGreen()*rhs,
+					lhs.getBlue()*rhs,
+					lhs.getAlpha()*rhs );
+	
+
+	return result;
+}
+
+Color operator+ (const Color& lhs, const double& rhs ) 
+{
+	Color result;
+	result.setRGBA( lhs.getRed()+rhs,
+					lhs.getGreen()+rhs,
+					lhs.getBlue()+rhs,
+					lhs.getAlpha()+rhs );
+	
+
+	return result;
+}
+
+Color operator- (const Color& lhs, const double& rhs ) 
+{
+	Color result;
+	result.setRGBA( lhs.getRed()-rhs,
+					lhs.getGreen()-rhs,
+					lhs.getBlue()-rhs,
+					lhs.getAlpha()-rhs );
+	
+
+	return result;
+}
+
+Color operator/ (const Color& lhs, const double& rhs ) 
+{
+	Color result;
+	result.setRGBA( lhs.getRed()/rhs,
+					lhs.getGreen()/rhs,
+					lhs.getBlue()/rhs,
+					lhs.getAlpha()/rhs );
+	
+
+	return result;
+}
+
+
+
+Color operator* (const double& lhs, const Color& rhs ) 
+{
+	Color result;
+	result.setRGBA( lhs*rhs.getRed(),
+					lhs*rhs.getGreen(),
+					lhs*rhs.getBlue(),
+					lhs*rhs.getAlpha() );
+	
+
+	return result;
+}
+
+Color operator+ (const double& lhs, const Color& rhs ) 
+{
+	Color result;
+	result.setRGBA( lhs+rhs.getRed(),
+					lhs+rhs.getGreen(),
+					lhs+rhs.getBlue(),
+					lhs+rhs.getAlpha() );
+	
+
+	return result;
+}
+
+Color operator- (const double& lhs, const Color& rhs ) 
+{
+	Color result;
+	result.setRGBA( lhs-rhs.getRed(),
+					lhs-rhs.getGreen(),
+					lhs-rhs.getBlue(),
+					lhs-rhs.getAlpha() );
+	
+
+	return result;
+}
+
+Color operator/ (const double& lhs, const Color& rhs ) 
+{
+	Color result;
+	result.setRGBA( lhs/rhs.getRed(),
+					lhs/rhs.getGreen(),
+					lhs/rhs.getBlue(),
+					lhs/rhs.getAlpha() );
+	
+
+	return result;
+}
+
+
 
 }; // namespace VCF
 
