@@ -2708,7 +2708,7 @@ inline uint32 ColorSpace::changeHue( const uint32& color, const double& deltaH )
 	return color2;
 }
 
-
+inline
 Color operator* (const Color& lhs, const Color& rhs ) 
 {
 	Color result;
@@ -2721,6 +2721,7 @@ Color operator* (const Color& lhs, const Color& rhs )
 	return result;
 }
 
+inline
 Color operator+ (const Color& lhs, const Color& rhs ) 
 {
 	Color result;
@@ -2733,6 +2734,7 @@ Color operator+ (const Color& lhs, const Color& rhs )
 	return result;
 }
 
+inline
 Color operator- (const Color& lhs, const Color& rhs ) 
 {
 	Color result;
@@ -2745,6 +2747,7 @@ Color operator- (const Color& lhs, const Color& rhs )
 	return result;
 }
 
+inline
 Color operator/ (const Color& lhs, const Color& rhs ) 
 {
 	Color result;
@@ -2758,8 +2761,7 @@ Color operator/ (const Color& lhs, const Color& rhs )
 }
 
 
-
-
+inline
 Color operator* (const Color& lhs, const double& rhs ) 
 {
 	Color result;
@@ -2772,6 +2774,7 @@ Color operator* (const Color& lhs, const double& rhs )
 	return result;
 }
 
+inline
 Color operator+ (const Color& lhs, const double& rhs ) 
 {
 	Color result;
@@ -2784,6 +2787,7 @@ Color operator+ (const Color& lhs, const double& rhs )
 	return result;
 }
 
+inline
 Color operator- (const Color& lhs, const double& rhs ) 
 {
 	Color result;
@@ -2796,6 +2800,7 @@ Color operator- (const Color& lhs, const double& rhs )
 	return result;
 }
 
+inline
 Color operator/ (const Color& lhs, const double& rhs ) 
 {
 	Color result;
@@ -2809,7 +2814,7 @@ Color operator/ (const Color& lhs, const double& rhs )
 }
 
 
-
+inline
 Color operator* (const double& lhs, const Color& rhs ) 
 {
 	Color result;
@@ -2822,6 +2827,7 @@ Color operator* (const double& lhs, const Color& rhs )
 	return result;
 }
 
+inline
 Color operator+ (const double& lhs, const Color& rhs ) 
 {
 	Color result;
@@ -2834,6 +2840,7 @@ Color operator+ (const double& lhs, const Color& rhs )
 	return result;
 }
 
+inline
 Color operator- (const double& lhs, const Color& rhs ) 
 {
 	Color result;
@@ -2846,6 +2853,7 @@ Color operator- (const double& lhs, const Color& rhs )
 	return result;
 }
 
+inline
 Color operator/ (const double& lhs, const Color& rhs ) 
 {
 	Color result;
