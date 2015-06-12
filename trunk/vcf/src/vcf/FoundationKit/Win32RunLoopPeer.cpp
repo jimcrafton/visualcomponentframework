@@ -78,8 +78,8 @@ void Win32RunLoopPeer::run( const DateTimeSpan* duration, const String& mode )
 	HandleCallBackMap& modeHandles = info->handles;
 
 	DateTime start = DateTime::now();
-
-    while ( !info->done.back() ) {
+	
+	while ( !info->done.back() ) {
 		//Thanks to obirsoy for rewriting this for Win32!
 
 		DateTimeSpan elapsed = DateTime::now() - start;
@@ -165,10 +165,18 @@ void Win32RunLoopPeer::run( const DateTimeSpan* duration, const String& mode )
 					doMsg = false;
 				}
 			}
+
+			if ( info->done.back() ) {
+				break;
+			}
 		}
 		
 		// Now fire everything we got..
 		for(std::vector<HANDLE>::iterator fit=firedHandles.begin(); fit!=firedHandles.end(); ++fit) {
+			if ( info->done.back() ) {
+				break;
+			}
+
 			HandleCallBackMap::iterator it = modeHandles.find(*fit);
 			if ( it != modeHandles.end() ) {
 				HANDLE handle = *fit;
