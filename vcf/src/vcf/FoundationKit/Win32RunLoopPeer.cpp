@@ -105,7 +105,9 @@ void Win32RunLoopPeer::run( const DateTimeSpan* duration, const String& mode )
 		
 
 		bool processedAllFires = false;
-		while(!processedAllFires) {
+		MSG msg;
+		bool doMsg = false;
+		while(!processedAllFires) {			
 			DWORD result = ::MsgWaitForMultipleObjects( handles.size(), &handles[0], FALSE, wait, QS_ALLEVENTS );
 			
 			if ( result >= WAIT_OBJECT_0 && result < WAIT_OBJECT_0+handles.size() ) {
@@ -121,18 +123,20 @@ void Win32RunLoopPeer::run( const DateTimeSpan* duration, const String& mode )
 				wait = 0;
 				
 				// end the loop if there is nothing left to wait.
-				processedAllFires = handles.empty();
+				processedAllFires = handles.empty();				
+				doMsg = true;
 			}
 			else if ( result == WAIT_OBJECT_0+handles.size() ) {
-				MSG msg;
+				doMsg = false;
 				if ( ::PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) != 0 ) {
 					::TranslateMessage( &msg );
-					::DispatchMessage( &msg );
+					::DispatchMessage( &msg );					
 				}
 			}
 			else if ( result >= WAIT_ABANDONED_0 && result < WAIT_ABANDONED_0+handles.size() ) {
 				// I don't know. This looks like a logical thing to do...
 				processedAllFires = true;
+				doMsg = true;
 			}
 			else if ( result == WAIT_TIMEOUT && wait == adjustedTimeOut ) {
 				// The run loop timeout has occurred, so quit, cause we're done running
@@ -145,6 +149,21 @@ void Win32RunLoopPeer::run( const DateTimeSpan* duration, const String& mode )
 			}
 			else {
 				VCF_ASSERT( false );
+			}
+
+			/**
+			note to self - unless this get called REPEATEDLY then the UI message loop stalls 
+			out and things don't quite work right. Note sure how best to handle this...
+			*/
+			if (doMsg ) {
+				if ( ::PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) != 0 ) {
+					::TranslateMessage( &msg );
+					::DispatchMessage( &msg );
+					doMsg = true;
+				}
+				else {
+					doMsg = false;
+				}
 			}
 		}
 		

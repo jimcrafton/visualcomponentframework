@@ -2921,7 +2921,6 @@ LRESULT CALLBACK Win32ToolKit::wndProc(HWND hWnd, UINT message, WPARAM wParam, L
 		break;
 
 		case WM_TIMER:	{
-
 			UINT wTimerID = wParam;
 			if ( ToolTipTimerID == wTimerID ) {
 				POINT pt = {0,0};
